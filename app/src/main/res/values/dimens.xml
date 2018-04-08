@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="SQUARE_RADIUS">5dp</dimen>
+    <dimen name="BLOCK_PADDING">5dp</dimen>
+    <dimen name="LINE_WIDTH">3dp</dimen>
+    <dimen name="ELEVATION">10dp</dimen>
+</resources>
