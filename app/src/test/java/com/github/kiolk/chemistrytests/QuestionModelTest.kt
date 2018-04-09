@@ -1,8 +1,8 @@
 package com.github.kiolk.chemistrytests
 
 import android.text.Html
-import com.github.kiolk.chemistrytests.data.CloseQuestion
-import com.github.kiolk.chemistrytests.data.Option
+import com.github.kiolk.chemistrytests.data.models.CloseQuestion
+import com.github.kiolk.chemistrytests.data.models.Option
 import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith

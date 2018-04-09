@@ -3,7 +3,7 @@ package com.github.kiolk.chemistrytests.ui
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import com.github.kiolk.chemistrytests.R
-import com.github.kiolk.chemistrytests.data.setFormattedText
+import com.github.kiolk.chemistrytests.data.models.setFormattedText
 import kiolk.com.github.pen.Pen
 import kiolk.com.github.pen.utils.PenConstantsUtil
 import kotlinx.android.synthetic.main.card_close_question.*
@@ -35,6 +35,7 @@ class MainActivity : AppCompatActivity() {
 ////                return pBitmapFromLoader ?: drawable.bitmap
 //            }
 //        })
+
         setFormattedText(question_text_view, "X^2^^<br> drawable <br> H_2__SO_4__", "http://teacher-chem.ru/wp-content/uploads/2014/12/olimp-11.jpg")
     }
 

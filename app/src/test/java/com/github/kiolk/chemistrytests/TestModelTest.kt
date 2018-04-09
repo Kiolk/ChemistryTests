@@ -1,9 +1,8 @@
 package com.github.kiolk.chemistrytests
 
-import com.github.kiolk.chemistrytests.data.CloseQuestion
-import com.github.kiolk.chemistrytests.data.Option
-import com.github.kiolk.chemistrytests.data.Test.TestParams.DIRECT_ORDER
-import com.github.kiolk.chemistrytests.data.Test.TestParams.RANDOM_ORDER
+import com.github.kiolk.chemistrytests.data.models.CloseQuestion
+import com.github.kiolk.chemistrytests.data.models.Option
+import com.github.kiolk.chemistrytests.data.models.Test.TestParams.RANDOM_ORDER
 import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -38,9 +37,9 @@ class TestModelTest {
             Option("Homel"),
             Option("Zhodina"),
             2)
-    val test = com.github.kiolk.chemistrytests.data.Test(listOf(question1,
-            question2, question3),RANDOM_ORDER)
-    val test2 = com.github.kiolk.chemistrytests.data.Test(listOf(question1,
+    val test = com.github.kiolk.chemistrytests.data.models.Test(listOf(question1,
+            question2, question3), RANDOM_ORDER)
+    val test2 = com.github.kiolk.chemistrytests.data.models.Test(listOf(question1,
             question2, question3))
 
     @Test

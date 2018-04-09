@@ -34,6 +34,7 @@
             android:layout_above="@+id/answers_check_box">
 
             <TextView
+                android:id="@+id/option_one_text_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/area_square_shape"

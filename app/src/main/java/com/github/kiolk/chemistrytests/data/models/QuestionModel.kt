@@ -1,16 +1,16 @@
-package com.github.kiolk.chemistrytests.data
+package com.github.kiolk.chemistrytests.data.models
 
 import PHOTO_TAG
-import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
 import android.text.Html
 import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.text.style.ImageSpan
 import android.widget.TextView
-import kiolk.com.github.pen.GetBitmapCallback
 import kiolk.com.github.pen.Pen
 import toHtml
+import java.io.Serializable
 import java.util.*
 
 val RATIO_INDEX: Int = 2
@@ -19,7 +19,7 @@ val DEFAULT_RATIO: Int = 1
 
 interface Question {
 
-    fun checkAnswer(userAnswer: String): Boolean
+    fun checkAnswer(userAnswer: Option): Boolean
 
 }
 
@@ -34,7 +34,13 @@ class CloseQuestion(var questionEn: String = "",
                     var questionType: Int = Question.SINGLE_CHOICE,
                     var tags: List<String>? = null,
                     var questionCost: Float = 1.0F,
-                    var language: String = "ru") : Question {
+                    var language: String = "ru") : Question, Serializable {
+
+   lateinit var options : List<Option>
+
+    init {
+        options = getOptions()
+    }
 
     object Question {
         val SINGLE_CHOICE: Int = 0
@@ -45,11 +51,16 @@ class CloseQuestion(var questionEn: String = "",
 
     fun getAnswer() = answer
 
-    override fun checkAnswer(userAnswer: String) = userAnswer == answer.optionPhotoUtl ?: answer.text
+    override fun checkAnswer(userAnswer: Option) = userAnswer.text == answer.text && userAnswer.optionPhotoUtl == answer.optionPhotoUtl
 
-    fun getOptions() = arrayListOf(option1, option2, option3, option4)
+
+    fun getOptions() = arrayListOf(option1, option2, option3, option4, option5)
 
     fun getRandomOptions() = randomSort(getOptions())
+
+    fun RandomizeOption() {
+        options = getRandomOptions()
+    }
 }
 
 fun <T> randomSort(collection: List<T>): List<T> {
@@ -68,12 +79,14 @@ fun <T> randomSort(collection: List<T>): List<T> {
     return resultListOption
 }
 
+
+
 class OpenQuestion(var question: String = "",
                    var answer: String = "",
                    var tags: List<String>? = null,
                    var questionCost: Float = 1.0F) : Question {
 
-    override fun checkAnswer(userAnswer: String) = userAnswer == answer
+    override fun checkAnswer(userAnswer: Option) = true
 }
 
 fun setFormattedText(view: TextView, text: String, photoUrl: String?) {
