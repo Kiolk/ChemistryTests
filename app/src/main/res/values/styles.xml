@@ -8,4 +8,15 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="QuestionBlockStyle">
+        <item name="android:layout_margin">@dimen/BLOCK_PADDING</item>
+        <item name="android:background">@drawable/area_square_shape</item>
+        <item name="android:padding">@dimen/BLOCK_PADDING</item>
+        <item name="android:visibility">invisible</item>
+    </style>
+
+    <style name="CheckBoxStyle">
+        <item name="android:layout_gravity">center</item>
+    </style>
+
 </resources>

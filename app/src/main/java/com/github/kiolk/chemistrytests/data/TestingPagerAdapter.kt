@@ -13,7 +13,7 @@ class TestingPagerAdapter(fm : android.support.v4.app.FragmentManager, test : Te
         usingTest = test
     }
 
-    override fun getItem(position: Int): Fragment {
+    override fun getItem(position: Int): android.support.v4.app.Fragment {
         return QuestionFragment().fromInctance(usingTest.getQuestion(position))
     }
 

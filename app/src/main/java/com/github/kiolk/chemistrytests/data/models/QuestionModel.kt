@@ -34,13 +34,14 @@ class CloseQuestion(var questionEn: String = "",
                     var questionType: Int = Question.SINGLE_CHOICE,
                     var tags: List<String>? = null,
                     var questionCost: Float = 1.0F,
-                    var language: String = "ru") : Question, Serializable {
+                    var language: String = "ru",
+                    var questionOptions : List<Option> = mutableListOf()) : Question, Serializable {
 
-   lateinit var options : List<Option>
-
-    init {
-        options = getOptions()
-    }
+//   lateinit var options : List<Option>
+//
+//    init {
+//        options = getOptions()
+//    }
 
     object Question {
         val SINGLE_CHOICE: Int = 0
@@ -54,12 +55,12 @@ class CloseQuestion(var questionEn: String = "",
     override fun checkAnswer(userAnswer: Option) = userAnswer.text == answer.text && userAnswer.optionPhotoUtl == answer.optionPhotoUtl
 
 
-    fun getOptions() = arrayListOf(option1, option2, option3, option4, option5)
+    fun getOptions() = questionOptions
 
-    fun getRandomOptions() = randomSort(getOptions())
+    fun getRandomOptions() = randomSort(questionOptions)
 
-    fun RandomizeOption() {
-        options = getRandomOptions()
+    fun randomizedOptions() {
+        questionOptions = getRandomOptions()
     }
 }
 

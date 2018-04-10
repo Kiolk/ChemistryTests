@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">ChemistryTests</string>
+    <string name="ONE">1</string>
+    <string name="TWO">2</string>
+    <string name="THREE">3</string>
+    <string name="FOUR">4</string>
+    <string name="FIVE">5</string>
 </resources>

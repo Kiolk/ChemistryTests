@@ -10,21 +10,35 @@ class Test(var questions: List<CloseQuestion>,
     var isStartTest = false
     var questionNumber = -1
     var resultingScore = 0F
-    lateinit var allQuestions : List<CloseQuestion>
+    lateinit var allQuestions: List<CloseQuestion>
 
     init {
-        if (params.order == RANDOM_ORDER) {
-            allQuestions = questions
-            if(params.isRandomOption) {
-                questions.forEach { it.options = randomSort(it.options) }
+        allQuestions = questions
+        if (params.isRandomOption) {
+//            val list : MutableList<CloseQuestion> = mutableListOf()
+            questions.forEach {
+                //                val options = randomSort(it.questionOptions)
+//                val q = it
+//                q.questionOptions = options
+                it.randomizedOptions()
+//                list.add(q)
             }
-            if (params.numberOfQuestions != ALL_QUESTION && questions.size >= params.numberOfQuestions){
+//            questions = list
+        }
+        if (params.order == RANDOM_ORDER) {
+            if (params.numberOfQuestions != ALL_QUESTION && questions.size >= params.numberOfQuestions) {
                 questions = randomSort(questions).subList(0, params.numberOfQuestions)
+            } else {
+                questions = randomSort(questions)
+            }
+        } else {
+            if (params.numberOfQuestions != ALL_QUESTION && questions.size >= params.numberOfQuestions) {
+                questions = questions.subList(0, params.numberOfQuestions)
             }
         }
     }
 
-    fun getQuestion(questionNumber : Int) = questions[questionNumber]
+    fun getQuestion(questionNumber: Int) = questions[questionNumber]
 
     fun getNext(): Question {
         if (!isStartTest) {
