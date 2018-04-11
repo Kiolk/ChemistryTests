@@ -1,6 +1,5 @@
 package com.github.kiolk.chemistrytests.data
 
-import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentStatePagerAdapter
 import com.github.kiolk.chemistrytests.data.fragments.QuestionFragment
 import com.github.kiolk.chemistrytests.data.models.Test
@@ -14,7 +13,7 @@ class TestingPagerAdapter(fm : android.support.v4.app.FragmentManager, test : Te
     }
 
     override fun getItem(position: Int): android.support.v4.app.Fragment {
-        return QuestionFragment().fromInctance(usingTest.getQuestion(position))
+        return QuestionFragment().fromInstance(usingTest.getQuestion(position))
     }
 
     override fun getCount(): Int {
