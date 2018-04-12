@@ -18,11 +18,11 @@ class QuestionFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mQuestion = arguments.getSerializable("question") as CloseQuestion
+        mQuestion = arguments?.getSerializable("question") as CloseQuestion
         setupCheckBocks()
     }
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater?.inflate(R.layout.fragment_question, null)
         if (view != null) {
             setFormattedText(view.findViewById(R.id.question_text_view), mQuestion.questionEn, mQuestion.photoUrl)
@@ -85,7 +85,7 @@ class QuestionFragment : Fragment() {
             }
         }
 
-        return view ?: super.onCreateView(inflater, container, savedInstanceState)
+        return view ?: inflater?.let { super.onCreateView(it, container, savedInstanceState) }
     }
 
     private fun setupCheckBocks() {
