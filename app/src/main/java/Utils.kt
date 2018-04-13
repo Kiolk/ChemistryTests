@@ -18,16 +18,16 @@ fun getTrainingTets() : Test{
 
     val question : CloseQuestion = CloseQuestion("How many month in year$cnt?", null,
             Option("6", null),
-            Option("2", null),
-            Option("10", null),
-            Option("11", null),
+            Option("2 drawable", "http://images.myshared.ru/5/327874/slide_7.jpg"),
+            Option("10 drawable", "http://images.myshared.ru/5/327874/slide_7.jpg"),
+            Option("11 drawable", "http://images.myshared.ru/5/327874/slide_7.jpg"),
             Option("12", null),
             5,
-            SINGLE_CHOICE, null, 1.0F, "ru", mutableListOf( Option("6", null),
-            Option("2", null),
-            Option("10", null),
-            Option("11", null),
-            Option("12", null)))
+            SINGLE_CHOICE, null, 1.0F, "ru", mutableListOf( Option("6 drawable", "http://images.myshared.ru/5/327874/slide_7.jpg"),
+            Option("2 drawable", "http://images.myshared.ru/5/327874/slide_7.jpg"),
+            Option("10 drawable", "http://images.myshared.ru/5/327874/slide_7.jpg"),
+            Option("11 drawable", "http://images.myshared.ru/5/327874/slide_7.jpg"),
+            Option("12 drawable", "http://images.myshared.ru/5/327874/slide_7.jpg")))
 
 
 

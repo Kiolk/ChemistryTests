@@ -1,7 +1,9 @@
 package com.github.kiolk.chemistrytests.ui
 
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import com.firebase.ui.auth.AuthUI
 import com.github.kiolk.chemistrytests.R
 import com.github.kiolk.chemistrytests.data.models.setFormattedText
@@ -9,6 +11,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import kiolk.com.github.pen.Pen
 import kiolk.com.github.pen.utils.PenConstantsUtil
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.card_close_question.*
 
 class MainActivity : AppCompatActivity() {
@@ -64,6 +67,10 @@ class MainActivity : AppCompatActivity() {
 //        })
 
         setFormattedText(question_text_view, "X^2^^<br> drawable <br> H_2__SO_4__", "http://teacher-chem.ru/wp-content/uploads/2014/12/olimp-11.jpg")
+        testing_activity_button.setOnClickListener{view : View ->
+            val intent = Intent(this, TestingActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     override fun onResume() {

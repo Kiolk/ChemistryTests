@@ -7,18 +7,23 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import com.github.kiolk.chemistrytests.R
+import com.github.kiolk.chemistrytests.data.CheckResultListener
+import com.github.kiolk.chemistrytests.data.models.Answer
 import com.github.kiolk.chemistrytests.data.models.CloseQuestion
 import com.github.kiolk.chemistrytests.data.models.setFormattedText
+import com.github.kiolk.chemistrytests.ui.TestingActivity
 import kotlinx.android.synthetic.main.card_close_question.view.*
 
 class QuestionFragment : Fragment() {
 
     lateinit var mQuestion: CloseQuestion
     lateinit var listener: View.OnClickListener
+//    lateinit var mChecjListener : CheckResultListener
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mQuestion = arguments?.getSerializable("question") as CloseQuestion
+//        mChecjListener = arguments?.getSerializable("listener") as CheckResultListener
         setupCheckBocks()
     }
 
@@ -72,17 +77,17 @@ class QuestionFragment : Fragment() {
                 view.findViewById<CheckBox>(R.id.answer_five_check_box).setOnClickListener(listener)
 
             }
-
-            val radioGroup = view.findViewById<RadioGroup>(R.id.answers_radio_group)
-            radioGroup.setOnCheckedChangeListener { group, checkedId ->
-                val answer = view.findViewById<RadioButton>(checkedId)
-                val answerNumber: Int = answer.tag as Int
-                if (mQuestion.checkAnswer(mQuestion.questionOptions[answerNumber])) {
-                    Toast.makeText(view.context, "Correct Answer!", Toast.LENGTH_LONG).show()
-                } else {
-                    Toast.makeText(view.context, "Wrong Answer!", Toast.LENGTH_LONG).show()
-                }
-            }
+//
+//            val radioGroup = view.findViewById<RadioGroup>(R.id.answers_radio_group)
+//            radioGroup.setOnCheckedChangeListener { group, checkedId ->
+//                val answer = view.findViewById<RadioButton>(checkedId)
+//                val answerNumber: Int = answer.tag as Int
+//                if (mQuestion.checkAnswer(mQuestion.questionOptions[answerNumber])) {
+//                    Toast.makeText(view.context, "Correct Answer!", Toast.LENGTH_LONG).show()
+//                } else {
+//                    Toast.makeText(view.context, "Wrong Answer!", Toast.LENGTH_LONG).show()
+//                }
+//            }
         }
 
         return view ?: inflater?.let { super.onCreateView(it, container, savedInstanceState) }
@@ -132,11 +137,14 @@ class QuestionFragment : Fragment() {
         }
 
         fun checkCorrectAnswer(answer: Int): Int {
+            val act = activity as TestingActivity
             return if (mQuestion.checkAnswer(mQuestion.questionOptions[answer])) {
-                Toast.makeText(view?.context, "Correct Answer!", Toast.LENGTH_LONG).show()
+//                Toast.makeText(view?.context, "Correct Answer!", Toast.LENGTH_LONG).show()
+                act.listener.onResult(Answer(mQuestion, mQuestion.questionOptions[answer]))
                 answer
             } else {
-                Toast.makeText(view?.context, "Wrong Answer!", Toast.LENGTH_LONG).show()
+//                Toast.makeText(view?.context, "Wrong Answer!", Toast.LENGTH_LONG).show()
+                act.listener.onResult(Answer(mQuestion, mQuestion.questionOptions[answer]))
                 answer
             }
         }
@@ -173,6 +181,7 @@ class QuestionFragment : Fragment() {
         val fragment = QuestionFragment()
         val bundle = Bundle()
         bundle.putSerializable("question", question)
+//        bundle.putSerializable("listener", listener)
         fragment.arguments = bundle
         return fragment
     }
