@@ -64,7 +64,8 @@ final class DiskCache {
             pBitmap.compress(Bitmap.CompressFormat.PNG, Pen.getInstance().getQualityOfCompressionBmp(), fileOutputStream);
             isSaved = true;
         } catch (final Exception ignored) {
-
+            Exception e = ignored;
+            e.fillInStackTrace();
         } finally {
             try {
                 if (fileOutputStream != null) {

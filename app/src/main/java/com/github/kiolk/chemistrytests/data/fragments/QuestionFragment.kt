@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.WebView
 import android.widget.*
 import com.github.kiolk.chemistrytests.R
 import com.github.kiolk.chemistrytests.data.CheckResultListener
@@ -12,12 +13,15 @@ import com.github.kiolk.chemistrytests.data.models.Answer
 import com.github.kiolk.chemistrytests.data.models.CloseQuestion
 import com.github.kiolk.chemistrytests.data.models.setFormattedText
 import com.github.kiolk.chemistrytests.ui.TestingActivity
+import kiolk.com.github.pen.utils.MD5Util
+import kotlinx.android.synthetic.main.card_close_question.*
 import kotlinx.android.synthetic.main.card_close_question.view.*
 
 class QuestionFragment : Fragment() {
 
     lateinit var mQuestion: CloseQuestion
     lateinit var listener: View.OnClickListener
+    lateinit var photoListener : View.OnClickListener
 //    lateinit var mChecjListener : CheckResultListener
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,12 +29,31 @@ class QuestionFragment : Fragment() {
         mQuestion = arguments?.getSerializable("question") as CloseQuestion
 //        mChecjListener = arguments?.getSerializable("listener") as CheckResultListener
         setupCheckBocks()
+        setUpListener()
+    }
+
+
+
+    private fun setUpListener() {
+        photoListener = object : View.OnClickListener{
+            override fun onClick(v: View?) {
+                val act = activity as TestingActivity
+                if(v?.tag != null) {
+                    val option: Int = v?.tag as Int
+                    val pictureUrl = mQuestion.questionOptions[option].optionPhotoUtl
+                    pictureUrl?.let { act?.showOptionPhoto(it) }
+                }else{
+                    mQuestion.photoUrl?.let { act.showOptionPhoto(it) }
+                }
+            }
+        }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater?.inflate(R.layout.fragment_question, null)
         if (view != null) {
             setFormattedText(view.findViewById(R.id.question_text_view), mQuestion.questionEn, mQuestion.photoUrl)
+            view.findViewById<TextView>(R.id.question_text_view).setOnClickListener(photoListener)
 
 
             if (mQuestion.questionOptions.size > 0) {
@@ -39,6 +62,9 @@ class QuestionFragment : Fragment() {
                 view.findViewById<TextView>(R.id.question_one_label_text_view).visibility = View.VISIBLE
                 view.findViewById<TextView>(R.id.option_one_text_view).tag = 0
                 view.findViewById<CheckBox>(R.id.answer_one_check_box).setOnClickListener(listener)
+                if(mQuestion.questionOptions[0].optionPhotoUtl != null) {
+                    view.findViewById<TextView>(R.id.option_one_text_view).setOnClickListener(photoListener)
+                }
             }
 
             if (mQuestion.questionOptions.size > 1) {
@@ -47,7 +73,9 @@ class QuestionFragment : Fragment() {
                 view.findViewById<TextView>(R.id.question_two_label_text_view).visibility = View.VISIBLE
                 view.findViewById<TextView>(R.id.option_two_text_view).tag = 1
                 view.findViewById<CheckBox>(R.id.answer_two_check_box).setOnClickListener(listener)
-
+                if(mQuestion.questionOptions[1].optionPhotoUtl != null) {
+                    view.findViewById<TextView>(R.id.option_two_text_view).setOnClickListener(photoListener)
+                }
 
             }
 
@@ -57,7 +85,9 @@ class QuestionFragment : Fragment() {
                 view.findViewById<TextView>(R.id.question_three_label_text_view).visibility = View.VISIBLE
                 view.findViewById<TextView>(R.id.option_three_text_view).tag = 2
                 view.findViewById<CheckBox>(R.id.answer_three_check_box).setOnClickListener(listener)
-
+                if(mQuestion.questionOptions[2].optionPhotoUtl != null) {
+                    view.findViewById<TextView>(R.id.option_three_text_view).setOnClickListener(photoListener)
+                }
             }
 
             if (mQuestion.questionOptions.size > 3) {
@@ -66,7 +96,9 @@ class QuestionFragment : Fragment() {
                 view.findViewById<TextView>(R.id.question_four_label_text_view).visibility = View.VISIBLE
                 view.findViewById<TextView>(R.id.option_four_text_view).tag = 3
                 view.findViewById<CheckBox>(R.id.answer_four_check_box).setOnClickListener(listener)
-
+                if(mQuestion.questionOptions[3].optionPhotoUtl != null) {
+                    view.findViewById<TextView>(R.id.option_four_text_view).setOnClickListener(photoListener)
+                }
             }
 
             if (mQuestion.questionOptions.size > 4) {
@@ -75,6 +107,9 @@ class QuestionFragment : Fragment() {
                 view.findViewById<TextView>(R.id.question_five_label_text_view).visibility = View.VISIBLE
                 view.findViewById<TextView>(R.id.option_five_text_view).tag = 4
                 view.findViewById<CheckBox>(R.id.answer_five_check_box).setOnClickListener(listener)
+                if(mQuestion.questionOptions[4].optionPhotoUtl != null) {
+                    view.findViewById<TextView>(R.id.option_five_text_view).setOnClickListener(photoListener)
+                }
 
             }
 //

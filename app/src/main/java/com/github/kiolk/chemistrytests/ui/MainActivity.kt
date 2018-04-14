@@ -86,6 +86,7 @@ class MainActivity : AppCompatActivity() {
     private fun initImageLoader() {
         Pen.getInstance().setLoaderSettings().
                 setSizeInnerFileCache(20L).
+                setContext(baseContext).
                 setTypeOfCache(PenConstantsUtil.INNER_FILE_CACHE).
                 setSavingStrategy(PenConstantsUtil.SAVE_FULL_IMAGE_STRATEGY).
                 setUp()
