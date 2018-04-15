@@ -3,6 +3,7 @@ package com.github.kiolk.chemistrytests.ui
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
+import android.view.MotionEvent
 import android.view.View
 import android.webkit.WebView
 import android.widget.Toast
@@ -13,6 +14,8 @@ import com.github.kiolk.chemistrytests.data.fragments.ResultFragment
 import com.github.kiolk.chemistrytests.data.models.Answer
 import com.github.kiolk.chemistrytests.data.models.OnEndTestListener
 import com.github.kiolk.chemistrytests.data.models.Result
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 import getTrainingTets
 import kiolk.com.github.pen.utils.MD5Util
 import kotlinx.android.synthetic.main.activity_testing.*
@@ -51,6 +54,7 @@ class TestingActivity : AppCompatActivity() {
         }
         testing_view_pager.adapter = adapter
         questions_tab_layout.setupWithViewPager(testing_view_pager)
+        testing_view_pager.setOnTouchListener { v, event -> false }
     }
 
     override fun onBackPressed() {

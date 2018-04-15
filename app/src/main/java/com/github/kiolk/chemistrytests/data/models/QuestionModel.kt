@@ -25,11 +25,6 @@ interface Question {
 
 class CloseQuestion(var questionEn: String = "",
                     var photoUrl: String? = null,
-                    var option1: Option = Option(),
-                    var option2: Option = Option(),
-                    var option3: Option = Option(),
-                    var option4: Option = Option(),
-                    var option5: Option = Option(),
                     var answerNumber: Int = 1,
                     var questionType: Int = Question.SINGLE_CHOICE,
                     var tags: List<String>? = null,

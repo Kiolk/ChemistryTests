@@ -17,11 +17,6 @@ fun getTrainingTets() : Test{
     while (cnt < 10){
 
     val question : CloseQuestion = CloseQuestion("X^2^^<br> drawable <br> H_2__SO_4__$cnt?", "http://teacher-chem.ru/wp-content/uploads/2014/12/olimp-11.jpg",
-            Option("6", null),
-            Option("2 drawable", "http://images.myshared.ru/5/327874/slide_7.jpg"),
-            Option("10 drawable", "http://images.myshared.ru/5/327874/slide_7.jpg"),
-            Option("11 drawable", "http://images.myshared.ru/5/327874/slide_7.jpg"),
-            Option("12", null),
             5,
             SINGLE_CHOICE, null, 1.0F, "ru", mutableListOf( Option("6 drawable", "http://images.myshared.ru/5/327874/slide_7.jpg"),
             Option("2 drawable", "http://images.myshared.ru/5/327874/slide_7.jpg"),
@@ -36,6 +31,6 @@ fun getTrainingTets() : Test{
 //        question.questionEn = "How many month in year?$cnt"
         listOfQuestions.add(question)
     }
-    val params: TestParams = TestParams(RANDOM_ORDER, TRAINING_TEST, 5, true)
+    val params: TestParams = TestParams(RANDOM_ORDER, TRAINING_TEST, 5, true, DIRECT_TEST)
     return Test(listOfQuestions, params)
 }

@@ -10,22 +10,18 @@ interface CheckResultListener : Serializable {
     fun onResult(answer : Answer)
 }
 
-class TestingPagerAdapter(fm : android.support.v4.app.FragmentManager, test : Test) : FragmentStatePagerAdapter(fm) {
-
-    lateinit var usingTest : Test
-//    lateinit var mListener : CheckResultListener
+class TestingPagerAdapter(fm : android.support.v4.app.FragmentManager,var test : Test) : FragmentStatePagerAdapter(fm) {
 
     init {
-        usingTest = test
-//        mListener = listener
+
     }
 
     override fun getItem(position: Int): android.support.v4.app.Fragment {
-        return QuestionFragment().fromInstance(usingTest.getQuestion(position))
+        return QuestionFragment().fromInstance(test.getQuestion(position))
     }
 
     override fun getCount(): Int {
-        return usingTest.questions.size
+        return test.questions.size
     }
 
     override fun getPageTitle(position: Int): CharSequence {
