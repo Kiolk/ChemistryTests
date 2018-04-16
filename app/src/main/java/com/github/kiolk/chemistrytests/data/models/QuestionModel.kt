@@ -23,29 +23,52 @@ interface Question {
 
 }
 
-class CloseQuestion(var questionEn: String = "",
+class CloseQuestion(var questionId: Int,
+                    var questionEn: String = "",
                     var photoUrl: String? = null,
                     var answerNumber: Int = 1,
                     var questionType: Int = Question.SINGLE_CHOICE,
                     var tags: List<String>? = null,
                     var questionCost: Float = 1.0F,
                     var language: String = "ru",
-                    var questionOptions : List<Option> = mutableListOf()) : Question, Serializable {
+                    var questionOptions: List<Option> = mutableListOf(),
+                    var correctOptions : List<Int> = mutableListOf()) : Question, Serializable {
 
-//   lateinit var options : List<Option>
-//
-//    init {
-//        options = getOptions()
-//    }
+    lateinit var correctAnswers : List<Option>
 
     object Question {
         val SINGLE_CHOICE: Int = 0
         val MULTIPLE_CHOICE: Int = 1
+        val INPUT_CHOICE : Int = 2
+    }
+
+    init {
+        correctAnswers = getAnswers()
     }
 
     private var answer = getOptions()[answerNumber - 1]
 
     fun getAnswer() = answer
+
+    private fun getAnswers() : List<Option>{
+        val list = mutableListOf<Option>()
+        correctOptions.forEach { list.add(questionOptions[it-1]) }
+        return list
+    }
+
+    fun checkCorrectAnswersByNumbers(list : List<Int>) : Boolean{
+        val userOptions = mutableListOf<Option>()
+        list.forEach { userOptions.add(questionOptions[it]) }
+        return checkCorrectAnswers(userOptions)
+    }
+
+    fun checkCorrectAnswers(userAnswer : List<Option>) : Boolean{
+        return userAnswer.size == correctAnswers.size && correctAnswers.containsAll(userAnswer)
+    }
+
+    fun checkOpenQuestionAnswers(userString : String?) : Boolean{
+         return correctAnswers[0].text == userString
+    }
 
     override fun checkAnswer(userAnswer: Option) = userAnswer.text == answer.text && userAnswer.optionPhotoUtl == answer.optionPhotoUtl
 
@@ -74,7 +97,6 @@ fun <T> randomSort(collection: List<T>): List<T> {
 
     return resultListOption
 }
-
 
 
 class OpenQuestion(var question: String = "",

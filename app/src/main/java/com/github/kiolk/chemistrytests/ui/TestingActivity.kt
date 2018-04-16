@@ -42,7 +42,12 @@ class TestingActivity : AppCompatActivity() {
         listener = object : CheckResultListener {
 
             override fun onResult(answer: Answer) {
-                if (answer.question.checkAnswer(answer.userAnswer)) {
+                if(answer.userInput != null){
+                    mResult.takeAnswer(answer)
+                    Toast.makeText(baseContext, "Correct Answer! ${mResult.points.toString()}", Toast.LENGTH_LONG).show()
+                }
+
+                if (answer.question.checkCorrectAnswersByNumbers(answer.userAnswers)) {
                     mResult.takeAnswer(answer)
                     Toast.makeText(baseContext, "Correct Answer! ${mResult.points.toString()}", Toast.LENGTH_LONG).show()
 

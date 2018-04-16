@@ -1,4 +1,5 @@
 import com.github.kiolk.chemistrytests.data.models.*
+import com.github.kiolk.chemistrytests.data.models.CloseQuestion.Question.MULTIPLE_CHOICE
 import com.github.kiolk.chemistrytests.data.models.CloseQuestion.Question.SINGLE_CHOICE
 
 val PHOTO_TAG = "drawable"
@@ -16,20 +17,24 @@ fun getTrainingTets() : Test{
     var cnt : Int = 0
     while (cnt < 10){
 
-    val question : CloseQuestion = CloseQuestion("X^2^^<br> drawable <br> H_2__SO_4__$cnt?", "http://teacher-chem.ru/wp-content/uploads/2014/12/olimp-11.jpg",
-            5,
+    val question : CloseQuestion = CloseQuestion(cnt, "X^2^^<br> drawable <br> H_2__SO_4__$cnt?", "http://teacher-chem.ru/wp-content/uploads/2014/12/olimp-11.jpg",
+            4,
             SINGLE_CHOICE, null, 1.0F, "ru", mutableListOf( Option("6 drawable", "http://images.myshared.ru/5/327874/slide_7.jpg"),
-            Option("2 drawable", "http://images.myshared.ru/5/327874/slide_7.jpg"),
             Option("10 drawable", "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Aptiganel.svg/1200px-Aptiganel.svg.png"),
             Option("11 drawable", "http://images.myshared.ru/5/327874/slide_7.jpg"),
-            Option("12 drawable", "http://images.myshared.ru/5/327874/slide_7.jpg")))
-
-
-
+            Option("12 drawable", "http://images.myshared.ru/5/327874/slide_7.jpg")),
+            listOf(4))
+        val question2 : CloseQuestion = CloseQuestion(cnt, "X^2^^<br> drawable <br> H_2__SO_4__$cnt?", "http://teacher-chem.ru/wp-content/uploads/2014/12/olimp-11.jpg",
+                4,
+                MULTIPLE_CHOICE, null, 1.0F, "ru", mutableListOf( Option("6 drawable", "http://images.myshared.ru/5/327874/slide_7.jpg"),
+                Option("10 drawable", "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Aptiganel.svg/1200px-Aptiganel.svg.png"),
+                Option("7 drawable", "http://images.myshared.ru/5/327874/slide_7.jpg"),
+                Option("11 drawable", "http://images.myshared.ru/5/327874/slide_7.jpg"),
+                Option("12 drawable", "http://images.myshared.ru/5/327874/slide_7.jpg")),
+                listOf(3, 4))
         cnt ++
-//        question.questionOptions = randomSort(question.questionOptions)
-//        question.questionEn = "How many month in year?$cnt"
         listOfQuestions.add(question)
+        listOfQuestions.add(question2)
     }
     val params: TestParams = TestParams(RANDOM_ORDER, TRAINING_TEST, 5, true, DIRECT_TEST)
     return Test(listOfQuestions, params)

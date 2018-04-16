@@ -148,12 +148,31 @@
 
         </ScrollView>
 
+            <LinearLayout
+                android:id="@+id/open_input_linear_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:visibility="gone"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/LINE_WIDTH"
+                    android:background="@color/SECOND_TEXT_COLOR"
+                    android:elevation="@dimen/ELEVATION" />
+                <EditText
+                    android:id="@+id/input_answer_edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
 
         <LinearLayout
             android:id="@+id/answers_check_box"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
+            android:visibility="gone"
             android:orientation="vertical">
 
             <LinearLayout
@@ -169,9 +188,11 @@
                 android:orientation="horizontal">
 
                 <LinearLayout
+                    android:id="@+id/box_one_linear_layout"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:visibility="gone"
                     android:orientation="vertical">
 
                     <TextView
@@ -189,9 +210,11 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/box_two_linear_layout"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:visibility="gone"
                     android:orientation="vertical">
 
                     <TextView
@@ -209,9 +232,11 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/box_three_linear_layout"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:visibility="gone"
                     android:orientation="vertical">
 
                     <TextView
@@ -229,9 +254,11 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/box_four_linear_layout"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:visibility="gone"
                     android:orientation="vertical">
 
                     <TextView
@@ -249,7 +276,9 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/box_five_linear_layout"
                     android:layout_width="0dp"
+                    android:visibility="gone"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:orientation="vertical">

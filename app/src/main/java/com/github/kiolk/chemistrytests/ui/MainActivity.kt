@@ -102,7 +102,7 @@ class MainActivity : AppCompatActivity() {
 
         setFormattedText(question_text_view, "X^2^^<br> drawable <br> H_2__SO_4__", "http://teacher-chem.ru/wp-content/uploads/2014/12/olimp-11.jpg")
         testing_activity_button.setOnClickListener{view : View ->
-            val question = CloseQuestion("How many months in year?", null, 1, SINGLE_CHOICE,
+            val question = CloseQuestion(1, "How many months in year?", null, 1, SINGLE_CHOICE,
                     listOf("Year", "Month", "Days"),
                     1.0F,
                     "en",
@@ -110,8 +110,9 @@ class MainActivity : AppCompatActivity() {
                             Option("8", null),
                             Option("9", null),
                             Option("11", null),
-                            Option("12", null)))
-            mDatabaseReference.child("4").setValue(question)
+                            Option("12", null)),
+                    listOf(1))
+//            mDatabaseReference.child("4").setValue(question)
             val intent = Intent(this, TestingActivity::class.java)
             startActivity(intent)
         }
