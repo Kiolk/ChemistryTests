@@ -7,10 +7,8 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.webkit.WebView
 import android.widget.*
 import com.github.kiolk.chemistrytests.R
-import com.github.kiolk.chemistrytests.data.CheckResultListener
 import com.github.kiolk.chemistrytests.data.models.Answer
 import com.github.kiolk.chemistrytests.data.models.CloseQuestion
 import com.github.kiolk.chemistrytests.data.models.CloseQuestion.Question.INPUT_CHOICE
@@ -18,8 +16,6 @@ import com.github.kiolk.chemistrytests.data.models.CloseQuestion.Question.MULTIP
 import com.github.kiolk.chemistrytests.data.models.CloseQuestion.Question.SINGLE_CHOICE
 import com.github.kiolk.chemistrytests.data.models.setFormattedText
 import com.github.kiolk.chemistrytests.ui.TestingActivity
-import kiolk.com.github.pen.utils.MD5Util
-import kotlinx.android.synthetic.main.card_close_question.*
 import kotlinx.android.synthetic.main.card_close_question.view.*
 
 class QuestionFragment : Fragment() {
@@ -58,9 +54,9 @@ class QuestionFragment : Fragment() {
             setFormattedText(view.findViewById(R.id.question_text_view), mQuestion.questionEn, mQuestion.photoUrl)
             view.findViewById<TextView>(R.id.question_text_view).setOnClickListener(photoListener)
 
-            if(mQuestion.questionType == INPUT_CHOICE){
+            if (mQuestion.questionType == INPUT_CHOICE) {
                 view.findViewById<LinearLayout>(R.id.open_input_linear_layout)?.visibility = View.VISIBLE
-                view.findViewById<EditText>(R.id.input_answer_edit_text).addTextChangedListener(object : TextWatcher{
+                view.findViewById<EditText>(R.id.input_answer_edit_text).addTextChangedListener(object : TextWatcher {
                     override fun afterTextChanged(s: Editable?) {
 
                     }
@@ -85,7 +81,7 @@ class QuestionFragment : Fragment() {
                 view.findViewById<TextView>(R.id.question_one_label_text_view).visibility = View.VISIBLE
                 view.findViewById<TextView>(R.id.option_one_text_view).tag = 0
                 view.findViewById<CheckBox>(R.id.answer_one_check_box).visibility = View.VISIBLE
-               view.findViewById<LinearLayout>(R.id.box_one_linear_layout).visibility = View.VISIBLE
+                view.findViewById<LinearLayout>(R.id.box_one_linear_layout).visibility = View.VISIBLE
 
                 view.findViewById<CheckBox>(R.id.answer_one_check_box).setOnClickListener(listener)
                 if (mQuestion.questionOptions[0].optionPhotoUtl != null) {
@@ -287,8 +283,8 @@ class QuestionFragment : Fragment() {
                         }
                     }
                     view?.answer_two_check_box?.id -> {
-                      if (view?.answer_two_check_box?.isChecked != null
-                        && view?.answer_two_check_box?.isChecked == true) {
+                        if (view?.answer_two_check_box?.isChecked != null
+                                && view?.answer_two_check_box?.isChecked == true) {
                             userAnswers.add(1)
                             checkCorrectAnswer(userAnswers)
 
@@ -300,8 +296,8 @@ class QuestionFragment : Fragment() {
                         }
                     }
                     view?.answer_three_check_box?.id -> {
-                       if (view?.answer_three_check_box?.isChecked != null
-                        && view?.answer_three_check_box?.isChecked == true) {
+                        if (view?.answer_three_check_box?.isChecked != null
+                                && view?.answer_three_check_box?.isChecked == true) {
                             userAnswers.add(2)
                             checkCorrectAnswer(userAnswers)
 
@@ -326,8 +322,8 @@ class QuestionFragment : Fragment() {
                         }
                     }
                     view?.answer_five_check_box?.id -> {
-                       if (view?.answer_five_check_box?.isChecked != null
-                        && view?.answer_five_check_box?.isChecked == true) {
+                        if (view?.answer_five_check_box?.isChecked != null
+                                && view?.answer_five_check_box?.isChecked == true) {
                             userAnswers.add(4)
                             checkCorrectAnswer(userAnswers)
 
@@ -351,4 +347,32 @@ class QuestionFragment : Fragment() {
         fragment.arguments = bundle
         return fragment
     }
+
+    fun getInputAnswer() : String{
+        return ""
+    }
+
+    fun getInputEditListener(before: EditText, current: EditText, isFirst : Boolean = false): View.OnFocusChangeListener {
+        val listener = object : View.OnFocusChangeListener {
+            var isTrueLostFocus = true
+            override fun onFocusChange(v: View?, hasFocus: Boolean) {
+                if (hasFocus) {
+                    if (current.text.toString() == "" && before.text.toString() == "") {
+                        current.isFocusable = false
+                        before.isFocusable = true
+                        isTrueLostFocus = false
+                        return
+                    }
+                }
+                if (!hasFocus && isTrueLostFocus) {
+                    getInputAnswer()
+                } else {
+                    isTrueLostFocus = true
+                }
+            }
+        }
+        return listener
+    }
+
+//    fun getTextChangeListener
 }

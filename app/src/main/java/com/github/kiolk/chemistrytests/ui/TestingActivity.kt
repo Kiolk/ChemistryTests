@@ -45,6 +45,7 @@ class TestingActivity : AppCompatActivity() {
                 if(answer.userInput != null){
                     mResult.takeAnswer(answer)
                     Toast.makeText(baseContext, "Correct Answer! ${mResult.points.toString()}", Toast.LENGTH_LONG).show()
+                return
                 }
 
                 if (answer.question.checkCorrectAnswersByNumbers(answer.userAnswers)) {

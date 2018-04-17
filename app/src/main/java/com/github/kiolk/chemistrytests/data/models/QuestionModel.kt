@@ -67,7 +67,7 @@ class CloseQuestion(var questionId: Int,
     }
 
     fun checkOpenQuestionAnswers(userString : String?) : Boolean{
-         return correctAnswers[0].text == userString
+         return correctAnswers[0].text.toUpperCase() == userString?.toUpperCase()
     }
 
     override fun checkAnswer(userAnswer: Option) = userAnswer.text == answer.text && userAnswer.optionPhotoUtl == answer.optionPhotoUtl

@@ -1,4 +1,5 @@
 import com.github.kiolk.chemistrytests.data.models.*
+import com.github.kiolk.chemistrytests.data.models.CloseQuestion.Question.INPUT_CHOICE
 import com.github.kiolk.chemistrytests.data.models.CloseQuestion.Question.MULTIPLE_CHOICE
 import com.github.kiolk.chemistrytests.data.models.CloseQuestion.Question.SINGLE_CHOICE
 
@@ -32,9 +33,14 @@ fun getTrainingTets() : Test{
                 Option("11 drawable", "http://images.myshared.ru/5/327874/slide_7.jpg"),
                 Option("12 drawable", "http://images.myshared.ru/5/327874/slide_7.jpg")),
                 listOf(3, 4))
+        val question3 : CloseQuestion = CloseQuestion(cnt, "What equal 2 + $cnt?", null,
+                1,
+                INPUT_CHOICE, null, 1.0F, "ru", mutableListOf( Option("${2+cnt}", null)),
+                listOf(1))
         cnt ++
         listOfQuestions.add(question)
         listOfQuestions.add(question2)
+        listOfQuestions.add(question3)
     }
     val params: TestParams = TestParams(RANDOM_ORDER, TRAINING_TEST, 5, true, DIRECT_TEST)
     return Test(listOfQuestions, params)

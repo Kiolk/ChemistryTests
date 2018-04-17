@@ -20,4 +20,13 @@
         <item name="android:visibility">gone</item>
     </style>
 
+    <style name="InputSquareStyle">
+        <item name="android:layout_width">@dimen/INPUT_BLOCK_SIZE</item>
+        <item name="android:layout_height">@dimen/INPUT_BLOCK_SIZE</item>
+        <item name="android:background">@drawable/input_area_shape</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">@dimen/INPUT_TEXT_SIZE</item>
+        <item name="android:layout_marginRight">@dimen/INPUT_PADDING</item>
+    </style>
+
 </resources>

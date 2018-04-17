@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tool="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/BACKGROUND_COLOR">
+
+        <HorizontalScrollView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/BLOCK_PADDING">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/first_input_edit_text"
+                    style="@style/InputSquareStyle" />
+
+                <EditText
+                    android:id="@+id/second_input_edit_text"
+                    style="@style/InputSquareStyle" />
+
+                <EditText
+                    android:id="@+id/third_input_edit_text"
+                    style="@style/InputSquareStyle" />
+
+                <EditText
+                    android:id="@+id/fourth_input_edit_text"
+                    style="@style/InputSquareStyle" />
+
+                <EditText
+                    android:id="@+id/fiveth_input_edit_text"
+                    style="@style/InputSquareStyle" />
+
+                <EditText
+                    android:id="@+id/sixth_input_edit_text"
+                    style="@style/InputSquareStyle" />
+
+                <EditText
+                    android:id="@+id/seventh_input_edit_text"
+                    style="@style/InputSquareStyle" />
+
+                <EditText
+                    android:id="@+id/eighth_input_edit_text"
+                    style="@style/InputSquareStyle" />
+
+                <EditText
+                    android:id="@+id/ninth_input_edit_text"
+                    style="@style/InputSquareStyle" />
+
+                <EditText
+                    android:id="@+id/tenth_input_edit_text"
+                    style="@style/InputSquareStyle" />
+
+                <EditText
+                    android:id="@+id/eleventh_input_edit_text"
+                    style="@style/InputSquareStyle" />
+
+                <EditText
+                    android:id="@+id/twelvth_input_edit_text"
+                    style="@style/InputSquareStyle" />
+
+                <EditText
+                    android:id="@+id/thertenth_input_edit_text"
+                    style="@style/InputSquareStyle" />
+
+                <EditText
+                    android:id="@+id/forteenth_input_edit_text"
+                    style="@style/InputSquareStyle" />
+
+                <EditText
+                    android:id="@+id/fifteenth_input_edit_text"
+                    style="@style/InputSquareStyle" />
+            </LinearLayout>
+        </HorizontalScrollView>
+    </LinearLayout>
+</android.support.v7.widget.CardView>

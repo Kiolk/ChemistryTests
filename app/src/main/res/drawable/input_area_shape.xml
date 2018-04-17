@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="@color/SQUER_COLOR"/>
+    <corners android:radius="@dimen/SQUARE_RADIUS"/>
+    <padding android:right="@dimen/INPUT_PADDING"
+        android:left="@dimen/INPUT_PADDING"
+        android:bottom="@dimen/INPUT_PADDING"
+        android:top="@dimen/INPUT_PADDING"/>
+</shape>
