@@ -50,15 +50,22 @@ class QuestionFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater?.inflate(R.layout.fragment_question, null)
+        var input : String = ""
         if (view != null) {
+            val inputText =  view.findViewById<TextView>(R.id.question_text_view)
             setFormattedText(view.findViewById(R.id.question_text_view), mQuestion.questionEn, mQuestion.photoUrl)
-            view.findViewById<TextView>(R.id.question_text_view).setOnClickListener(photoListener)
+            inputText.setOnClickListener(photoListener)
+
 
             if (mQuestion.questionType == INPUT_CHOICE) {
                 view.findViewById<LinearLayout>(R.id.open_input_linear_layout)?.visibility = View.VISIBLE
                 view.findViewById<EditText>(R.id.input_answer_edit_text).addTextChangedListener(object : TextWatcher {
                     override fun afterTextChanged(s: Editable?) {
-
+                        if(inputText.text.toString() != "" && input != s?.toString()) {
+                            s?.let{input = it.toString()}
+                            val act = activity as TestingActivity
+                            act.listener.onResult(Answer(mQuestion, mutableListOf(), s?.toString()))
+                        }
                     }
 
                     override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -66,8 +73,11 @@ class QuestionFragment : Fragment() {
                     }
 
                     override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                        val act = activity as TestingActivity
-                        act.listener.onResult(Answer(mQuestion, mutableListOf(), s?.toString()))
+//                        if(inputText.text.toString() != "" && input == s?.toString()) {
+//                            s?.let{input = it.toString()}
+//                            val act = activity as TestingActivity
+//                            act.listener.onResult(Answer(mQuestion, mutableListOf(), s?.toString()))
+//                        }
                     }
                 })
                 return view
@@ -357,6 +367,9 @@ class QuestionFragment : Fragment() {
             var isTrueLostFocus = true
             override fun onFocusChange(v: View?, hasFocus: Boolean) {
                 if (hasFocus) {
+                    if(isFirst){
+                        return
+                    }
                     if (current.text.toString() == "" && before.text.toString() == "") {
                         current.isFocusable = false
                         before.isFocusable = true
@@ -374,5 +387,18 @@ class QuestionFragment : Fragment() {
         return listener
     }
 
-//    fun getTextChangeListener
+    fun getTextChangeListener(before : EditText, current : EditText, after : EditText, isFirst : Boolean = false,
+                              isLast : Boolean = false) : TextWatcher{
+        return object : TextWatcher{
+            override fun afterTextChanged(s: Editable?) {
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+
+            }
+        }
+    }
 }

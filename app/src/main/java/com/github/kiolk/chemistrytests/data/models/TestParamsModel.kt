@@ -12,4 +12,5 @@ class TestParams(var order : Int = DIRECT_ORDER,
                  var testType : Int = TRAINING_TEST,
                  var numberOfQuestions : Int = ALL_QUESTION,
                  var isRandomOption : Boolean = false,
-                 var direction : Int = FREE_TEST)
+                 var direction : Int = FREE_TEST,
+                 var tags : List<String> = mutableListOf())

@@ -1,10 +1,14 @@
 package com.github.kiolk.chemistrytests.ui
 
+import android.app.Activity
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
 import com.firebase.ui.auth.AuthUI
 import com.github.kiolk.chemistrytests.R
 import com.github.kiolk.chemistrytests.data.models.CloseQuestion
@@ -21,6 +25,8 @@ import kiolk.com.github.pen.utils.PenConstantsUtil
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.card_close_question.*
 
+val RC_SIGN_IN : Int = 1
+
 class MainActivity : AppCompatActivity() {
 
     lateinit var mAuthentication: FirebaseAuth
@@ -34,43 +40,27 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         initImageLoader()
         setContentView(R.layout.activity_main)
+        setSupportActionBar(main_tool_bar)
+        main_drawer_layout.setStatusBarBackground(R.color.fui_transparent)
         FirebaseMessaging.getInstance()
         mAuthentication = FirebaseAuth.getInstance()
         mFirebaseDatabase = FirebaseDatabase.getInstance()
         mDatabaseReference = mFirebaseDatabase.getReference().child("monts")
-        mChaildEventListener = object : ChildEventListener{
-            override fun onCancelled(p0: DatabaseError?) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-            }
 
-            override fun onChildMoved(p0: DataSnapshot?, p1: String?) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-            }
-
-            override fun onChildChanged(p0: DataSnapshot?, p1: String?) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-            }
-
-            override fun onChildAdded(p0: DataSnapshot?, p1: String?) {
-//                val  question = p0?.getValue<CloseQuestion>(CloseQuestion::class.java)
-//                Log.d("MyLogs", question.toString())
-            }
-
-            override fun onChildRemoved(p0: DataSnapshot?) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-            }
-        }
         mAuthenticationListener = object : FirebaseAuth.AuthStateListener{
             override fun onAuthStateChanged(p0: FirebaseAuth) {
                 val firebaseUser : FirebaseUser? = p0.currentUser
                 if (firebaseUser != null){
-
+                    Toast.makeText(baseContext,
+                            resources.getString(R.string.SUCCES_LOGGIN),
+                            Toast.LENGTH_LONG)
+                            .show()
                 }else{
                     startActivityForResult(AuthUI.getInstance().
                     createSignInIntentBuilder().
                     setIsSmartLockEnabled(false).
                     setAvailableProviders(mProviders).
-                            build(), 1)
+                            build(), RC_SIGN_IN)
 
                 }
             }
@@ -100,9 +90,9 @@ class MainActivity : AppCompatActivity() {
 //            }
 //        })
 
-        setFormattedText(question_text_view, "X^2^^<br> drawable <br> H_2__SO_4__", "http://teacher-chem.ru/wp-content/uploads/2014/12/olimp-11.jpg")
+//        setFormattedText(question_text_view, "X^2^^<br> drawable <br> H_2__SO_4__", "http://teacher-chem.ru/wp-content/uploads/2014/12/olimp-11.jpg")
         testing_activity_button.setOnClickListener{view : View ->
-            val question = CloseQuestion(1, "How many months in year?", null, 1, SINGLE_CHOICE,
+            val question = CloseQuestion(1, "How many months in year?", null,  SINGLE_CHOICE,
                     listOf("Year", "Month", "Days"),
                     1.0F,
                     "en",
@@ -112,23 +102,38 @@ class MainActivity : AppCompatActivity() {
                             Option("11", null),
                             Option("12", null)),
                     listOf(1))
-//            mDatabaseReference.child("4").setValue(question)
+            mDatabaseReference.child(question.questionId.toString()).setValue(question)
             val intent = Intent(this, TestingActivity::class.java)
             startActivity(intent)
         }
 //        mDatabaseReference.addChildEventListener(mChaildEventListener)
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+         menuInflater.inflate(R.menu.menu_main, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when (item?.itemId){
+            R.id.sign_out_menu_item ->{
+                AuthUI.getInstance().signOut(baseContext)
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
     override fun onResume() {
         super.onResume()
         mAuthentication.addAuthStateListener(mAuthenticationListener)
-        mDatabaseReference.addChildEventListener(mChaildEventListener)
+//        mDatabaseReference.addChildEventListener(mChaildEventListener)
     }
 
     override fun onPause() {
         super.onPause()
         mAuthentication.removeAuthStateListener(mAuthenticationListener)
-        mDatabaseReference.removeEventListener(mChaildEventListener)
+//        mDatabaseReference.removeEventListener(mChaildEventListener)
     }
 
     private fun initImageLoader() {
@@ -139,5 +144,20 @@ class MainActivity : AppCompatActivity() {
                 setSavingStrategy(PenConstantsUtil.SAVE_FULL_IMAGE_STRATEGY).
                 setUp()
 
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(requestCode == RC_SIGN_IN){
+            if(resultCode == Activity.RESULT_OK){
+                Toast.makeText(baseContext,
+                        resources.getString(R.string.SUCCES_LOGGIN),
+                        Toast.LENGTH_LONG)
+                        .show()
+            } else if(resultCode == Activity.RESULT_CANCELED){
+                finish()
+            }
+
+        }
     }
 }

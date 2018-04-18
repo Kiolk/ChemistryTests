@@ -163,7 +163,8 @@
                 <EditText
                     android:id="@+id/input_answer_edit_text"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:focusedByDefault="false"/>
             </LinearLayout>
 
 
@@ -279,6 +280,7 @@
                     android:id="@+id/box_five_linear_layout"
                     android:layout_width="0dp"
                     android:visibility="gone"
+
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:orientation="vertical">

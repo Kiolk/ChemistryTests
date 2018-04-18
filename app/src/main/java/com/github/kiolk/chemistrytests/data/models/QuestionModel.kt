@@ -26,15 +26,14 @@ interface Question {
 class CloseQuestion(var questionId: Int,
                     var questionEn: String = "",
                     var photoUrl: String? = null,
-                    var answerNumber: Int = 1,
                     var questionType: Int = Question.SINGLE_CHOICE,
                     var tags: List<String>? = null,
                     var questionCost: Float = 1.0F,
                     var language: String = "ru",
                     var questionOptions: List<Option> = mutableListOf(),
-                    var correctOptions : List<Int> = mutableListOf()) : Question, Serializable {
+                    var correctOptions : List<Int> = mutableListOf()) : Serializable {
 
-    lateinit var correctAnswers : List<Option>
+     var correctAnswers : List<Option>
 
     object Question {
         val SINGLE_CHOICE: Int = 0
@@ -45,10 +44,6 @@ class CloseQuestion(var questionId: Int,
     init {
         correctAnswers = getAnswers()
     }
-
-    private var answer = getOptions()[answerNumber - 1]
-
-    fun getAnswer() = answer
 
     private fun getAnswers() : List<Option>{
         val list = mutableListOf<Option>()
@@ -69,9 +64,6 @@ class CloseQuestion(var questionId: Int,
     fun checkOpenQuestionAnswers(userString : String?) : Boolean{
          return correctAnswers[0].text.toUpperCase() == userString?.toUpperCase()
     }
-
-    override fun checkAnswer(userAnswer: Option) = userAnswer.text == answer.text && userAnswer.optionPhotoUtl == answer.optionPhotoUtl
-
 
     fun getOptions() = questionOptions
 

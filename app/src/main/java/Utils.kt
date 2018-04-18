@@ -19,14 +19,14 @@ fun getTrainingTets() : Test{
     while (cnt < 10){
 
     val question : CloseQuestion = CloseQuestion(cnt, "X^2^^<br> drawable <br> H_2__SO_4__$cnt?", "http://teacher-chem.ru/wp-content/uploads/2014/12/olimp-11.jpg",
-            4,
+
             SINGLE_CHOICE, null, 1.0F, "ru", mutableListOf( Option("6 drawable", "http://images.myshared.ru/5/327874/slide_7.jpg"),
             Option("10 drawable", "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Aptiganel.svg/1200px-Aptiganel.svg.png"),
             Option("11 drawable", "http://images.myshared.ru/5/327874/slide_7.jpg"),
             Option("12 drawable", "http://images.myshared.ru/5/327874/slide_7.jpg")),
             listOf(4))
         val question2 : CloseQuestion = CloseQuestion(cnt, "X^2^^<br> drawable <br> H_2__SO_4__$cnt?", "http://teacher-chem.ru/wp-content/uploads/2014/12/olimp-11.jpg",
-                4,
+
                 MULTIPLE_CHOICE, null, 1.0F, "ru", mutableListOf( Option("6 drawable", "http://images.myshared.ru/5/327874/slide_7.jpg"),
                 Option("10 drawable", "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Aptiganel.svg/1200px-Aptiganel.svg.png"),
                 Option("7 drawable", "http://images.myshared.ru/5/327874/slide_7.jpg"),
@@ -34,7 +34,7 @@ fun getTrainingTets() : Test{
                 Option("12 drawable", "http://images.myshared.ru/5/327874/slide_7.jpg")),
                 listOf(3, 4))
         val question3 : CloseQuestion = CloseQuestion(cnt, "What equal 2 + $cnt?", null,
-                1,
+
                 INPUT_CHOICE, null, 1.0F, "ru", mutableListOf( Option("${2+cnt}", null)),
                 listOf(1))
         cnt ++

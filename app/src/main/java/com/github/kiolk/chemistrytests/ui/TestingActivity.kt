@@ -3,6 +3,7 @@ package com.github.kiolk.chemistrytests.ui
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.webkit.WebView
@@ -12,10 +13,10 @@ import com.github.kiolk.chemistrytests.data.CheckResultListener
 import com.github.kiolk.chemistrytests.data.TestingPagerAdapter
 import com.github.kiolk.chemistrytests.data.fragments.ResultFragment
 import com.github.kiolk.chemistrytests.data.models.Answer
+import com.github.kiolk.chemistrytests.data.models.CloseQuestion
 import com.github.kiolk.chemistrytests.data.models.OnEndTestListener
 import com.github.kiolk.chemistrytests.data.models.Result
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.*
 import getTrainingTets
 import kiolk.com.github.pen.utils.MD5Util
 import kotlinx.android.synthetic.main.activity_testing.*
@@ -26,10 +27,38 @@ class TestingActivity : AppCompatActivity() {
     var mResultFragment = ResultFragment()
     lateinit var mResult: Result
     lateinit var adapter: TestingPagerAdapter
+    lateinit var mFirebaseDatabase : FirebaseDatabase
+    lateinit var mDatabaseReference : DatabaseReference
+    lateinit var mChaildEventListener : ChildEventListener
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_testing)
+        mFirebaseDatabase = FirebaseDatabase.getInstance()
+        mDatabaseReference = mFirebaseDatabase.getReference().child("monts")
+        mChaildEventListener = object : ChildEventListener {
+            override fun onCancelled(p0: DatabaseError?) {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+
+            override fun onChildMoved(p0: DataSnapshot?, p1: String?) {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+
+            override fun onChildChanged(p0: DataSnapshot?, p1: String?) {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+
+            override fun onChildAdded(p0: DataSnapshot?, p1: String?) {
+//                val  question = p0?.getValue<CloseQuestion>(CloseQuestion::class.java)
+//                Log.d("MyLogs", question.toString())
+            }
+
+            override fun onChildRemoved(p0: DataSnapshot?) {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+        }
+
         val test = getTrainingTets()
         mResult = Result(test, object : OnEndTestListener {
             override fun endedTest() {
@@ -75,6 +104,16 @@ class TestingActivity : AppCompatActivity() {
             return
         }
         super.onBackPressed()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mDatabaseReference.addChildEventListener(mChaildEventListener)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        mDatabaseReference.removeEventListener(mChaildEventListener)
     }
 
     fun showFragment(container: Int, fragment: Fragment) {
