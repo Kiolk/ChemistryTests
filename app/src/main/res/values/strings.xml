@@ -7,4 +7,5 @@
     <string name="FIVE">5</string>
     <string name="SUCCES_LOGGIN">Succes loggin</string>
     <string name="SIGN_OUT">Sign out</string>
+    <string name="CHOSE_TEST">CHOSE TEST</string>
 </resources>

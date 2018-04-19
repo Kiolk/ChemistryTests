@@ -23,7 +23,7 @@ interface Question {
 
 }
 
-class CloseQuestion(var questionId: Int,
+class CloseQuestion(var questionId: Int = 1,
                     var questionEn: String = "",
                     var photoUrl: String? = null,
                     var questionType: Int = Question.SINGLE_CHOICE,
@@ -31,7 +31,8 @@ class CloseQuestion(var questionId: Int,
                     var questionCost: Float = 1.0F,
                     var language: String = "ru",
                     var questionOptions: List<Option> = mutableListOf(),
-                    var correctOptions : List<Int> = mutableListOf()) : Serializable {
+                    var correctOptions : List<Int> = mutableListOf(),
+                    var questionStrength : Int = Question.EASY_QUESTION) : Serializable {
 
      var correctAnswers : List<Option>
 
@@ -39,6 +40,11 @@ class CloseQuestion(var questionId: Int,
         val SINGLE_CHOICE: Int = 0
         val MULTIPLE_CHOICE: Int = 1
         val INPUT_CHOICE : Int = 2
+        val EASY_QUESTION : Int = 1
+        val SIMPLE_QUESTION : Int = 2
+        val NORMAL_QUESTION : Int = 3
+        val COMPLEX_QUESTION : Int = 4
+        val HARD_QUESTION : Int = 5
     }
 
     init {

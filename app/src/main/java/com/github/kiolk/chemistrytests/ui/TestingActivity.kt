@@ -12,16 +12,17 @@ import com.github.kiolk.chemistrytests.R
 import com.github.kiolk.chemistrytests.data.CheckResultListener
 import com.github.kiolk.chemistrytests.data.TestingPagerAdapter
 import com.github.kiolk.chemistrytests.data.fragments.ResultFragment
-import com.github.kiolk.chemistrytests.data.models.Answer
-import com.github.kiolk.chemistrytests.data.models.CloseQuestion
-import com.github.kiolk.chemistrytests.data.models.OnEndTestListener
-import com.github.kiolk.chemistrytests.data.models.Result
+import com.github.kiolk.chemistrytests.data.models.*
 import com.google.firebase.database.*
 import getTrainingTets
 import kiolk.com.github.pen.utils.MD5Util
 import kotlinx.android.synthetic.main.activity_testing.*
 
+val QUESTIONS_CHILDS : String = "Questions"
+
 class TestingActivity : AppCompatActivity() {
+
+
 
     lateinit var listener: CheckResultListener
     var mResultFragment = ResultFragment()
@@ -30,12 +31,15 @@ class TestingActivity : AppCompatActivity() {
     lateinit var mFirebaseDatabase : FirebaseDatabase
     lateinit var mDatabaseReference : DatabaseReference
     lateinit var mChaildEventListener : ChildEventListener
+   lateinit var mParams : TestParams
+    var mQuestions : MutableList<CloseQuestion> = mutableListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_testing)
+        mParams = intent.extras.get(TEST_PARAM_INT) as TestParams
         mFirebaseDatabase = FirebaseDatabase.getInstance()
-        mDatabaseReference = mFirebaseDatabase.getReference().child("monts")
+        mDatabaseReference = mFirebaseDatabase.getReference().child(QUESTIONS_CHILDS)
         mChaildEventListener = object : ChildEventListener {
             override fun onCancelled(p0: DatabaseError?) {
                 TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
@@ -50,46 +54,19 @@ class TestingActivity : AppCompatActivity() {
             }
 
             override fun onChildAdded(p0: DataSnapshot?, p1: String?) {
-//                val  question = p0?.getValue<CloseQuestion>(CloseQuestion::class.java)
-//                Log.d("MyLogs", question.toString())
+                val  question = p0?.getValue(CloseQuestion::class.java)
+                question?.let { mQuestions.add(it) }
+                Log.d("MyLogs", question.toString())
+                if (mQuestions.size == 10){
+                    setupTestingViewPAger()
+                }
             }
 
             override fun onChildRemoved(p0: DataSnapshot?) {
                 TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
             }
         }
-
-        val test = getTrainingTets()
-        mResult = Result(test, object : OnEndTestListener {
-            override fun endedTest() {
-                result_frame_layout.visibility = View.VISIBLE
-                showFragment(R.id.result_frame_layout, mResultFragment)
-                mResultFragment.showResult(mResult)
-            }
-        })
-        adapter = TestingPagerAdapter(supportFragmentManager, test)
-        listener = object : CheckResultListener {
-
-            override fun onResult(answer: Answer) {
-                if(answer.userInput != null){
-                    mResult.takeAnswer(answer)
-                    Toast.makeText(baseContext, "Correct Answer! ${mResult.points.toString()}", Toast.LENGTH_LONG).show()
-                return
-                }
-
-                if (answer.question.checkCorrectAnswersByNumbers(answer.userAnswers)) {
-                    mResult.takeAnswer(answer)
-                    Toast.makeText(baseContext, "Correct Answer! ${mResult.points.toString()}", Toast.LENGTH_LONG).show()
-
-                } else {
-                    mResult.takeAnswer(answer)
-                    Toast.makeText(baseContext, "Wrong Answer! ${mResult.points.toString()}", Toast.LENGTH_LONG).show()
-                }
-            }
-        }
-        testing_view_pager.adapter = adapter
-        questions_tab_layout.setupWithViewPager(testing_view_pager)
-        testing_view_pager.setOnTouchListener { v, event -> false }
+        mDatabaseReference.addChildEventListener(mChaildEventListener)
     }
 
     override fun onBackPressed() {
@@ -116,9 +93,44 @@ class TestingActivity : AppCompatActivity() {
         mDatabaseReference.removeEventListener(mChaildEventListener)
     }
 
+    private fun setupTestingViewPAger(){
+
+//        val test = getTrainingTets()
+        val test = Test(mQuestions, mParams)
+        mResult = Result(test, object : OnEndTestListener {
+            override fun endedTest() {
+                result_frame_layout.visibility = View.VISIBLE
+                showFragment(R.id.result_frame_layout, mResultFragment)
+                mResultFragment.showResult(mResult)
+            }
+        })
+        adapter = TestingPagerAdapter(supportFragmentManager, test)
+        listener = object : CheckResultListener {
+
+            override fun onResult(answer: Answer) {
+                if(answer.userInput != null){
+                    mResult.takeAnswer(answer)
+                    Toast.makeText(baseContext, "Correct Answer! ${mResult.points.toString()}", Toast.LENGTH_LONG).show()
+                    return
+                }
+
+                if (answer.question.checkCorrectAnswersByNumbers(answer.userAnswers)) {
+                    mResult.takeAnswer(answer)
+                    Toast.makeText(baseContext, "Correct Answer! ${mResult.points.toString()}", Toast.LENGTH_LONG).show()
+
+                } else {
+                    mResult.takeAnswer(answer)
+                    Toast.makeText(baseContext, "Wrong Answer! ${mResult.points.toString()}", Toast.LENGTH_LONG).show()
+                }
+            }
+        }
+        testing_view_pager.adapter = adapter
+        questions_tab_layout.setupWithViewPager(testing_view_pager)
+    }
+
     fun showFragment(container: Int, fragment: Fragment) {
         val transaction = supportFragmentManager.beginTransaction()
-        transaction.add(container, fragment)
+        transaction.replace(container, fragment)
         transaction.commit()
         supportFragmentManager.executePendingTransactions()
     }

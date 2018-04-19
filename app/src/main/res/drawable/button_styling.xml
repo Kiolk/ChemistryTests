@@ -9,7 +9,6 @@
             <stroke android:color="@color/colorAccent"
                 android:width="5dp"/>
             <corners android:radius="@dimen/MAX_RADIUS"/>
-            <solid android:color="@color/fui_transparent"/>
             <solid android:color="@color/colorAccent"/>
         </shape>
     </item>

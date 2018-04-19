@@ -19,14 +19,29 @@
             android:minHeight="?attr/actionBarSize"
             android:background="?attr/colorPrimary"/>
         <Button
-            android:text="Start test"
-            android:textSize="48sp"
+            android:text="@string/CHOSE_TEST"
+            android:textSize="32sp"
             android:layout_centerInParent="true"
-            android:layout_margin="@dimen/INPUT_PADDING"
+            android:layout_below="@+id/testing_activity_button"
+            android:id="@+id/chose_ready_test_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_styling"/>
+        <Button
+            android:text="Start test"
+            android:textSize="32sp"
+            android:layout_centerInParent="true"
             android:id="@+id/testing_activity_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/button_styling"/>
+        <FrameLayout
+            android:id="@+id/main_frame_layout"
+            android:layout_below="@+id/main_tool_bar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone">
+        </FrameLayout>
     </RelativeLayout>
     <android.support.design.widget.NavigationView
         android:id="@+id/navigation_relative_layout"
