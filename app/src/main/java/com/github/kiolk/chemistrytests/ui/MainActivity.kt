@@ -14,6 +14,7 @@ import closeFragment
 import com.firebase.ui.auth.AuthUI
 import com.github.kiolk.chemistrytests.R
 import com.github.kiolk.chemistrytests.data.fragments.AvaliableFragments
+import com.github.kiolk.chemistrytests.data.fragments.AvaliableTestFragment
 import com.github.kiolk.chemistrytests.data.models.*
 import com.github.kiolk.chemistrytests.data.models.CloseQuestion.Question.EASY_QUESTION
 import com.github.kiolk.chemistrytests.data.models.CloseQuestion.Question.SINGLE_CHOICE
@@ -40,6 +41,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var mDatabaseReference: DatabaseReference
     lateinit var mChaildEventListener: ChildEventListener
     lateinit var mAvaliableTests: AvaliableFragments
+    lateinit var mAvailableTests : AvaliableTestFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,6 +51,7 @@ class MainActivity : AppCompatActivity() {
         main_drawer_layout.setStatusBarBackground(R.color.fui_transparent)
         FirebaseMessaging.getInstance()
         mAvaliableTests = AvaliableFragments()
+        mAvailableTests = AvaliableTestFragment()
         mAuthentication = FirebaseAuth.getInstance()
         mFirebaseDatabase = FirebaseDatabase.getInstance()
 //        mDatabaseReference = mFirebaseDatabase.getReference().child(TESTS_CHILD)
@@ -117,7 +120,8 @@ class MainActivity : AppCompatActivity() {
         chose_ready_test_button.setOnClickListener { view: View ->
             if (main_frame_layout.visibility != View.VISIBLE) {
                 main_frame_layout.visibility = View.VISIBLE
-                showFragment(supportFragmentManager, R.id.main_frame_layout, mAvaliableTests)
+//                showFragment(supportFragmentManager, R.id.main_frame_layout, mAvaliableTests)
+                showFragment(supportFragmentManager, R.id.main_frame_layout, mAvailableTests)
             }
         }
 //        mDatabaseReference.addChildEventListener(mChaildEventListener)
@@ -178,9 +182,10 @@ class MainActivity : AppCompatActivity() {
     override fun onBackPressed() {
         if (main_frame_layout.visibility == View.VISIBLE) {
             main_frame_layout.visibility = View.GONE
-            closeFragment(supportFragmentManager, mAvaliableTests)
+            closeFragment(supportFragmentManager, mAvailableTests)
+        }else {
+            super.onBackPressed()
         }
-        super.onBackPressed()
     }
 //
 //   private  fun showFragment(container: Int, fragment: Fragment) {

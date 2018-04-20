@@ -55,8 +55,8 @@ class TestingActivity : AppCompatActivity() {
                 var questionsList = mutableListOf<CloseQuestion>()
                 question?.let { questionsList.add(it) }
                 question?.let { mQuestions.add(it) }
-                Log.d("MyLogs", question.toString())
-                if (mQuestions.size == 10){
+                Log.d("MyLogs", question?.questionId?.toString())
+                if (mQuestions.size == 20){
                     questionsList = mQuestions
                     setupTestingViewPAger(questionsList)
                 }
@@ -85,7 +85,7 @@ class TestingActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        mDatabaseReference.addChildEventListener(mChaildEventListener)
+//        mDatabaseReference.addChildEventListener(mChaildEventListener)
     }
 
     override fun onPause() {
