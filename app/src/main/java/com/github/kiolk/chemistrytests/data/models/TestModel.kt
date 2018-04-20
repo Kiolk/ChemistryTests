@@ -8,19 +8,26 @@ class Test(var questions: List<CloseQuestion>,
 
     //    var questionNumber = -1
     var resultingScore = 0F
-    var allQuestions: List<CloseQuestion>
+    //    var allQuestions: List<CloseQuestion>
+    var mSortedQuestions: List<CloseQuestion>
+//    var mSortedQuestions2: List<CloseQuestion>
+//    var filteredQuestions : Int
+
 
     init {
-        allQuestions = questions
+//        allQuestions = questions
+//        mSortedQuestions2 = mutableListOf()
+        mSortedQuestions = questions
         checkRandomisation()
-        checkOrder()
         checkQuestionType()
         checkTags()
+        checkOrder()
+//        filteredQuestions =mSortedQuestions.size
     }
 
     private fun checkRandomisation() {
         if (params.isRandomOption) {
-            questions.forEach {
+            mSortedQuestions.forEach {
                 it.randomizedOptions()
             }
         }
@@ -28,26 +35,34 @@ class Test(var questions: List<CloseQuestion>,
 
     private fun checkOrder() {
         if (params.order == RANDOM_ORDER) {
-            if (params.numberOfQuestions != ALL_QUESTION && questions.size >= params.numberOfQuestions) {
-                questions = randomSort(questions).subList(0, params.numberOfQuestions)
+            if (params.numberOfQuestions != ALL_QUESTION && mSortedQuestions.size >= params.numberOfQuestions) {
+                mSortedQuestions = randomSort(mSortedQuestions).subList(0, params.numberOfQuestions)
             } else {
-                questions = randomSort(questions)
+                mSortedQuestions = randomSort(mSortedQuestions)
             }
         } else {
-            if (params.numberOfQuestions != ALL_QUESTION && questions.size >= params.numberOfQuestions) {
-                questions = questions.subList(0, params.numberOfQuestions)
+            if (params.numberOfQuestions != ALL_QUESTION && mSortedQuestions.size >= params.numberOfQuestions) {
+                mSortedQuestions = mSortedQuestions.subList(0, params.numberOfQuestions)
             }
         }
     }
 
     private fun checkTags() {
-        if(params.tags.isNotEmpty()){
+        if (params.tags.isNotEmpty()) {
             val tmpQuestionList = mutableListOf<CloseQuestion>()
             params.tags.forEach {
-                val tag= it
-                tmpQuestionList.addAll(questions.filter { it.tags?.contains(tag) == true })
+                val tag = it
+                val filtered = mSortedQuestions.filter { it.tags?.contains(tag) == true }
+                filtered.forEach {
+                    if (!tmpQuestionList.contains(it)) {
+                        tmpQuestionList.add(it)
+                    }
+                }
+//                tmpQuestionList.addAll(mSortedQuestions.filter { it.tags?.contains(tag) == true })
+//                tmpQuestionList.toList()
             }
-            questions = tmpQuestionList
+            mSortedQuestions = tmpQuestionList
+//            mSortedQuestions2 = tmpQuestionList
         }
     }
 
@@ -56,13 +71,13 @@ class Test(var questions: List<CloseQuestion>,
             val tmpQuestionList = mutableListOf<CloseQuestion>()
             params.questionTypes.forEach {
                 val type = it
-                tmpQuestionList.addAll(questions.filter { it.questionType == type })
+                tmpQuestionList.addAll(mSortedQuestions.filter { it.questionType == type })
             }
-            questions = tmpQuestionList
+            mSortedQuestions = tmpQuestionList
         }
     }
 
-    fun getQuestion(questionNumber: Int) = questions[questionNumber]
+    fun getQuestion(questionNumber: Int) = mSortedQuestions[questionNumber]
 
 //    fun getNext(): Question {
 //        if (!isStartTest) {

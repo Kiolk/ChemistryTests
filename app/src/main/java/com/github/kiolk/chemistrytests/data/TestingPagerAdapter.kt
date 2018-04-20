@@ -2,6 +2,7 @@ package com.github.kiolk.chemistrytests.data
 
 import android.support.v4.app.FragmentStatePagerAdapter
 import com.github.kiolk.chemistrytests.data.fragments.QuestionFragment
+import com.github.kiolk.chemistrytests.data.models.ALL_QUESTION
 import com.github.kiolk.chemistrytests.data.models.Answer
 import com.github.kiolk.chemistrytests.data.models.Test
 import java.io.Serializable
@@ -21,7 +22,12 @@ class TestingPagerAdapter(fm : android.support.v4.app.FragmentManager,var test :
     }
 
     override fun getCount(): Int {
-        return test.questions.size
+        if(test.params.numberOfQuestions == ALL_QUESTION) {
+            return test.mSortedQuestions.size
+        }else {
+
+            return test.mSortedQuestions.size
+        }
     }
 
     override fun getPageTitle(position: Int): CharSequence {

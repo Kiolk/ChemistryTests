@@ -36,7 +36,7 @@ class Result(var test: Test, var endListener: OnEndTestListener) {
         return result
     }
 
-    fun isLastTestQuestion() = askedQuestions.size == test.questions.size
+    fun isLastTestQuestion() = askedQuestions.size == test.mSortedQuestions.size
 
 }
 

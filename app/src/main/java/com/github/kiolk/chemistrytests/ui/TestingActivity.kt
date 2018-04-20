@@ -4,9 +4,7 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
-import android.view.MotionEvent
 import android.view.View
-import android.webkit.WebView
 import android.widget.Toast
 import com.github.kiolk.chemistrytests.R
 import com.github.kiolk.chemistrytests.data.CheckResultListener
@@ -14,7 +12,6 @@ import com.github.kiolk.chemistrytests.data.TestingPagerAdapter
 import com.github.kiolk.chemistrytests.data.fragments.ResultFragment
 import com.github.kiolk.chemistrytests.data.models.*
 import com.google.firebase.database.*
-import getTrainingTets
 import kiolk.com.github.pen.utils.MD5Util
 import kotlinx.android.synthetic.main.activity_testing.*
 
@@ -55,10 +52,13 @@ class TestingActivity : AppCompatActivity() {
 
             override fun onChildAdded(p0: DataSnapshot?, p1: String?) {
                 val  question = p0?.getValue(CloseQuestion::class.java)
+                var questionsList = mutableListOf<CloseQuestion>()
+                question?.let { questionsList.add(it) }
                 question?.let { mQuestions.add(it) }
                 Log.d("MyLogs", question.toString())
                 if (mQuestions.size == 10){
-                    setupTestingViewPAger()
+                    questionsList = mQuestions
+                    setupTestingViewPAger(questionsList)
                 }
             }
 
@@ -93,10 +93,11 @@ class TestingActivity : AppCompatActivity() {
         mDatabaseReference.removeEventListener(mChaildEventListener)
     }
 
-    private fun setupTestingViewPAger(){
+    private fun setupTestingViewPAger(questionsList: MutableList<CloseQuestion>) {
 
 //        val test = getTrainingTets()
-        val test = Test(mQuestions, mParams)
+        val test = Test(questionsList, mParams)
+
         mResult = Result(test, object : OnEndTestListener {
             override fun endedTest() {
                 result_frame_layout.visibility = View.VISIBLE
