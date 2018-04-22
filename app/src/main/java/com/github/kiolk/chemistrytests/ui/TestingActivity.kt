@@ -11,6 +11,7 @@ import android.widget.Toast
 import com.github.kiolk.chemistrytests.R
 import com.github.kiolk.chemistrytests.data.CheckResultListener
 import com.github.kiolk.chemistrytests.data.TestingPagerAdapter
+import com.github.kiolk.chemistrytests.data.fragments.HintFragment
 import com.github.kiolk.chemistrytests.data.fragments.ResultFragment
 import com.github.kiolk.chemistrytests.data.models.*
 import com.google.firebase.database.*
@@ -25,6 +26,7 @@ class TestingActivity : AppCompatActivity() {
 
     lateinit var listener: CheckResultListener
     var mResultFragment = ResultFragment()
+    var mHintFragment = HintFragment()
     lateinit var mResult: Result
     lateinit var adapter: TestingPagerAdapter
     lateinit var mFirebaseDatabase : FirebaseDatabase
@@ -61,6 +63,7 @@ class TestingActivity : AppCompatActivity() {
                 if (mQuestions.size == 30){
                     questionsList = mQuestions
                     setupTestingViewPAger(questionsList)
+                    setupBottomBar()
                 }
             }
 
@@ -86,6 +89,7 @@ class TestingActivity : AppCompatActivity() {
     override fun onBackPressed() {
         if (result_frame_layout.visibility == View.VISIBLE) {
             closeFragment(mResultFragment)
+            closeFragment(mHintFragment)
             result_frame_layout.visibility = View.GONE
             return
         }
@@ -143,9 +147,22 @@ class TestingActivity : AppCompatActivity() {
         questions_tab_layout.setupWithViewPager(testing_view_pager)
     }
 
+    private fun setupBottomBar(){
+        hint_button_image_view.setOnClickListener {
+            val position = testing_view_pager.currentItem
+            val hint : List<Hint>? = mResult.test.mSortedQuestions[position].hints
+            if(hint != null) {
+                result_frame_layout.setPadding(0, 0, 0, bottom_bar_linear_layout.height)
+                result_frame_layout.visibility = View.VISIBLE
+                showFragment(R.id.result_frame_layout, mHintFragment)
+                mHintFragment.showHint(hint)
+            }
+        }
+    }
+
     fun showFragment(container: Int, fragment: Fragment) {
         val transaction = supportFragmentManager.beginTransaction()
-        transaction.replace(container, fragment)
+        transaction.add(container, fragment)
         transaction.commit()
         supportFragmentManager.executePendingTransactions()
     }

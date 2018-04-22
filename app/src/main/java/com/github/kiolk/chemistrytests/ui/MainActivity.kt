@@ -101,7 +101,7 @@ class MainActivity : AppCompatActivity() {
 
 //        setFormattedText(question_text_view, "X^2^^<br> drawable <br> H_2__SO_4__", "http://teacher-chem.ru/wp-content/uploads/2014/12/olimp-11.jpg")
         testing_activity_button.setOnClickListener { view: View ->
-            val question = CloseQuestion(1, "Чему равен заряд иона, который содержит 10 электронов и 13 протонов?", null, SINGLE_CHOICE,
+            val question = CloseQuestion(31, "Чему равен заряд иона, который содержит 10 электронов и 13 протонов?", null, SINGLE_CHOICE,
                     listOf("Строение атома", "Ионы"),
                     1.0F,
                     "кг",
@@ -109,13 +109,13 @@ class MainActivity : AppCompatActivity() {
                             Option("+13", null),
                             Option("-10", null),
                             Option("-3", null)),
-                    listOf(1), EASY_QUESTION)
-            val testParams: TestParams = getExampleTest()
-//            val res = mFirebaseDatabase.getReference().child(QUESTIONS_CHILDS)
-//            res.child(question.questionId.toString()).setValue(question)
-            val intent = Intent(this, TestingActivity::class.java)
-            intent.putExtra(TEST_PARAM_INT, testParams)
-            startActivity(intent)
+                    listOf(1), EASY_QUESTION, listOf(Hint("Equal for sulfuric acid <br> drawable", listOf("https://upload.wikimedia.org/wikipedia/commons/8/8b/Sulfuric-acid-2D-dimensions.svg") )))
+//            val testParams: TestParams = getExampleTest()
+            val res = mFirebaseDatabase.getReference().child(QUESTIONS_CHILDS)
+            res.child(question.questionId.toString()).setValue(question)
+//            val intent = Intent(this, TestingActivity::class.java)
+//            intent.putExtra(TEST_PARAM_INT, testParams)
+//            startActivity(intent)
         }
         chose_ready_test_button.setOnClickListener { view: View ->
             if (main_frame_layout.visibility != View.VISIBLE) {
