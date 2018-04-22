@@ -7,25 +7,59 @@
     android:orientation="vertical"
     tools:context="com.github.kiolk.chemistrytests.ui.TestingActivity">
 
-    <android.support.design.widget.TabLayout
-        android:id="@+id/questions_tab_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:tabMode="scrollable">
-
-    </android.support.design.widget.TabLayout>
-    <android.support.v4.view.ViewPager
-        android:layout_below="@+id/questions_tab_layout"
-        android:id="@+id/testing_view_pager"
+    <android.support.design.widget.CoordinatorLayout
+        android:id="@+id/tab_bar_coordinate_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-    </android.support.v4.view.ViewPager>
+
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/questions_app_bar_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:expanded="false">
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/questions_tool_bar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:layout_scrollFlags="scroll|enterAlwaysCollapsed">
+
+            </android.support.v7.widget.Toolbar>
+
+        </android.support.design.widget.AppBarLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <android.support.v4.widget.NestedScrollView
+                android:id="@+id/tab_nested_scroll_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <android.support.design.widget.TabLayout
+                    android:id="@+id/questions_tab_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    app:tabMode="scrollable" />
+            </android.support.v4.widget.NestedScrollView>
+
+            <android.support.v4.view.ViewPager
+                android:layout_below="@+id/tab_nested_scroll_view"
+                android:id="@+id/testing_view_pager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </RelativeLayout>
+    </android.support.design.widget.CoordinatorLayout>
+
     <FrameLayout
         android:id="@+id/result_frame_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone">
-    </FrameLayout>
+        android:visibility="gone" />
+
     <WebView
         android:id="@+id/photo_web_view"
         android:layout_width="match_parent"
@@ -33,4 +67,13 @@
         android:layout_centerInParent="true"
         android:background="#88000000"
         android:visibility="gone" />
+    <LinearLayout
+        android:layout_alignParentBottom="true"
+        android:id="@+id/bottom_bar_linear_layout"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:visibility="gone"
+        android:background="@color/colorAccent"
+        android:orientation="horizontal" >
+    </LinearLayout>
 </RelativeLayout>

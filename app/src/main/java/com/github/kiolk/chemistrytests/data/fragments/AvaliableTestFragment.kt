@@ -26,6 +26,7 @@ class AvaliableTestFragment : Fragment(){
     lateinit var mDatabaseReference : DatabaseReference
     lateinit var mChildEventListener : ChildEventListener
     var mRecyclerAdapter : AvailableTestRecyclerAdapter? = null
+    var mIsTestStart : Boolean = false
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_avaliable_tests, null)
@@ -41,8 +42,13 @@ class AvaliableTestFragment : Fragment(){
                 val position = rv?.getChildAdapterPosition(child) ?: 0
                 val intent = Intent(context, TestingActivity::class.java)
 //                activity?.onBackPressed()
-                intent.putExtra(TEST_PARAM_INT, mTests[position])
-                startActivity(intent)
+                if(!mIsTestStart && position < mTests.size && position >= 0) {
+                    Log.d("MyLogs", "Start test by item $position")
+                    intent.putExtra(TEST_PARAM_INT, mTests[position])
+                    startActivity(intent)
+                    mIsTestStart = true
+
+                }
             }
 
             override fun onInterceptTouchEvent(rv: RecyclerView?, e: MotionEvent?): Boolean {
@@ -91,5 +97,10 @@ class AvaliableTestFragment : Fragment(){
         super.onDestroyView()
         mDatabaseReference.removeEventListener(mChildEventListener)
         mTests = mutableListOf()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if(mIsTestStart) mIsTestStart = false
     }
 }

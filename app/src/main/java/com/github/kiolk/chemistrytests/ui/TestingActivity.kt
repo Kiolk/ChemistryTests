@@ -1,6 +1,8 @@
 package com.github.kiolk.chemistrytests.ui
 
+import android.graphics.Color
 import android.os.Bundle
+import android.support.design.widget.AppBarLayout
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
@@ -56,7 +58,7 @@ class TestingActivity : AppCompatActivity() {
                 question?.let { questionsList.add(it) }
                 question?.let { mQuestions.add(it) }
                 Log.d("MyLogs", question?.questionId?.toString())
-                if (mQuestions.size == 20){
+                if (mQuestions.size == 30){
                     questionsList = mQuestions
                     setupTestingViewPAger(questionsList)
                 }
@@ -67,6 +69,18 @@ class TestingActivity : AppCompatActivity() {
             }
         }
         mDatabaseReference.addChildEventListener(mChaildEventListener)
+        questions_app_bar_layout.addOnOffsetChangedListener(object : AppBarLayout.OnOffsetChangedListener{
+            override fun onOffsetChanged(appBarLayout: AppBarLayout?, verticalOffset: Int) {
+                Log.d("MyLogs", "verticalOffset $verticalOffset")
+                if(Math.abs(verticalOffset) > questions_app_bar_layout.totalScrollRange.div(2)){
+                    questions_tool_bar.setBackgroundColor(Color.RED)
+                    bottom_bar_linear_layout.visibility = View.GONE
+                }else{
+                    questions_tool_bar.setBackgroundColor(Color.GREEN)
+                    bottom_bar_linear_layout.visibility = View.VISIBLE
+                }
+            }
+        })
     }
 
     override fun onBackPressed() {
