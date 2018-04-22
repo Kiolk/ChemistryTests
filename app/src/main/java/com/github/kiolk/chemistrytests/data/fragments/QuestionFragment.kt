@@ -16,6 +16,7 @@ import com.github.kiolk.chemistrytests.data.models.CloseQuestion.Question.MULTIP
 import com.github.kiolk.chemistrytests.data.models.CloseQuestion.Question.SINGLE_CHOICE
 import com.github.kiolk.chemistrytests.data.models.setFormattedText
 import com.github.kiolk.chemistrytests.ui.TestingActivity
+import kotlinx.android.synthetic.main.activity_testing.*
 import kotlinx.android.synthetic.main.card_close_question.view.*
 
 class QuestionFragment : Fragment() {
@@ -65,6 +66,8 @@ class QuestionFragment : Fragment() {
                             s?.let{input = it.toString()}
                             val act = activity as TestingActivity
                             act.listener.onResult(Answer(mQuestion, mutableListOf(), s?.toString()))
+                            updateIndicator(act.indicator_answered_progress_bar, act.mResult.askedQuestions.size,
+                                    act.mResult.test.mSortedQuestions.size)
                         }
                     }
 
@@ -207,6 +210,8 @@ class QuestionFragment : Fragment() {
     fun checkCorrectAnswer(answers: List<Int>) {
         val act = activity as TestingActivity
         act.listener.onResult(Answer(mQuestion, answers))
+        updateIndicator(act.indicator_answered_progress_bar, act.mResult.askedQuestions.size,
+                act.mResult.test.mSortedQuestions.size)
 //            return if (mQuestion.checkAnswer(mQuestion.questionOptions[answer])) {
 ////                Toast.makeText(view?.context, "Correct Answer!", Toast.LENGTH_LONG).show()
 //                act.listener.onResult(Answer(mQuestion, mQuestion.questionOptions[answer]))
@@ -214,6 +219,11 @@ class QuestionFragment : Fragment() {
 ////                Toast.makeText(view?.context, "Wrong Answer!", Toast.LENGTH_LONG).show()
 //                act.listener.onResult(Answer(mQuestion, mQuestion.questionOptions[answer]))
 //            }
+    }
+
+    private fun updateIndicator(progressBar: ProgressBar?, size: Int, total : Int) {
+        val percentAnswered : Int = size.times(100).div(total)
+        progressBar?.progress = percentAnswered
     }
 //        setUpClickListener()
 //        listener = View.OnClickListener { viewTarget: View ->
