@@ -34,6 +34,7 @@ import showFragment
 val RC_SIGN_IN: Int = 1
 val TEST_PARAM_INT: String = "params"
 val TESTS_CHILD : String = "tests"
+val DATA_BASE_INFO_CHAILD : String = "DBInformation"
 
 class MainActivity : AppCompatActivity() {
 
@@ -41,7 +42,9 @@ class MainActivity : AppCompatActivity() {
     lateinit var mAuthenticationListener: FirebaseAuth.AuthStateListener
     val mProviders = listOf<AuthUI.IdpConfig>(AuthUI.IdpConfig.Builder(AuthUI.EMAIL_PROVIDER).build(), AuthUI.IdpConfig.Builder(AuthUI.GOOGLE_PROVIDER).build())
     lateinit var mFirebaseDatabase: FirebaseDatabase
+    lateinit var mFirebaseDatabase2: FirebaseDatabase
     lateinit var mDatabaseReference: DatabaseReference
+//    lateinit var mDatabaseReference2: DatabaseReference
     lateinit var mChaildEventListener: ChildEventListener
     lateinit var mAvaliableTests: AvaliableFragments
     lateinit var mAvailableTests : AvaliableTestFragment
@@ -53,7 +56,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initImageLoader()
-        DBConnector.initInstance(baseContext)
         setContentView(R.layout.activity_main)
         setSupportActionBar(main_tool_bar)
         main_drawer_layout.setStatusBarBackground(R.color.fui_transparent)
@@ -61,8 +63,10 @@ class MainActivity : AppCompatActivity() {
         mAvaliableTests = AvaliableFragments()
         mAvailableTests = AvaliableTestFragment()
         mAuthentication = FirebaseAuth.getInstance()
-
-        splashScreenSetup()
+        mFirebaseDatabase = FirebaseDatabase.getInstance()
+//        splashScreenSetup()
+        upload_data_progress_bar.visibility = View.GONE
+        splash_frame_layout.visibility = View.GONE
         mAuthenticationListener = object : FirebaseAuth.AuthStateListener {
             override fun onAuthStateChanged(p0: FirebaseAuth) {
                 val firebaseUser: FirebaseUser? = p0.currentUser
@@ -118,8 +122,9 @@ class MainActivity : AppCompatActivity() {
                             Option("-3", null)),
                     listOf(1), EASY_QUESTION, listOf(Hint("Equal for sulfuric acid <br> drawable", listOf("https://upload.wikimedia.org/wikipedia/commons/8/8b/Sulfuric-acid-2D-dimensions.svg") )))
             val testParams: TestParams = getExampleTest()
-            val res = mFirebaseDatabase.getReference().child(TESTS_CHILD)
-            res.child(testParams.testId.toString()).setValue(testParams)
+            val res = mFirebaseDatabase.getReference().child(DATA_BASE_INFO_CHAILD)
+            val info = QuestionsDataBaseInfo(1, 3, 30)
+            res.child(info.version.toString()).setValue(info)
 //            val intent = Intent(this, TestingActivity::class.java)
 //            intent.putExtra(TEST_PARAM_INT, testParams)
 //            startActivity(intent)
@@ -198,7 +203,7 @@ class MainActivity : AppCompatActivity() {
                 override fun onChildRemoved(p0: DataSnapshot?) {
                 }
             }
-            mTestDataBaseReference.removeEventListener(mChildEventListener)
+            mTestDataBaseReference.addChildEventListener(mChildEventListener)
         }
     }
 

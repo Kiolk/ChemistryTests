@@ -61,7 +61,7 @@ class DBOperations {
         val readableDatabase = helper.readableDatabase
         try {
             readableDatabase.beginTransaction()
-            readableDatabase.replace(TABLE_NAME, null, contentValue)
+            val re = readableDatabase.replace(TABLE_NAME, null, contentValue)
             readableDatabase.setTransactionSuccessful()
         } catch (e: Exception) {
             e.printStackTrace()
@@ -77,7 +77,7 @@ class DBOperations {
                 null,
                 null,
                 null,
-                null).use { cursor -> this.allTestParamsFromCursor(cursor) }
+                TEST_PARAMS_ID).use { cursor -> this.allTestParamsFromCursor(cursor) }
     }
 
 
@@ -103,7 +103,7 @@ class DBOperations {
         val readableDatabase = helper.readableDatabase
         try {
             readableDatabase.beginTransaction()
-            readableDatabase.replace(TestParamsDBModel.TestParamsDB.TABLE_NAME, null, contentValue)
+            val res = readableDatabase.insert(TestParamsDBModel.TestParamsDB.TABLE_NAME, null, contentValue)
             readableDatabase.setTransactionSuccessful()
         } catch (e: Exception) {
             e.printStackTrace()
@@ -114,7 +114,7 @@ class DBOperations {
 
     private fun fromTestParams(testParams: TestParams): ContentValues {
         return ContentValues().apply {
-            put(TEST_PARAMS_ID, testParams.testId)
+            put(TEST_PARAMS_ID, testParams.testId.toLong())
             put(TEST_PARAMS_JSON, Gson().toJson(testParams))
         }
     }

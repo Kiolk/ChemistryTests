@@ -42,6 +42,10 @@ class TestingActivity : AppCompatActivity() {
         mParams = intent.extras.get(TEST_PARAM_INT) as TestParams
         mFirebaseDatabase = FirebaseDatabase.getInstance()
         mDatabaseReference = mFirebaseDatabase.getReference().child(QUESTIONS_CHILDS)
+        mQuestions = DBOperations().getAllQuestions()
+//        questionsList = mQuestions
+        setupTestingViewPAger(mQuestions)
+        setupBottomBar()
         mChaildEventListener = object : ChildEventListener {
             override fun onCancelled(p0: DatabaseError?) {
                 TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
@@ -56,17 +60,17 @@ class TestingActivity : AppCompatActivity() {
             }
 
             override fun onChildAdded(p0: DataSnapshot?, p1: String?) {
-                val  question = p0?.getValue(CloseQuestion::class.java)
-                var questionsList = mutableListOf<CloseQuestion>()
-                question?.let { questionsList.add(it) }
-//                question?.let { mQuestions.add(it) }
-                Log.d("MyLogs", question?.questionId?.toString())
-                if (question?.questionId == 30){
-                    mQuestions = DBOperations().getAllQuestions()
-                    questionsList = mQuestions
-                    setupTestingViewPAger(questionsList)
-                    setupBottomBar()
-                }
+//                val  question = p0?.getValue(CloseQuestion::class.java)
+//                var questionsList = mutableListOf<CloseQuestion>()
+//                question?.let { questionsList.add(it) }
+////                question?.let { mQuestions.add(it) }
+//                Log.d("MyLogs", question?.questionId?.toString())
+//                if (question?.questionId == 30){
+//                    mQuestions = DBOperations().getAllQuestions()
+//                    questionsList = mQuestions
+//                    setupTestingViewPAger(DBOperations().getAllQuestions())
+//                    setupBottomBar()
+//                }
             }
 
             override fun onChildRemoved(p0: DataSnapshot?) {

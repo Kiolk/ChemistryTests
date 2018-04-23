@@ -31,6 +31,7 @@ class AvaliableTestFragment : Fragment(){
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_avaliable_tests, null)
+        mTests = DBOperations().getAllTestsParams()
         mRecyclerAdapter = context?.let { AvailableTestRecyclerAdapter(it, mTests) }
         val recycler = view.findViewById<RecyclerView>(R.id.available_tests_recycler_view)
         recycler.layoutManager = LinearLayoutManager(context)
@@ -81,13 +82,13 @@ class AvaliableTestFragment : Fragment(){
             }
 
             override fun onChildAdded(p0: DataSnapshot?, p1: String?) {
-                val testParam = p0?.getValue(TestParams::class.java)
+//                val testParam = p0?.getValue(TestParams::class.java)
 //                testParam?.let { mTests.add(it) }
-                if(testParam?.testId==3) {
-                    mTests = DBOperations().getAllTestsParams()
-                    Log.d("MyLogs", testParam?.testInfo?.testTitle)
-                    mRecyclerAdapter?.notifyDataSetChanged()
-                }
+//                if(testParam?.testId==3) {
+//                    mTests = DBOperations().getAllTestsParams()
+//                    Log.d("MyLogs", testParam?.testInfo?.testTitle)
+//                    mRecyclerAdapter?.notifyDataSetChanged()
+//                }
             }
 
             override fun onChildRemoved(p0: DataSnapshot?) {
