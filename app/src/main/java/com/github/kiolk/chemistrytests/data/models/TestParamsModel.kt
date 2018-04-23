@@ -11,7 +11,8 @@ val ALL_QUESTION : Int = 0
 val FREE_TEST = 0
 val DIRECT_TEST =1
 
-class TestParams(var order : Int = DIRECT_ORDER,
+class TestParams(var testId : Int = 1,
+                 var order : Int = DIRECT_ORDER,
                  var testType : Int = TRAINING_TEST,
                  var numberOfQuestions : Int = ALL_QUESTION,
                  var isRandomOption : Boolean = false,
@@ -28,7 +29,7 @@ class TestInfo(var testTitle : String = "Test",
                var testIcon : String? = null) : Serializable
 
 fun getExampleTest() : TestParams{
-    return TestParams(RANDOM_ORDER, TRAINING_TEST, 5, true,
+    return TestParams(3, RANDOM_ORDER, TRAINING_TEST, 5, true,
             FREE_TEST, TestInfo("My first Chemistry test",
             "This test contain simple in chemistry",
             "Yauheni Slizh", 1111111111111, 1111111111111),

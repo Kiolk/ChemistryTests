@@ -10,9 +10,12 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
+import checkConnection
 import closeFragment
 import com.firebase.ui.auth.AuthUI
 import com.github.kiolk.chemistrytests.R
+import com.github.kiolk.chemistrytests.data.database.DBConnector
+import com.github.kiolk.chemistrytests.data.database.DBOperations
 import com.github.kiolk.chemistrytests.data.fragments.AvaliableFragments
 import com.github.kiolk.chemistrytests.data.fragments.AvaliableTestFragment
 import com.github.kiolk.chemistrytests.data.models.*
@@ -42,10 +45,15 @@ class MainActivity : AppCompatActivity() {
     lateinit var mChaildEventListener: ChildEventListener
     lateinit var mAvaliableTests: AvaliableFragments
     lateinit var mAvailableTests : AvaliableTestFragment
+    lateinit var mTestDataBaseReference : DatabaseReference
+    lateinit var mChildEventListener : ChildEventListener
+    var cnt = 0
+    var cnt2 = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initImageLoader()
+        DBConnector.initInstance(baseContext)
         setContentView(R.layout.activity_main)
         setSupportActionBar(main_tool_bar)
         main_drawer_layout.setStatusBarBackground(R.color.fui_transparent)
@@ -53,9 +61,8 @@ class MainActivity : AppCompatActivity() {
         mAvaliableTests = AvaliableFragments()
         mAvailableTests = AvaliableTestFragment()
         mAuthentication = FirebaseAuth.getInstance()
-        mFirebaseDatabase = FirebaseDatabase.getInstance()
-//        mDatabaseReference = mFirebaseDatabase.getReference().child(TESTS_CHILD)
 
+        splashScreenSetup()
         mAuthenticationListener = object : FirebaseAuth.AuthStateListener {
             override fun onAuthStateChanged(p0: FirebaseAuth) {
                 val firebaseUser: FirebaseUser? = p0.currentUser
@@ -110,9 +117,9 @@ class MainActivity : AppCompatActivity() {
                             Option("-10", null),
                             Option("-3", null)),
                     listOf(1), EASY_QUESTION, listOf(Hint("Equal for sulfuric acid <br> drawable", listOf("https://upload.wikimedia.org/wikipedia/commons/8/8b/Sulfuric-acid-2D-dimensions.svg") )))
-//            val testParams: TestParams = getExampleTest()
-            val res = mFirebaseDatabase.getReference().child(QUESTIONS_CHILDS)
-            res.child(question.questionId.toString()).setValue(question)
+            val testParams: TestParams = getExampleTest()
+            val res = mFirebaseDatabase.getReference().child(TESTS_CHILD)
+            res.child(testParams.testId.toString()).setValue(testParams)
 //            val intent = Intent(this, TestingActivity::class.java)
 //            intent.putExtra(TEST_PARAM_INT, testParams)
 //            startActivity(intent)
@@ -125,6 +132,74 @@ class MainActivity : AppCompatActivity() {
             }
         }
 //        mDatabaseReference.addChildEventListener(mChaildEventListener)
+    }
+
+    private fun splashScreenSetup() {
+        if(!checkConnection(baseContext)){
+            upload_data_progress_bar.visibility = View.GONE
+            splash_frame_layout.visibility = View.GONE
+            Log.d("MyLogs", "Continue work ofline")
+            Toast.makeText(baseContext, "You continue off line", Toast.LENGTH_SHORT)
+        }else {
+            mFirebaseDatabase = FirebaseDatabase.getInstance()
+            mDatabaseReference = mFirebaseDatabase.reference.child(QUESTIONS_CHILDS)
+            mChaildEventListener = object : ChildEventListener {
+                override fun onCancelled(p0: DatabaseError?) {
+                }
+
+                override fun onChildMoved(p0: DataSnapshot?, p1: String?) {
+                }
+
+                override fun onChildChanged(p0: DataSnapshot?, p1: String?) {
+                }
+
+                override fun onChildAdded(p0: DataSnapshot?, p1: String?) {
+                    val question = p0?.getValue(CloseQuestion::class.java)
+                    question?.let { DBOperations().insertQuestion(it) }
+                    cnt = cnt + 1
+                    upload_data_progress_bar.max = 30
+                    upload_data_progress_bar.progress = cnt
+                    Log.d("MyLogs", question?.questionId?.toString())
+                    if (cnt == 30) {
+                        upload_data_progress_bar.visibility = View.GONE
+                        splash_frame_layout.visibility = View.GONE
+                        mDatabaseReference.removeEventListener(mChaildEventListener)
+                        Log.d("MyLogs", "Remove child Event Listener")
+                    }
+                }
+
+                override fun onChildRemoved(p0: DataSnapshot?) {
+                }
+            }
+            mDatabaseReference.addChildEventListener(mChaildEventListener)
+            Log.d("MyLogs", "Add child event listener")
+            mTestDataBaseReference = mFirebaseDatabase.reference.child(TESTS_CHILD)
+             mChildEventListener = object : ChildEventListener{
+                override fun onCancelled(p0: DatabaseError?) {
+                }
+
+                override fun onChildMoved(p0: DataSnapshot?, p1: String?) {
+                }
+
+                override fun onChildChanged(p0: DataSnapshot?, p1: String?) {
+                }
+
+                override fun onChildAdded(p0: DataSnapshot?, p1: String?) {
+                    val testParams : TestParams? = p0?.getValue(TestParams::class.java)
+                    Log.d("MyLogs", "add new test")
+                    cnt2 = cnt2 + 1
+                    testParams?.let{DBOperations().insertTest(testParams)}
+                    if(cnt2 == 3){
+                        Log.d("MyLogs", "Complete tests")
+                        mTestDataBaseReference.removeEventListener(mChildEventListener)
+                    }
+                }
+
+                override fun onChildRemoved(p0: DataSnapshot?) {
+                }
+            }
+            mTestDataBaseReference.removeEventListener(mChildEventListener)
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

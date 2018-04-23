@@ -11,6 +11,7 @@ import android.widget.Toast
 import com.github.kiolk.chemistrytests.R
 import com.github.kiolk.chemistrytests.data.CheckResultListener
 import com.github.kiolk.chemistrytests.data.TestingPagerAdapter
+import com.github.kiolk.chemistrytests.data.database.DBOperations
 import com.github.kiolk.chemistrytests.data.fragments.HintFragment
 import com.github.kiolk.chemistrytests.data.fragments.ResultFragment
 import com.github.kiolk.chemistrytests.data.models.*
@@ -58,9 +59,10 @@ class TestingActivity : AppCompatActivity() {
                 val  question = p0?.getValue(CloseQuestion::class.java)
                 var questionsList = mutableListOf<CloseQuestion>()
                 question?.let { questionsList.add(it) }
-                question?.let { mQuestions.add(it) }
+//                question?.let { mQuestions.add(it) }
                 Log.d("MyLogs", question?.questionId?.toString())
-                if (mQuestions.size == 30){
+                if (question?.questionId == 30){
+                    mQuestions = DBOperations().getAllQuestions()
                     questionsList = mQuestions
                     setupTestingViewPAger(questionsList)
                     setupBottomBar()

@@ -1,3 +1,5 @@
+import android.content.Context
+import android.net.ConnectivityManager
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import com.github.kiolk.chemistrytests.data.models.*
@@ -29,6 +31,11 @@ fun closeFragment(manager: FragmentManager, fragment: Fragment) {
     transaction.commit()
 }
 
+fun checkConnection(pContext: Context): Boolean {
+    val check = pContext.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+    return check.activeNetworkInfo != null && check.activeNetworkInfo.isConnectedOrConnecting
+}
+
 fun getTrainingTets(): Test {
     val listOfQuestions: MutableList<CloseQuestion> = mutableListOf()
     var cnt: Int = 0
@@ -58,6 +65,6 @@ fun getTrainingTets(): Test {
         listOfQuestions.add(question2)
         listOfQuestions.add(question3)
     }
-    val params: TestParams = TestParams(RANDOM_ORDER, TRAINING_TEST, 5, true, DIRECT_TEST)
+    val params: TestParams = TestParams(3, RANDOM_ORDER, TRAINING_TEST, 5, true, DIRECT_TEST)
     return Test(listOfQuestions, params)
 }

@@ -12,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.github.kiolk.chemistrytests.R
 import com.github.kiolk.chemistrytests.data.adapters.AvailableTestRecyclerAdapter
+import com.github.kiolk.chemistrytests.data.database.DBOperations
 import com.github.kiolk.chemistrytests.data.models.TestParams
 import com.github.kiolk.chemistrytests.ui.TESTS_CHILD
 import com.github.kiolk.chemistrytests.ui.TEST_PARAM_INT
@@ -81,9 +82,12 @@ class AvaliableTestFragment : Fragment(){
 
             override fun onChildAdded(p0: DataSnapshot?, p1: String?) {
                 val testParam = p0?.getValue(TestParams::class.java)
-                testParam?.let { mTests.add(it) }
-                Log.d("MyLogs", testParam?.testInfo?.testTitle)
-                mRecyclerAdapter?.notifyDataSetChanged()
+//                testParam?.let { mTests.add(it) }
+                if(testParam?.testId==3) {
+                    mTests = DBOperations().getAllTestsParams()
+                    Log.d("MyLogs", testParam?.testInfo?.testTitle)
+                    mRecyclerAdapter?.notifyDataSetChanged()
+                }
             }
 
             override fun onChildRemoved(p0: DataSnapshot?) {

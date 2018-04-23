@@ -42,6 +42,20 @@
             android:layout_height="match_parent"
             android:visibility="gone">
         </FrameLayout>
+        <RelativeLayout
+            android:id="@+id/splash_frame_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/SECOND_TEXT_COLOR"
+            android:visibility="visible">
+            <ProgressBar
+                android:id="@+id/upload_data_progress_bar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:layout_centerInParent="true"
+                android:progress="0"/>
+        </RelativeLayout>
     </RelativeLayout>
     <android.support.design.widget.NavigationView
         android:id="@+id/navigation_relative_layout"
@@ -51,5 +65,4 @@
         android:fitsSystemWindows="false">
 
     </android.support.design.widget.NavigationView>
-    
 </android.support.v4.widget.DrawerLayout>
