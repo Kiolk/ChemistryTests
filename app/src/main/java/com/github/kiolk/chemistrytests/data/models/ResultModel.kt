@@ -38,5 +38,18 @@ class Result(var test: Test, var endListener: OnEndTestListener) {
 
     fun isLastTestQuestion() = askedQuestions.size == test.mSortedQuestions.size
 
+    fun userResultAnswers() : MutableList<Answer>{
+        val listAskedQuestion : MutableList<Answer> = mutableListOf()
+        test.mSortedQuestions.forEach {
+            val question : CloseQuestion = it
+            val userAnswer : Answer? = askedQuestions.find { it.question == question}
+            if(userAnswer != null){
+                listAskedQuestion.add(userAnswer)
+            }else{
+                listAskedQuestion.add(Answer(question, listOf(-1), null))
+            }
+        }
+        return listAskedQuestion
+    }
 }
 

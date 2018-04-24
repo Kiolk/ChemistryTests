@@ -19,17 +19,18 @@ import com.github.kiolk.chemistrytests.ui.TestingActivity
 import kotlinx.android.synthetic.main.activity_testing.*
 import kotlinx.android.synthetic.main.card_close_question.view.*
 
-class QuestionFragment : Fragment() {
+class QuestionAnsweredFragment : Fragment() {
 
     lateinit var mQuestion: CloseQuestion
+    lateinit var mAnswer : Answer
     lateinit var listener: View.OnClickListener
     lateinit var photoListener: View.OnClickListener
     var userAnswers: MutableList<Int> = mutableListOf<Int>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val que = arguments?.getSerializable("question") as CloseQuestion
-        que?.let { mQuestion = que }
+        mAnswer = arguments?.getSerializable("answer") as Answer
+        mQuestion = mAnswer.question
         setUpClickListener()
         setUpListener()
     }
@@ -60,37 +61,22 @@ class QuestionFragment : Fragment() {
 
 
             if (mQuestion.questionType == INPUT_CHOICE) {
-                view.findViewById<LinearLayout>(R.id.open_input_linear_layout)?.visibility = View.VISIBLE
-                view.findViewById<EditText>(R.id.input_answer_edit_text).addTextChangedListener(object : TextWatcher {
-                    override fun afterTextChanged(s: Editable?) {
-                        if(inputText.text.toString() != "" && input != s?.toString()) {
-                            s?.let{input = it.toString()}
-                            val act = activity as TestingActivity
-                            act.listener.onResult(Answer(mQuestion, mutableListOf(), s?.toString()))
-                            updateIndicator(act.indicator_answered_progress_bar, act.mResult.askedQuestions.size,
-                                    act.mResult.test.mSortedQuestions.size)
-                        }
-                    }
-
-                    override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-
-                    }
-
-                    override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-//                        if(inputText.text.toString() != "" && input == s?.toString()) {
-//                            s?.let{input = it.toString()}
-//                            val act = activity as TestingActivity
-//                            act.listener.onResult(Answer(mQuestion, mutableListOf(), s?.toString()))
-//                        }
-                    }
-                })
+                val firstOption = view.findViewById<TextView>(R.id.option_one_text_view)
+                firstOption.visibility = View.VISIBLE
+                firstOption.background = resources.getDrawable(R.drawable.area_square_shape_correct)
+                if(mAnswer.userInput != null && mAnswer.userInput?.toUpperCase() != mQuestion.correctAnswers[0].text.toUpperCase()){
+                    val secondOption = view.findViewById<TextView>(R.id.option_two_text_view)
+                    secondOption.visibility = View.VISIBLE
+                    secondOption.text = mAnswer.userInput
+                }
                 return view
             }
 
-            view.findViewById<LinearLayout>(R.id.answers_check_box).visibility = View.VISIBLE
-
             if (mQuestion.questionOptions.size > 0) {
                 setFormattedText(view.findViewById(R.id.option_one_text_view), mQuestion.questionOptions[0].text, mQuestion.questionOptions[0].optionPhotoUtl)
+                if(mQuestion.correctAnswers.contains(mQuestion.questionOptions[0])){
+                    view.findViewById<TextView>(R.id.option_one_text_view).background = resources.getDrawable(R.drawable.area_square_shape_correct)
+                }
                 view.findViewById<TextView>(R.id.option_one_text_view).visibility = View.VISIBLE
                 view.findViewById<TextView>(R.id.question_one_label_text_view).visibility = View.VISIBLE
                 view.findViewById<TextView>(R.id.option_one_text_view).tag = 0
@@ -105,6 +91,9 @@ class QuestionFragment : Fragment() {
 
             if (mQuestion.questionOptions.size > 1) {
                 setFormattedText(view.findViewById(R.id.option_two_text_view), mQuestion.questionOptions[1].text, mQuestion.questionOptions[1].optionPhotoUtl)
+                if(mQuestion.correctAnswers.contains(mQuestion.questionOptions[1])){
+                    view.findViewById<TextView>(R.id.option_two_text_view).background = resources.getDrawable(R.drawable.area_square_shape_correct)
+                }
                 view.findViewById<TextView>(R.id.option_two_text_view).visibility = View.VISIBLE
                 view.findViewById<TextView>(R.id.question_two_label_text_view).visibility = View.VISIBLE
                 view.findViewById<TextView>(R.id.option_two_text_view).tag = 1
@@ -120,6 +109,9 @@ class QuestionFragment : Fragment() {
 
             if (mQuestion.questionOptions.size > 2) {
                 setFormattedText(view.findViewById(R.id.option_three_text_view), mQuestion.questionOptions[2].text, mQuestion.questionOptions[2].optionPhotoUtl)
+                if(mQuestion.correctAnswers.contains(mQuestion.questionOptions[2])){
+                    view.findViewById<TextView>(R.id.option_three_text_view).background = resources.getDrawable(R.drawable.area_square_shape_correct)
+                }
                 view.findViewById<TextView>(R.id.option_three_text_view).visibility = View.VISIBLE
                 view.findViewById<TextView>(R.id.question_three_label_text_view).visibility = View.VISIBLE
                 view.findViewById<TextView>(R.id.option_three_text_view).tag = 2
@@ -134,6 +126,9 @@ class QuestionFragment : Fragment() {
 
             if (mQuestion.questionOptions.size > 3) {
                 setFormattedText(view.findViewById(R.id.option_four_text_view), mQuestion.questionOptions[3].text, mQuestion.questionOptions[3].optionPhotoUtl)
+                if(mQuestion.correctAnswers.contains(mQuestion.questionOptions[3])){
+                    view.findViewById<TextView>(R.id.option_four_text_view).background = resources.getDrawable(R.drawable.area_square_shape_correct)
+                }
                 view.findViewById<TextView>(R.id.option_four_text_view).visibility = View.VISIBLE
                 view.findViewById<TextView>(R.id.question_four_label_text_view).visibility = View.VISIBLE
                 view.findViewById<TextView>(R.id.option_four_text_view).tag = 3
@@ -148,6 +143,10 @@ class QuestionFragment : Fragment() {
 
             if (mQuestion.questionOptions.size > 4) {
                 setFormattedText(view.findViewById(R.id.option_five_text_view), mQuestion.questionOptions[4].text, mQuestion.questionOptions[4].optionPhotoUtl)
+
+                if(mQuestion.correctAnswers.contains(mQuestion.questionOptions[4])){
+                    view.findViewById<TextView>(R.id.option_four_text_view).background = resources.getDrawable(R.drawable.area_square_shape_correct)
+                }
                 view.findViewById<TextView>(R.id.option_five_text_view).visibility = View.VISIBLE
                 view.findViewById<TextView>(R.id.question_five_label_text_view).visibility = View.VISIBLE
                 view.findViewById<TextView>(R.id.option_five_text_view).tag = 4
@@ -161,8 +160,7 @@ class QuestionFragment : Fragment() {
                 }
             }
         }
-
-        return view ?: inflater?.let { super.onCreateView(it, container, savedInstanceState) }
+        return view ?: inflater.let { super.onCreateView(it, container, savedInstanceState) }
     }
 
     //    private fun setupCheckBocks() {
@@ -226,34 +224,6 @@ class QuestionFragment : Fragment() {
         val percentAnswered : Int = size.times(100).div(total)
         progressBar?.progress = percentAnswered
     }
-//        setUpClickListener()
-//        listener = View.OnClickListener { viewTarget: View ->
-//            val userAnswer: Int = when (viewTarget.id) {
-//                view?.answer_one_check_box?.id -> {
-//                    clearCheckBox(0)
-//                    checkCorrectAnswer(0)
-//                }
-//                view?.answer_two_check_box?.id -> {
-//                    clearCheckBox(1)
-//                    checkCorrectAnswer(1)
-//                }
-//                view?.answer_three_check_box?.id -> {
-//                    clearCheckBox(2)
-//                    checkCorrectAnswer(2)
-//                }
-//                view?.answer_four_check_box?.id -> {
-//                    clearCheckBox(3)
-//
-//                    checkCorrectAnswer(3)
-//                }
-//                view?.answer_five_check_box?.id -> {
-//                    clearCheckBox(4)
-//                    checkCorrectAnswer(4)
-//                }
-//                else -> -1
-//            }
-//        }
-
     private fun setUpClickListener() {
         if (mQuestion.questionType == SINGLE_CHOICE) {
             listener = View.OnClickListener { viewTarget: View ->
@@ -360,56 +330,15 @@ class QuestionFragment : Fragment() {
         }
     }
 
-    fun fromInstance(question: CloseQuestion): QuestionFragment {
-        val fragment = QuestionFragment()
+    fun fromInstance(answer: Answer): QuestionAnsweredFragment {
+        val fragment = QuestionAnsweredFragment()
         val bundle = Bundle()
-        bundle.putSerializable("question", question)
-//        bundle.putSerializable("listener", listener)
+        bundle.putSerializable("answer", answer)
         fragment.arguments = bundle
         return fragment
     }
 
     fun getInputAnswer() : String{
         return ""
-    }
-
-    fun getInputEditListener(before: EditText, current: EditText, isFirst : Boolean = false): View.OnFocusChangeListener {
-        val listener = object : View.OnFocusChangeListener {
-            var isTrueLostFocus = true
-            override fun onFocusChange(v: View?, hasFocus: Boolean) {
-                if (hasFocus) {
-                    if(isFirst){
-                        return
-                    }
-                    if (current.text.toString() == "" && before.text.toString() == "") {
-                        current.isFocusable = false
-                        before.isFocusable = true
-                        isTrueLostFocus = false
-                        return
-                    }
-                }
-                if (!hasFocus && isTrueLostFocus) {
-                    getInputAnswer()
-                } else {
-                    isTrueLostFocus = true
-                }
-            }
-        }
-        return listener
-    }
-
-    fun getTextChangeListener(before : EditText, current : EditText, after : EditText, isFirst : Boolean = false,
-                              isLast : Boolean = false) : TextWatcher{
-        return object : TextWatcher{
-            override fun afterTextChanged(s: Editable?) {
-            }
-
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-
-            }
-        }
     }
 }

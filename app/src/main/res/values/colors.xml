@@ -7,4 +7,6 @@
     <color name="SECOND_TEXT_COLOR">#3a6959</color>
     <color name="FIRST_TEXT_COLOR">#10120d</color>
     <color name="SQUER_COLOR">#ffffff</color>
+    <color name="CORRECT_COLOR">#35df02</color>
+    <color name="WRONG_COLOR">#f11b2a</color>
 </resources>

@@ -127,9 +127,14 @@ class TestingActivity : AppCompatActivity() {
                 result_frame_layout.visibility = View.VISIBLE
                 showFragment(R.id.result_frame_layout, mResultFragment)
                 mResultFragment.showResult(mResult)
+                val resultAdapter : TestingPagerAdapter = TestingPagerAdapter(supportFragmentManager, mResult.test.mSortedQuestions,
+                       true, mResult.userResultAnswers() )
+//                testing_view_pager.removeAllViews()
+                testing_view_pager.adapter = resultAdapter
+                questions_tab_layout.setupWithViewPager(testing_view_pager)
             }
         })
-        adapter = TestingPagerAdapter(supportFragmentManager, test)
+        adapter = TestingPagerAdapter(supportFragmentManager, test.mSortedQuestions)
         listener = object : CheckResultListener {
 
             override fun onResult(answer: Answer) {
@@ -142,7 +147,6 @@ class TestingActivity : AppCompatActivity() {
                 if (answer.question.checkCorrectAnswersByNumbers(answer.userAnswers)) {
                     mResult.takeAnswer(answer)
                     Toast.makeText(baseContext, "Correct Answer! ${mResult.points.toString()}", Toast.LENGTH_LONG).show()
-
                 } else {
                     mResult.takeAnswer(answer)
                     Toast.makeText(baseContext, "Wrong Answer! ${mResult.points.toString()}", Toast.LENGTH_LONG).show()

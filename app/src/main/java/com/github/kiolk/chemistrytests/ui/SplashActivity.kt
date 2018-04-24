@@ -4,21 +4,15 @@ import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import android.widget.Toast
 import checkConnection
-import com.firebase.ui.auth.AuthUI
 import com.github.kiolk.chemistrytests.R
 import com.github.kiolk.chemistrytests.data.database.DBConnector
 import com.github.kiolk.chemistrytests.data.database.DBOperations
-import com.github.kiolk.chemistrytests.data.fragments.AvaliableFragments
-import com.github.kiolk.chemistrytests.data.fragments.AvaliableTestFragment
 import com.github.kiolk.chemistrytests.data.models.CloseQuestion
 import com.github.kiolk.chemistrytests.data.models.QuestionsDataBaseInfo
 import com.github.kiolk.chemistrytests.data.models.TestParams
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_splash.*
 
 class SplashActivity : AppCompatActivity() {
@@ -43,6 +37,9 @@ class SplashActivity : AppCompatActivity() {
         if (!checkConnection(baseContext)) {
             Log.d("MyLogs", "Continue work offline")
             Toast.makeText(baseContext, "You continue off line", Toast.LENGTH_SHORT).show()
+            uploadQuestions = true
+            uploadTests = true
+            launchMainActivity()
         } else {
             mFirebaseDatabase = FirebaseDatabase.getInstance()
             getDBInformation()
@@ -101,7 +98,7 @@ class SplashActivity : AppCompatActivity() {
                     if (cnt == dbInfo?.availableQuestions) {
                         mDatabaseReference.removeEventListener(mChaildEventListener)
                         uploadQuestions = true
-                        luanchMainActivity()
+                        launchMainActivity()
                         Log.d("MyLogs", "Remove child Event Listener")
                     }
                 }
@@ -131,7 +128,7 @@ class SplashActivity : AppCompatActivity() {
                         Log.d("MyLogs", "Complete tests")
                         mTestDataBaseReference.removeEventListener(mChildEventListener)
                         uploadTests = true
-                        luanchMainActivity()
+                        launchMainActivity()
                     }
                 }
 
@@ -142,11 +139,11 @@ class SplashActivity : AppCompatActivity() {
         }
     }
 
-
-    fun luanchMainActivity() {
+    fun launchMainActivity() {
         if (uploadQuestions && uploadTests) {
             val intent = Intent(baseContext, MainActivity::class.java)
             startActivity(intent)
+            finish()
         }
     }
 }
