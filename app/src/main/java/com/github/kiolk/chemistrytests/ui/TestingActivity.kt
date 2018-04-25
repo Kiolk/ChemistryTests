@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
 import com.github.kiolk.chemistrytests.R
 import com.github.kiolk.chemistrytests.data.CheckResultListener
@@ -132,6 +133,24 @@ class TestingActivity : AppCompatActivity() {
 //                testing_view_pager.removeAllViews()
                 testing_view_pager.adapter = resultAdapter
                 questions_tab_layout.setupWithViewPager(testing_view_pager)
+               val group : ViewGroup = questions_tab_layout.getChildAt(0) as ViewGroup
+                var cnt = 0
+                mResult.userResultAnswers().forEach{
+                    if(it.userInput == null) {
+                       if( it.question.checkCorrectAnswers(it.getAnsweredOptions())){
+                           group.getChildAt(cnt).background = resources.getDrawable(R.drawable.area_square_shape_correct)
+                       }else{
+                           group.getChildAt(cnt).background = resources.getDrawable(R.drawable.area_square_shape_wrong)
+                       }
+                    }else{
+                        if(it.question.checkOpenQuestionAnswers(it.userInput)){
+                            group.getChildAt(cnt).background = resources.getDrawable(R.drawable.area_square_shape_correct)
+                        }else{
+                            group.getChildAt(cnt).background = resources.getDrawable(R.drawable.area_square_shape_wrong)
+                        }
+                    }
+                    cnt = cnt + 1
+                }
             }
         })
         adapter = TestingPagerAdapter(supportFragmentManager, test.mSortedQuestions)
