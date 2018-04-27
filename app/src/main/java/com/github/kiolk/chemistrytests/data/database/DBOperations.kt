@@ -103,7 +103,7 @@ class DBOperations {
         val readableDatabase = helper.readableDatabase
         try {
             readableDatabase.beginTransaction()
-            val res = readableDatabase.insert(TestParamsDBModel.TestParamsDB.TABLE_NAME, null, contentValue)
+            val res = readableDatabase.replace(TestParamsDBModel.TestParamsDB.TABLE_NAME, null, contentValue)
             readableDatabase.setTransactionSuccessful()
         } catch (e: Exception) {
             e.printStackTrace()

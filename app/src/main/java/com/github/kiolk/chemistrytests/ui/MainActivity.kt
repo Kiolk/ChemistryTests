@@ -20,6 +20,7 @@ import com.github.kiolk.chemistrytests.data.fragments.AvaliableFragments
 import com.github.kiolk.chemistrytests.data.fragments.AvaliableTestFragment
 import com.github.kiolk.chemistrytests.data.models.*
 import com.github.kiolk.chemistrytests.data.models.CloseQuestion.Question.EASY_QUESTION
+import com.github.kiolk.chemistrytests.data.models.CloseQuestion.Question.INPUT_CHOICE
 import com.github.kiolk.chemistrytests.data.models.CloseQuestion.Question.SINGLE_CHOICE
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -112,19 +113,16 @@ class MainActivity : AppCompatActivity() {
 
 //        setFormattedText(question_text_view, "X^2^^<br> drawable <br> H_2__SO_4__", "http://teacher-chem.ru/wp-content/uploads/2014/12/olimp-11.jpg")
         testing_activity_button.setOnClickListener { view: View ->
-            val question = CloseQuestion(31, "Чему равен заряд иона, который содержит 10 электронов и 13 протонов?", null, SINGLE_CHOICE,
-                    listOf("Строение атома", "Ионы"),
+            val question = CloseQuestion(31, "Чему равняется молярная масса ацетилена?", null, INPUT_CHOICE,
+                    listOf("Органическая химия", "Тривиальные названия"),
                     1.0F,
-                    "кг",
-                    listOf(Option("+3", null),
-                            Option("+13", null),
-                            Option("-10", null),
-                            Option("-3", null)),
+                    "ru",
+                    listOf(Option("26", null)),
                     listOf(1), EASY_QUESTION, listOf(Hint("Equal for sulfuric acid <br> drawable", listOf("https://upload.wikimedia.org/wikipedia/commons/8/8b/Sulfuric-acid-2D-dimensions.svg") )))
             val testParams: TestParams = getExampleTest()
-            val res = mFirebaseDatabase.getReference().child(DATA_BASE_INFO_CHAILD)
+            val res = mFirebaseDatabase.getReference().child(QUESTIONS_CHILDS)
             val info = QuestionsDataBaseInfo(1, 3, 30)
-            res.child(info.version.toString()).setValue(info)
+            res.child(question.questionId.toString()).setValue(question)
 //            val intent = Intent(this, TestingActivity::class.java)
 //            intent.putExtra(TEST_PARAM_INT, testParams)
 //            startActivity(intent)
