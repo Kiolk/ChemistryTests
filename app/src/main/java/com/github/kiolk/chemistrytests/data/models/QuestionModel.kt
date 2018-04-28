@@ -109,7 +109,7 @@ class OpenQuestion(var question: String = "",
 fun setFormattedText(view: TextView, text: String, photoUrl: String?) {
     val context = view.context
     if (photoUrl == null) {
-        view.text = toHtml(text)
+        view.text = Html.fromHtml(toHtml(text))
     } else {
         Pen.getInstance().getImageFromUrl(photoUrl).getBitmapDirect { pBitmapFromLoader ->
             val spannableBuilder = SpannableStringBuilder("")

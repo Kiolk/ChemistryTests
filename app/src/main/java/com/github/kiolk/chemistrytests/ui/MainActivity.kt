@@ -21,6 +21,7 @@ import com.github.kiolk.chemistrytests.data.fragments.AvaliableTestFragment
 import com.github.kiolk.chemistrytests.data.models.*
 import com.github.kiolk.chemistrytests.data.models.CloseQuestion.Question.EASY_QUESTION
 import com.github.kiolk.chemistrytests.data.models.CloseQuestion.Question.INPUT_CHOICE
+import com.github.kiolk.chemistrytests.data.models.CloseQuestion.Question.MULTIPLE_CHOICE
 import com.github.kiolk.chemistrytests.data.models.CloseQuestion.Question.SINGLE_CHOICE
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -66,8 +67,8 @@ class MainActivity : AppCompatActivity() {
         mAuthentication = FirebaseAuth.getInstance()
         mFirebaseDatabase = FirebaseDatabase.getInstance()
 //        splashScreenSetup()
-        upload_data_progress_bar.visibility = View.GONE
-        splash_frame_layout.visibility = View.GONE
+//        upload_data_progress_bar.visibility = View.GONE
+//        splash_frame_layout.visibility = View.GONE
         mAuthenticationListener = object : FirebaseAuth.AuthStateListener {
             override fun onAuthStateChanged(p0: FirebaseAuth) {
                 val firebaseUser: FirebaseUser? = p0.currentUser
@@ -113,12 +114,18 @@ class MainActivity : AppCompatActivity() {
 
 //        setFormattedText(question_text_view, "X^2^^<br> drawable <br> H_2__SO_4__", "http://teacher-chem.ru/wp-content/uploads/2014/12/olimp-11.jpg")
         testing_activity_button.setOnClickListener { view: View ->
-            val question = CloseQuestion(31, "Чему равняется молярная масса ацетилена?", null, INPUT_CHOICE,
-                    listOf("Органическая химия", "Тривиальные названия"),
+            val question = CloseQuestion(32, "Из указанных веществ выберите кислоты.", null, MULTIPLE_CHOICE,
+                    listOf("Неорганическая химия", "Кислоты", "Химическая формула"),
                     1.0F,
                     "ru",
-                    listOf(Option("26", null)),
-                    listOf(1), EASY_QUESTION, listOf(Hint("Equal for sulfuric acid <br> drawable", listOf("https://upload.wikimedia.org/wikipedia/commons/8/8b/Sulfuric-acid-2D-dimensions.svg") )))
+                    listOf(Option("H_2__SO_4__", null),
+                            Option("HNO_3__", null),
+                            Option("H_2__O", null),
+                            Option("NaOH", null),
+                            Option("Al_2__(SO_4__)_3__", null)),
+                    listOf(1, 2), EASY_QUESTION, listOf(Hint("Как правило, формула кислоты начинается с водорода HClO_4__, " +
+                    "H2S. Формула органических кислоты содержит карбоксильную функциональную группу -COOH." +
+                    "<br> drawable", listOf("https://dic.academic.ru/pictures/wiki/files/76/Lipoic-acid-3D-vdW.png") )))
             val testParams: TestParams = getExampleTest()
             val res = mFirebaseDatabase.getReference().child(QUESTIONS_CHILDS)
             val info = QuestionsDataBaseInfo(1, 3, 30)
@@ -130,6 +137,7 @@ class MainActivity : AppCompatActivity() {
         chose_ready_test_button.setOnClickListener { view: View ->
             if (main_frame_layout.visibility != View.VISIBLE) {
                 main_frame_layout.visibility = View.VISIBLE
+                start_relative_layout.visibility = View.GONE
 //                showFragment(supportFragmentManager, R.id.main_frame_layout, mAvaliableTests)
                 showFragment(supportFragmentManager, R.id.main_frame_layout, mAvailableTests)
             }
@@ -139,8 +147,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun splashScreenSetup() {
         if(!checkConnection(baseContext)){
-            upload_data_progress_bar.visibility = View.GONE
-            splash_frame_layout.visibility = View.GONE
+//            upload_data_progress_bar.visibility = View.GONE
+//            splash_frame_layout.visibility = View.GONE
             Log.d("MyLogs", "Continue work ofline")
             Toast.makeText(baseContext, "You continue off line", Toast.LENGTH_SHORT)
         }else {
@@ -160,12 +168,12 @@ class MainActivity : AppCompatActivity() {
                     val question = p0?.getValue(CloseQuestion::class.java)
                     question?.let { DBOperations().insertQuestion(it) }
                     cnt = cnt + 1
-                    upload_data_progress_bar.max = 30
-                    upload_data_progress_bar.progress = cnt
+//                    upload_data_progress_bar.max = 30
+//                    upload_data_progress_bar.progress = cnt
                     Log.d("MyLogs", question?.questionId?.toString())
                     if (cnt == 30) {
-                        upload_data_progress_bar.visibility = View.GONE
-                        splash_frame_layout.visibility = View.GONE
+//                        upload_data_progress_bar.visibility = View.GONE
+//                        splash_frame_layout.visibility = View.GONE
                         mDatabaseReference.removeEventListener(mChaildEventListener)
                         Log.d("MyLogs", "Remove child Event Listener")
                     }
@@ -260,6 +268,7 @@ class MainActivity : AppCompatActivity() {
     override fun onBackPressed() {
         if (main_frame_layout.visibility == View.VISIBLE) {
             main_frame_layout.visibility = View.GONE
+            start_relative_layout.visibility = View.VISIBLE
             closeFragment(supportFragmentManager, mAvailableTests)
         }else {
             super.onBackPressed()

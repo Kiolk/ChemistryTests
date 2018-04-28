@@ -62,11 +62,17 @@ class QuestionAnsweredFragment : Fragment() {
 
             if (mQuestion.questionType == INPUT_CHOICE) {
                 val firstOption = view.findViewById<TextView>(R.id.option_one_text_view)
+                view.findViewById<TextView>(R.id.question_one_label_text_view).visibility = View.VISIBLE
+                view.findViewById<TextView>(R.id.question_one_label_text_view).text = resources.getString(R.string.CORRECT)
                 firstOption.visibility = View.VISIBLE
                 firstOption.background = resources.getDrawable(R.drawable.area_square_shape_correct)
+                firstOption.text = mQuestion.correctAnswers[0].text
                 if(mAnswer.userInput != null && mAnswer.userInput?.toUpperCase() != mQuestion.correctAnswers[0].text.toUpperCase()){
+                   view.findViewById<TextView>(R.id.question_two_label_text_view).visibility = View.VISIBLE
+                   view.findViewById<TextView>(R.id.question_two_label_text_view).text = resources.getString(R.string.YOU_ANSWER)
                     val secondOption = view.findViewById<TextView>(R.id.option_two_text_view)
                     secondOption.visibility = View.VISIBLE
+                    secondOption.background = resources.getDrawable(R.drawable.area_square_shape_wrong)
                     secondOption.text = mAnswer.userInput
                 }
                 return view

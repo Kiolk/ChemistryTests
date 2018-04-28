@@ -24,36 +24,42 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="gone"/>
-        <Button
-            android:text="@string/CHOSE_TEST"
-            android:textSize="32sp"
-            android:layout_centerInParent="true"
-            android:layout_below="@+id/testing_activity_button"
-            android:id="@+id/chose_ready_test_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/button_styling"/>
-        <Button
-            android:text="Start test"
-            android:textSize="32sp"
-            android:layout_centerInParent="true"
-            android:id="@+id/testing_activity_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/button_styling"/>
+
         <RelativeLayout
-            android:id="@+id/splash_frame_layout"
+            android:layout_below="@id/main_tool_bar"
+            android:id="@+id/start_relative_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/SECOND_TEXT_COLOR"
             android:visibility="visible">
-            <ProgressBar
-                android:id="@+id/upload_data_progress_bar"
+            <Button
+                android:layout_margin="@dimen/BLOCK_PADDING"
+                android:text="@string/COURSES"
+                android:layout_centerInParent="true"
+                android:textSize="32sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:background="@drawable/button_styling"
+                android:layout_above="@+id/testing_activity_button"/>
+            <Button
+                android:layout_margin="@dimen/BLOCK_PADDING"
+                android:text="@string/CHOSE_TEST"
+                android:textSize="32sp"
                 android:layout_centerInParent="true"
-                android:progress="0"/>
+                android:layout_below="@+id/testing_activity_button"
+                android:id="@+id/chose_ready_test_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button_styling"/>
+            <Button
+                android:layout_margin="@dimen/BLOCK_PADDING"
+                android:text="Start test"
+                android:textSize="32sp"
+                android:layout_centerInParent="true"
+                android:id="@+id/testing_activity_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button_styling"/>
         </RelativeLayout>
     </RelativeLayout>
     <android.support.design.widget.NavigationView
