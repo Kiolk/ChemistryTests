@@ -174,9 +174,17 @@ class TestingActivity : AppCompatActivity() {
         }
         testing_view_pager.adapter = adapter
         questions_tab_layout.setupWithViewPager(testing_view_pager)
+        questions_tool_bar.title = mParams.testInfo.testTitle
     }
 
     private fun setupBottomBar(){
+        hint_button_image_view.setOnSystemUiVisibilityChangeListener {
+            val position = testing_view_pager.currentItem
+            val hint : List<Hint>? = mResult.test.mSortedQuestions[position].hints
+            if(hint != null) {
+                hint_button_image_view.background = resources.getDrawable(R.drawable.ic_help_inactive)
+            }
+        }
         hint_button_image_view.setOnClickListener {
             val position = testing_view_pager.currentItem
             val hint : List<Hint>? = mResult.test.mSortedQuestions[position].hints
@@ -187,6 +195,11 @@ class TestingActivity : AppCompatActivity() {
                 mHintFragment.showHint(hint)
             }
         }
+        periodical_table_image_view.setOnClickListener(object : View.OnClickListener{
+            override fun onClick(v: View?) {
+                showPeriodicTable()
+            }
+        })
     }
 
     fun showFragment(container: Int, fragment: Fragment) {
@@ -213,4 +226,16 @@ class TestingActivity : AppCompatActivity() {
         photo_web_view.settings?.loadWithOverviewMode = true
         photo_web_view.visibility = View.VISIBLE
     }
+    fun showPeriodicTable(){
+        val urlFolder = baseContext.cacheDir?.canonicalPath
+        val url : String = "file:///android_asset/"
+        val data = "<body bgcolor=\"#000000\"><div class=\"centered-content\" align=\"middle\" ><img src=\"table.png\"/></div></body>"
+        photo_web_view.loadDataWithBaseURL(url, data, "text/html", "UTF-8", null)
+        photo_web_view.settings?.builtInZoomControls = true
+        photo_web_view.settings?.displayZoomControls = false
+        photo_web_view.settings?.useWideViewPort = true
+        photo_web_view.settings?.loadWithOverviewMode = false
+        photo_web_view.visibility = View.VISIBLE
+    }
+
 }

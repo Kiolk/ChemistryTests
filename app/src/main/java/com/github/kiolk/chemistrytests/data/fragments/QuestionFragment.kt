@@ -51,6 +51,13 @@ class QuestionFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+//        if (mQuestion.hints != null){
+//            val activity = activity as TestingActivity
+//            activity.hint_button_image_view.background = resources.getDrawable(R.drawable.ic_help_inactive)
+//        }else{
+//            val activity = activity as TestingActivity
+//            activity.hint_button_image_view.background = resources.getDrawable(R.drawable.ic_help)
+//        }
         val view = inflater?.inflate(R.layout.fragment_question, null)
         var input : String = ""
         if (view != null) {

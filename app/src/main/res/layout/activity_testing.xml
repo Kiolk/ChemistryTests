@@ -94,40 +94,49 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:gravity="center"
+            android:orientation="vertical"
             android:layout_weight="1">
             <ImageView
                 android:id="@+id/like_button_image_view"
-                android:scaleType="centerInside"
                 android:background="@android:drawable/ic_notification_clear_all"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center"/>
+                style="@style/BottomIconStyle"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/SMALL_TEXT_SIZE"
+                android:text="@string/PERIODIC_TABLE"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:orientation="vertical">
             <ImageView
-                android:id="@+id/comment_button_image_view"
-                android:scaleType="centerInside"
-                android:background="@android:drawable/ic_menu_send"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center"/>
+                android:id="@+id/periodical_table_image_view"
+                android:background="@drawable/ic_element"
+                style="@style/BottomIconStyle" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/SMALL_TEXT_SIZE"
+                android:text="@string/PERIODIC_TABLE"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:gravity="center"
+            android:orientation="vertical"
             android:layout_weight="1">
             <ImageView
                 android:id="@+id/hint_button_image_view"
-                android:scaleType="centerInside"
-                android:background="@android:drawable/ic_lock_power_off"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center"/>
+                android:background="@drawable/ic_help"
+                style="@style/BottomIconStyle"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/SMALL_TEXT_SIZE"
+                android:text="@string/PERIODIC_TABLE"/>
         </LinearLayout>
     </LinearLayout>
 </RelativeLayout>
