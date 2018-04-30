@@ -12,4 +12,13 @@
     <string name="CORRECT">Correct:</string>
     <string name="YOU_ANSWER">You answer</string>
     <string name="PERIODIC_TABLE">Periodic table</string>
+    <string name="CUSTOM_TEST">Custome test</string>
+    <string name="CHOSE_TOPICS">Chose topics</string>
+    <string name="TOTAL_QUESTIONS">Total</string>
+    <string name="ZERO">0</string>
+    <string name="QUESTION_TYPE">Question type:</string>
+    <string name="SINGLE_CHOICE">Single choice</string>
+    <string name="MULTIPLE_CHOICE">Multiple choice</string>
+    <string name="INPUT_CHOICE">Inputed answer</string>
+    <string name="START_TEST">Start test</string>
 </resources>

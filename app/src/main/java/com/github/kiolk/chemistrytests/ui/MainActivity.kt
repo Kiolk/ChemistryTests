@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
@@ -14,15 +13,14 @@ import checkConnection
 import closeFragment
 import com.firebase.ui.auth.AuthUI
 import com.github.kiolk.chemistrytests.R
-import com.github.kiolk.chemistrytests.data.database.DBConnector
+import com.github.kiolk.chemistrytests.data.adapters.CoursesViewPagerAdapter
 import com.github.kiolk.chemistrytests.data.database.DBOperations
 import com.github.kiolk.chemistrytests.data.fragments.AvaliableFragments
 import com.github.kiolk.chemistrytests.data.fragments.AvaliableTestFragment
+import com.github.kiolk.chemistrytests.data.fragments.CustomTest
 import com.github.kiolk.chemistrytests.data.models.*
 import com.github.kiolk.chemistrytests.data.models.CloseQuestion.Question.EASY_QUESTION
-import com.github.kiolk.chemistrytests.data.models.CloseQuestion.Question.INPUT_CHOICE
 import com.github.kiolk.chemistrytests.data.models.CloseQuestion.Question.MULTIPLE_CHOICE
-import com.github.kiolk.chemistrytests.data.models.CloseQuestion.Question.SINGLE_CHOICE
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
@@ -30,13 +28,12 @@ import com.google.firebase.messaging.FirebaseMessaging
 import kiolk.com.github.pen.Pen
 import kiolk.com.github.pen.utils.PenConstantsUtil
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.card_close_question.*
 import showFragment
 
 val RC_SIGN_IN: Int = 1
 val TEST_PARAM_INT: String = "params"
-val TESTS_CHILD : String = "tests"
-val DATA_BASE_INFO_CHAILD : String = "DBInformation"
+val TESTS_CHILD: String = "tests"
+val DATA_BASE_INFO_CHAILD: String = "DBInformation"
 
 class MainActivity : AppCompatActivity() {
 
@@ -46,12 +43,13 @@ class MainActivity : AppCompatActivity() {
     lateinit var mFirebaseDatabase: FirebaseDatabase
     lateinit var mFirebaseDatabase2: FirebaseDatabase
     lateinit var mDatabaseReference: DatabaseReference
-//    lateinit var mDatabaseReference2: DatabaseReference
+    //    lateinit var mDatabaseReference2: DatabaseReference
     lateinit var mChaildEventListener: ChildEventListener
     lateinit var mAvaliableTests: AvaliableFragments
-    lateinit var mAvailableTests : AvaliableTestFragment
-    lateinit var mTestDataBaseReference : DatabaseReference
-    lateinit var mChildEventListener : ChildEventListener
+    lateinit var mAvailableTests: AvaliableTestFragment
+    lateinit var mCustomTest: CustomTest
+    lateinit var mTestDataBaseReference: DatabaseReference
+    lateinit var mChildEventListener: ChildEventListener
     var cnt = 0
     var cnt2 = 0
 
@@ -64,6 +62,7 @@ class MainActivity : AppCompatActivity() {
         FirebaseMessaging.getInstance()
         mAvaliableTests = AvaliableFragments()
         mAvailableTests = AvaliableTestFragment()
+        mCustomTest = CustomTest()
         mAuthentication = FirebaseAuth.getInstance()
         mFirebaseDatabase = FirebaseDatabase.getInstance()
 //        splashScreenSetup()
@@ -125,7 +124,7 @@ class MainActivity : AppCompatActivity() {
                             Option("Al_2__(SO_4__)_3__", null)),
                     listOf(1, 2), EASY_QUESTION, listOf(Hint("Как правило, формула кислоты начинается с водорода HClO_4__, " +
                     "H2S. Формула органических кислоты содержит карбоксильную функциональную группу -COOH." +
-                    "<br> drawable", listOf("https://dic.academic.ru/pictures/wiki/files/76/Lipoic-acid-3D-vdW.png") )))
+                    "<br> drawable", listOf("https://dic.academic.ru/pictures/wiki/files/76/Lipoic-acid-3D-vdW.png"))))
             val testParams: TestParams = getExampleTest()
             val res = mFirebaseDatabase.getReference().child(QUESTIONS_CHILDS)
             val info = QuestionsDataBaseInfo(1, 3, 30)
@@ -142,16 +141,33 @@ class MainActivity : AppCompatActivity() {
                 showFragment(supportFragmentManager, R.id.main_frame_layout, mAvailableTests)
             }
         }
+
+        custom_test_button.setOnClickListener {
+            if (main_frame_layout.visibility != View.VISIBLE) {
+                main_frame_layout.visibility = View.VISIBLE
+                start_relative_layout.visibility = View.GONE
+                showFragment(supportFragmentManager, R.id.main_frame_layout, mCustomTest)
+                mCustomTest.combineCustomeTest(DBOperations().getAllQuestions())
+            }
+        }
+        open_courses_button.setOnClickListener {
+            main_frame_layout.visibility = View.GONE
+            start_relative_layout.visibility = View.GONE
+            courses_view_pager.visibility = View.VISIBLE
+            val coursesAdapter = CoursesViewPagerAdapter(supportFragmentManager, testCourses())
+            courses_view_pager.adapter = coursesAdapter
+
+        }
 //        mDatabaseReference.addChildEventListener(mChaildEventListener)
     }
 
     private fun splashScreenSetup() {
-        if(!checkConnection(baseContext)){
+        if (!checkConnection(baseContext)) {
 //            upload_data_progress_bar.visibility = View.GONE
 //            splash_frame_layout.visibility = View.GONE
             Log.d("MyLogs", "Continue work ofline")
             Toast.makeText(baseContext, "You continue off line", Toast.LENGTH_SHORT)
-        }else {
+        } else {
             mFirebaseDatabase = FirebaseDatabase.getInstance()
             mDatabaseReference = mFirebaseDatabase.reference.child(QUESTIONS_CHILDS)
             mChaildEventListener = object : ChildEventListener {
@@ -185,7 +201,7 @@ class MainActivity : AppCompatActivity() {
             mDatabaseReference.addChildEventListener(mChaildEventListener)
             Log.d("MyLogs", "Add child event listener")
             mTestDataBaseReference = mFirebaseDatabase.reference.child(TESTS_CHILD)
-             mChildEventListener = object : ChildEventListener{
+            mChildEventListener = object : ChildEventListener {
                 override fun onCancelled(p0: DatabaseError?) {
                 }
 
@@ -196,11 +212,11 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 override fun onChildAdded(p0: DataSnapshot?, p1: String?) {
-                    val testParams : TestParams? = p0?.getValue(TestParams::class.java)
+                    val testParams: TestParams? = p0?.getValue(TestParams::class.java)
                     Log.d("MyLogs", "add new test")
                     cnt2 = cnt2 + 1
-                    testParams?.let{DBOperations().insertTest(testParams)}
-                    if(cnt2 == 3){
+                    testParams?.let { DBOperations().insertTest(testParams) }
+                    if (cnt2 == 3) {
                         Log.d("MyLogs", "Complete tests")
                         mTestDataBaseReference.removeEventListener(mChildEventListener)
                     }
@@ -270,7 +286,11 @@ class MainActivity : AppCompatActivity() {
             main_frame_layout.visibility = View.GONE
             start_relative_layout.visibility = View.VISIBLE
             closeFragment(supportFragmentManager, mAvailableTests)
-        }else {
+            closeFragment(supportFragmentManager, mCustomTest)
+        } else if (courses_view_pager.visibility == View.VISIBLE) {
+            start_relative_layout.visibility = View.VISIBLE
+            courses_view_pager.visibility = View.GONE
+        } else {
             super.onBackPressed()
         }
     }

@@ -9,5 +9,8 @@
     <color name="SQUER_COLOR">#ffffff</color>
     <color name="CORRECT_COLOR">#35df02</color>
     <color name="WRONG_COLOR">#f11b2a</color>
-    <color name="INACTIVE_ICON">#848484</color> />
+    <color name="INACTIVE_ICON">#848484</color>
+    <color name="GRAY_TEXT_COLOR">#8f8f8f</color>
+    <color name="BLACK_TEXT_COLOR">#000000</color>
+    <color name="RED_TEXT_COLOR">#ff3333</color>
 </resources>

@@ -9,4 +9,6 @@
     <dimen name="INPUT_BLOCK_SIZE">40dp</dimen>
     <dimen name="MAX_RADIUS">100dp</dimen>
     <dimen name="SMALL_TEXT_SIZE">8sp</dimen>
+    <dimen name="BIG_TEXT_SIZE">32sp</dimen>
+    <dimen name="COURSE_EXPAND_SIZE">250dp</dimen>
 </resources>

@@ -97,8 +97,8 @@
             android:orientation="vertical"
             android:layout_weight="1">
             <ImageView
-                android:id="@+id/like_button_image_view"
-                android:background="@android:drawable/ic_notification_clear_all"
+                android:id="@+id/solubility_button_image_view"
+                android:background="@drawable/ic_spreadshee"
                 style="@style/BottomIconStyle"/>
             <TextView
                 android:layout_width="wrap_content"

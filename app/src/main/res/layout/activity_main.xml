@@ -24,6 +24,11 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="gone"/>
+        <android.support.v4.view.ViewPager
+            android:id="@+id/courses_view_pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"/>
 
         <RelativeLayout
             android:layout_below="@id/main_tool_bar"
@@ -33,6 +38,7 @@
             android:background="@color/SECOND_TEXT_COLOR"
             android:visibility="visible">
             <Button
+                android:id="@+id/open_courses_button"
                 android:layout_margin="@dimen/BLOCK_PADDING"
                 android:text="@string/COURSES"
                 android:layout_centerInParent="true"
@@ -59,6 +65,16 @@
                 android:id="@+id/testing_activity_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:background="@drawable/button_styling"/>
+            <Button
+                android:layout_margin="@dimen/BLOCK_PADDING"
+                android:text="@string/CUSTOM_TEST"
+                android:textSize="32sp"
+                android:layout_centerInParent="true"
+                android:id="@+id/custom_test_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/chose_ready_test_button"
                 android:background="@drawable/button_styling"/>
         </RelativeLayout>
     </RelativeLayout>
