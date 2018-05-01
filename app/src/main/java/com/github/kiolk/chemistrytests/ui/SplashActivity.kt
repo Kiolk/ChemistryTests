@@ -14,6 +14,7 @@ import com.github.kiolk.chemistrytests.data.models.QuestionsDataBaseInfo
 import com.github.kiolk.chemistrytests.data.models.TestParams
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_splash.*
+import java.util.*
 
 class SplashActivity : AppCompatActivity() {
 
@@ -24,6 +25,7 @@ class SplashActivity : AppCompatActivity() {
     lateinit var mChildEventListener: ChildEventListener
     lateinit var mChidInforListener: ChildEventListener
     lateinit var mInfoDatabaseReference: DatabaseReference
+    lateinit var mTimer: Timer
     var dbInfo: QuestionsDataBaseInfo? = null
     var cnt = 0
     var cnt2 = 0
@@ -34,6 +36,7 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
         DBConnector.initInstance(baseContext)
+        setupTimer()
         if (!checkConnection(baseContext)) {
             Log.d("MyLogs", "Continue work offline")
             Toast.makeText(baseContext, "You continue off line", Toast.LENGTH_SHORT).show()
@@ -44,6 +47,44 @@ class SplashActivity : AppCompatActivity() {
             mFirebaseDatabase = FirebaseDatabase.getInstance()
             getDBInformation()
         }
+    }
+
+    private fun setupTimer() {
+        mTimer = Timer()
+        mTimer.schedule(object : TimerTask() {
+            override fun run() {
+                if(!listOf(2, 3, 4, 5, 6 ).contains(my_progress_bar_image_view.tag)) {
+                    my_progress_bar_image_view.setImageDrawable(resources.getDrawable(R.drawable.ic_benzolring))
+                    my_progress_bar_image_view.tag = 2
+                    return
+                }
+                if(!listOf(1, 3, 4, 5, 6 ).contains(my_progress_bar_image_view.tag)) {
+                    my_progress_bar_image_view.setImageDrawable(resources.getDrawable(R.drawable.ic_benzolring1))
+                    my_progress_bar_image_view.tag = 3
+                    return
+                }
+                if(!listOf(2, 1, 4, 5, 6 ).contains(my_progress_bar_image_view.tag)) {
+                    my_progress_bar_image_view.setImageDrawable(resources.getDrawable(R.drawable.ic_benzolring2))
+                    my_progress_bar_image_view.tag = 4
+                    return
+                }
+                if(!listOf(2, 3, 1, 5, 6 ).contains(my_progress_bar_image_view.tag)) {
+                    my_progress_bar_image_view.setImageDrawable(resources.getDrawable(R.drawable.ic_benzolring3))
+                    my_progress_bar_image_view.tag = 5
+                    return
+                }
+                if(!listOf(2, 3, 4, 1, 6 ).contains(my_progress_bar_image_view.tag)) {
+                    my_progress_bar_image_view.setImageDrawable(resources.getDrawable(R.drawable.ic_benzolring4))
+                    my_progress_bar_image_view.tag = 6
+                    return
+                }
+                if(!listOf(2, 3, 4, 5, 1 ).contains(my_progress_bar_image_view.tag)) {
+                    my_progress_bar_image_view.setImageDrawable(resources.getDrawable(R.drawable.ic_benzolring5))
+                    my_progress_bar_image_view.tag = 1
+                    return
+                }
+            }
+        }, 100000, 1000)
     }
 
     private fun getDBInformation() {
@@ -143,6 +184,7 @@ class SplashActivity : AppCompatActivity() {
         if (uploadQuestions && uploadTests) {
             val intent = Intent(baseContext, MainActivity::class.java)
             startActivity(intent)
+            mTimer.cancel()
             finish()
         }
     }

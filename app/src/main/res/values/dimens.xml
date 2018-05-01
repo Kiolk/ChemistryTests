@@ -11,4 +11,5 @@
     <dimen name="SMALL_TEXT_SIZE">8sp</dimen>
     <dimen name="BIG_TEXT_SIZE">32sp</dimen>
     <dimen name="COURSE_EXPAND_SIZE">250dp</dimen>
+    <dimen name="FAB_MARGIN">16dp</dimen>
 </resources>

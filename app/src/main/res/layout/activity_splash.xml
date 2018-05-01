@@ -6,12 +6,28 @@
     android:layout_height="match_parent"
     tools:context="com.github.kiolk.chemistrytests.ui.SplashActivity">
 
+    <ImageView
+        android:id="@+id/my_progress_bar_image_view"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_centerHorizontal="true"
+        android:tag="1"
+        android:layout_centerVertical="true"/>
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/splash_upload_progress_bar"
+        android:indeterminateDrawable="@drawable/ic_loading"
+        android:indeterminate="true"
+        android:visibility="invisible"
+        android:layout_centerHorizontal="true"/>
     <ProgressBar
         android:id="@+id/splash_upload_progress_bar"
         android:layout_centerInParent="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:indeterminate="false"
+        android:visibility="invisible"
         style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"
         android:max="3"/>
 </RelativeLayout>

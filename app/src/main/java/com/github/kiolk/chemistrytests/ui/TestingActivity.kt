@@ -4,6 +4,9 @@ import android.graphics.Color
 import android.os.Bundle
 import android.support.design.widget.AppBarLayout
 import android.support.v4.app.Fragment
+import android.support.v4.view.ViewCompat
+import android.support.v4.view.ViewPropertyAnimatorListener
+import android.support.v4.view.animation.FastOutSlowInInterpolator
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.View
@@ -20,10 +23,9 @@ import com.google.firebase.database.*
 import kiolk.com.github.pen.utils.MD5Util
 import kotlinx.android.synthetic.main.activity_testing.*
 
-val QUESTIONS_CHILDS : String = "Questions"
+val QUESTIONS_CHILDS: String = "Questions"
 
 class TestingActivity : AppCompatActivity() {
-
 
 
     lateinit var listener: CheckResultListener
@@ -31,11 +33,13 @@ class TestingActivity : AppCompatActivity() {
     var mHintFragment = HintFragment()
     lateinit var mResult: Result
     lateinit var adapter: TestingPagerAdapter
-    lateinit var mFirebaseDatabase : FirebaseDatabase
-    lateinit var mDatabaseReference : DatabaseReference
-    lateinit var mChaildEventListener : ChildEventListener
-   lateinit var mParams : TestParams
-    var mQuestions : MutableList<CloseQuestion> = mutableListOf()
+    lateinit var mFirebaseDatabase: FirebaseDatabase
+    lateinit var mDatabaseReference: DatabaseReference
+    lateinit var mChaildEventListener: ChildEventListener
+    lateinit var mParams: TestParams
+    var isShowBottomBar: Boolean = false
+    var isShowFAB: Boolean = false
+    var mQuestions: MutableList<CloseQuestion> = mutableListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,6 +48,10 @@ class TestingActivity : AppCompatActivity() {
         mFirebaseDatabase = FirebaseDatabase.getInstance()
         mDatabaseReference = mFirebaseDatabase.getReference().child(QUESTIONS_CHILDS)
         mQuestions = DBOperations().getAllQuestions()
+        animIn(end_test_fab)
+        animOut(end_test_fab)
+        animIn(bottom_bar_linear_layout)
+        animOut(bottom_bar_linear_layout)
 //        questionsList = mQuestions
         setupTestingViewPAger(mQuestions)
         setupBottomBar()
@@ -79,18 +87,34 @@ class TestingActivity : AppCompatActivity() {
             }
         }
         mDatabaseReference.addChildEventListener(mChaildEventListener)
-        questions_app_bar_layout.addOnOffsetChangedListener(object : AppBarLayout.OnOffsetChangedListener{
+        questions_app_bar_layout.addOnOffsetChangedListener(object : AppBarLayout.OnOffsetChangedListener {
             override fun onOffsetChanged(appBarLayout: AppBarLayout?, verticalOffset: Int) {
                 Log.d("MyLogs", "verticalOffset $verticalOffset")
-                if(Math.abs(verticalOffset) > questions_app_bar_layout.totalScrollRange.div(2)){
+                if (Math.abs(verticalOffset) >= questions_app_bar_layout.totalScrollRange.div(2)) {
                     questions_tool_bar.setBackgroundColor(Color.RED)
-                    bottom_bar_linear_layout.visibility = View.GONE
-                }else{
+//                    bottom_bar_linear_layout.visibility = View.INVISIBLE
+                    if (isShowBottomBar) {
+                        animOut(bottom_bar_linear_layout)
+                    }
+                    isShowBottomBar = false
+                } else {
                     questions_tool_bar.setBackgroundColor(Color.GREEN)
                     bottom_bar_linear_layout.visibility = View.VISIBLE
+
+                    if (!isShowBottomBar) {
+                        animIn(bottom_bar_linear_layout)
+                    }
+                    isShowBottomBar = true
                 }
             }
         })
+
+        end_test_fab.setOnClickListener {
+            animOut(end_test_fab)
+//            end_test_fab.visibility = View.GONE
+            showResult()
+            isShowFAB = false
+        }
     }
 
     override fun onBackPressed() {
@@ -125,39 +149,46 @@ class TestingActivity : AppCompatActivity() {
 
         mResult = Result(test, object : OnEndTestListener {
             override fun endedTest() {
-                result_frame_layout.visibility = View.VISIBLE
-                showFragment(R.id.result_frame_layout, mResultFragment)
-                mResultFragment.showResult(mResult)
-                val resultAdapter : TestingPagerAdapter = TestingPagerAdapter(supportFragmentManager, mResult.test.mSortedQuestions,
-                       true, mResult.userResultAnswers() )
-//                testing_view_pager.removeAllViews()
-                testing_view_pager.adapter = resultAdapter
-                questions_tab_layout.setupWithViewPager(testing_view_pager)
-               val group : ViewGroup = questions_tab_layout.getChildAt(0) as ViewGroup
-                var cnt = 0
-                mResult.userResultAnswers().forEach{
-                    if(it.userInput == null) {
-                       if( it.question.checkCorrectAnswers(it.getAnsweredOptions())){
-                           group.getChildAt(cnt).background = resources.getDrawable(R.drawable.area_square_shape_correct)
-                       }else{
-                           group.getChildAt(cnt).background = resources.getDrawable(R.drawable.area_square_shape_wrong)
-                       }
-                    }else{
-                        if(it.question.checkOpenQuestionAnswers(it.userInput)){
-                            group.getChildAt(cnt).background = resources.getDrawable(R.drawable.area_square_shape_correct)
-                        }else{
-                            group.getChildAt(cnt).background = resources.getDrawable(R.drawable.area_square_shape_wrong)
-                        }
-                    }
-                    cnt = cnt + 1
+                if (!isShowFAB) {
+                    end_test_fab.visibility = View.VISIBLE
+                    animIn(end_test_fab)
+                    animIn(end_test_fab)
+                    isShowFAB = true
                 }
+
+//                result_frame_layout.visibility = View.VISIBLE
+//                showFragment(R.id.result_frame_layout, mResultFragment)
+//                mResultFragment.showResult(mResult)
+//                val resultAdapter : TestingPagerAdapter = TestingPagerAdapter(supportFragmentManager, mResult.test.mSortedQuestions,
+//                       true, mResult.userResultAnswers() )
+////                testing_view_pager.removeAllViews()
+//                testing_view_pager.adapter = resultAdapter
+//                questions_tab_layout.setupWithViewPager(testing_view_pager)
+//               val group : ViewGroup = questions_tab_layout.getChildAt(0) as ViewGroup
+//                var cnt = 0
+//                mResult.userResultAnswers().forEach{
+//                    if(it.userInput == null) {
+//                       if( it.question.checkCorrectAnswers(it.getAnsweredOptions())){
+//                           group.getChildAt(cnt).background = resources.getDrawable(R.drawable.area_square_shape_correct)
+//                       }else{
+//                           group.getChildAt(cnt).background = resources.getDrawable(R.drawable.area_square_shape_wrong)
+//                       }
+//                    }else{
+//                        if(it.question.checkOpenQuestionAnswers(it.userInput)){
+//                            group.getChildAt(cnt).background = resources.getDrawable(R.drawable.area_square_shape_correct)
+//                        }else{
+//                            group.getChildAt(cnt).background = resources.getDrawable(R.drawable.area_square_shape_wrong)
+//                        }
+//                    }
+//                    cnt = cnt + 1
+//                }
             }
         })
         adapter = TestingPagerAdapter(supportFragmentManager, test.mSortedQuestions)
         listener = object : CheckResultListener {
 
             override fun onResult(answer: Answer) {
-                if(answer.userInput != null){
+                if (answer.userInput != null) {
                     mResult.takeAnswer(answer)
                     Toast.makeText(baseContext, "Correct Answer! ${mResult.points.toString()}", Toast.LENGTH_LONG).show()
                     return
@@ -177,31 +208,60 @@ class TestingActivity : AppCompatActivity() {
         questions_tool_bar.title = mParams.testInfo.testTitle
     }
 
-    private fun setupBottomBar(){
+    private fun setupBottomBar() {
         hint_button_image_view.setOnSystemUiVisibilityChangeListener {
             val position = testing_view_pager.currentItem
-            val hint : List<Hint>? = mResult.test.mSortedQuestions[position].hints
-            if(hint != null) {
+            val hint: List<Hint>? = mResult.test.mSortedQuestions[position].hints
+            if (hint != null) {
                 hint_button_image_view.background = resources.getDrawable(R.drawable.ic_help_inactive)
             }
         }
         hint_button_image_view.setOnClickListener {
             val position = testing_view_pager.currentItem
-            val hint : List<Hint>? = mResult.test.mSortedQuestions[position].hints
-            if(hint != null) {
+            val hint: List<Hint>? = mResult.test.mSortedQuestions[position].hints
+            if (hint != null) {
                 result_frame_layout.setPadding(0, 0, 0, bottom_bar_linear_layout.height)
                 result_frame_layout.visibility = View.VISIBLE
                 showFragment(R.id.result_frame_layout, mHintFragment)
                 mHintFragment.showHint(hint)
             }
         }
-        periodical_table_image_view.setOnClickListener(object : View.OnClickListener{
+        periodical_table_image_view.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
                 showPeriodicTable("table")
             }
         })
         solubility_button_image_view.setOnClickListener {
             showPeriodicTable("solubility")
+        }
+    }
+
+    private fun showResult() {
+        result_frame_layout.visibility = View.VISIBLE
+        showFragment(R.id.result_frame_layout, mResultFragment)
+        mResultFragment.showResult(mResult)
+        val resultAdapter: TestingPagerAdapter = TestingPagerAdapter(supportFragmentManager, mResult.test.mSortedQuestions,
+                true, mResult.userResultAnswers())
+//                testing_view_pager.removeAllViews()
+        testing_view_pager.adapter = resultAdapter
+        questions_tab_layout.setupWithViewPager(testing_view_pager)
+        val group: ViewGroup = questions_tab_layout.getChildAt(0) as ViewGroup
+        var cnt = 0
+        mResult.userResultAnswers().forEach {
+            if (it.userInput == null) {
+                if (it.question.checkCorrectAnswers(it.getAnsweredOptions())) {
+                    group.getChildAt(cnt).background = resources.getDrawable(R.drawable.area_square_shape_correct)
+                } else {
+                    group.getChildAt(cnt).background = resources.getDrawable(R.drawable.area_square_shape_wrong)
+                }
+            } else {
+                if (it.question.checkOpenQuestionAnswers(it.userInput)) {
+                    group.getChildAt(cnt).background = resources.getDrawable(R.drawable.area_square_shape_correct)
+                } else {
+                    group.getChildAt(cnt).background = resources.getDrawable(R.drawable.area_square_shape_wrong)
+                }
+            }
+            cnt = cnt + 1
         }
     }
 
@@ -217,9 +277,10 @@ class TestingActivity : AppCompatActivity() {
         transaction.remove(fragment)
         transaction.commit()
     }
-    fun showOptionPhoto(pictureUrl : String){
+
+    fun showOptionPhoto(pictureUrl: String) {
         val urlFolder = baseContext.cacheDir?.canonicalPath
-        val url : String = "file://$urlFolder/ImageCache/"
+        val url: String = "file://$urlFolder/ImageCache/"
         val tagPhoto = MD5Util.getHashString(pictureUrl)
         val data = "<body bgcolor=\"#000000\"><div class=\"centered-content\" align=\"middle\" ><img src=\"$tagPhoto.jpg\"/></div></body>"
         photo_web_view.loadDataWithBaseURL(url, data, "text/html", "UTF-8", null)
@@ -229,9 +290,10 @@ class TestingActivity : AppCompatActivity() {
         photo_web_view.settings?.loadWithOverviewMode = true
         photo_web_view.visibility = View.VISIBLE
     }
-    fun showPeriodicTable(picture : String){
+
+    fun showPeriodicTable(picture: String) {
         val urlFolder = baseContext.cacheDir?.canonicalPath
-        val url : String = "file:///android_asset/"
+        val url: String = "file:///android_asset/"
         val data = "<body bgcolor=\"#000000\"><div class=\"centered-content\" align=\"middle\" ><img src=\"$picture.png\"/></div></body>"
         photo_web_view.loadDataWithBaseURL(url, data, "text/html", "UTF-8", null)
         photo_web_view.settings?.builtInZoomControls = true
@@ -241,4 +303,49 @@ class TestingActivity : AppCompatActivity() {
         photo_web_view.visibility = View.VISIBLE
     }
 
+}
+
+fun animOut(view: View) {
+    ViewCompat.animate(view)
+            .scaleX(0.0F)
+            .scaleY(0.0F)
+            .alpha(0.0F)
+            .setInterpolator(FastOutSlowInInterpolator())
+            .withLayer()
+            .setListener(object : ViewPropertyAnimatorListener {
+                override fun onAnimationEnd(view: View?) {
+                    view?.visibility = View.GONE
+                }
+
+                override fun onAnimationCancel(view: View?) {
+                }
+
+                override fun onAnimationStart(view: View?) {
+
+                }
+            })
+            .start()
+}
+
+fun animIn(view: View) {
+//    view.visibility = View.VISIBLE
+    ViewCompat.animate(view)
+            .scaleX(1.0F)
+            .scaleY(1.0F)
+            .alpha(1.0F)
+            .setInterpolator(FastOutSlowInInterpolator())
+            .withLayer()
+            .setListener(object : ViewPropertyAnimatorListener {
+                override fun onAnimationEnd(view: View?) {
+//                    view?.visibility = View.VISIBLE
+                }
+
+                override fun onAnimationCancel(view: View?) {
+                }
+
+                override fun onAnimationStart(view: View?) {
+
+                }
+            })
+            .start()
 }
