@@ -277,7 +277,6 @@ class MainActivity : AppCompatActivity() {
             } else if (resultCode == Activity.RESULT_CANCELED) {
                 finish()
             }
-
         }
     }
 

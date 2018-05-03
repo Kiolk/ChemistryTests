@@ -230,8 +230,8 @@ class QuestionFragment : Fragment() {
     }
 
     private fun updateIndicator(progressBar: ProgressBar?, size: Int, total : Int) {
-        val percentAnswered : Int = size.times(100).div(total)
-        progressBar?.progress = percentAnswered
+//        val percentAnswered : Int = size.times(100).div(total)
+//        progressBar?.progress = percentAnswered
     }
 //        setUpClickListener()
 //        listener = View.OnClickListener { viewTarget: View ->

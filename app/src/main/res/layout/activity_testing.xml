@@ -61,7 +61,7 @@
                     app:tabMode="scrollable" />
             </android.support.v4.widget.NestedScrollView>
 
-            <android.support.v4.view.ViewPager
+            <com.github.kiolk.chemistrytests.ui.ControledViewPager
                 android:layout_below="@+id/tab_nested_scroll_view"
                 android:id="@+id/testing_view_pager"
                 android:layout_width="match_parent"

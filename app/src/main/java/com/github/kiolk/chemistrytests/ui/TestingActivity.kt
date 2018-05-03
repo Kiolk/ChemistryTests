@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import android.widget.Toast
 import com.github.kiolk.chemistrytests.R
 import com.github.kiolk.chemistrytests.data.CheckResultListener
@@ -37,6 +38,7 @@ class TestingActivity : AppCompatActivity() {
     lateinit var mDatabaseReference: DatabaseReference
     lateinit var mChaildEventListener: ChildEventListener
     lateinit var mParams: TestParams
+    lateinit var mViewPager: ControledViewPager
     var isShowBottomBar: Boolean = false
     var isShowFAB: Boolean = false
     var mQuestions: MutableList<CloseQuestion> = mutableListOf()
@@ -47,12 +49,12 @@ class TestingActivity : AppCompatActivity() {
         mParams = intent.extras.get(TEST_PARAM_INT) as TestParams
         mFirebaseDatabase = FirebaseDatabase.getInstance()
         mDatabaseReference = mFirebaseDatabase.getReference().child(QUESTIONS_CHILDS)
+        mViewPager = findViewById(R.id.testing_view_pager)
         mQuestions = DBOperations().getAllQuestions()
         animIn(end_test_fab)
         animOut(end_test_fab)
         animIn(bottom_bar_linear_layout)
         animOut(bottom_bar_linear_layout)
-//        questionsList = mQuestions
         setupTestingViewPAger(mQuestions)
         setupBottomBar()
         mChaildEventListener = object : ChildEventListener {
@@ -108,13 +110,6 @@ class TestingActivity : AppCompatActivity() {
                 }
             }
         })
-
-        end_test_fab.setOnClickListener {
-            animOut(end_test_fab)
-//            end_test_fab.visibility = View.GONE
-            showResult()
-            isShowFAB = false
-        }
     }
 
     override fun onBackPressed() {
@@ -144,7 +139,6 @@ class TestingActivity : AppCompatActivity() {
 
     private fun setupTestingViewPAger(questionsList: MutableList<CloseQuestion>) {
 
-//        val test = getTrainingTets()
         val test = Test(questionsList, mParams)
 
         mResult = Result(test, object : OnEndTestListener {
@@ -154,6 +148,12 @@ class TestingActivity : AppCompatActivity() {
                     animIn(end_test_fab)
                     animIn(end_test_fab)
                     isShowFAB = true
+                    end_test_fab.setImageDrawable(resources.getDrawable(R.drawable.ic_benzolring1))
+                    end_test_fab.setOnClickListener {
+                        animOut(end_test_fab)
+                        showResult()
+                        isShowFAB = false
+                    }
                 }
 
 //                result_frame_layout.visibility = View.VISIBLE
@@ -188,24 +188,63 @@ class TestingActivity : AppCompatActivity() {
         listener = object : CheckResultListener {
 
             override fun onResult(answer: Answer) {
-                if (answer.userInput != null) {
-                    mResult.takeAnswer(answer)
-                    Toast.makeText(baseContext, "Correct Answer! ${mResult.points.toString()}", Toast.LENGTH_LONG).show()
-                    return
-                }
 
-                if (answer.question.checkCorrectAnswersByNumbers(answer.userAnswers)) {
-                    mResult.takeAnswer(answer)
-                    Toast.makeText(baseContext, "Correct Answer! ${mResult.points.toString()}", Toast.LENGTH_LONG).show()
-                } else {
-                    mResult.takeAnswer(answer)
-                    Toast.makeText(baseContext, "Wrong Answer! ${mResult.points.toString()}", Toast.LENGTH_LONG).show()
+                if (mResult.test.params.testType == TRAINING_TEST) {
+                    end_test_fab.setImageDrawable(resources.getDrawable(R.drawable.ic_benzolring2))
+                    animIn(end_test_fab)
+                    end_test_fab.setOnClickListener {
+                        showSingleQuestionAnswer(answer)
+                        if (mResult.test.params.direction == DIRECT_TEST && end_test_fab.visibility == View.VISIBLE
+                                && (testing_view_pager.currentItem < testing_view_pager.adapter?.count?.minus(1) ?: 0)) {
+                            end_test_fab.setImageDrawable(resources.getDrawable(R.drawable.ic_benzolring4))
+                            animIn(end_test_fab)
+                            end_test_fab.setOnClickListener {
+                                animOut(end_test_fab)
+                                testing_view_pager.currentItem = testing_view_pager.currentItem + 1
+                                updateIndicator(indicator_answered_progress_bar, mResult.askedQuestions.size, mResult.test.mSortedQuestions.size)
+                            }
+                        }else if(mResult.askedQuestions.size != mResult.test.mSortedQuestions.size){
+                            animOut(end_test_fab)
+                            updateIndicator(indicator_answered_progress_bar, mResult.askedQuestions.size, mResult.test.mSortedQuestions.size)
+                        }else{
+                            updateIndicator(indicator_answered_progress_bar, mResult.askedQuestions.size, mResult.test.mSortedQuestions.size)
+                        }
+                    }
+                } else if (mResult.test.params.direction == DIRECT_TEST && end_test_fab.visibility == View.GONE
+                        && (testing_view_pager.currentItem < testing_view_pager.adapter?.count?.minus(1) ?: 0)) {
+                    animIn(end_test_fab)
+                    end_test_fab.setOnClickListener {
+                        animOut(end_test_fab)
+                        testing_view_pager.currentItem = testing_view_pager.currentItem + 1
+                        updateIndicator(indicator_answered_progress_bar, mResult.askedQuestions.size, mResult.test.mSortedQuestions.size)
+                    }
                 }
+                updateIndicator(indicator_answered_progress_bar, mResult.askedQuestions.size, mResult.test.mSortedQuestions.size)
             }
         }
         testing_view_pager.adapter = adapter
+        if (mResult.test.params.direction == DIRECT_TEST) {
+            testing_view_pager.setPagingEnabled(false)
+            questions_tab_layout.visibility = View.GONE
+        }
         questions_tab_layout.setupWithViewPager(testing_view_pager)
         questions_tool_bar.title = mParams.testInfo.testTitle
+    }
+
+    fun showSingleQuestionAnswer(answer: Answer) {
+        if (answer.userInput != null) {
+            mResult.takeAnswer(answer)
+            Toast.makeText(baseContext, "Correct Answer! ${mResult.points.toString()}", Toast.LENGTH_LONG).show()
+            return
+        }
+
+        if (answer.question.checkCorrectAnswersByNumbers(answer.userAnswers)) {
+            mResult.takeAnswer(answer)
+            Toast.makeText(baseContext, "Correct Answer! ${mResult.points.toString()}", Toast.LENGTH_LONG).show()
+        } else {
+            mResult.takeAnswer(answer)
+            Toast.makeText(baseContext, "Wrong Answer! ${mResult.points.toString()}", Toast.LENGTH_LONG).show()
+        }
     }
 
     private fun setupBottomBar() {
@@ -242,8 +281,9 @@ class TestingActivity : AppCompatActivity() {
         mResultFragment.showResult(mResult)
         val resultAdapter: TestingPagerAdapter = TestingPagerAdapter(supportFragmentManager, mResult.test.mSortedQuestions,
                 true, mResult.userResultAnswers())
-//                testing_view_pager.removeAllViews()
         testing_view_pager.adapter = resultAdapter
+        testing_view_pager.setPagingEnabled(true)
+        questions_tab_layout.visibility = View.VISIBLE
         questions_tab_layout.setupWithViewPager(testing_view_pager)
         val group: ViewGroup = questions_tab_layout.getChildAt(0) as ViewGroup
         var cnt = 0
@@ -305,6 +345,11 @@ class TestingActivity : AppCompatActivity() {
 
 }
 
+private fun updateIndicator(progressBar: ProgressBar?, size: Int, total : Int) {
+    val percentAnswered : Int = size.times(100).div(total)
+    progressBar?.progress = percentAnswered
+}
+
 fun animOut(view: View) {
     ViewCompat.animate(view)
             .scaleX(0.0F)
@@ -328,7 +373,7 @@ fun animOut(view: View) {
 }
 
 fun animIn(view: View) {
-//    view.visibility = View.VISIBLE
+    view.visibility = View.VISIBLE
     ViewCompat.animate(view)
             .scaleX(1.0F)
             .scaleY(1.0F)
@@ -337,7 +382,6 @@ fun animIn(view: View) {
             .withLayer()
             .setListener(object : ViewPropertyAnimatorListener {
                 override fun onAnimationEnd(view: View?) {
-//                    view?.visibility = View.VISIBLE
                 }
 
                 override fun onAnimationCancel(view: View?) {
