@@ -6,7 +6,7 @@ interface OnEndTestListener {
 
 class Result(var test: Test, var endListener: OnEndTestListener) {
 
-    val askedQuestions: MutableList<Answer> = mutableListOf()
+    var askedQuestions: MutableList<Answer> = mutableListOf()
     var points: Float = 0.0F
 
 
@@ -30,7 +30,7 @@ class Result(var test: Test, var endListener: OnEndTestListener) {
         askedQuestions.filter { it.userAnswers.isNotEmpty() && it.question.checkCorrectAnswersByNumbers(it.userAnswers) }.forEach {
             result += it.question.questionCost
         }
-        askedQuestions.filter { !it.userAnswers.isNotEmpty() && it.question.checkOpenQuestionAnswers(it.userInput)}.forEach {
+        askedQuestions.filter { !it.userAnswers.isNotEmpty() && it.question.checkOpenQuestionAnswers(it.userInput) }.forEach {
             result += it.question.questionCost
         }
         return result
@@ -38,18 +38,28 @@ class Result(var test: Test, var endListener: OnEndTestListener) {
 
     fun isLastTestQuestion() = askedQuestions.size == test.mSortedQuestions.size
 
-    fun userResultAnswers() : MutableList<Answer>{
-        val listAskedQuestion : MutableList<Answer> = mutableListOf()
+    fun userResultAnswers(): MutableList<Answer> {
+        val listAskedQuestion: MutableList<Answer> = mutableListOf()
         test.mSortedQuestions.forEach {
-            val question : CloseQuestion = it
-            val userAnswer : Answer? = askedQuestions.find { it.question == question}
-            if(userAnswer != null){
+            val question: CloseQuestion = it
+            val userAnswer: Answer? = askedQuestions.find { it.question == question }
+            if (userAnswer != null) {
                 listAskedQuestion.add(userAnswer)
-            }else{
+            } else {
                 listAskedQuestion.add(Answer(question, listOf(-1), null))
             }
         }
         return listAskedQuestion
+    }
+
+    fun removeEmptyAnswer(answer: Answer) {
+        val tmp: MutableList<Answer> = mutableListOf()
+        askedQuestions.forEach {
+            if (it.question != answer.question) {
+                tmp.add(it)
+            }
+        }
+        askedQuestions = tmp
     }
 }
 

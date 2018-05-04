@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.support.design.widget.AppBarLayout
 import android.support.v4.app.Fragment
 import android.support.v4.view.ViewCompat
+import android.support.v4.view.ViewPager
 import android.support.v4.view.ViewPropertyAnimatorListener
 import android.support.v4.view.animation.FastOutSlowInInterpolator
 import android.support.v7.app.AppCompatActivity
@@ -13,16 +14,20 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.Toast
+import android.widget.Toolbar
+import closeFragment
 import com.github.kiolk.chemistrytests.R
 import com.github.kiolk.chemistrytests.data.CheckResultListener
 import com.github.kiolk.chemistrytests.data.TestingPagerAdapter
 import com.github.kiolk.chemistrytests.data.database.DBOperations
 import com.github.kiolk.chemistrytests.data.fragments.HintFragment
 import com.github.kiolk.chemistrytests.data.fragments.ResultFragment
+import com.github.kiolk.chemistrytests.data.fragments.TestInfoFragment
 import com.github.kiolk.chemistrytests.data.models.*
 import com.google.firebase.database.*
 import kiolk.com.github.pen.utils.MD5Util
 import kotlinx.android.synthetic.main.activity_testing.*
+import showFragment
 
 val QUESTIONS_CHILDS: String = "Questions"
 
@@ -39,6 +44,7 @@ class TestingActivity : AppCompatActivity() {
     lateinit var mChaildEventListener: ChildEventListener
     lateinit var mParams: TestParams
     lateinit var mViewPager: ControledViewPager
+    var mTestInfo = TestInfoFragment()
     var isShowBottomBar: Boolean = false
     var isShowFAB: Boolean = false
     var mQuestions: MutableList<CloseQuestion> = mutableListOf()
@@ -119,17 +125,16 @@ class TestingActivity : AppCompatActivity() {
             result_frame_layout.visibility = View.GONE
             return
         }
+        if(test_info_frame_layout.visibility == View.VISIBLE){
+            closeTestInfo()
+            return
+        }
         if (photo_web_view.visibility == View.VISIBLE) {
             photo_web_view.visibility = View.GONE
             //TODO find solution for jumping of pictures
             return
         }
         super.onBackPressed()
-    }
-
-    override fun onResume() {
-        super.onResume()
-//        mDatabaseReference.addChildEventListener(mChaildEventListener)
     }
 
     override fun onPause() {
@@ -218,8 +223,11 @@ class TestingActivity : AppCompatActivity() {
                         testing_view_pager.currentItem = testing_view_pager.currentItem + 1
                         updateIndicator(indicator_answered_progress_bar, mResult.askedQuestions.size, mResult.test.mSortedQuestions.size)
                     }
+                }else{
+                    showSingleQuestionAnswer(answer)
                 }
                 updateIndicator(indicator_answered_progress_bar, mResult.askedQuestions.size, mResult.test.mSortedQuestions.size)
+                updateTabLayout()
             }
         }
         testing_view_pager.adapter = adapter
@@ -229,9 +237,31 @@ class TestingActivity : AppCompatActivity() {
         }
         questions_tab_layout.setupWithViewPager(testing_view_pager)
         questions_tool_bar.title = mParams.testInfo.testTitle
+
+
+        val naviagationListener : View.OnClickListener= object : View.OnClickListener {
+            override fun onClick(v: View?) {
+                if(test_info_frame_layout.visibility == View.GONE){
+
+                    test_info_frame_layout.visibility = View.VISIBLE
+                    questions_tool_bar.setNavigationIcon(resources.getDrawable(R.drawable.ic_left_arrow))
+                    showFragment(supportFragmentManager, R.id.test_info_frame_layout, mTestInfo)
+                    mTestInfo.showTestInfo(mResult.test)
+                }else{
+                    closeTestInfo()
+                }
+            }
+        }
+        questions_tool_bar.setNavigationOnClickListener(naviagationListener)
     }
 
-    fun showSingleQuestionAnswer(answer: Answer) {
+    private fun closeTestInfo(){
+        test_info_frame_layout.visibility = View.GONE
+        questions_tool_bar.setNavigationIcon(resources.getDrawable(R.drawable.ic_menu))
+        closeFragment(supportFragmentManager, mTestInfo)
+    }
+
+   private fun showSingleQuestionAnswer(answer: Answer) {
         if (answer.userInput != null) {
             mResult.takeAnswer(answer)
             Toast.makeText(baseContext, "Correct Answer! ${mResult.points.toString()}", Toast.LENGTH_LONG).show()
@@ -241,10 +271,42 @@ class TestingActivity : AppCompatActivity() {
         if (answer.question.checkCorrectAnswersByNumbers(answer.userAnswers)) {
             mResult.takeAnswer(answer)
             Toast.makeText(baseContext, "Correct Answer! ${mResult.points.toString()}", Toast.LENGTH_LONG).show()
-        } else {
+        } else if(answer.userAnswers.isEmpty()){
+            mResult.removeEmptyAnswer(answer)
+        }else {
             mResult.takeAnswer(answer)
             Toast.makeText(baseContext, "Wrong Answer! ${mResult.points.toString()}", Toast.LENGTH_LONG).show()
         }
+    }
+
+    private fun updateTabLayout(){
+        val position : Int = testing_view_pager.currentItem
+        if(mResult.askedQuestions.find { it.question ==  mResult.test.mSortedQuestions[position]} != null){
+            val group: ViewGroup = questions_tab_layout.getChildAt(0) as ViewGroup
+            group.getChildAt(position).background = resources.getDrawable(R.drawable.area_take_answer)
+        }else{
+            val group: ViewGroup = questions_tab_layout.getChildAt(0) as ViewGroup
+            group.getChildAt(position).background = resources.getDrawable(R.drawable.area_not_answer)
+        }
+//        testing_view_pager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener{
+//            override fun onPageScrollStateChanged(state: Int) {
+//            }
+//
+//            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+//                Log.d("MyLogs", "onPageScrolled $position")
+//                if(mResult.askedQuestions.find { it.question ==  mResult.test.mSortedQuestions[position]} != null){
+//                    val group: ViewGroup = questions_tab_layout.getChildAt(0) as ViewGroup
+//                    group.getChildAt(position).background = resources.getDrawable(R.drawable.area_square_shape_correct)
+//                }else{
+//                    val group: ViewGroup = questions_tab_layout.getChildAt(0) as ViewGroup
+//                    group.getChildAt(position).background = resources.getDrawable(R.drawable.area_square_shape_wrong)
+//                }
+//            }
+//
+//            override fun onPageSelected(position: Int) {
+//                Log.d("MyLogs", "onPageSelected $position")
+//            }
+//        })
     }
 
     private fun setupBottomBar() {

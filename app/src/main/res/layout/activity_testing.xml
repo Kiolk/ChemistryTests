@@ -23,12 +23,11 @@
                 android:id="@+id/questions_tool_bar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
+                app:navigationIcon="@drawable/ic_menu"
                 app:layout_scrollFlags="scroll|enterAlwaysCollapsed">
 
             </android.support.v7.widget.Toolbar>
-
         </android.support.design.widget.AppBarLayout>
-
         <RelativeLayout
             android:id="@+id/testing_relative_layout"
             android:layout_width="match_parent"
@@ -60,12 +59,18 @@
                     android:layout_height="?attr/actionBarSize"
                     app:tabMode="scrollable" />
             </android.support.v4.widget.NestedScrollView>
-
             <com.github.kiolk.chemistrytests.ui.ControledViewPager
                 android:layout_below="@+id/tab_nested_scroll_view"
                 android:id="@+id/testing_view_pager"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
+            <FrameLayout
+                android:id="@+id/test_info_frame_layout"
+                android:layout_width="match_parent"
+                android:visibility="gone"
+                android:layout_height="match_parent"
+                android:layout_below="@id/indicator_line_linear_layout">
+            </FrameLayout>
         </RelativeLayout>
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/end_test_fab"

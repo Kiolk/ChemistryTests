@@ -13,4 +13,6 @@
     <color name="GRAY_TEXT_COLOR">#8f8f8f</color>
     <color name="BLACK_TEXT_COLOR">#000000</color>
     <color name="RED_TEXT_COLOR">#ff3333</color>
+    <color name="ANSWERED">#904c6ca6</color>
+    <color name="NOT_ANSWERED">#00ffffff</color>
 </resources>

@@ -70,10 +70,14 @@ class QuestionFragment : Fragment() {
                 view.findViewById<LinearLayout>(R.id.open_input_linear_layout)?.visibility = View.VISIBLE
                 view.findViewById<EditText>(R.id.input_answer_edit_text).addTextChangedListener(object : TextWatcher {
                     override fun afterTextChanged(s: Editable?) {
+                        val act = activity as TestingActivity
                         if(inputText.text.toString() != "" && input != s?.toString()) {
                             s?.let{input = it.toString()}
-                            val act = activity as TestingActivity
                             act.listener.onResult(Answer(mQuestion, mutableListOf(), s?.toString()))
+                            updateIndicator(act.indicator_answered_progress_bar, act.mResult.askedQuestions.size,
+                                    act.mResult.test.mSortedQuestions.size)
+                        }else{
+                            act.listener.onResult(Answer(mQuestion, mutableListOf(), null))
                             updateIndicator(act.indicator_answered_progress_bar, act.mResult.askedQuestions.size,
                                     act.mResult.test.mSortedQuestions.size)
                         }
@@ -268,27 +272,37 @@ class QuestionFragment : Fragment() {
                 when (viewTarget.id) {
                     view?.answer_one_check_box?.id -> {
                         clearCheckBox(0)
-                        userAnswers.add(0)
+                        if(view?.answer_one_check_box?.isChecked == true) {
+                            userAnswers.add(0)
+                        }
                         checkCorrectAnswer(userAnswers)
                     }
                     view?.answer_two_check_box?.id -> {
                         clearCheckBox(1)
-                        userAnswers.add(1)
+                        if(view?.answer_two_check_box?.isChecked == true) {
+                            userAnswers.add(1)
+                        }
                         checkCorrectAnswer(userAnswers)
                     }
                     view?.answer_three_check_box?.id -> {
                         clearCheckBox(2)
-                        userAnswers.add(2)
+                        if(view?.answer_three_check_box?.isChecked == true) {
+                            userAnswers.add(2)
+                        }
                         checkCorrectAnswer(userAnswers)
                     }
                     view?.answer_four_check_box?.id -> {
                         clearCheckBox(3)
-                        userAnswers.add(3)
+                        if(view?.answer_four_check_box?.isChecked == true) {
+                            userAnswers.add(3)
+                        }
                         checkCorrectAnswer(userAnswers)
                     }
                     view?.answer_five_check_box?.id -> {
                         clearCheckBox(4)
-                        userAnswers.add(0)
+                        if(view?.answer_five_check_box?.isChecked == true) {
+                            userAnswers.add(4)
+                        }
                         checkCorrectAnswer(userAnswers)
                     }
                     else -> -1
