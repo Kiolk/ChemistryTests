@@ -30,16 +30,16 @@ import kiolk.com.github.pen.utils.PenConstantsUtil
 import kotlinx.android.synthetic.main.activity_main.*
 import showFragment
 
-val RC_SIGN_IN: Int = 1
+//val RC_SIGN_IN: Int = 1
 val TEST_PARAM_INT: String = "params"
 val TESTS_CHILD: String = "tests"
 val DATA_BASE_INFO_CHAILD: String = "DBInformation"
 
 class MainActivity : AppCompatActivity() {
-
-    lateinit var mAuthentication: FirebaseAuth
-    lateinit var mAuthenticationListener: FirebaseAuth.AuthStateListener
-    val mProviders = listOf<AuthUI.IdpConfig>(AuthUI.IdpConfig.Builder(AuthUI.EMAIL_PROVIDER).build(), AuthUI.IdpConfig.Builder(AuthUI.GOOGLE_PROVIDER).build())
+//
+//    lateinit var mAuthentication: FirebaseAuth
+//    lateinit var mAuthenticationListener: FirebaseAuth.AuthStateListener
+//    val mProviders = listOf<AuthUI.IdpConfig>(AuthUI.IdpConfig.Builder(AuthUI.EMAIL_PROVIDER).build(), AuthUI.IdpConfig.Builder(AuthUI.GOOGLE_PROVIDER).build())
     lateinit var mFirebaseDatabase: FirebaseDatabase
     lateinit var mFirebaseDatabase2: FirebaseDatabase
     lateinit var mDatabaseReference: DatabaseReference
@@ -55,38 +55,35 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        initImageLoader()
         setContentView(R.layout.activity_main)
         setSupportActionBar(main_tool_bar)
         main_drawer_layout.setStatusBarBackground(R.color.fui_transparent)
-        FirebaseMessaging.getInstance()
         mAvaliableTests = AvaliableFragments()
         mAvailableTests = AvaliableTestFragment()
         mCustomTest = CustomTest()
-        mAuthentication = FirebaseAuth.getInstance()
+//        mAuthentication = FirebaseAuth.getInstance()
         mFirebaseDatabase = FirebaseDatabase.getInstance()
 //        splashScreenSetup()
 //        upload_data_progress_bar.visibility = View.GONE
 //        splash_frame_layout.visibility = View.GONE
-        mAuthenticationListener = object : FirebaseAuth.AuthStateListener {
-            override fun onAuthStateChanged(p0: FirebaseAuth) {
-                val firebaseUser: FirebaseUser? = p0.currentUser
-                if (firebaseUser != null) {
-                    Toast.makeText(baseContext,
-                            resources.getString(R.string.SUCCES_LOGGIN),
-                            Toast.LENGTH_LONG)
-                            .show()
-                } else {
-                    startActivityForResult(AuthUI.getInstance().
-                            createSignInIntentBuilder().
-                            setIsSmartLockEnabled(false).
-                            setAvailableProviders(mProviders).
-                            build(), RC_SIGN_IN)
-
-                }
-            }
-
-        }
+//        mAuthenticationListener = object : FirebaseAuth.AuthStateListener {
+//            override fun onAuthStateChanged(p0: FirebaseAuth) {
+//                val firebaseUser: FirebaseUser? = p0.currentUser
+//                if (firebaseUser != null) {
+//                    Toast.makeText(baseContext,
+//                            resources.getString(R.string.SUCCES_LOGGIN),
+//                            Toast.LENGTH_LONG)
+//                            .show()
+//                } else {
+//                    startActivityForResult(AuthUI.getInstance().
+//                            createSignInIntentBuilder().
+//                            setIsSmartLockEnabled(false).
+//                            setAvailableProviders(mProviders).
+//                            build(), RC_SIGN_IN)
+//
+//                }
+//            }
+//        }
 
 
 //        text2.text = Html.fromHtml("H<sub>2</sub>SO<sup>4</sup> + Al = Al<sub>2</sub>(SO<sub>4</sub>)<sub>3</sub> + H<sub>2</sub>")
@@ -246,24 +243,14 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        mAuthentication.addAuthStateListener(mAuthenticationListener)
+//        mAuthentication.addAuthStateListener(mAuthenticationListener)
 //        mDatabaseReference.addChildEventListener(mChaildEventListener)
     }
 
     override fun onPause() {
         super.onPause()
-        mAuthentication.removeAuthStateListener(mAuthenticationListener)
+//        mAuthentication.removeAuthStateListener(mAuthenticationListener)
 //        mDatabaseReference.removeEventListener(mChaildEventListener)
-    }
-
-    private fun initImageLoader() {
-        Pen.getInstance().setLoaderSettings().
-                setSizeInnerFileCache(20L).
-                setContext(baseContext).
-                setTypeOfCache(PenConstantsUtil.INNER_FILE_CACHE).
-                setSavingStrategy(PenConstantsUtil.SAVE_FULL_IMAGE_STRATEGY).
-                setUp()
-
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

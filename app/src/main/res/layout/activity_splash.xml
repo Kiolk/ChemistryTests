@@ -7,6 +7,15 @@
     tools:context="com.github.kiolk.chemistrytests.ui.SplashActivity">
 
     <ImageView
+        android:id="@+id/logo_splash_image_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitCenter"
+        android:visibility="visible"
+        android:padding="@dimen/BLOCK_PADDING"
+        android:src="@drawable/ic_chem"/>
+
+    <ImageView
         android:id="@+id/my_progress_bar_image_view"
         android:layout_width="100dp"
         android:layout_height="100dp"
@@ -14,6 +23,7 @@
         android:scaleType="centerInside"
         android:src="@drawable/ic_benzolring"
         android:tag="1"
+        android:visibility="gone"
         android:layout_centerVertical="true"/>
     <ProgressBar
         android:layout_width="wrap_content"

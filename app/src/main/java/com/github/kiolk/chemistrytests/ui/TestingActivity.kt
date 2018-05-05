@@ -24,6 +24,8 @@ import com.github.kiolk.chemistrytests.data.fragments.HintFragment
 import com.github.kiolk.chemistrytests.data.fragments.ResultFragment
 import com.github.kiolk.chemistrytests.data.fragments.TestInfoFragment
 import com.github.kiolk.chemistrytests.data.models.*
+import com.github.kiolk.chemistrytests.utils.SlideAnimationUtil
+import com.github.kiolk.chemistrytests.utils.SlideAnimationUtil.FASTER
 import com.google.firebase.database.*
 import kiolk.com.github.pen.utils.MD5Util
 import kotlinx.android.synthetic.main.activity_testing.*
@@ -59,8 +61,8 @@ class TestingActivity : AppCompatActivity() {
         mQuestions = DBOperations().getAllQuestions()
         animIn(end_test_fab)
         animOut(end_test_fab)
-        animIn(bottom_bar_linear_layout)
-        animOut(bottom_bar_linear_layout)
+//        animIn(bottom_bar_linear_layout)
+//        animOut(bottom_bar_linear_layout)
         setupTestingViewPAger(mQuestions)
         setupBottomBar()
         mChaildEventListener = object : ChildEventListener {
@@ -98,11 +100,17 @@ class TestingActivity : AppCompatActivity() {
         questions_app_bar_layout.addOnOffsetChangedListener(object : AppBarLayout.OnOffsetChangedListener {
             override fun onOffsetChanged(appBarLayout: AppBarLayout?, verticalOffset: Int) {
                 Log.d("MyLogs", "verticalOffset $verticalOffset")
-                if (Math.abs(verticalOffset) >= questions_app_bar_layout.totalScrollRange.div(2)) {
+//                if (Math.abs(verticalOffset) >= questions_app_bar_layout.totalScrollRange.div(0.5F)) {
+                if (Math.abs(verticalOffset) >= 55) {
                     questions_tool_bar.setBackgroundColor(Color.RED)
-//                    bottom_bar_linear_layout.visibility = View.INVISIBLE
                     if (isShowBottomBar) {
-                        animOut(bottom_bar_linear_layout)
+//                        animOut(bottom_bar_linear_layout)
+                        SlideAnimationUtil.slideOutToTop(baseContext, bottom_bar_linear_layout,
+                                object : SlideAnimationUtil.SlideAnimationListener{
+                                    override fun animationEnd() {
+                                        bottom_bar_linear_layout.visibility = View.GONE
+                                    }
+                                }, FASTER)
                     }
                     isShowBottomBar = false
                 } else {
@@ -110,7 +118,9 @@ class TestingActivity : AppCompatActivity() {
                     bottom_bar_linear_layout.visibility = View.VISIBLE
 
                     if (!isShowBottomBar) {
-                        animIn(bottom_bar_linear_layout)
+                        bottom_bar_linear_layout.visibility = View.VISIBLE
+                        SlideAnimationUtil.slideInToTop(baseContext, bottom_bar_linear_layout, null, 150)
+//                        animIn(bottom_bar_linear_layout)
                     }
                     isShowBottomBar = true
                 }
@@ -125,7 +135,7 @@ class TestingActivity : AppCompatActivity() {
             result_frame_layout.visibility = View.GONE
             return
         }
-        if(test_info_frame_layout.visibility == View.VISIBLE){
+        if (test_info_frame_layout.visibility == View.VISIBLE) {
             closeTestInfo()
             return
         }
@@ -208,10 +218,10 @@ class TestingActivity : AppCompatActivity() {
                                 testing_view_pager.currentItem = testing_view_pager.currentItem + 1
                                 updateIndicator(indicator_answered_progress_bar, mResult.askedQuestions.size, mResult.test.mSortedQuestions.size)
                             }
-                        }else if(mResult.askedQuestions.size != mResult.test.mSortedQuestions.size){
+                        } else if (mResult.askedQuestions.size != mResult.test.mSortedQuestions.size) {
                             animOut(end_test_fab)
                             updateIndicator(indicator_answered_progress_bar, mResult.askedQuestions.size, mResult.test.mSortedQuestions.size)
-                        }else{
+                        } else {
                             updateIndicator(indicator_answered_progress_bar, mResult.askedQuestions.size, mResult.test.mSortedQuestions.size)
                         }
                     }
@@ -223,7 +233,7 @@ class TestingActivity : AppCompatActivity() {
                         testing_view_pager.currentItem = testing_view_pager.currentItem + 1
                         updateIndicator(indicator_answered_progress_bar, mResult.askedQuestions.size, mResult.test.mSortedQuestions.size)
                     }
-                }else{
+                } else {
                     showSingleQuestionAnswer(answer)
                 }
                 updateIndicator(indicator_answered_progress_bar, mResult.askedQuestions.size, mResult.test.mSortedQuestions.size)
@@ -239,15 +249,16 @@ class TestingActivity : AppCompatActivity() {
         questions_tool_bar.title = mParams.testInfo.testTitle
 
 
-        val naviagationListener : View.OnClickListener= object : View.OnClickListener {
+        val naviagationListener: View.OnClickListener = object : View.OnClickListener {
             override fun onClick(v: View?) {
-                if(test_info_frame_layout.visibility == View.GONE){
+                if (test_info_frame_layout.visibility == View.GONE) {
 
                     test_info_frame_layout.visibility = View.VISIBLE
+                    SlideAnimationUtil.slideInFromLeft(baseContext, test_info_frame_layout, null, FASTER)
                     questions_tool_bar.setNavigationIcon(resources.getDrawable(R.drawable.ic_left_arrow))
                     showFragment(supportFragmentManager, R.id.test_info_frame_layout, mTestInfo)
                     mTestInfo.showTestInfo(mResult.test)
-                }else{
+                } else {
                     closeTestInfo()
                 }
             }
@@ -255,13 +266,19 @@ class TestingActivity : AppCompatActivity() {
         questions_tool_bar.setNavigationOnClickListener(naviagationListener)
     }
 
-    private fun closeTestInfo(){
-        test_info_frame_layout.visibility = View.GONE
-        questions_tool_bar.setNavigationIcon(resources.getDrawable(R.drawable.ic_menu))
-        closeFragment(supportFragmentManager, mTestInfo)
+    private fun closeTestInfo() {
+//        test_info_frame_layout.visibility = View.GONE
+        SlideAnimationUtil.slideOutToLeft(baseContext, test_info_frame_layout, object : SlideAnimationUtil.SlideAnimationListener {
+            override fun animationEnd() {
+                test_info_frame_layout.visibility = View.GONE
+                questions_tool_bar.setNavigationIcon(resources.getDrawable(R.drawable.ic_menu))
+                closeFragment(supportFragmentManager, mTestInfo)
+            }
+        }, FASTER)
+
     }
 
-   private fun showSingleQuestionAnswer(answer: Answer) {
+    private fun showSingleQuestionAnswer(answer: Answer) {
         if (answer.userInput != null) {
             mResult.takeAnswer(answer)
             Toast.makeText(baseContext, "Correct Answer! ${mResult.points.toString()}", Toast.LENGTH_LONG).show()
@@ -271,20 +288,20 @@ class TestingActivity : AppCompatActivity() {
         if (answer.question.checkCorrectAnswersByNumbers(answer.userAnswers)) {
             mResult.takeAnswer(answer)
             Toast.makeText(baseContext, "Correct Answer! ${mResult.points.toString()}", Toast.LENGTH_LONG).show()
-        } else if(answer.userAnswers.isEmpty()){
+        } else if (answer.userAnswers.isEmpty()) {
             mResult.removeEmptyAnswer(answer)
-        }else {
+        } else {
             mResult.takeAnswer(answer)
             Toast.makeText(baseContext, "Wrong Answer! ${mResult.points.toString()}", Toast.LENGTH_LONG).show()
         }
     }
 
-    private fun updateTabLayout(){
-        val position : Int = testing_view_pager.currentItem
-        if(mResult.askedQuestions.find { it.question ==  mResult.test.mSortedQuestions[position]} != null){
+    private fun updateTabLayout() {
+        val position: Int = testing_view_pager.currentItem
+        if (mResult.askedQuestions.find { it.question == mResult.test.mSortedQuestions[position] } != null) {
             val group: ViewGroup = questions_tab_layout.getChildAt(0) as ViewGroup
             group.getChildAt(position).background = resources.getDrawable(R.drawable.area_take_answer)
-        }else{
+        } else {
             val group: ViewGroup = questions_tab_layout.getChildAt(0) as ViewGroup
             group.getChildAt(position).background = resources.getDrawable(R.drawable.area_not_answer)
         }
@@ -407,8 +424,8 @@ class TestingActivity : AppCompatActivity() {
 
 }
 
-private fun updateIndicator(progressBar: ProgressBar?, size: Int, total : Int) {
-    val percentAnswered : Int = size.times(100).div(total)
+private fun updateIndicator(progressBar: ProgressBar?, size: Int, total: Int) {
+    val percentAnswered: Int = size.times(100).div(total)
     progressBar?.progress = percentAnswered
 }
 

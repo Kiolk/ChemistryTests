@@ -1,34 +1,130 @@
 package com.github.kiolk.chemistrytests.ui
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import checkConnection
+import com.firebase.ui.auth.AuthUI
 import com.github.kiolk.chemistrytests.R
 import com.github.kiolk.chemistrytests.data.asynctasks.ResultCallback
 import com.github.kiolk.chemistrytests.data.asynctasks.SingleAsyncTask
 import com.github.kiolk.chemistrytests.data.database.DBConnector
 import com.github.kiolk.chemistrytests.data.executs.UploadDataInDb
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import kotlinx.android.synthetic.main.activity_splash.*
 
 val SPEED_ROTATION : Long = 200
 val SPLASH_DURATION : Long = 5000
+val PROVIDERS = listOf<AuthUI.IdpConfig>(AuthUI.IdpConfig.Builder(AuthUI.EMAIL_PROVIDER).build(), AuthUI.IdpConfig.Builder(AuthUI.GOOGLE_PROVIDER).build())
+val RC_SIGN_IN: Int = 1
 
 class SplashActivity : AppCompatActivity() {
 
     lateinit var mHandler : Handler
     lateinit var mRunnable : Runnable
     lateinit var mResultCallback : ResultCallback
+    lateinit var mAuthentication: FirebaseAuth
+    lateinit var mAuthenticationListener: FirebaseAuth.AuthStateListener
+    var isSetupAuth : Boolean = false
 
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
-        DBConnector.initInstance(baseContext)
+//        setupTimer()
+//        mResultCallback = object : ResultCallback{
+//            override fun onSuccess() {
+//                launchMainActivity()
+//            }
+//
+//            override fun onError() {
+//            }
+//        }
+//
+//        if (!checkConnection(baseContext)) {
+//            Log.d("MyLogs", "Continue work offline")
+//            Toast.makeText(baseContext, "You continue off line", Toast.LENGTH_SHORT).show()
+//            launchMainActivity()
+//        } else {
+//            val handler = Handler()
+//            handler.postDelayed({  SingleAsyncTask().execute(UploadDataInDb(mResultCallback)) }, SPLASH_DURATION)
+//        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == RC_SIGN_IN) {
+            if (resultCode == Activity.RESULT_OK) {
+                Toast.makeText(baseContext,
+                        resources.getString(R.string.SUCCES_LOGGIN),
+                        Toast.LENGTH_LONG)
+                        .show()
+                startLoad()
+            } else if (resultCode == Activity.RESULT_CANCELED) {
+                finish()
+            }
+        }
+    }
+
+    private fun setupAuthentication() {
+        isSetupAuth = true
+        mAuthentication = FirebaseAuth.getInstance()
+        mAuthenticationListener = object : FirebaseAuth.AuthStateListener {
+            override fun onAuthStateChanged(p0: FirebaseAuth) {
+                val firebaseUser: FirebaseUser? = p0.currentUser
+                if (firebaseUser != null) {
+                    Toast.makeText(baseContext,
+                            resources.getString(R.string.SUCCES_LOGGIN),
+                            Toast.LENGTH_LONG)
+                            .show()
+                    startLoad()
+
+                } else {
+                    startActivityForResult(AuthUI.getInstance().
+                            createSignInIntentBuilder().
+                            setIsSmartLockEnabled(false).
+                            setAvailableProviders(PROVIDERS).
+                            build(), RC_SIGN_IN)
+                }
+            }
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+    }
+
+    override fun onPostResume() {
+        super.onPostResume()
+        if(!isSetupAuth){
+            setupAuthentication()
+        }
+//        if(isSetupAuth)
+        mAuthentication.addAuthStateListener(mAuthenticationListener)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        mAuthentication.removeAuthStateListener(mAuthenticationListener)
+
+    }
+
+    override fun onDestroy() {
+        mHandler.removeCallbacks(mRunnable)
+        super.onDestroy()
+    }
+
+    private fun startLoad(){
+        logo_splash_image_view.visibility = View.GONE
+        my_progress_bar_image_view.visibility = View.VISIBLE
         setupTimer()
         mResultCallback = object : ResultCallback{
             override fun onSuccess() {
@@ -38,6 +134,7 @@ class SplashActivity : AppCompatActivity() {
             override fun onError() {
             }
         }
+
         if (!checkConnection(baseContext)) {
             Log.d("MyLogs", "Continue work offline")
             Toast.makeText(baseContext, "You continue off line", Toast.LENGTH_SHORT).show()
@@ -46,11 +143,6 @@ class SplashActivity : AppCompatActivity() {
             val handler = Handler()
             handler.postDelayed({  SingleAsyncTask().execute(UploadDataInDb(mResultCallback)) }, SPLASH_DURATION)
         }
-    }
-
-    override fun onDestroy() {
-        mHandler.removeCallbacks(mRunnable)
-        super.onDestroy()
     }
 
     private fun setupTimer() {
