@@ -38,6 +38,18 @@ class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
+//        logo_splash_image_view.setOnSystemUiVisibilityChangeListener(object : View.OnSystemUiVisibilityChangeListener{
+//            override fun onSystemUiVisibilityChange(visibility: Int) {
+//                if (1==1){
+//                    if(!isSetupAuth){
+//                        setupAuthentication()
+//                    }
+//                    mAuthentication.addAuthStateListener(mAuthenticationListener)
+//                }
+//            }
+//        })
+//        val handler = Handler()
+//        handler.postDelayed({logo_splash_image_view.visibility = View.VISIBLE}, 1000)
 //        setupTimer()
 //        mResultCallback = object : ResultCallback{
 //            override fun onSuccess() {
@@ -99,25 +111,25 @@ class SplashActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-
+        val handler = Handler()
+        handler.postDelayed({if(!isSetupAuth){
+            setupAuthentication()
+        }
+            mAuthentication.addAuthStateListener(mAuthenticationListener)}, 2000)
     }
 
     override fun onPostResume() {
         super.onPostResume()
-        if(!isSetupAuth){
-            setupAuthentication()
-        }
-//        if(isSetupAuth)
-        mAuthentication.addAuthStateListener(mAuthenticationListener)
     }
 
     override fun onPause() {
         super.onPause()
-        mAuthentication.removeAuthStateListener(mAuthenticationListener)
+
 
     }
 
     override fun onDestroy() {
+        mAuthentication.removeAuthStateListener(mAuthenticationListener)
         mHandler.removeCallbacks(mRunnable)
         super.onDestroy()
     }

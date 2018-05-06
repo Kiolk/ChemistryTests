@@ -21,4 +21,7 @@
     <string name="MULTIPLE_CHOICE">Multiple choice</string>
     <string name="INPUT_CHOICE">Inputed answer</string>
     <string name="START_TEST">Start test</string>
+    <string name="LEAV_TEST">Do you want leav page?</string>
+    <string name="YES">Yes</string>
+    <string name="NO">No</string>
 </resources>

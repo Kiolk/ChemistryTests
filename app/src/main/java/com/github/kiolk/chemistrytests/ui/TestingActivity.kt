@@ -21,11 +21,13 @@ import com.github.kiolk.chemistrytests.data.CheckResultListener
 import com.github.kiolk.chemistrytests.data.TestingPagerAdapter
 import com.github.kiolk.chemistrytests.data.database.DBOperations
 import com.github.kiolk.chemistrytests.data.fragments.HintFragment
+import com.github.kiolk.chemistrytests.data.fragments.LeavTestDialog
 import com.github.kiolk.chemistrytests.data.fragments.ResultFragment
 import com.github.kiolk.chemistrytests.data.fragments.TestInfoFragment
 import com.github.kiolk.chemistrytests.data.models.*
 import com.github.kiolk.chemistrytests.utils.SlideAnimationUtil
 import com.github.kiolk.chemistrytests.utils.SlideAnimationUtil.FASTER
+import com.github.kiolk.chemistrytests.utils.SlideAnimationUtil.VERY_FASTER
 import com.google.firebase.database.*
 import kiolk.com.github.pen.utils.MD5Util
 import kotlinx.android.synthetic.main.activity_testing.*
@@ -41,22 +43,23 @@ class TestingActivity : AppCompatActivity() {
     var mHintFragment = HintFragment()
     lateinit var mResult: Result
     lateinit var adapter: TestingPagerAdapter
-    lateinit var mFirebaseDatabase: FirebaseDatabase
-    lateinit var mDatabaseReference: DatabaseReference
-    lateinit var mChaildEventListener: ChildEventListener
+//    lateinit var mFirebaseDatabase: FirebaseDatabase
+//    lateinit var mDatabaseReference: DatabaseReference
+//    lateinit var mChaildEventListener: ChildEventListener
     lateinit var mParams: TestParams
     lateinit var mViewPager: ControledViewPager
     var mTestInfo = TestInfoFragment()
     var isShowBottomBar: Boolean = false
     var isShowFAB: Boolean = false
+    var isTestEnd : Boolean = false
     var mQuestions: MutableList<CloseQuestion> = mutableListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_testing)
         mParams = intent.extras.get(TEST_PARAM_INT) as TestParams
-        mFirebaseDatabase = FirebaseDatabase.getInstance()
-        mDatabaseReference = mFirebaseDatabase.getReference().child(QUESTIONS_CHILDS)
+//        mFirebaseDatabase = FirebaseDatabase.getInstance()
+//        mDatabaseReference = mFirebaseDatabase.getReference().child(QUESTIONS_CHILDS)
         mViewPager = findViewById(R.id.testing_view_pager)
         mQuestions = DBOperations().getAllQuestions()
         animIn(end_test_fab)
@@ -65,38 +68,38 @@ class TestingActivity : AppCompatActivity() {
 //        animOut(bottom_bar_linear_layout)
         setupTestingViewPAger(mQuestions)
         setupBottomBar()
-        mChaildEventListener = object : ChildEventListener {
-            override fun onCancelled(p0: DatabaseError?) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-            }
-
-            override fun onChildMoved(p0: DataSnapshot?, p1: String?) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-            }
-
-            override fun onChildChanged(p0: DataSnapshot?, p1: String?) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-            }
-
-            override fun onChildAdded(p0: DataSnapshot?, p1: String?) {
-//                val  question = p0?.getValue(CloseQuestion::class.java)
-//                var questionsList = mutableListOf<CloseQuestion>()
-//                question?.let { questionsList.add(it) }
-////                question?.let { mQuestions.add(it) }
-//                Log.d("MyLogs", question?.questionId?.toString())
-//                if (question?.questionId == 30){
-//                    mQuestions = DBOperations().getAllQuestions()
-//                    questionsList = mQuestions
-//                    setupTestingViewPAger(DBOperations().getAllQuestions())
-//                    setupBottomBar()
-//                }
-            }
-
-            override fun onChildRemoved(p0: DataSnapshot?) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-            }
-        }
-        mDatabaseReference.addChildEventListener(mChaildEventListener)
+//        mChaildEventListener = object : ChildEventListener {
+//            override fun onCancelled(p0: DatabaseError?) {
+//                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+//            }
+//
+//            override fun onChildMoved(p0: DataSnapshot?, p1: String?) {
+//                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+//            }
+//
+//            override fun onChildChanged(p0: DataSnapshot?, p1: String?) {
+//                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+//            }
+//
+//            override fun onChildAdded(p0: DataSnapshot?, p1: String?) {
+////                val  question = p0?.getValue(CloseQuestion::class.java)
+////                var questionsList = mutableListOf<CloseQuestion>()
+////                question?.let { questionsList.add(it) }
+//////                question?.let { mQuestions.add(it) }
+////                Log.d("MyLogs", question?.questionId?.toString())
+////                if (question?.questionId == 30){
+////                    mQuestions = DBOperations().getAllQuestions()
+////                    questionsList = mQuestions
+////                    setupTestingViewPAger(DBOperations().getAllQuestions())
+////                    setupBottomBar()
+////                }
+//            }
+//
+//            override fun onChildRemoved(p0: DataSnapshot?) {
+//                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+//            }
+//        }
+//        mDatabaseReference.addChildEventListener(mChaildEventListener)
         questions_app_bar_layout.addOnOffsetChangedListener(object : AppBarLayout.OnOffsetChangedListener {
             override fun onOffsetChanged(appBarLayout: AppBarLayout?, verticalOffset: Int) {
                 Log.d("MyLogs", "verticalOffset $verticalOffset")
@@ -119,7 +122,7 @@ class TestingActivity : AppCompatActivity() {
 
                     if (!isShowBottomBar) {
                         bottom_bar_linear_layout.visibility = View.VISIBLE
-                        SlideAnimationUtil.slideInToTop(baseContext, bottom_bar_linear_layout, null, 150)
+                        SlideAnimationUtil.slideInToTop(baseContext, bottom_bar_linear_layout, null, VERY_FASTER)
 //                        animIn(bottom_bar_linear_layout)
                     }
                     isShowBottomBar = true
@@ -144,12 +147,16 @@ class TestingActivity : AppCompatActivity() {
             //TODO find solution for jumping of pictures
             return
         }
+        if(!isTestEnd){
+            LeavTestDialog().show(supportFragmentManager, null)
+            return
+        }
         super.onBackPressed()
     }
 
     override fun onPause() {
         super.onPause()
-        mDatabaseReference.removeEventListener(mChaildEventListener)
+//        mDatabaseReference.removeEventListener(mChaildEventListener)
     }
 
     private fun setupTestingViewPAger(questionsList: MutableList<CloseQuestion>) {
@@ -354,7 +361,8 @@ class TestingActivity : AppCompatActivity() {
         }
     }
 
-    private fun showResult() {
+    fun showResult() {
+        isTestEnd = true
         result_frame_layout.visibility = View.VISIBLE
         showFragment(R.id.result_frame_layout, mResultFragment)
         mResultFragment.showResult(mResult)

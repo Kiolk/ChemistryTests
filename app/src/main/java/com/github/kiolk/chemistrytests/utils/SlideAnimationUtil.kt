@@ -8,6 +8,7 @@ import com.github.kiolk.chemistrytests.R
 
 object SlideAnimationUtil {
 
+    val VERY_FASTER : Long = 200
     val FASTER: Long = 500
     val SLOWLY: Long = 1500
     val NORMAL: Long = 1000
