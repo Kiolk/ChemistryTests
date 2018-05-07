@@ -12,4 +12,6 @@
     <dimen name="BIG_TEXT_SIZE">32sp</dimen>
     <dimen name="COURSE_EXPAND_SIZE">250dp</dimen>
     <dimen name="FAB_MARGIN">16dp</dimen>
+    <dimen name="ZERO">0dp</dimen>
+    <dimen name="BOTTOM_BAR_ELEVATION">12dp</dimen>
 </resources>

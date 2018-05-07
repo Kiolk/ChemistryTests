@@ -14,21 +14,19 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.Toast
-import android.widget.Toolbar
 import closeFragment
 import com.github.kiolk.chemistrytests.R
 import com.github.kiolk.chemistrytests.data.CheckResultListener
 import com.github.kiolk.chemistrytests.data.TestingPagerAdapter
 import com.github.kiolk.chemistrytests.data.database.DBOperations
 import com.github.kiolk.chemistrytests.data.fragments.HintFragment
-import com.github.kiolk.chemistrytests.data.fragments.LeavTestDialog
+import com.github.kiolk.chemistrytests.data.fragments.LeaveTestDialog
 import com.github.kiolk.chemistrytests.data.fragments.ResultFragment
 import com.github.kiolk.chemistrytests.data.fragments.TestInfoFragment
 import com.github.kiolk.chemistrytests.data.models.*
 import com.github.kiolk.chemistrytests.utils.SlideAnimationUtil
 import com.github.kiolk.chemistrytests.utils.SlideAnimationUtil.FASTER
 import com.github.kiolk.chemistrytests.utils.SlideAnimationUtil.VERY_FASTER
-import com.google.firebase.database.*
 import kiolk.com.github.pen.utils.MD5Util
 import kotlinx.android.synthetic.main.activity_testing.*
 import showFragment
@@ -43,7 +41,7 @@ class TestingActivity : AppCompatActivity() {
     var mHintFragment = HintFragment()
     lateinit var mResult: Result
     lateinit var adapter: TestingPagerAdapter
-//    lateinit var mFirebaseDatabase: FirebaseDatabase
+    //    lateinit var mFirebaseDatabase: FirebaseDatabase
 //    lateinit var mDatabaseReference: DatabaseReference
 //    lateinit var mChaildEventListener: ChildEventListener
     lateinit var mParams: TestParams
@@ -51,7 +49,7 @@ class TestingActivity : AppCompatActivity() {
     var mTestInfo = TestInfoFragment()
     var isShowBottomBar: Boolean = false
     var isShowFAB: Boolean = false
-    var isTestEnd : Boolean = false
+    var isTestEnd: Boolean = false
     var mQuestions: MutableList<CloseQuestion> = mutableListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -105,11 +103,10 @@ class TestingActivity : AppCompatActivity() {
                 Log.d("MyLogs", "verticalOffset $verticalOffset")
 //                if (Math.abs(verticalOffset) >= questions_app_bar_layout.totalScrollRange.div(0.5F)) {
                 if (Math.abs(verticalOffset) >= 55) {
-                    questions_tool_bar.setBackgroundColor(Color.RED)
+//                    questions_tool_bar.setBackgroundColor(Color.RED)
                     if (isShowBottomBar) {
-//                        animOut(bottom_bar_linear_layout)
                         SlideAnimationUtil.slideOutToTop(baseContext, bottom_bar_linear_layout,
-                                object : SlideAnimationUtil.SlideAnimationListener{
+                                object : SlideAnimationUtil.SlideAnimationListener {
                                     override fun animationEnd() {
                                         bottom_bar_linear_layout.visibility = View.GONE
                                     }
@@ -117,13 +114,13 @@ class TestingActivity : AppCompatActivity() {
                     }
                     isShowBottomBar = false
                 } else {
-                    questions_tool_bar.setBackgroundColor(Color.GREEN)
+//                    questions_tool_bar.setBackgroundColor(Color.GREEN)
                     bottom_bar_linear_layout.visibility = View.VISIBLE
 
                     if (!isShowBottomBar) {
                         bottom_bar_linear_layout.visibility = View.VISIBLE
                         SlideAnimationUtil.slideInToTop(baseContext, bottom_bar_linear_layout, null, VERY_FASTER)
-//                        animIn(bottom_bar_linear_layout)
+                        checkHintPresent()
                     }
                     isShowBottomBar = true
                 }
@@ -147,8 +144,8 @@ class TestingActivity : AppCompatActivity() {
             //TODO find solution for jumping of pictures
             return
         }
-        if(!isTestEnd){
-            LeavTestDialog().show(supportFragmentManager, null)
+        if (!isTestEnd) {
+            LeaveTestDialog().show(supportFragmentManager, null)
             return
         }
         super.onBackPressed()
@@ -252,6 +249,17 @@ class TestingActivity : AppCompatActivity() {
             testing_view_pager.setPagingEnabled(false)
             questions_tab_layout.visibility = View.GONE
         }
+        testing_view_pager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener{
+            override fun onPageScrollStateChanged(state: Int) {
+            }
+
+            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+            }
+
+            override fun onPageSelected(position: Int) {
+                checkHintPresent()
+            }
+        })
         questions_tab_layout.setupWithViewPager(testing_view_pager)
         questions_tool_bar.title = mParams.testInfo.testTitle
 
@@ -334,13 +342,30 @@ class TestingActivity : AppCompatActivity() {
     }
 
     private fun setupBottomBar() {
-        hint_button_image_view.setOnSystemUiVisibilityChangeListener {
-            val position = testing_view_pager.currentItem
-            val hint: List<Hint>? = mResult.test.mSortedQuestions[position].hints
-            if (hint != null) {
-                hint_button_image_view.background = resources.getDrawable(R.drawable.ic_help_inactive)
+        setupHintListener()
+        periodical_table_image_view.setOnClickListener(object : View.OnClickListener {
+            override fun onClick(v: View?) {
+                showPeriodicTable("table")
             }
+        })
+        solubility_button_image_view.setOnClickListener {
+            showPeriodicTable("solubility")
         }
+    }
+
+    private fun checkHintPresent() {
+        val position = testing_view_pager.currentItem
+        val hint: List<Hint>? = mResult.test.mSortedQuestions[position].hints
+        if (hint == null) {
+            hint_button_image_view.background = resources.getDrawable(R.drawable.ic_help_inactive)
+            hint_button_image_view.setOnClickListener(null)
+        } else {
+            hint_button_image_view.background = resources.getDrawable(R.drawable.ic_help)
+            setupHintListener()
+        }
+    }
+
+    private fun setupHintListener(){
         hint_button_image_view.setOnClickListener {
             val position = testing_view_pager.currentItem
             val hint: List<Hint>? = mResult.test.mSortedQuestions[position].hints
@@ -350,14 +375,6 @@ class TestingActivity : AppCompatActivity() {
                 showFragment(R.id.result_frame_layout, mHintFragment)
                 mHintFragment.showHint(hint)
             }
-        }
-        periodical_table_image_view.setOnClickListener(object : View.OnClickListener {
-            override fun onClick(v: View?) {
-                showPeriodicTable("table")
-            }
-        })
-        solubility_button_image_view.setOnClickListener {
-            showPeriodicTable("solubility")
         }
     }
 

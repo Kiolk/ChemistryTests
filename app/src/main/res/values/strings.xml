@@ -24,4 +24,5 @@
     <string name="LEAV_TEST">Do you want leav page?</string>
     <string name="YES">Yes</string>
     <string name="NO">No</string>
+    <string name="SHOW_RESULT">Show result</string>
 </resources>

@@ -23,30 +23,35 @@
                 android:id="@+id/questions_tool_bar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                app:navigationIcon="@drawable/ic_menu"
-                app:layout_scrollFlags="scroll|enterAlwaysCollapsed">
+                android:background="@drawable/area_neutral_shape"
+                app:layout_scrollFlags="scroll|enterAlwaysCollapsed"
+                app:navigationIcon="@drawable/ic_menu">
 
             </android.support.v7.widget.Toolbar>
         </android.support.design.widget.AppBarLayout>
+
         <RelativeLayout
             android:id="@+id/testing_relative_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
             <LinearLayout
                 android:id="@+id/indicator_line_linear_layout"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/LINE_WIDTH"
-                android:orientation="horizontal"
-                android:layout_alignParentTop="true">
+                android:layout_alignParentTop="true"
+                android:orientation="horizontal">
+
                 <ProgressBar
                     android:id="@+id/indicator_answered_progress_bar"
+                    style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:progress="0"
-                    style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"
-                    android:max="100"                    />
+                    android:max="100"
+                    android:progress="0" />
             </LinearLayout>
+
             <android.support.v4.widget.NestedScrollView
                 android:id="@+id/tab_nested_scroll_view"
                 android:layout_width="match_parent"
@@ -59,40 +64,46 @@
                     android:layout_height="?attr/actionBarSize"
                     app:tabMode="scrollable" />
             </android.support.v4.widget.NestedScrollView>
-            <com.github.kiolk.chemistrytests.ui.ControledViewPager
-                android:layout_below="@+id/tab_nested_scroll_view"
-                android:id="@+id/testing_view_pager"
+
+            <android.support.v4.widget.NestedScrollView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:layout_below="@+id/tab_nested_scroll_view">
+
+                <com.github.kiolk.chemistrytests.ui.ControledViewPager
+                    android:id="@+id/testing_view_pager"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </android.support.v4.widget.NestedScrollView>
+
             <FrameLayout
                 android:id="@+id/test_info_frame_layout"
                 android:layout_width="match_parent"
-                android:visibility="gone"
                 android:layout_height="match_parent"
-                android:layout_below="@id/indicator_line_linear_layout">
-            </FrameLayout>
+                android:layout_below="@id/indicator_line_linear_layout"
+                android:visibility="gone"/>
         </RelativeLayout>
+
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/end_test_fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_chemical"
-            app:fabSize="normal"
-            android:visibility="gone"
-            android:elevation="11dp"
-            app:elevation="11dp"
-            android:layout_marginRight="@dimen/FAB_MARGIN"
             android:layout_marginBottom="76dp"
+            android:layout_marginRight="@dimen/FAB_MARGIN"
+            android:elevation="11dp"
+            android:src="@drawable/ic_chemical"
+            android:visibility="gone"
+            app:elevation="11dp"
+            app:fabSize="normal"
             app:layout_anchor="@id/testing_relative_layout"
-            app:layout_anchorGravity="bottom|right|end"/>
+            app:layout_anchorGravity="bottom|right|end" />
     </android.support.design.widget.CoordinatorLayout>
 
     <FrameLayout
         android:id="@+id/result_frame_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone"
-        />
+        android:visibility="gone" />
 
     <WebView
         android:id="@+id/photo_web_view"
@@ -101,64 +112,74 @@
         android:layout_centerInParent="true"
         android:background="#88000000"
         android:visibility="gone" />
+
     <LinearLayout
-        android:layout_alignParentBottom="true"
         android:id="@+id/bottom_bar_linear_layout"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:visibility="gone"
-        android:background="@drawable/area_square_shape_correct"
-        android:paddingTop="@dimen/BLOCK_PADDING"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/area_neutral_shape"
         android:clipToPadding="true"
-        android:elevation="11dp"
-        android:orientation="horizontal" >
+        android:elevation="@dimen/BOTTOM_BAR_ELEVATION"
+        android:orientation="horizontal"
+        android:paddingTop="@dimen/BOTTOM_BAR_ELEVATION"
+        android:visibility="gone">
+
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_weight="1"
             android:gravity="center"
-            android:orientation="vertical"
-            android:layout_weight="1">
+            android:orientation="vertical">
+
             <ImageView
                 android:id="@+id/solubility_button_image_view"
-                android:background="@drawable/ic_spreadshee"
-                style="@style/BottomIconStyle"/>
+                style="@style/BottomIconStyle"
+                android:background="@drawable/ic_spreadshee" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/SMALL_TEXT_SIZE"
-                android:text="@string/PERIODIC_TABLE"/>
+                android:text="@string/PERIODIC_TABLE"
+                android:textSize="@dimen/SMALL_TEXT_SIZE" />
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:gravity="center"
             android:layout_weight="1"
+            android:gravity="center"
             android:orientation="vertical">
+
             <ImageView
                 android:id="@+id/periodical_table_image_view"
-                android:background="@drawable/ic_element"
-                style="@style/BottomIconStyle" />
+                style="@style/BottomIconStyle"
+                android:background="@drawable/ic_element" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/SMALL_TEXT_SIZE"
-                android:text="@string/PERIODIC_TABLE"/>
+                android:text="@string/PERIODIC_TABLE"
+                android:textSize="@dimen/SMALL_TEXT_SIZE" />
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_weight="1"
             android:gravity="center"
-            android:orientation="vertical"
-            android:layout_weight="1">
+            android:orientation="vertical">
+
             <ImageView
                 android:id="@+id/hint_button_image_view"
-                android:background="@drawable/ic_help"
-                style="@style/BottomIconStyle"/>
+                style="@style/BottomIconStyle"
+                android:background="@drawable/ic_help" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/SMALL_TEXT_SIZE"
-                android:text="@string/PERIODIC_TABLE"/>
+                android:text="@string/PERIODIC_TABLE"
+                android:textSize="@dimen/SMALL_TEXT_SIZE" />
         </LinearLayout>
     </LinearLayout>
 </RelativeLayout>
