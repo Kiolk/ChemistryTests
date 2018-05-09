@@ -65,23 +65,18 @@
                     app:tabMode="scrollable" />
             </android.support.v4.widget.NestedScrollView>
 
-            <android.support.v4.widget.NestedScrollView
+            <com.github.kiolk.chemistrytests.ui.ControledViewPager
+                android:id="@+id/testing_view_pager"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_below="@+id/tab_nested_scroll_view">
-
-                <com.github.kiolk.chemistrytests.ui.ControledViewPager
-                    android:id="@+id/testing_view_pager"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
-            </android.support.v4.widget.NestedScrollView>
+                android:layout_below="@+id/tab_nested_scroll_view" />
 
             <FrameLayout
                 android:id="@+id/test_info_frame_layout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_below="@id/indicator_line_linear_layout"
-                android:visibility="gone"/>
+                android:visibility="gone" />
         </RelativeLayout>
 
         <android.support.design.widget.FloatingActionButton

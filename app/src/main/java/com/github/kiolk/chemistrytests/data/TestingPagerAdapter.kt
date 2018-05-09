@@ -15,14 +15,18 @@ interface CheckResultListener : Serializable {
 
 class TestingPagerAdapter(fm: android.support.v4.app.FragmentManager, var test: List<CloseQuestion>,
                           var isResult: Boolean = false,
-                          var answers : MutableList<Answer>? = null) : FragmentStatePagerAdapter(fm) {
+                          var answers: MutableList<Answer>? = null) : FragmentStatePagerAdapter(fm) {
 
     override fun getItem(position: Int): android.support.v4.app.Fragment {
-        if (!isResult) {
-            return QuestionFragment().fromInstance(test[position])
-        } else {
-            return QuestionAnsweredFragment().fromInstance(answers!![position])
-        }
+        val isCheckAnswer = (test.contains(answers?.get(position)?.question) && (answers?.get(position)?.userAnswers?.contains(-1) != true ||
+                answers?.get(position)?.userInput != null))
+        return if (isCheckAnswer) {
+            QuestionAnsweredFragment().fromInstance(answers!![position])
+        } else            if (!isResult) {
+                QuestionFragment().fromInstance(test[position])
+            } else {
+                QuestionAnsweredFragment().fromInstance(answers!![position])
+            }
     }
 
     override fun getCount(): Int {

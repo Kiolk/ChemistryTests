@@ -213,6 +213,7 @@ class TestingActivity : AppCompatActivity() {
                     animIn(end_test_fab)
                     end_test_fab.setOnClickListener {
                         showSingleQuestionAnswer(answer)
+                        updateViewPagerAdapter()
                         if (mResult.test.params.direction == DIRECT_TEST && end_test_fab.visibility == View.VISIBLE
                                 && (testing_view_pager.currentItem < testing_view_pager.adapter?.count?.minus(1) ?: 0)) {
                             end_test_fab.setImageDrawable(resources.getDrawable(R.drawable.ic_benzolring4))
@@ -225,8 +226,10 @@ class TestingActivity : AppCompatActivity() {
                         } else if (mResult.askedQuestions.size != mResult.test.mSortedQuestions.size) {
                             animOut(end_test_fab)
                             updateIndicator(indicator_answered_progress_bar, mResult.askedQuestions.size, mResult.test.mSortedQuestions.size)
+                       updateTabLayout()
                         } else {
                             updateIndicator(indicator_answered_progress_bar, mResult.askedQuestions.size, mResult.test.mSortedQuestions.size)
+                        updateTabLayout()
                         }
                     }
                 } else if (mResult.test.params.direction == DIRECT_TEST && end_test_fab.visibility == View.GONE
@@ -249,17 +252,23 @@ class TestingActivity : AppCompatActivity() {
             testing_view_pager.setPagingEnabled(false)
             questions_tab_layout.visibility = View.GONE
         }
-        testing_view_pager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener{
-            override fun onPageScrollStateChanged(state: Int) {
-            }
-
-            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
-            }
-
-            override fun onPageSelected(position: Int) {
-                checkHintPresent()
-            }
-        })
+        attachViewPagerListener(testing_view_pager)
+//        testing_view_pager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener{
+//            override fun onPageScrollStateChanged(state: Int) {
+//            }
+//
+//            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+//            }
+//
+//            override fun onPageSelected(position: Int) {
+//                checkHintPresent()
+//                if(end_test_fab.visibility == View.VISIBLE && !isTestEnd){
+//                    end_test_fab.visibility == View.GONE
+//                } else if (end_test_fab.visibility == View.INVISIBLE && !isTestEnd && test.params.testType == TRAINING_TEST){
+//
+//                }
+//            }
+//        })
         questions_tab_layout.setupWithViewPager(testing_view_pager)
         questions_tool_bar.title = mParams.testInfo.testTitle
 
@@ -279,6 +288,38 @@ class TestingActivity : AppCompatActivity() {
             }
         }
         questions_tool_bar.setNavigationOnClickListener(naviagationListener)
+    }
+
+    private fun updateViewPagerAdapter(){
+        val position : Int = testing_view_pager.currentItem
+        val updatedAdapter: TestingPagerAdapter = TestingPagerAdapter(supportFragmentManager, mResult.test.mSortedQuestions,
+                false, mResult.userResultAnswers())
+        attachViewPagerListener(testing_view_pager)
+        testing_view_pager.adapter = updatedAdapter
+        testing_view_pager.currentItem = position
+    }
+
+    private fun attachViewPagerListener(pager : ViewPager){
+        pager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener{
+            override fun onPageScrollStateChanged(state: Int) {
+            }
+
+            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+            }
+
+            override fun onPageSelected(position: Int) {
+                checkHintPresent()
+                if(end_test_fab.visibility == View.VISIBLE && !isTestEnd){
+                    end_test_fab.visibility = View.GONE
+                } else if (end_test_fab.visibility == View.INVISIBLE && !isTestEnd && mResult.test.params.testType == TRAINING_TEST){
+                    val answer : Answer? = mResult.askedQuestions[position]
+                    if(answer != null){
+                        end_test_fab.visibility = View.VISIBLE
+                    }
+
+                }
+            }
+        })
     }
 
     private fun closeTestInfo() {
