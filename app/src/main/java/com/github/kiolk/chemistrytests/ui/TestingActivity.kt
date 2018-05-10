@@ -207,14 +207,13 @@ class TestingActivity : AppCompatActivity() {
         listener = object : CheckResultListener {
 
             override fun onResult(answer: Answer) {
-
                 if (mResult.test.params.testType == TRAINING_TEST) {
                     end_test_fab.setImageDrawable(resources.getDrawable(R.drawable.ic_benzolring2))
                     animIn(end_test_fab)
                     end_test_fab.setOnClickListener {
                         showSingleQuestionAnswer(answer)
                         updateViewPagerAdapter()
-                        if (mResult.test.params.direction == DIRECT_TEST && end_test_fab.visibility == View.VISIBLE
+                        if (mResult.test.params.direction == DIRECT_TEST
                                 && (testing_view_pager.currentItem < testing_view_pager.adapter?.count?.minus(1) ?: 0)) {
                             end_test_fab.setImageDrawable(resources.getDrawable(R.drawable.ic_benzolring4))
                             animIn(end_test_fab)
@@ -309,14 +308,14 @@ class TestingActivity : AppCompatActivity() {
 
             override fun onPageSelected(position: Int) {
                 checkHintPresent()
-                if(end_test_fab.visibility == View.VISIBLE && !isTestEnd){
-                    end_test_fab.visibility = View.GONE
-                } else if (end_test_fab.visibility == View.INVISIBLE && !isTestEnd && mResult.test.params.testType == TRAINING_TEST){
-                    val answer : Answer? = mResult.askedQuestions[position]
-                    if(answer != null){
-                        end_test_fab.visibility = View.VISIBLE
+                if(end_test_fab.visibility == View.VISIBLE && !isTestEnd && mResult.test.mSortedQuestions.size != mResult.askedQuestions.size){
+//                    end_test_fab.visibility = View.GONE
+                    animOut(end_test_fab)
+                } else if (end_test_fab.visibility == View.GONE && !isTestEnd && mResult.test.params.testType == TRAINING_TEST){
+                    val group: ViewGroup = questions_tab_layout.getChildAt(0) as ViewGroup
+                    if(group.getChildAt(position).background == resources.getDrawable(R.drawable.area_select_answer)){
+                        animIn(end_test_fab)
                     }
-
                 }
             }
         })
@@ -350,6 +349,12 @@ class TestingActivity : AppCompatActivity() {
             mResult.takeAnswer(answer)
             Toast.makeText(baseContext, "Wrong Answer! ${mResult.points.toString()}", Toast.LENGTH_LONG).show()
         }
+    }
+
+    private fun updateSelectTabLayout(){
+        val position: Int = testing_view_pager.currentItem
+        val group: ViewGroup = questions_tab_layout.getChildAt(0) as ViewGroup
+        group.getChildAt(position).background = resources.getDrawable(R.drawable.area_select_answer)
     }
 
     private fun updateTabLayout() {
