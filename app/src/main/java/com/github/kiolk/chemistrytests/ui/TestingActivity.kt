@@ -213,8 +213,12 @@ class TestingActivity : AppCompatActivity() {
                     end_test_fab.setOnClickListener {
                         showSingleQuestionAnswer(answer)
                         updateViewPagerAdapter()
-                        if (mResult.test.params.direction == DIRECT_TEST
+                        if (
+                        mResult.test.params.direction == DIRECT_TEST
+                                && end_test_fab.visibility == View.VISIBLE
                                 && (testing_view_pager.currentItem < testing_view_pager.adapter?.count?.minus(1) ?: 0)) {
+//                                && (mResult.askedQuestions.size != mResult.test.mSortedQuestions.size)) {
+//                                ) {
                             end_test_fab.setImageDrawable(resources.getDrawable(R.drawable.ic_benzolring4))
                             animIn(end_test_fab)
                             end_test_fab.setOnClickListener {
@@ -307,6 +311,9 @@ class TestingActivity : AppCompatActivity() {
             }
 
             override fun onPageSelected(position: Int) {
+                if(mResult.test.params.testType == TRAINING_TEST && mResult.test.params.direction == DIRECT_ORDER){
+                    return
+                }
                 checkHintPresent()
                 if(end_test_fab.visibility == View.VISIBLE && !isTestEnd && mResult.test.mSortedQuestions.size != mResult.askedQuestions.size){
 //                    end_test_fab.visibility = View.GONE

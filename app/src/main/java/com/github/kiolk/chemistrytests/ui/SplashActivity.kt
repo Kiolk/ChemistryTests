@@ -38,6 +38,7 @@ class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
+        setupAuthentication()
 //        logo_splash_image_view.setOnSystemUiVisibilityChangeListener(object : View.OnSystemUiVisibilityChangeListener{
 //            override fun onSystemUiVisibilityChange(visibility: Int) {
 //                if (1==1){
@@ -111,11 +112,11 @@ class SplashActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        val handler = Handler()
-        handler.postDelayed({if(!isSetupAuth){
-            setupAuthentication()
-        }
-            mAuthentication.addAuthStateListener(mAuthenticationListener)}, 2000)
+//        val handler = Handler()
+//        handler.postDelayed({if(!isSetupAuth){
+//            setupAuthentication()
+//        }
+            mAuthentication.addAuthStateListener(mAuthenticationListener)
     }
 
     override fun onPostResume() {
