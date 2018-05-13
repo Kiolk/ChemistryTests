@@ -8,6 +8,8 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import checkConnection
 import closeFragment
@@ -28,6 +30,7 @@ import com.google.firebase.messaging.FirebaseMessaging
 import kiolk.com.github.pen.Pen
 import kiolk.com.github.pen.utils.PenConstantsUtil
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.drawer_header.*
 import showFragment
 
 //val RC_SIGN_IN: Int = 1
@@ -36,9 +39,9 @@ val TESTS_CHILD: String = "tests"
 val DATA_BASE_INFO_CHAILD: String = "DBInformation"
 
 class MainActivity : AppCompatActivity() {
-//
-//    lateinit var mAuthentication: FirebaseAuth
-//    lateinit var mAuthenticationListener: FirebaseAuth.AuthStateListener
+    //
+    lateinit var mAuthentication: FirebaseAuth
+    //    lateinit var mAuthenticationListener: FirebaseAuth.AuthStateListener
 //    val mProviders = listOf<AuthUI.IdpConfig>(AuthUI.IdpConfig.Builder(AuthUI.EMAIL_PROVIDER).build(), AuthUI.IdpConfig.Builder(AuthUI.GOOGLE_PROVIDER).build())
     lateinit var mFirebaseDatabase: FirebaseDatabase
     lateinit var mFirebaseDatabase2: FirebaseDatabase
@@ -61,8 +64,9 @@ class MainActivity : AppCompatActivity() {
         mAvaliableTests = AvaliableFragments()
         mAvailableTests = AvaliableTestFragment()
         mCustomTest = CustomTest()
-//        mAuthentication = FirebaseAuth.getInstance()
+        mAuthentication = FirebaseAuth.getInstance()
         mFirebaseDatabase = FirebaseDatabase.getInstance()
+        setupNavigationDrawer()
 //        splashScreenSetup()
 //        upload_data_progress_bar.visibility = View.GONE
 //        splash_frame_layout.visibility = View.GONE
@@ -156,6 +160,15 @@ class MainActivity : AppCompatActivity() {
 
         }
 //        mDatabaseReference.addChildEventListener(mChaildEventListener)
+    }
+
+    private fun setupNavigationDrawer() {
+        val view: TextView = navigation_relative_layout.getHeaderView(0).findViewById(R.id.user_login_text_view)
+        view.text = mAuthentication.currentUser?.displayName
+        if (mAuthentication.currentUser?.photoUrl != null) {
+            val imageView: ImageView = navigation_relative_layout.getHeaderView(0).findViewById(R.id.user_profile_picture_image_view)
+            Pen.getInstance().getImageFromUrl(mAuthentication.currentUser?.photoUrl?.toString()).inputTo(imageView)
+        }
     }
 
     private fun splashScreenSetup() {

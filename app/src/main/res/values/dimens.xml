@@ -14,4 +14,5 @@
     <dimen name="FAB_MARGIN">16dp</dimen>
     <dimen name="ZERO">0dp</dimen>
     <dimen name="BOTTOM_BAR_ELEVATION">12dp</dimen>
+    <dimen name="HEADER_PADDING">16dp</dimen>
 </resources>

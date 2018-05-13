@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="192dp"
+    android:background="@color/colorAccent"
+    android:gravity="bottom"
+    android:orientation="vertical"
+    android:padding="@dimen/HEADER_PADDING">
+
+    <com.github.kiolk.chemistrytests.ui.customviews.RoundedImageView
+        android:id="@+id/user_profile_picture_image_view"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/area_transparent_shape" />
+
+
+    <TextView
+        android:id="@+id/user_login_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/BIG_TEXT_SIZE" />
+
+</LinearLayout>

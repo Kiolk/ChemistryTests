@@ -16,4 +16,5 @@
     <color name="ANSWERED">#904c6ca6</color>
     <color name="NOT_ANSWERED">#00ffffff</color>
     <color name="SELECTED">#5e5d5d</color>
+    <color name="TRANSPARENT_COLOR">#00000000</color>
 </resources>

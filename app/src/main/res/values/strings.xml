@@ -25,4 +25,6 @@
     <string name="YES">Yes</string>
     <string name="NO">No</string>
     <string name="SHOW_RESULT">Show result</string>
+    <string name="LOG_OUT">Log out</string>
+    <string name="PROFILE_SETTING">Profile settings</string>
 </resources>
