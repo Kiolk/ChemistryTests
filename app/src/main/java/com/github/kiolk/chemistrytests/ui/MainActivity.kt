@@ -166,6 +166,7 @@ class MainActivity : AppCompatActivity() {
         val view: TextView = navigation_relative_layout.getHeaderView(0).findViewById(R.id.user_login_text_view)
         view.text = mAuthentication.currentUser?.displayName
         if (mAuthentication.currentUser?.photoUrl != null) {
+
             val imageView: ImageView = navigation_relative_layout.getHeaderView(0).findViewById(R.id.user_profile_picture_image_view)
             Pen.getInstance().getImageFromUrl(mAuthentication.currentUser?.photoUrl?.toString()).inputTo(imageView)
         }

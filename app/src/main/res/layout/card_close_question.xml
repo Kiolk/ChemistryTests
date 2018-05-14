@@ -32,6 +32,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="@dimen/BLOCK_PADDING"
+                            android:fontFamily="@font/bicubik"
                             android:background="@drawable/area_square_shape"
                             android:padding="@dimen/BLOCK_PADDING" />
                     </android.support.v4.widget.NestedScrollView>

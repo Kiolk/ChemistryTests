@@ -18,6 +18,7 @@
         android:id="@+id/user_login_text_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/bicubik"
         android:textSize="@dimen/BIG_TEXT_SIZE" />
 
 </LinearLayout>
