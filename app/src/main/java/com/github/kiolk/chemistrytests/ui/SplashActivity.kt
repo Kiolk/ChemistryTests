@@ -39,36 +39,6 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
         setupAuthentication()
-//        logo_splash_image_view.setOnSystemUiVisibilityChangeListener(object : View.OnSystemUiVisibilityChangeListener{
-//            override fun onSystemUiVisibilityChange(visibility: Int) {
-//                if (1==1){
-//                    if(!isSetupAuth){
-//                        setupAuthentication()
-//                    }
-//                    mAuthentication.addAuthStateListener(mAuthenticationListener)
-//                }
-//            }
-//        })
-//        val handler = Handler()
-//        handler.postDelayed({logo_splash_image_view.visibility = View.VISIBLE}, 1000)
-//        setupTimer()
-//        mResultCallback = object : ResultCallback{
-//            override fun onSuccess() {
-//                launchMainActivity()
-//            }
-//
-//            override fun onError() {
-//            }
-//        }
-//
-//        if (!checkConnection(baseContext)) {
-//            Log.d("MyLogs", "Continue work offline")
-//            Toast.makeText(baseContext, "You continue off line", Toast.LENGTH_SHORT).show()
-//            launchMainActivity()
-//        } else {
-//            val handler = Handler()
-//            handler.postDelayed({  SingleAsyncTask().execute(UploadDataInDb(mResultCallback)) }, SPLASH_DURATION)
-//        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -136,8 +106,8 @@ class SplashActivity : AppCompatActivity() {
     }
 
     private fun startLoad(){
-        logo_splash_image_view.visibility = View.GONE
-        my_progress_bar_image_view.visibility = View.VISIBLE
+        logo_splash_image_view.visibility = View.VISIBLE
+        my_progress_bar_image_view.visibility = View.GONE
         setupTimer()
         mResultCallback = object : ResultCallback{
             override fun onSuccess() {

@@ -167,7 +167,7 @@ class TestingActivity : AppCompatActivity() {
                     animIn(end_test_fab)
                     animIn(end_test_fab)
                     isShowFAB = true
-                    end_test_fab.setImageDrawable(resources.getDrawable(R.drawable.ic_benzolring1))
+                    end_test_fab.setImageDrawable(resources.getDrawable(R.drawable.ic_results))
                     end_test_fab.setOnClickListener {
                         animOut(end_test_fab)
                         showResult()
@@ -208,7 +208,7 @@ class TestingActivity : AppCompatActivity() {
 
             override fun onResult(answer: Answer) {
                 if (mResult.test.params.testType == TRAINING_TEST) {
-                    end_test_fab.setImageDrawable(resources.getDrawable(R.drawable.ic_benzolring2))
+                    end_test_fab.setImageDrawable(resources.getDrawable(R.drawable.ic_select))
                     animIn(end_test_fab)
                     end_test_fab.setOnClickListener {
                         showSingleQuestionAnswer(answer)
@@ -219,7 +219,7 @@ class TestingActivity : AppCompatActivity() {
                                 && (testing_view_pager.currentItem < testing_view_pager.adapter?.count?.minus(1) ?: 0)) {
 //                                && (mResult.askedQuestions.size != mResult.test.mSortedQuestions.size)) {
 //                                ) {
-                            end_test_fab.setImageDrawable(resources.getDrawable(R.drawable.ic_benzolring4))
+                            end_test_fab.setImageDrawable(resources.getDrawable(R.drawable.ic_dot_right_arrow))
                             animIn(end_test_fab)
                             end_test_fab.setOnClickListener {
                                 animOut(end_test_fab)
@@ -424,9 +424,11 @@ class TestingActivity : AppCompatActivity() {
             val hint: List<Hint>? = mResult.test.mSortedQuestions[position].hints
             if (hint != null) {
                 result_frame_layout.setPadding(0, 0, 0, bottom_bar_linear_layout.height)
-                result_frame_layout.visibility = View.VISIBLE
-                showFragment(R.id.result_frame_layout, mHintFragment)
-                mHintFragment.showHint(hint)
+                if(result_frame_layout.visibility != View.VISIBLE) {
+                    result_frame_layout.visibility = View.VISIBLE
+                    showFragment(R.id.result_frame_layout, mHintFragment)
+                    mHintFragment.showHint(hint)
+                }
             }
         }
     }
