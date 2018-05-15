@@ -27,4 +27,9 @@
     <string name="SHOW_RESULT">Show result</string>
     <string name="LOG_OUT">Log out</string>
     <string name="PROFILE_SETTING">Profile settings</string>
+    <string name="ASKED_QUESTIONS">Asked questions:</string>
+    <string name="TOTAL_QUESTIONS_IN_TEST">Questions in Test:</string>
+    <string name="CORRECT_ANSWERS">Correct answers:</string>
+    <string name="SCORE">Score:</string>
+    <string name="START_TEST_TIME">Start test:</string>
 </resources>

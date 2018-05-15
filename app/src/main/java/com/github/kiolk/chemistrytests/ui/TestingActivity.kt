@@ -435,6 +435,7 @@ class TestingActivity : AppCompatActivity() {
         isTestEnd = true
         result_frame_layout.visibility = View.VISIBLE
         showFragment(R.id.result_frame_layout, mResultFragment)
+        mResult.writeResultInformation()
         mResultFragment.showResult(mResult)
         val resultAdapter: TestingPagerAdapter = TestingPagerAdapter(supportFragmentManager, mResult.test.mSortedQuestions,
                 true, mResult.userResultAnswers())

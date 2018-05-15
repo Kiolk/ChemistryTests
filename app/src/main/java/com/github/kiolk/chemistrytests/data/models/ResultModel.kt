@@ -8,7 +8,8 @@ class Result(var test: Test, var endListener: OnEndTestListener) {
 
     var askedQuestions: MutableList<Answer> = mutableListOf()
     var points: Float = 0.0F
-
+    var correctAnswers = 0
+    lateinit var mResultInfo : ResultInformation
 
     fun takeAnswer(answer: Answer) {
 
@@ -27,11 +28,14 @@ class Result(var test: Test, var endListener: OnEndTestListener) {
 
     fun getTestResult(): Float {
         var result: Float = 0.0F
+        correctAnswers = 0
         askedQuestions.filter { it.userAnswers.isNotEmpty() && it.question.checkCorrectAnswersByNumbers(it.userAnswers) }.forEach {
             result += it.question.questionCost
+            correctAnswers += 1
         }
         askedQuestions.filter { !it.userAnswers.isNotEmpty() && it.question.checkOpenQuestionAnswers(it.userInput) }.forEach {
             result += it.question.questionCost
+            correctAnswers += 1
         }
         return result
     }
@@ -60,6 +64,19 @@ class Result(var test: Test, var endListener: OnEndTestListener) {
             }
         }
         askedQuestions = tmp
+    }
+
+    fun writeResultInformation(){
+        mResultInfo = ResultInformation()
+        mResultInfo.totalQuestions = test.mSortedQuestions.size
+        mResultInfo.askedQuestions = askedQuestions.size
+        mResultInfo.correctAnswered = correctAnswers
+        mResultInfo.wrongAnswered = mResultInfo.askedQuestions!! - correctAnswers
+        mResultInfo.startTime = 1111111111111L
+        mResultInfo.endTime = 2222222222222L
+        mResultInfo.duration = mResultInfo.endTime!! - mResultInfo.startTime!!
+        mResultInfo.resultScore = getTestResult()
+        mResultInfo.percentCorrect = (mResultInfo.correctAnswered!! / mResultInfo.totalQuestions!!)*100F
     }
 }
 

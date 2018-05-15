@@ -5,9 +5,120 @@
     android:background="@color/colorAccent">
 
     <TextView
+        android:id="@+id/test_title_result_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/BigTitleStyle" />
+    <LinearLayout
+        android:orientation="vertical"
+        android:id="@+id/separate_line_linear_layout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/LINE_WIDTH"
+        android:background="@color/DIVIDER_LINE_COLOR"
+        android:layout_below="@+id/test_title_result_text_view"
+        android:layout_alignLeft="@id/test_title_result_text_view"
+        android:layout_alignRight="@id/test_title_result_text_view">
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/total_question_linear_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/separate_line_linear_layout"
+        android:orientation="horizontal">
+        <TextView
+            android:text="@string/TOTAL_QUESTIONS_IN_TEST"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            style="@style/ResultInformationStyle.Right" />
+        <TextView
+            android:id="@+id/total_questions_result_test_view"
+            android:layout_width="0dp"
+            style="@style/ResultInformationStyle.Left"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/asked_question_linear_layout"
+        android:layout_below="@+id/total_question_linear_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:text="@string/ASKED_QUESTIONS"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            style="@style/ResultInformationStyle.Right" />
+        <TextView
+            android:id="@+id/asked_question_result_test_view"
+            android:layout_width="0dp"
+            style="@style/ResultInformationStyle.Left"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/correct_answers_linear_layout"
+        android:layout_below="@+id/asked_question_linear_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:text="@string/CORRECT_ANSWERS"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            style="@style/ResultInformationStyle.Right" />
+        <TextView
+            android:id="@+id/correct_answers_result_text_view"
+            android:layout_width="0dp"
+            style="@style/ResultInformationStyle.Left"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/score_linear_layout"
+        android:layout_below="@+id/correct_answers_linear_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:text="@string/SCORE"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            style="@style/ResultInformationStyle.Right" />
+        <TextView
+            android:id="@+id/score_result_text_view"
+            android:layout_width="0dp"
+            style="@style/ResultInformationStyle.Left"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/start_time_linear_layout"
+        android:layout_below="@+id/score_linear_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:text="@string/START_TEST_TIME"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            style="@style/ResultInformationStyle.Right" />
+        <TextView
+            android:id="@+id/start_test_text_view"
+            android:layout_width="0dp"
+            style="@style/ResultInformationStyle.Left"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+    </LinearLayout>
+    <TextView
         android:id="@+id/result_test_score_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true" />
-
 </RelativeLayout>

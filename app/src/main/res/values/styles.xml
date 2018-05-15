@@ -36,5 +36,25 @@
         <item name="android:layout_gravity">center</item>
     </style>
 
+    <style name="BigTitleStyle">
+        <item name="android:textSize">@dimen/BIG_TEXT_SIZE</item>
+        <item name="android:padding">@dimen/BLOCK_PADDING</item>
+        <item name="android:fontFamily">@font/bicubik</item>
+    </style>
+
+    <style name="ResultInformationStyle">
+        <item name="android:padding">@dimen/BLOCK_PADDING</item>
+        <item name="android:textSize">@dimen/SMALL_TITLE_SIZE</item>
+    </style>
+
+    <style name="ResultInformationStyle.Right" parent="ResultInformationStyle">
+        <item name="android:gravity">right</item>
+    </style>
+
+    <style name="ResultInformationStyle.Left" parent="ResultInformationStyle">
+        <item name="android:gravity">left</item>
+        <item name="android:layout_gravity">center_vertical</item>
+    </style>
+
     <dimen name="SMALL_ICON_SIZE">30dp</dimen>
 </resources>

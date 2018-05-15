@@ -17,4 +17,5 @@
     <color name="NOT_ANSWERED">#00ffffff</color>
     <color name="SELECTED">#5e5d5d</color>
     <color name="TRANSPARENT_COLOR">#00000000</color>
+    <color name="DIVIDER_LINE_COLOR">#459023</color>
 </resources>
