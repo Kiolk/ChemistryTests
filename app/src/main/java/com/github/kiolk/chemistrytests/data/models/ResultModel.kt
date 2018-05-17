@@ -1,10 +1,12 @@
 package com.github.kiolk.chemistrytests.data.models
 
+import java.io.Serializable
+
 interface OnEndTestListener {
     fun endedTest()
 }
 
-class Result(var test: Test, var endListener: OnEndTestListener) {
+class Result(var test: Test = Test(), var endListener: OnEndTestListener? = null) : Serializable {
 
     var askedQuestions: MutableList<Answer> = mutableListOf()
     var points: Float = 0.0F
@@ -23,7 +25,7 @@ class Result(var test: Test, var endListener: OnEndTestListener) {
             askedQuestions.add(answer)
         }
         points = getTestResult()
-        if (isLastTestQuestion()) endListener.endedTest()
+        if (isLastTestQuestion()) endListener?.endedTest()
     }
 
     fun getTestResult(): Float {

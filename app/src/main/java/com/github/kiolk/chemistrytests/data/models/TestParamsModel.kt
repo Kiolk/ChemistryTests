@@ -19,7 +19,8 @@ class TestParams(var testId : Int = 1,
                  var direction : Int = FREE_TEST,
                  var testInfo : TestInfo = TestInfo(),
                  var tags : List<String> = mutableListOf(),
-                 var questionTypes : List<Int> = mutableListOf()) : Serializable
+                 var questionTypes : List<Int> = mutableListOf(),
+                 var testTimer : Long? = null) : Serializable
 
 class TestInfo(var testTitle : String = "Test",
                var testDescription : String = "Description",

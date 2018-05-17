@@ -2,6 +2,7 @@ package com.github.kiolk.chemistrytests.ui
 
 import android.graphics.Color
 import android.os.Bundle
+import android.os.Handler
 import android.support.design.widget.AppBarLayout
 import android.support.v4.app.Fragment
 import android.support.v4.view.ViewCompat
@@ -30,10 +31,12 @@ import com.github.kiolk.chemistrytests.utils.SlideAnimationUtil.VERY_FASTER
 import kiolk.com.github.pen.utils.MD5Util
 import kotlinx.android.synthetic.main.activity_testing.*
 import showFragment
+import java.util.*
 
 val QUESTIONS_CHILDS: String = "Questions"
 
 class TestingActivity : AppCompatActivity() {
+
 
 
     lateinit var listener: CheckResultListener
@@ -50,7 +53,10 @@ class TestingActivity : AppCompatActivity() {
     var isShowBottomBar: Boolean = false
     var isShowFAB: Boolean = false
     var isTestEnd: Boolean = false
+    var isTestForeground : Boolean = false
+    var isTimeEnd : Boolean = false
     var mQuestions: MutableList<CloseQuestion> = mutableListOf()
+    var mTimer : Timer? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -152,9 +158,16 @@ class TestingActivity : AppCompatActivity() {
     }
 
     override fun onPause() {
+
+        isTestForeground = false
+        if(isTestEnd){
+            closeFragment(mResultFragment)
+        }
         super.onPause()
 //        mDatabaseReference.removeEventListener(mChaildEventListener)
     }
+
+
 
     private fun setupTestingViewPAger(questionsList: MutableList<CloseQuestion>) {
 
@@ -292,6 +305,30 @@ class TestingActivity : AppCompatActivity() {
             }
         }
         questions_tool_bar.setNavigationOnClickListener(naviagationListener)
+        if(mParams.testTimer != null){
+            mParams.testTimer?.let { startTestTimer(it) }
+        }
+    }
+
+    private fun startTestTimer(time : Long){
+        var timeLength = time
+        test_timer_text_view.visibility = View.VISIBLE
+        val handler = Handler()
+        val task : TimerTask = object : TimerTask(){
+            override fun run() {
+                handler.post {
+                    test_timer_text_view.text = timeLength.toString()
+                    timeLength -= 100L
+                    if(timeLength < 0 && isTestForeground){
+                        showResult()
+                    }else if(timeLength < 0 && !isTestForeground){
+                        isTimeEnd = true
+                    }
+                }
+            }
+        }
+        mTimer = Timer()
+        mTimer?.scheduleAtFixedRate(task, 0, 100)
     }
 
     private fun updateViewPagerAdapter(){
@@ -327,6 +364,19 @@ class TestingActivity : AppCompatActivity() {
                 }
             }
         })
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mTimer?.cancel()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        isTestForeground = true
+        if(isTimeEnd){
+            showResult()
+        }
     }
 
     private fun closeTestInfo() {
@@ -435,6 +485,7 @@ class TestingActivity : AppCompatActivity() {
     }
 
     fun showResult() {
+        mTimer?.cancel()
         isTestEnd = true
         result_frame_layout.visibility = View.VISIBLE
         showFragment(R.id.result_frame_layout, mResultFragment)

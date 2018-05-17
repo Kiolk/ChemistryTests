@@ -4,8 +4,8 @@ import android.graphics.Path
 import java.io.Serializable
 
 
-class Test(var questions: List<CloseQuestion>,
-           var params: TestParams) : Serializable{
+class Test(var questions: MutableList<CloseQuestion> = mutableListOf(),
+           var params: TestParams = TestParams()) : Serializable{
 
     //    var questionNumber = -1
     var resultingScore = 0F
