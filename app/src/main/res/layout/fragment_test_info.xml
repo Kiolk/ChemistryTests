@@ -26,55 +26,109 @@
         android:padding="@dimen/BLOCK_PADDING"
         android:orientation="horizontal">
         <LinearLayout
+            android:id="@+id/exam_test_type_linear_layout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="0"
             android:orientation="vertical">
             <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_gravity="center"
+                style="@style/BottomIconStyle"
+                android:background="@drawable/ic_exam"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/EXAM_TEST"
+                style="@style/IconTitleStyle" />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/training_test_icon_linear_layout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:orientation="vertical">
+            <ImageView
+                style="@style/BottomIconStyle"
                 android:background="@drawable/ic_pulling_up_training_silhouette"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:textSize="@dimen/SMALL_TEXT_SIZE"
+                style="@style/IconTitleStyle"
                 android:text="@string/TRAINING_TEST"/>
         </LinearLayout>
         <LinearLayout
+            android:id="@+id/free_direction_icon_linear_layout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="0"
             android:orientation="vertical">
             <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_gravity="center"
+                style="@style/BottomIconStyle"
                 android:background="@drawable/ic_recycable"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:textSize="@dimen/SMALL_TEXT_SIZE"
+                style="@style/IconTitleStyle"
                 android:text="@string/FREE_DIRECTION"/>
         </LinearLayout>
         <LinearLayout
+            android:id="@+id/direct_order_icon_linear_layout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="0"
             android:orientation="vertical">
             <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_gravity="center"
+                style="@style/BottomIconStyle"
+                android:background="@drawable/ic_arrow_pointing_to_right"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/DIRECT_ORDER"
+                style="@style/IconTitleStyle" />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/single_choice_icon_linear_layout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:orientation="vertical">
+            <ImageView
+                style="@style/BottomIconStyle"
                 android:background="@drawable/ic_checked"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:textSize="@dimen/SMALL_TEXT_SIZE"
-                android:text="@string/SINGLE_CHOICE"/>
+                android:text="@string/SINGLE_CHOICE"
+                style="@style/IconTitleStyle" />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/multiple_choice_icon_linear_layout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:orientation="vertical">
+            <ImageView
+                style="@style/BottomIconStyle"
+                android:background="@drawable/ic_multiple_square"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/MULTIPLE_CHOICE"
+                style="@style/IconTitleStyle" />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/input_choice_icon_linear_layout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:orientation="vertical">
+            <ImageView
+                style="@style/BottomIconStyle"
+                android:background="@drawable/ic_input"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/INPUT_CHOICE"
+                style="@style/IconTitleStyle" />
         </LinearLayout>
 
     </LinearLayout>

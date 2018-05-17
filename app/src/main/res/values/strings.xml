@@ -34,6 +34,8 @@
     <string name="START_TEST_TIME">Start test:</string>
     <string name="TRAINING_TEST">Training test</string>
     <string name="FREE_DIRECTION">Free choice</string>
+    <string name="EXAM_TEST">Exam test</string>
+    <string name="DIRECT_ORDER">Direct_order</string>
     <string-array name="RESULT_TAB_TITLES">
         <item>Test information</item>
         <item>General result</item>
