@@ -16,8 +16,8 @@
         android:layout_height="@dimen/LINE_WIDTH"
         android:background="@color/DIVIDER_LINE_COLOR"
         android:layout_below="@+id/test_title_result_text_view"
-        android:layout_alignLeft="@id/test_title_result_text_view"
-        android:layout_alignRight="@id/test_title_result_text_view">
+        android:paddingLeft="@dimen/BLOCK_PADDING"
+        android:paddingRight="@dimen/BLOCK_PADDING">
 
     </LinearLayout>
 

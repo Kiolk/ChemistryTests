@@ -1,10 +1,11 @@
 package com.github.kiolk.chemistrytests.data.models
 
 import android.graphics.Path
+import java.io.Serializable
 
 
 class Test(var questions: List<CloseQuestion>,
-           var params: TestParams) {
+           var params: TestParams) : Serializable{
 
     //    var questionNumber = -1
     var resultingScore = 0F

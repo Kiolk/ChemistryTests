@@ -203,6 +203,7 @@ class TestingActivity : AppCompatActivity() {
 //                }
             }
         })
+        mTestInfo = TestInfoFragment().fromInstance(mResult.test)
         adapter = TestingPagerAdapter(supportFragmentManager, test.mSortedQuestions)
         listener = object : CheckResultListener {
 

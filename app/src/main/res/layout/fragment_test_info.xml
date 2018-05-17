@@ -7,6 +7,82 @@
         android:id="@+id/test_title_info_fragment_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"/>
+        style="@style/BigTitleStyle"/>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:id="@+id/separate_line_linear_layout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/LINE_WIDTH"
+        android:background="@color/DIVIDER_LINE_COLOR"
+        android:layout_below="@+id/test_title_info_fragment_text_view"
+        android:paddingLeft="@dimen/BLOCK_PADDING"
+        android:paddingRight="@dimen/BLOCK_PADDING"/>
+    <LinearLayout
+        android:id="@+id/test_properties_icons_block"
+        android:layout_below="@+id/test_title_info_fragment_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/BLOCK_PADDING"
+        android:orientation="horizontal">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:background="@drawable/ic_pulling_up_training_silhouette"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textSize="@dimen/SMALL_TEXT_SIZE"
+                android:text="@string/TRAINING_TEST"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:background="@drawable/ic_recycable"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textSize="@dimen/SMALL_TEXT_SIZE"
+                android:text="@string/FREE_DIRECTION"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:background="@drawable/ic_checked"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textSize="@dimen/SMALL_TEXT_SIZE"
+                android:text="@string/SINGLE_CHOICE"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/test_description_text_view"
+        android:layout_below="@+id/test_properties_icons_block"
+        android:layout_width="match_parent"
+        style="@style/DescriptionBlockStyle"
+        android:layout_height="wrap_content"/>
 </RelativeLayout>

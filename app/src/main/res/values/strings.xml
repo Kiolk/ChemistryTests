@@ -32,4 +32,11 @@
     <string name="CORRECT_ANSWERS">Correct answers:</string>
     <string name="SCORE">Score:</string>
     <string name="START_TEST_TIME">Start test:</string>
+    <string name="TRAINING_TEST">Training test</string>
+    <string name="FREE_DIRECTION">Free choice</string>
+    <string-array name="RESULT_TAB_TITLES">
+        <item>Test information</item>
+        <item>General result</item>
+        <item>Statistic</item>
+    </string-array>
 </resources>

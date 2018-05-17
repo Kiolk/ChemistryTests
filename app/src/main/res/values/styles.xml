@@ -56,5 +56,11 @@
         <item name="android:layout_gravity">center_vertical</item>
     </style>
 
+    <style name="DescriptionBlockStyle">
+        <item name="android:padding">@dimen/BLOCK_PADDING</item>
+        <item name="android:textSize">@dimen/NORMAL_TEXT_SIZE</item>
+    </style>
+
     <dimen name="SMALL_ICON_SIZE">30dp</dimen>
+    <dimen name="NORMAL_TEXT_SIZE">16sp</dimen>
 </resources>
