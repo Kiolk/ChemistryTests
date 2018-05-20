@@ -1,6 +1,8 @@
 package com.github.kiolk.chemistrytests.data.models
 
-class ResultInformation{
+import java.io.Serializable
+
+class ResultInformation : Serializable{
     var totalQuestions : Int? = null
     var askedQuestions : Int? = null
     var correctAnswered : Int? = null

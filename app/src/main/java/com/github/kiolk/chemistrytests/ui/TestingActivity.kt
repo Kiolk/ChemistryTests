@@ -159,11 +159,12 @@ class TestingActivity : AppCompatActivity() {
 
     override fun onPause() {
 
-        isTestForeground = false
-        if(isTestEnd){
-            closeFragment(mResultFragment)
-        }
+
+//        if(isTestEnd){
+//            closeFragment(mResultFragment)
+//        }
         super.onPause()
+        isTestForeground = false
 //        mDatabaseReference.removeEventListener(mChaildEventListener)
     }
 
@@ -216,7 +217,7 @@ class TestingActivity : AppCompatActivity() {
 //                }
             }
         })
-        mTestInfo = TestInfoFragment().fromInstance(mResult.test)
+        mTestInfo = TestInfoFragment().fromInstance(mResult.test.params)
         adapter = TestingPagerAdapter(supportFragmentManager, test.mSortedQuestions)
         listener = object : CheckResultListener {
 
@@ -321,8 +322,10 @@ class TestingActivity : AppCompatActivity() {
                     timeLength -= 100L
                     if(timeLength < 0 && isTestForeground){
                         showResult()
+                        mTimer?.cancel()
                     }else if(timeLength < 0 && !isTestForeground){
                         isTimeEnd = true
+                        mTimer?.cancel()
                     }
                 }
             }
