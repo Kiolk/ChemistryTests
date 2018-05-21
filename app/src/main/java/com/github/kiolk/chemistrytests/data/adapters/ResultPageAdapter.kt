@@ -6,20 +6,25 @@ import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentStatePagerAdapter
 import com.github.kiolk.chemistrytests.R
 import com.github.kiolk.chemistrytests.data.fragments.GenerralResultFragment
+import com.github.kiolk.chemistrytests.data.fragments.ResultStatisticFragment
 import com.github.kiolk.chemistrytests.data.fragments.TestInfoFragment
 import com.github.kiolk.chemistrytests.data.models.Result
 
 class ResultPageAdapter(var fm : FragmentManager, var result : Result, var context : Context) : FragmentStatePagerAdapter(fm){
-    val GENERAL_TEST_INFORMATION = 0
-    val GENERAL_TEST_RESULT = 1
-    val RESULT_STATISTIC = 2
-    val TAB_ITEMS = 3
+
+    companion object {
+        val GENERAL_TEST_INFORMATION = 0
+        val GENERAL_TEST_RESULT = 1
+        val RESULT_STATISTIC = 2
+        val TAB_ITEMS = 3
+    }
+
 
     override fun getItem(position: Int): Fragment {
        return when (position) {
             GENERAL_TEST_INFORMATION -> TestInfoFragment().fromInstance(result.test.params)
             GENERAL_TEST_RESULT ->  GenerralResultFragment().fromInstance(result.mResultInfo)
-            RESULT_STATISTIC ->  TestInfoFragment()
+            RESULT_STATISTIC ->  ResultStatisticFragment().fromInstance(result.mResultInfo)
             else -> {
                 TestInfoFragment()
             }

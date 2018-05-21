@@ -78,7 +78,6 @@ class AvaliableTestFragment : Fragment(){
             }
 
             override fun onChildChanged(p0: DataSnapshot?, p1: String?) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
             }
 
             override fun onChildAdded(p0: DataSnapshot?, p1: String?) {

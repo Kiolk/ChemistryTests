@@ -36,6 +36,8 @@
     <string name="FREE_DIRECTION">Free choice</string>
     <string name="EXAM_TEST">Exam test</string>
     <string name="DIRECT_ORDER">Direct_order</string>
+    <string name="YOUR_SCORE">Your score:</string>
+    <string name="TIMER_CONTROL">Timer control</string>
     <string-array name="RESULT_TAB_TITLES">
         <item>Test information</item>
         <item>General result</item>

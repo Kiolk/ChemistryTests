@@ -21,13 +21,15 @@ class GenerralResultFragment : Fragment(){
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.fragment_general_reslt, null)
-        view.findViewById<TextView>(R.id.total_questions_result_test_view).text = mTestInfo.totalQuestions.toString()
-        view.findViewById<TextView>(R.id.asked_question_result_test_view).text = mTestInfo.askedQuestions.toString()
-        view.findViewById<TextView>(R.id.correct_answers_result_text_view).text = mTestInfo.correctAnswered.toString()
-        view.findViewById<TextView>(R.id.result_test_score_text_view).text = mTestInfo.resultScore.toString()
-        view.findViewById<TextView>(R.id.start_test_text_view).text = mTestInfo.startTime.toString()
-        view.findViewById<TextView>(R.id.score_result_text_view).text = mTestInfo.resultScore.toString()
+        val view = inflater.inflate(R.layout.fragment_general_score_reslt, null)
+        view.findViewById<TextView>(R.id.user_score_fragment_text_view).text = mTestInfo.testMark
+//        view.findViewById<TextView>(R.id.total_questions_result_test_view).text = mTestInfo.totalQuestions.toString()
+//        view.findViewById<TextView>(R.id.asked_question_result_test_view).text = mTestInfo.askedQuestions.toString()
+//        view.findViewById<TextView>(R.id.correct_answers_result_text_view).text = mTestInfo.correctAnswered.toString()
+//        view.findViewById<TextView>(R.id.result_test_score_text_view).text = mTestInfo.resultScore.toString()
+//        view.findViewById<TextView>(R.id.start_test_text_view).text = mTestInfo.startTime.toString()
+//        view.findViewById<TextView>(R.id.score_result_text_view).text = mTestInfo.resultScore.toString()
+//        view.findViewById<TextView>(R.id.test_mark_text_view).text = mTestInfo.testMark
         return view //super.onCreateView(inflater, container, savedInstanceState)
     }
     fun fromInstance(result: ResultInformation) : GenerralResultFragment{

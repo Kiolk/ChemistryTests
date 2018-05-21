@@ -50,23 +50,42 @@ class TestInfoFragment : Fragment() {
 //                view.findViewById<LinearLayout>(R.id.training_test_icon_linear_layout).layoutParams as LinearLayout.LayoutParams
 //        params.weight = 1.0F
         if(mParams?.testType == TRAINING_TEST){
-            view.findViewById<LinearLayout>(R.id.training_test_icon_linear_layout).layoutParams = params
+            val iconLayout = view.findViewById<LinearLayout>(R.id.training_test_icon_linear_layout)
+            iconLayout.visibility = View.VISIBLE
+            iconLayout.layoutParams = params
         }else if(mParams?.testType == EXAM_TEST){
-            view.findViewById<LinearLayout>(R.id.exam_test_type_linear_layout).layoutParams = params
+            val iconLayout = view.findViewById<LinearLayout>(R.id.exam_test_type_linear_layout)
+            iconLayout.visibility = View.VISIBLE
+            iconLayout.layoutParams = params
         }
         if (mParams?.direction == FREE_TEST){
-            view.findViewById<LinearLayout>(R.id.free_direction_icon_linear_layout).layoutParams = params
+            val iconLayout = view.findViewById<LinearLayout>(R.id.free_direction_icon_linear_layout)
+            iconLayout.visibility = View.VISIBLE
+            iconLayout.layoutParams = params
         }else if(mParams?.direction == DIRECT_TEST){
-            view.findViewById<LinearLayout>(R.id.direct_order_icon_linear_layout).layoutParams = params
+            val iconLayout = view.findViewById<LinearLayout>(R.id.direct_order_icon_linear_layout)
+            iconLayout.visibility = View.VISIBLE
+            iconLayout.layoutParams = params
+        }
+        if(mParams?.testTimer!=null){
+            val iconLayout = view.findViewById<LinearLayout>(R.id.timer_control_icon_linear_layout)
+            iconLayout.visibility = View.VISIBLE
+            iconLayout.layoutParams = params
         }
         if(mParams?.questionTypes?.contains(SINGLE_CHOICE) == true){
-            view.findViewById<LinearLayout>(R.id.single_choice_icon_linear_layout).layoutParams = params
+            val iconLayout = view.findViewById<LinearLayout>(R.id.single_choice_icon_linear_layout)
+            iconLayout.visibility = View.VISIBLE
+            iconLayout.layoutParams = params
         }
         if(mParams?.questionTypes?.contains(MULTIPLE_CHOICE) == true){
-            view.findViewById<LinearLayout>(R.id.multiple_choice_icon_linear_layout).layoutParams = params
+            val iconLayout = view.findViewById<LinearLayout>(R.id.multiple_choice_icon_linear_layout)
+            iconLayout.visibility = View.VISIBLE
+            iconLayout.layoutParams = params
         }
         if(mParams?.questionTypes?.contains(INPUT_CHOICE) == true){
-            view.findViewById<LinearLayout>(R.id.input_choice_icon_linear_layout).layoutParams = params
+            val iconLayout = view.findViewById<LinearLayout>(R.id.input_choice_icon_linear_layout)
+            iconLayout.visibility = View.VISIBLE
+            iconLayout.layoutParams = params
         }
     }
 }

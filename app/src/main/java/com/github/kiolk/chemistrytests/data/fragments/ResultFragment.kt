@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.github.kiolk.chemistrytests.R
 import com.github.kiolk.chemistrytests.data.adapters.ResultPageAdapter
+import com.github.kiolk.chemistrytests.data.adapters.ResultPageAdapter.Companion.GENERAL_TEST_RESULT
 import com.github.kiolk.chemistrytests.data.models.Result
 
 class ResultFragment : Fragment() {
@@ -29,6 +30,7 @@ class ResultFragment : Fragment() {
         val adapter = fragmentManager?.let { context?.let { it1 -> ResultPageAdapter(it, result, it1) } }
        val viewPager =  view?.findViewById<ViewPager>(R.id.result_view_pager)
         viewPager?.adapter = adapter
+        viewPager?.currentItem = GENERAL_TEST_RESULT
         view?.findViewById<TabLayout>(R.id.result_tab_layout)?.setupWithViewPager(viewPager)
     }
 }

@@ -79,6 +79,21 @@ class Result(var test: Test = Test(), var endListener: OnEndTestListener? = null
         mResultInfo.duration = mResultInfo.endTime!! - mResultInfo.startTime!!
         mResultInfo.resultScore = getTestResult()
         mResultInfo.percentCorrect = (mResultInfo.correctAnswered!! / mResultInfo.totalQuestions!!)*100F
+        mResultInfo.resultScore = getTestResult()
+        mResultInfo.testMark = getTestMark()
+    }
+
+    private fun getTestMark(): String {
+        val resultScore = getTestResult()
+        val maxScore : Float = getMaxScore()
+        val system : ScoredSystem = ScoredSystem(test.params.scoredSystem)
+        return system.getMark(resultScore, maxScore) ?: "No mark"
+    }
+
+    private fun getMaxScore(): Float {
+        var maxResult = 0F
+        test.mSortedQuestions.forEach{maxResult += it.questionCost}
+        return maxResult
     }
 }
 

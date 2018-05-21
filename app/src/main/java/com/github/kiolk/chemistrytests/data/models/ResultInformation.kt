@@ -12,4 +12,5 @@ class ResultInformation : Serializable{
     var startTime : Long? = null
     var endTime : Long? = null
     var duration : Long? = null
+    var testMark : String? = null
 }

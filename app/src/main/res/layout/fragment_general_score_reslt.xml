@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/user_score_fragment_text_view"
+        android:layout_above="@+id/user_score_fragment_text_view"
+        android:text="@string/YOUR_SCORE"
+        style="@style/ResultInformationStyle"/>
+    <TextView
+        android:id="@+id/user_score_fragment_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:shadowColor="@color/colorAccent"
+        android:shadowDx="40"
+        android:shadowDy="34"
+        android:shadowRadius="34"
+        android:elevation="@dimen/BOTTOM_BAR_ELEVATION"
+        android:textSize="@dimen/GIANT_TEXT_SIZE"
+        android:gravity="center_vertical|center_horizontal"
+        android:text="A+"/>
+</RelativeLayout>
