@@ -7,8 +7,11 @@ import com.github.kiolk.chemistrytests.data.database.QuestionDBModel.QuestionDB.
 import com.github.kiolk.chemistrytests.data.database.QuestionDBModel.QuestionDB.TABLE_NAME
 import com.github.kiolk.chemistrytests.data.database.TestParamsDBModel.TestParamsDB.TEST_PARAMS_ID
 import com.github.kiolk.chemistrytests.data.database.TestParamsDBModel.TestParamsDB.TEST_PARAMS_JSON
+import com.github.kiolk.chemistrytests.data.database.UserDbModel.UserDB.USER_ID
+import com.github.kiolk.chemistrytests.data.database.UserDbModel.UserDB.USER_JSON
 import com.github.kiolk.chemistrytests.data.models.CloseQuestion
 import com.github.kiolk.chemistrytests.data.models.TestParams
+import com.github.kiolk.chemistrytests.data.models.User
 import com.google.gson.Gson
 
 class DBOperations {
@@ -131,4 +134,51 @@ class DBOperations {
             put(QUESTION_JSON, Gson().toJson(question))
         }
     }
+
+    fun getAllUsers(): MutableList<User> {
+        return helper.readableDatabase.query(UserDbModel.UserDB.TABLE_NAME,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null).use { cursor -> this.allUsersFromCursor(cursor) }
+    }
+
+    private fun allUsersFromCursor(cursor: Cursor): MutableList<User> {
+        val list = mutableListOf<User>()
+        while (cursor.moveToNext()) {
+            list.add(userFromCursor(cursor))
+        }
+        cursor.close()
+        return list
+    }
+
+    private fun userFromCursor(cursor: Cursor): User {
+        val json = cursor.getString(cursor.getColumnIndex(UserDbModel.UserDB.USER_JSON))
+        val ob: User = Gson().fromJson(json, User::class.java)
+        return ob
+    }
+
+    fun insertUser(user: User) {
+        val contentValue = fromUser(user)
+        val readableDatabase = helper.readableDatabase
+        try {
+            readableDatabase.beginTransaction()
+            val res = readableDatabase.replace(UserDbModel.UserDB.TABLE_NAME, null, contentValue)
+            readableDatabase.setTransactionSuccessful()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        } finally {
+            readableDatabase.endTransaction()
+        }
+    }
+
+    private fun fromUser(user: User): ContentValues {
+        return ContentValues().apply {
+            put(USER_ID, user.userId)
+            put(USER_JSON, Gson().toJson(user))
+        }
+    }
+
 }

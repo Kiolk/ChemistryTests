@@ -81,6 +81,9 @@ class Result(var test: Test = Test(), var endListener: OnEndTestListener? = null
         mResultInfo.percentCorrect = (mResultInfo.correctAnswered!! / mResultInfo.totalQuestions!!)*100F
         mResultInfo.resultScore = getTestResult()
         mResultInfo.testMark = getTestMark()
+        mResultInfo.testParams = test.params
+//        mResultInfo.sortedQuestions = test.mSortedQuestions //as MutableList<CloseQuestion>
+//        mResultInfo.anweredQuestions = askedQuestions
     }
 
     private fun getTestMark(): String {

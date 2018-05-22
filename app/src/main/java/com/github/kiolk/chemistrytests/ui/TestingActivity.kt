@@ -19,7 +19,10 @@ import closeFragment
 import com.github.kiolk.chemistrytests.R
 import com.github.kiolk.chemistrytests.data.CheckResultListener
 import com.github.kiolk.chemistrytests.data.TestingPagerAdapter
+import com.github.kiolk.chemistrytests.data.asynctasks.ResultCallback
+import com.github.kiolk.chemistrytests.data.asynctasks.SingleAsyncTask
 import com.github.kiolk.chemistrytests.data.database.DBOperations
+import com.github.kiolk.chemistrytests.data.executs.UpdateResultInDb
 import com.github.kiolk.chemistrytests.data.fragments.HintFragment
 import com.github.kiolk.chemistrytests.data.fragments.LeaveTestDialog
 import com.github.kiolk.chemistrytests.data.fragments.ResultFragment
@@ -518,6 +521,17 @@ class TestingActivity : AppCompatActivity() {
             }
             cnt = cnt + 1
         }
+        addResultForUserProfile()
+    }
+
+    private fun addResultForUserProfile() {
+        SingleAsyncTask().execute(UpdateResultInDb(mResult.mResultInfo, object : ResultCallback{
+            override fun onSuccess() {
+            }
+
+            override fun onError() {
+            }
+        }))
     }
 
     fun showFragment(container: Int, fragment: Fragment) {

@@ -11,6 +11,7 @@ class ChemistryTestApp : Application(){
         super.onCreate()
         initImageLoader()
         DBConnector.initInstance(baseContext)
+
         FirebaseMessaging.getInstance()
     }
 

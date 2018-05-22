@@ -13,4 +13,7 @@ class ResultInformation : Serializable{
     var endTime : Long? = null
     var duration : Long? = null
     var testMark : String? = null
+    var testParams : TestParams? = null
+//    var sortedQuestions :List<CloseQuestion> = mutableListOf()
+//    var anweredQuestions : MutableList<Answer> = mutableListOf()
 }

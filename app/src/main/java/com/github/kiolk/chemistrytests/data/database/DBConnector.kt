@@ -21,11 +21,13 @@ class DBConnector private constructor(context : Context) : SQLiteOpenHelper(cont
     override fun onCreate(db: SQLiteDatabase?) {
         db?.execSQL(QuestionDBModel.SQL_CREATE_ENTRIES)
         db?.execSQL(TestParamsDBModel.SQL_CREATE_ENTRIES)
+        db?.execSQL(UserDbModel.SQL_CREATE_ENTRIES)
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
         db?.execSQL(QuestionDBModel.SQL_DELETE_ENTRIES)
         db?.execSQL(TestParamsDBModel.SQL_DELETE_ENTRIES)
+        db?.execSQL(UserDbModel.SQL_DELETE_ENTRIES)
     }
 }
 
