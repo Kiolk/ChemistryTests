@@ -10,6 +10,7 @@ import com.github.kiolk.chemistrytests.data.database.TestParamsDBModel.TestParam
 import com.github.kiolk.chemistrytests.data.database.UserDbModel.UserDB.USER_ID
 import com.github.kiolk.chemistrytests.data.database.UserDbModel.UserDB.USER_JSON
 import com.github.kiolk.chemistrytests.data.models.CloseQuestion
+import com.github.kiolk.chemistrytests.data.models.ResultInformation
 import com.github.kiolk.chemistrytests.data.models.TestParams
 import com.github.kiolk.chemistrytests.data.models.User
 import com.google.gson.Gson
@@ -181,4 +182,9 @@ class DBOperations {
         }
     }
 
+    fun getUser(uid: String?): User? {
+        val users = getAllUsers()
+        val findedUser = users.find { it.userId == uid }
+        return findedUser
+    }
 }

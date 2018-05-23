@@ -36,6 +36,17 @@ fun checkConnection(pContext: Context): Boolean {
     return check.activeNetworkInfo != null && check.activeNetworkInfo.isConnectedOrConnecting
 }
 
+fun <T> reversSort(list: MutableList<T>): MutableList<T> {
+    val tmpList: MutableList<T> = mutableListOf()
+    list.forEach { tmpList.add(it) }
+    var position: Int = list.size - 1
+    list.forEach {
+        tmpList.add(position, it)
+        position -= 1
+    }
+    return tmpList
+}
+
 fun getTrainingTets(): Test {
     val listOfQuestions: MutableList<CloseQuestion> = mutableListOf()
     var cnt: Int = 0

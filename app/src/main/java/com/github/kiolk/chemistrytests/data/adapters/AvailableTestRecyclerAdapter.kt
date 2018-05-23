@@ -1,6 +1,5 @@
 package com.github.kiolk.chemistrytests.data.adapters
 
-import android.app.ActionBar
 import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -11,27 +10,47 @@ import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
 import com.github.kiolk.chemistrytests.R
+import com.github.kiolk.chemistrytests.data.models.ResultInformation
 import com.github.kiolk.chemistrytests.data.models.TestParams
 import kiolk.com.github.pen.Pen
 import kotlinx.android.synthetic.main.card_test_params.view.*
+import reversSort
 
-class AvailableTestRecyclerAdapter(var context : Context, var avaliableTests : List<TestParams>) : RecyclerView.Adapter<AvailableTestRecyclerAdapter.AvaliableTestViewHolder>(){
+class AvailableTestRecyclerAdapter(var context : Context,
+                                   var avaliableTests : MutableList<TestParams>? = null,
+                                   var completedTests : MutableList<ResultInformation>? = null) : RecyclerView.Adapter<AvailableTestRecyclerAdapter.AvaliableTestViewHolder>(){
 
 
+//    init {
+//        if(avaliableTests != null){
+//            avaliableTests = reversSort(avaliableTests!!)
+//        }
+//        if(completedTests != null){
+//            completedTests = reversSort(completedTests!!)
+//        }
+//    }
 
     override fun onBindViewHolder(holder: AvaliableTestViewHolder?, position: Int) {
-        val test = avaliableTests[position]
-        holder?.title?.text = test.testInfo.testTitle
-        holder?.author?.text = test.testInfo.testAuthor
-        Pen.getInstance().getImageFromUrl(test.testInfo.testIcon).inputTo(holder?.icon)
+        var test : TestParams? = null
+        val size = itemCount - 1
+        if(avaliableTests != null){
+//            val tmp = reversSort(avaliableTests!!)
+//            avaliableTests = tmp
+            test = avaliableTests!![position]
+        }else if(completedTests != null){
+//            val tmp = reversSort(completedTests!!)
+//            completedTests = tmp
+            test = completedTests!![position].testParams
+        }
+        setupTestInformation(holder, test)
+
+    }
+
+    private fun setupTestInformation(holder: AvaliableTestViewHolder?, test: TestParams?) {
+        holder?.title?.text = test?.testInfo?.testTitle
+        holder?.author?.text = test?.testInfo?.testAuthor
+        Pen.getInstance().getImageFromUrl(test?.testInfo?.testIcon).inputTo(holder?.icon)
         holder?.lablLayer?.background = context.resources.getDrawable(R.drawable.area_square_shape_correct)
-
-//        var params = object : RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,
-//                RelativeLayout.LayoutParams.WRAP_CONTENT)
-////        val tag : TextView =
-//                TextView(context)
-
-//        val tag = View.inflate(context, R.layout.view_tag, holder?.infoBlock)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): AvaliableTestViewHolder {
@@ -40,7 +59,11 @@ class AvailableTestRecyclerAdapter(var context : Context, var avaliableTests : L
     }
 
     override fun getItemCount(): Int {
-        return avaliableTests.size
+        if(avaliableTests != null){
+            return avaliableTests!!.size
+        }else{
+           return completedTests?.size ?: 0
+        }
     }
 
     class AvaliableTestViewHolder internal constructor(item : View) : RecyclerView.ViewHolder(item){

@@ -38,6 +38,7 @@
     <string name="DIRECT_ORDER">Direct_order</string>
     <string name="YOUR_SCORE">Your score:</string>
     <string name="TIMER_CONTROL">Timer control</string>
+    <string name="COMPLETED_TESTS">Completed tests</string>
     <string-array name="RESULT_TAB_TITLES">
         <item>Test information</item>
         <item>General result</item>

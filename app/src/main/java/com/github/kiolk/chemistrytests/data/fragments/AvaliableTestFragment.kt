@@ -13,12 +13,15 @@ import android.view.ViewGroup
 import com.github.kiolk.chemistrytests.R
 import com.github.kiolk.chemistrytests.data.adapters.AvailableTestRecyclerAdapter
 import com.github.kiolk.chemistrytests.data.database.DBOperations
+import com.github.kiolk.chemistrytests.data.listeners.OnItemClickListener
+import com.github.kiolk.chemistrytests.data.listeners.RecyclerTouchListener
 import com.github.kiolk.chemistrytests.data.models.TestParams
 import com.github.kiolk.chemistrytests.ui.TESTS_CHILD
 import com.github.kiolk.chemistrytests.ui.TEST_PARAM_INT
 import com.github.kiolk.chemistrytests.ui.TestingActivity
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.fragment_avaliable_tests.view.*
+import reversSort
 
 class AvaliableTestFragment : Fragment(){
 
@@ -32,35 +35,49 @@ class AvaliableTestFragment : Fragment(){
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_avaliable_tests, null)
         mTests = DBOperations().getAllTestsParams()
+//        mTests = reversSort(mTests)
         mRecyclerAdapter = context?.let { AvailableTestRecyclerAdapter(it, mTests) }
         val recycler = view.findViewById<RecyclerView>(R.id.available_tests_recycler_view)
-        recycler.layoutManager = LinearLayoutManager(context)
+        recycler.layoutManager = LinearLayoutManager(context,LinearLayoutManager.VERTICAL, true)
         recycler.adapter = mRecyclerAdapter
-        recycler.addOnItemTouchListener(object : RecyclerView.OnItemTouchListener{
-            override fun onTouchEvent(rv: RecyclerView?, e: MotionEvent?) {
-                val x : Float? = e?.x
-                val y : Float? = e?.y
-                val child = x?.let { y?.let { it1 -> rv?.findChildViewUnder(it, it1) } }
-                val position = rv?.getChildAdapterPosition(child) ?: 0
+        recycler.addOnItemTouchListener(RecyclerTouchListener(context, recycler, object : OnItemClickListener{
+            override fun onClick(view: View, position: Int) {
                 val intent = Intent(context, TestingActivity::class.java)
-//                activity?.onBackPressed()
-                if(!mIsTestStart && position < mTests.size && position >= 0) {
                     Log.d("MyLogs", "Start test by item $position")
                     intent.putExtra(TEST_PARAM_INT, mTests[position])
                     startActivity(intent)
                     mIsTestStart = true
-
-                }
             }
 
-            override fun onInterceptTouchEvent(rv: RecyclerView?, e: MotionEvent?): Boolean {
-                return true
+            override fun onLongClick(view: View, position: Int) {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
             }
-
-            override fun onRequestDisallowInterceptTouchEvent(disallowIntercept: Boolean) {
-
-            }
-        })
+        }))
+//        recycler.addOnItemTouchListener(object : RecyclerView.OnItemTouchListener{
+//
+//            override fun onTouchEvent(rv: RecyclerView?, e: MotionEvent?) {
+//                val x : Float? = e?.x
+//                val y : Float? = e?.y
+//                val child = x?.let { y?.let { it1 -> rv?.findChildViewUnder(it, it1) } }
+//                val position = rv?.getChildAdapterPosition(child) ?: 0
+//                val intent = Intent(context, TestingActivity::class.java)
+////                activity?.onBackPressed()
+//                if(!mIsTestStart && position < mTests.size && position >= 0) {
+//                    Log.d("MyLogs", "Start test by item $position")
+//                    intent.putExtra(TEST_PARAM_INT, mTests[position])
+//                    startActivity(intent)
+//                    mIsTestStart = true
+//                }
+//            }
+//
+//            override fun onInterceptTouchEvent(rv: RecyclerView?, e: MotionEvent?): Boolean {
+//                return false
+//            }
+//
+//            override fun onRequestDisallowInterceptTouchEvent(disallowIntercept: Boolean) {
+//
+//            }
+//        })
         return view ?: super.onCreateView(inflater, container, savedInstanceState)
     }
 

@@ -77,6 +77,16 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/chose_ready_test_button"
                 android:background="@drawable/button_styling"/>
+            <Button
+                android:layout_margin="@dimen/BLOCK_PADDING"
+                android:text="@string/COMPLETED_TESTS"
+                android:textSize="32sp"
+                android:layout_centerInParent="true"
+                android:id="@+id/completed_test_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/custom_test_button"
+                android:background="@drawable/button_styling"/>
         </RelativeLayout>
     </RelativeLayout>
     <android.support.design.widget.NavigationView

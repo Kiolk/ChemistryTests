@@ -19,6 +19,7 @@ import com.github.kiolk.chemistrytests.data.adapters.CoursesViewPagerAdapter
 import com.github.kiolk.chemistrytests.data.database.DBOperations
 import com.github.kiolk.chemistrytests.data.fragments.AvaliableFragments
 import com.github.kiolk.chemistrytests.data.fragments.AvaliableTestFragment
+import com.github.kiolk.chemistrytests.data.fragments.CompletedTestsFragment
 import com.github.kiolk.chemistrytests.data.fragments.CustomTest
 import com.github.kiolk.chemistrytests.data.models.*
 import com.github.kiolk.chemistrytests.data.models.CloseQuestion.Question.EASY_QUESTION
@@ -51,6 +52,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var mChaildEventListener: ChildEventListener
     lateinit var mAvaliableTests: AvaliableFragments
     lateinit var mAvailableTests: AvaliableTestFragment
+    lateinit var mCompletedTsts : CompletedTestsFragment
     lateinit var mCustomTest: CustomTest
     lateinit var mTestDataBaseReference: DatabaseReference
     lateinit var mChildEventListener: ChildEventListener
@@ -67,6 +69,7 @@ class MainActivity : AppCompatActivity() {
         mCustomTest = CustomTest()
         mAuthentication = FirebaseAuth.getInstance()
         mFirebaseDatabase = FirebaseDatabase.getInstance()
+        mCompletedTsts = CompletedTestsFragment()
         setupNavigationDrawer()
 //        splashScreenSetup()
 //        upload_data_progress_bar.visibility = View.GONE
@@ -158,9 +161,14 @@ class MainActivity : AppCompatActivity() {
             courses_view_pager.visibility = View.VISIBLE
             val coursesAdapter = CoursesViewPagerAdapter(supportFragmentManager, testCourses())
             courses_view_pager.adapter = coursesAdapter
-
         }
-//        mDatabaseReference.addChildEventListener(mChaildEventListener)
+        completed_test_button.setOnClickListener{
+            main_frame_layout.visibility = View.VISIBLE
+            start_relative_layout.visibility = View.GONE
+            showFragment(supportFragmentManager, R.id.main_frame_layout, mCompletedTsts )
+            DBOperations().getUser(mAuthentication.currentUser?.uid)?.completedTests?.let { it1 -> mCompletedTsts.showResults(it1) }
+        }
+//        mDatabaseReference.addChildEventListener(mChaildEventLisgettener)
     }
 
     private fun setupNavigationDrawer() {
@@ -288,6 +296,7 @@ class MainActivity : AppCompatActivity() {
             start_relative_layout.visibility = View.VISIBLE
             closeFragment(supportFragmentManager, mAvailableTests)
             closeFragment(supportFragmentManager, mCustomTest)
+            closeFragment(supportFragmentManager, mCompletedTsts)
         } else if (courses_view_pager.visibility == View.VISIBLE) {
             start_relative_layout.visibility = View.VISIBLE
             courses_view_pager.visibility = View.GONE
