@@ -8,14 +8,13 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import checkConnection
 import closeFragment
 import com.firebase.ui.auth.AuthUI
 import com.github.kiolk.chemistrytests.R
 import com.github.kiolk.chemistrytests.data.adapters.CoursesViewPagerAdapter
+import com.github.kiolk.chemistrytests.data.adapters.MenuCustomeArrayAdapter
 import com.github.kiolk.chemistrytests.data.database.DBOperations
 import com.github.kiolk.chemistrytests.data.fragments.AvaliableFragments
 import com.github.kiolk.chemistrytests.data.fragments.AvaliableTestFragment
@@ -38,7 +37,7 @@ import showFragment
 val TEST_PARAM_INT: String = "params"
 val TESTS_CHILD: String = "tests"
 val DATA_BASE_INFO_CHAILD: String = "DBInformation"
-val DATA_BASE_USERS_CHAILD : String = "Users"
+val DATA_BASE_USERS_CHAILD: String = "Users"
 
 class MainActivity : AppCompatActivity() {
     //
@@ -52,7 +51,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var mChaildEventListener: ChildEventListener
     lateinit var mAvaliableTests: AvaliableFragments
     lateinit var mAvailableTests: AvaliableTestFragment
-    lateinit var mCompletedTsts : CompletedTestsFragment
+    lateinit var mCompletedTsts: CompletedTestsFragment
     lateinit var mCustomTest: CustomTest
     lateinit var mTestDataBaseReference: DatabaseReference
     lateinit var mChildEventListener: ChildEventListener
@@ -71,6 +70,7 @@ class MainActivity : AppCompatActivity() {
         mFirebaseDatabase = FirebaseDatabase.getInstance()
         mCompletedTsts = CompletedTestsFragment()
         setupNavigationDrawer()
+
 //        splashScreenSetup()
 //        upload_data_progress_bar.visibility = View.GONE
 //        splash_frame_layout.visibility = View.GONE
@@ -162,10 +162,10 @@ class MainActivity : AppCompatActivity() {
             val coursesAdapter = CoursesViewPagerAdapter(supportFragmentManager, testCourses())
             courses_view_pager.adapter = coursesAdapter
         }
-        completed_test_button.setOnClickListener{
+        completed_test_button.setOnClickListener {
             main_frame_layout.visibility = View.VISIBLE
             start_relative_layout.visibility = View.GONE
-            showFragment(supportFragmentManager, R.id.main_frame_layout, mCompletedTsts )
+            showFragment(supportFragmentManager, R.id.main_frame_layout, mCompletedTsts)
             DBOperations().getUser(mAuthentication.currentUser?.uid)?.completedTests?.let { it1 -> mCompletedTsts.showResults(it1) }
         }
 //        mDatabaseReference.addChildEventListener(mChaildEventLisgettener)
@@ -179,6 +179,35 @@ class MainActivity : AppCompatActivity() {
             val imageView: ImageView = navigation_relative_layout.getHeaderView(0).findViewById(R.id.user_profile_picture_image_view)
             Pen.getInstance().getImageFromUrl(mAuthentication.currentUser?.photoUrl?.toString()).inputTo(imageView)
         }
+        setupNavigationMenu()
+    }
+
+    private fun setupNavigationMenu() {
+        val itemArray: List<MenuItemModel> = getMenuItems()
+        val listAdapter : MenuCustomeArrayAdapter = MenuCustomeArrayAdapter(applicationContext, R.layout.item_navigation_menu, itemArray)
+        navigation_menu_list_view.adapter = listAdapter
+        navigation_menu_list_view.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
+            selectPosition(position)
+        }
+    }
+
+    private fun selectPosition(position: Int) {
+        when(position){
+            0 -> Toast.makeText(baseContext, "Show first fragment", Toast.LENGTH_SHORT).show()
+            1 -> Toast.makeText(baseContext, "Show second fragment", Toast.LENGTH_SHORT).show()
+            2 -> Toast.makeText(baseContext, "Show third fragment", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+
+
+    private fun getMenuItems(): List<MenuItemModel> {
+        val titles: Array<String> = baseContext.resources.getStringArray(R.array.NAVIGATION_MENU_ITEMS)
+        val menuItems: List<MenuItemModel> = listOf(
+                MenuItemModel(R.drawable.ic_time_control_tool, titles[0]),
+                MenuItemModel(R.drawable.ic_multiple_check_square, titles[1]),
+                MenuItemModel(R.drawable.ic_single_checked, titles[2]))
+        return menuItems
     }
 
     private fun splashScreenSetup() {

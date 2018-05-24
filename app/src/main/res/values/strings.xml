@@ -44,4 +44,9 @@
         <item>General result</item>
         <item>Statistic</item>
     </string-array>
+    <string-array name="NAVIGATION_MENU_ITEMS">
+        <item>Tests history</item>
+        <item>Configuration</item>
+        <item>Log out</item>
+    </string-array>
 </resources>

@@ -95,8 +95,13 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="false"
-        app:menu="@menu/menu_drawer"
         app:headerLayout="@layout/drawer_header">
+            <ListView
+                android:paddingTop="@dimen/HEADER_HEIGHT"
+                android:id="@+id/navigation_menu_list_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
+            </ListView>
     </android.support.design.widget.NavigationView>
 </android.support.v4.widget.DrawerLayout>
