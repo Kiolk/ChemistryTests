@@ -28,7 +28,7 @@ class CompletedTestsFragment : Fragment() {
     fun showResults(results: MutableList<ResultInformation>) {
         mResults = results
         val recyclerView: RecyclerView? = view?.findViewById<RecyclerView>(R.id.last_user_tests_recycler_view)
-        recyclerView?.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, true)
+        recyclerView?.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         mAdapter = context?.let { AvailableTestRecyclerAdapter(it, null, mResults) }
         recyclerView?.adapter = mAdapter
         context?.let {

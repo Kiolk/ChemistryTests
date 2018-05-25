@@ -41,7 +41,6 @@ val QUESTIONS_CHILDS: String = "Questions"
 class TestingActivity : AppCompatActivity() {
 
 
-
     lateinit var listener: CheckResultListener
     var mResultFragment = ResultFragment()
     var mHintFragment = HintFragment()
@@ -52,19 +51,21 @@ class TestingActivity : AppCompatActivity() {
 //    lateinit var mChaildEventListener: ChildEventListener
     lateinit var mParams: TestParams
     lateinit var mViewPager: ControledViewPager
+    var mStartTest: Long = 0L
     var mTestInfo = TestInfoFragment()
     var isShowBottomBar: Boolean = false
     var isShowFAB: Boolean = false
     var isTestEnd: Boolean = false
-    var isTestForeground : Boolean = false
-    var isTimeEnd : Boolean = false
+    var isTestForeground: Boolean = false
+    var isTimeEnd: Boolean = false
     var mQuestions: MutableList<CloseQuestion> = mutableListOf()
-    var mTimer : Timer? = null
+    var mTimer: Timer? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_testing)
         mParams = intent.extras.get(TEST_PARAM_INT) as TestParams
+        mStartTest = System.currentTimeMillis()
 //        mFirebaseDatabase = FirebaseDatabase.getInstance()
 //        mDatabaseReference = mFirebaseDatabase.getReference().child(QUESTIONS_CHILDS)
         mViewPager = findViewById(R.id.testing_view_pager)
@@ -172,7 +173,6 @@ class TestingActivity : AppCompatActivity() {
     }
 
 
-
     private fun setupTestingViewPAger(questionsList: MutableList<CloseQuestion>) {
 
         val test = Test(questionsList, mParams)
@@ -220,6 +220,7 @@ class TestingActivity : AppCompatActivity() {
 //                }
             }
         })
+//        mResult.mResultInfo.startTime = System.currentTimeMillis()
         mTestInfo = TestInfoFragment().fromInstance(mResult.test.params)
         adapter = TestingPagerAdapter(supportFragmentManager, test.mSortedQuestions)
         listener = object : CheckResultListener {
@@ -247,10 +248,10 @@ class TestingActivity : AppCompatActivity() {
                         } else if (mResult.askedQuestions.size != mResult.test.mSortedQuestions.size) {
                             animOut(end_test_fab)
                             updateIndicator(indicator_answered_progress_bar, mResult.askedQuestions.size, mResult.test.mSortedQuestions.size)
-                       updateTabLayout()
+                            updateTabLayout()
                         } else {
                             updateIndicator(indicator_answered_progress_bar, mResult.askedQuestions.size, mResult.test.mSortedQuestions.size)
-                        updateTabLayout()
+                            updateTabLayout()
                         }
                     }
                 } else if (mResult.test.params.direction == DIRECT_TEST && end_test_fab.visibility == View.GONE
@@ -309,24 +310,24 @@ class TestingActivity : AppCompatActivity() {
             }
         }
         questions_tool_bar.setNavigationOnClickListener(naviagationListener)
-        if(mParams.testTimer != null){
+        if (mParams.testTimer != null) {
             mParams.testTimer?.let { startTestTimer(it) }
         }
     }
 
-    private fun startTestTimer(time : Long){
+    private fun startTestTimer(time: Long) {
         var timeLength = time
         test_timer_text_view.visibility = View.VISIBLE
         val handler = Handler()
-        val task : TimerTask = object : TimerTask(){
+        val task: TimerTask = object : TimerTask() {
             override fun run() {
                 handler.post {
                     test_timer_text_view.text = timeLength.toString()
                     timeLength -= 100L
-                    if(timeLength < 0 && isTestForeground){
+                    if (timeLength < 0 && isTestForeground) {
                         showResult()
                         mTimer?.cancel()
-                    }else if(timeLength < 0 && !isTestForeground){
+                    } else if (timeLength < 0 && !isTestForeground) {
                         isTimeEnd = true
                         mTimer?.cancel()
                     }
@@ -337,8 +338,8 @@ class TestingActivity : AppCompatActivity() {
         mTimer?.scheduleAtFixedRate(task, 0, 100)
     }
 
-    private fun updateViewPagerAdapter(){
-        val position : Int = testing_view_pager.currentItem
+    private fun updateViewPagerAdapter() {
+        val position: Int = testing_view_pager.currentItem
         val updatedAdapter: TestingPagerAdapter = TestingPagerAdapter(supportFragmentManager, mResult.test.mSortedQuestions,
                 false, mResult.userResultAnswers())
         attachViewPagerListener(testing_view_pager)
@@ -346,8 +347,8 @@ class TestingActivity : AppCompatActivity() {
         testing_view_pager.currentItem = position
     }
 
-    private fun attachViewPagerListener(pager : ViewPager){
-        pager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener{
+    private fun attachViewPagerListener(pager: ViewPager) {
+        pager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrollStateChanged(state: Int) {
             }
 
@@ -355,16 +356,16 @@ class TestingActivity : AppCompatActivity() {
             }
 
             override fun onPageSelected(position: Int) {
-                if(mResult.test.params.testType == TRAINING_TEST && mResult.test.params.direction == DIRECT_ORDER){
+                if (mResult.test.params.testType == TRAINING_TEST && mResult.test.params.direction == DIRECT_ORDER) {
                     return
                 }
                 checkHintPresent()
-                if(end_test_fab.visibility == View.VISIBLE && !isTestEnd && mResult.test.mSortedQuestions.size != mResult.askedQuestions.size){
+                if (end_test_fab.visibility == View.VISIBLE && !isTestEnd && mResult.test.mSortedQuestions.size != mResult.askedQuestions.size) {
 //                    end_test_fab.visibility = View.GONE
                     animOut(end_test_fab)
-                } else if (end_test_fab.visibility == View.GONE && !isTestEnd && mResult.test.params.testType == TRAINING_TEST){
+                } else if (end_test_fab.visibility == View.GONE && !isTestEnd && mResult.test.params.testType == TRAINING_TEST) {
                     val group: ViewGroup = questions_tab_layout.getChildAt(0) as ViewGroup
-                    if(group.getChildAt(position).background == resources.getDrawable(R.drawable.area_select_answer)){
+                    if (group.getChildAt(position).background == resources.getDrawable(R.drawable.area_select_answer)) {
                         animIn(end_test_fab)
                     }
                 }
@@ -380,7 +381,7 @@ class TestingActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         isTestForeground = true
-        if(isTimeEnd){
+        if (isTimeEnd) {
             showResult()
         }
     }
@@ -415,7 +416,7 @@ class TestingActivity : AppCompatActivity() {
         }
     }
 
-    private fun updateSelectTabLayout(){
+    private fun updateSelectTabLayout() {
         val position: Int = testing_view_pager.currentItem
         val group: ViewGroup = questions_tab_layout.getChildAt(0) as ViewGroup
         group.getChildAt(position).background = resources.getDrawable(R.drawable.area_select_answer)
@@ -475,13 +476,13 @@ class TestingActivity : AppCompatActivity() {
         }
     }
 
-    private fun setupHintListener(){
+    private fun setupHintListener() {
         hint_button_image_view.setOnClickListener {
             val position = testing_view_pager.currentItem
             val hint: List<Hint>? = mResult.test.mSortedQuestions[position].hints
             if (hint != null) {
                 result_frame_layout.setPadding(0, 0, 0, bottom_bar_linear_layout.height)
-                if(result_frame_layout.visibility != View.VISIBLE) {
+                if (result_frame_layout.visibility != View.VISIBLE) {
                     result_frame_layout.visibility = View.VISIBLE
                     showFragment(R.id.result_frame_layout, mHintFragment)
                     mHintFragment.showHint(hint)
@@ -496,6 +497,8 @@ class TestingActivity : AppCompatActivity() {
         result_frame_layout.visibility = View.VISIBLE
         showFragment(R.id.result_frame_layout, mResultFragment)
         mResult.writeResultInformation()
+        mResult.mResultInfo.startTime = mStartTest
+        mResult.mResultInfo.endTime = System.currentTimeMillis()
         mResultFragment.showResult(mResult)
         val resultAdapter: TestingPagerAdapter = TestingPagerAdapter(supportFragmentManager, mResult.test.mSortedQuestions,
                 true, mResult.userResultAnswers())
@@ -525,7 +528,7 @@ class TestingActivity : AppCompatActivity() {
     }
 
     private fun addResultForUserProfile() {
-        SingleAsyncTask().execute(UpdateResultInDb(mResult.mResultInfo, object : ResultCallback{
+        SingleAsyncTask().execute(UpdateResultInDb(mResult.mResultInfo, object : ResultCallback {
             override fun onSuccess() {
             }
 

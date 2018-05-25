@@ -14,7 +14,7 @@ import closeFragment
 import com.firebase.ui.auth.AuthUI
 import com.github.kiolk.chemistrytests.R
 import com.github.kiolk.chemistrytests.data.adapters.CoursesViewPagerAdapter
-import com.github.kiolk.chemistrytests.data.adapters.MenuCustomeArrayAdapter
+import com.github.kiolk.chemistrytests.data.adapters.MenuCustomArrayAdapter
 import com.github.kiolk.chemistrytests.data.database.DBOperations
 import com.github.kiolk.chemistrytests.data.fragments.AvaliableFragments
 import com.github.kiolk.chemistrytests.data.fragments.AvaliableTestFragment
@@ -24,13 +24,10 @@ import com.github.kiolk.chemistrytests.data.models.*
 import com.github.kiolk.chemistrytests.data.models.CloseQuestion.Question.EASY_QUESTION
 import com.github.kiolk.chemistrytests.data.models.CloseQuestion.Question.MULTIPLE_CHOICE
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
-import com.google.firebase.messaging.FirebaseMessaging
 import kiolk.com.github.pen.Pen
-import kiolk.com.github.pen.utils.PenConstantsUtil
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.drawer_header.*
+import reversSort
 import showFragment
 
 //val RC_SIGN_IN: Int = 1
@@ -166,7 +163,10 @@ class MainActivity : AppCompatActivity() {
             main_frame_layout.visibility = View.VISIBLE
             start_relative_layout.visibility = View.GONE
             showFragment(supportFragmentManager, R.id.main_frame_layout, mCompletedTsts)
-            DBOperations().getUser(mAuthentication.currentUser?.uid)?.completedTests?.let { it1 -> mCompletedTsts.showResults(it1) }
+//            DBOperations().getUser(mAuthentication.currentUser?.uid)?.completedTests?.let { it1 -> mCompletedTsts.showResults(it1) }
+            var resultTests = DBOperations().getUser(mAuthentication.currentUser?.uid)?.completedTests
+            resultTests = resultTests?.let { it1 -> reversSort(it1) }
+            resultTests?.let { it1 -> mCompletedTsts.showResults(it1) }
         }
 //        mDatabaseReference.addChildEventListener(mChaildEventLisgettener)
     }
@@ -184,7 +184,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupNavigationMenu() {
         val itemArray: List<MenuItemModel> = getMenuItems()
-        val listAdapter : MenuCustomeArrayAdapter = MenuCustomeArrayAdapter(applicationContext, R.layout.item_navigation_menu, itemArray)
+        val listAdapter : MenuCustomArrayAdapter = MenuCustomArrayAdapter(applicationContext, R.layout.item_navigation_menu, itemArray)
         navigation_menu_list_view.adapter = listAdapter
         navigation_menu_list_view.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
             selectPosition(position)

@@ -35,10 +35,11 @@ class AvaliableTestFragment : Fragment(){
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_avaliable_tests, null)
         mTests = DBOperations().getAllTestsParams()
-//        mTests = reversSort(mTests)
+        mTests.sortBy { it.testInfo.lasModifed }
+        mTests = reversSort(mTests)
         mRecyclerAdapter = context?.let { AvailableTestRecyclerAdapter(it, mTests) }
         val recycler = view.findViewById<RecyclerView>(R.id.available_tests_recycler_view)
-        recycler.layoutManager = LinearLayoutManager(context,LinearLayoutManager.VERTICAL, true)
+        recycler.layoutManager = LinearLayoutManager(context,LinearLayoutManager.VERTICAL, false)
         recycler.adapter = mRecyclerAdapter
         recycler.addOnItemTouchListener(RecyclerTouchListener(context, recycler, object : OnItemClickListener{
             override fun onClick(view: View, position: Int) {

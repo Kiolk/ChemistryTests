@@ -11,9 +11,9 @@ import android.widget.TextView
 import com.github.kiolk.chemistrytests.R
 import com.github.kiolk.chemistrytests.data.models.MenuItemModel
 
-class MenuCustomeArrayAdapter(var contexte: Context,
-                              var layoutResourceId: Int,
-                              var itemsArray: List<MenuItemModel>) : ArrayAdapter<MenuItemModel>(contexte, layoutResourceId, itemsArray) {
+class MenuCustomArrayAdapter(var contexte: Context,
+                             var layoutResourceId: Int,
+                             var itemsArray: List<MenuItemModel>) : ArrayAdapter<MenuItemModel>(contexte, layoutResourceId, itemsArray) {
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
 //        val activity = contexte as Activity

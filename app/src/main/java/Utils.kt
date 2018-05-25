@@ -41,7 +41,8 @@ fun <T> reversSort(list: MutableList<T>): MutableList<T> {
     list.forEach { tmpList.add(it) }
     var position: Int = list.size - 1
     list.forEach {
-        tmpList.add(position, it)
+        tmpList[position] = it
+//        tmpList.add(position, it)
         position -= 1
     }
     return tmpList

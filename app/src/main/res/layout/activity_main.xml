@@ -100,6 +100,7 @@
                 android:paddingTop="@dimen/HEADER_HEIGHT"
                 android:id="@+id/navigation_menu_list_view"
                 android:layout_width="match_parent"
+                android:divider="@color/TRANSPARENT_COLOR"
                 android:layout_height="match_parent">
 
             </ListView>

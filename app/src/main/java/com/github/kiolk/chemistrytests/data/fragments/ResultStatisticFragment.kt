@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.github.kiolk.chemistrytests.R
 import com.github.kiolk.chemistrytests.data.models.ResultInformation
+import com.github.kiolk.chemistrytests.utils.CONSTANTS.DATE_PATTERN
+import com.github.kiolk.chemistrytests.utils.convertEpochTime
 
 class ResultStatisticFragment : Fragment(){
     val RESULT_BUNDLE: String = "resultInformation"
@@ -24,7 +26,7 @@ class ResultStatisticFragment : Fragment(){
         view.findViewById<TextView>(R.id.asked_question_result_test_view).text = mResult.askedQuestions.toString()
         view.findViewById<TextView>(R.id.correct_answers_result_text_view).text = mResult.correctAnswered.toString()
         view.findViewById<TextView>(R.id.result_test_score_text_view).text = mResult.resultScore.toString()
-        view.findViewById<TextView>(R.id.start_test_text_view).text = mResult.startTime.toString()
+        view.findViewById<TextView>(R.id.start_test_text_view).text = mResult.startTime?.let { convertEpochTime(it, inflater.context, DATE_PATTERN) }
         view.findViewById<TextView>(R.id.score_result_text_view).text = mResult.resultScore.toString()
 //        view.findViewById<TextView>(R.id.test_mark_text_view).text = mResult.testMark
         return view// super.onCreateView(inflater, container, savedInstanceState)
