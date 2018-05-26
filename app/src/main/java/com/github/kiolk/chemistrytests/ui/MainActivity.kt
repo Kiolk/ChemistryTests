@@ -321,11 +321,13 @@ class MainActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         if (main_frame_layout.visibility == View.VISIBLE) {
-            main_frame_layout.visibility = View.GONE
-            start_relative_layout.visibility = View.VISIBLE
-            closeFragment(supportFragmentManager, mAvailableTests)
-            closeFragment(supportFragmentManager, mCustomTest)
-            closeFragment(supportFragmentManager, mCompletedTsts)
+            if(!mCompletedTsts.closeResult()) {
+                main_frame_layout.visibility = View.GONE
+                start_relative_layout.visibility = View.VISIBLE
+                closeFragment(supportFragmentManager, mAvailableTests)
+                closeFragment(supportFragmentManager, mCustomTest)
+                closeFragment(supportFragmentManager, mCompletedTsts)
+            }
         } else if (courses_view_pager.visibility == View.VISIBLE) {
             start_relative_layout.visibility = View.VISIBLE
             courses_view_pager.visibility = View.GONE

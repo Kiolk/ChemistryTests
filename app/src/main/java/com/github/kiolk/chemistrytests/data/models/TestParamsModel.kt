@@ -21,7 +21,8 @@ class TestParams(var testId: Int = 1,
                  var tags: List<String> = mutableListOf(),
                  var questionTypes: List<Int> = mutableListOf(),
                  var testTimer: Long? = null,
-                 var scoredSystem: String? = null) : Serializable
+                 var scoredSystem: String? = null,
+                 var questionList: MutableList<Int>? = null) : Serializable
 
 class TestInfo(var testTitle: String = "Test",
                var testDescription: String = "Description",

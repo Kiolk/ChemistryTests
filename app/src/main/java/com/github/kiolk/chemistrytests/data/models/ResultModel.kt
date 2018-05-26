@@ -82,6 +82,9 @@ class Result(var test: Test = Test(), var endListener: OnEndTestListener? = null
         mResultInfo.resultScore = getTestResult()
         mResultInfo.testMark = getTestMark()
         mResultInfo.testParams = test.params
+        mResultInfo.listAskedQuestionsId = mutableListOf()
+        askedQuestions.forEach { mResultInfo.listAskedQuestionsId?.add(it.question.questionId)  }
+
 //        mResultInfo.sortedQuestions = test.mSortedQuestions //as MutableList<CloseQuestion>
 //        mResultInfo.anweredQuestions = askedQuestions
     }

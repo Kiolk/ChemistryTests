@@ -499,7 +499,7 @@ class TestingActivity : AppCompatActivity() {
         mResult.writeResultInformation()
         mResult.mResultInfo.startTime = mStartTest
         mResult.mResultInfo.endTime = System.currentTimeMillis()
-        mResultFragment.showResult(mResult)
+        mResultFragment.showResult(mResult.mResultInfo)
         val resultAdapter: TestingPagerAdapter = TestingPagerAdapter(supportFragmentManager, mResult.test.mSortedQuestions,
                 true, mResult.userResultAnswers())
         testing_view_pager.adapter = resultAdapter

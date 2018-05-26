@@ -18,6 +18,16 @@ class Test(var questions: MutableList<CloseQuestion> = mutableListOf(),
     init {
 //        allQuestions = questions
 //        mSortedQuestions2 = mutableListOf()
+        if(params.questionList != null){
+            val list = params.questionList
+            val tmpList : MutableList<CloseQuestion> = mutableListOf()
+            questions.forEach {
+                if(list?.contains(it.questionId) == true){
+                tmpList.add(it)
+            }
+            }
+            questions = tmpList
+        }
         mSortedQuestions = questions
         checkRandomisation()
         checkQuestionType()

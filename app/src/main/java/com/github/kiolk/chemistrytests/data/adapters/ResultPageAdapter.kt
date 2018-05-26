@@ -9,8 +9,9 @@ import com.github.kiolk.chemistrytests.data.fragments.GenerralResultFragment
 import com.github.kiolk.chemistrytests.data.fragments.ResultStatisticFragment
 import com.github.kiolk.chemistrytests.data.fragments.TestInfoFragment
 import com.github.kiolk.chemistrytests.data.models.Result
+import com.github.kiolk.chemistrytests.data.models.ResultInformation
 
-class ResultPageAdapter(var fm : FragmentManager, var result : Result, var context : Context) : FragmentStatePagerAdapter(fm){
+class ResultPageAdapter(var fm : FragmentManager, var result : ResultInformation, var context : Context) : FragmentStatePagerAdapter(fm){
 
     companion object {
         val GENERAL_TEST_INFORMATION = 0
@@ -22,9 +23,9 @@ class ResultPageAdapter(var fm : FragmentManager, var result : Result, var conte
 
     override fun getItem(position: Int): Fragment {
        return when (position) {
-            GENERAL_TEST_INFORMATION -> TestInfoFragment().fromInstance(result.test.params)
-            GENERAL_TEST_RESULT ->  GenerralResultFragment().fromInstance(result.mResultInfo)
-            RESULT_STATISTIC ->  ResultStatisticFragment().fromInstance(result.mResultInfo)
+            GENERAL_TEST_INFORMATION -> TestInfoFragment().fromInstance(result.testParams!!)
+            GENERAL_TEST_RESULT ->  GenerralResultFragment().fromInstance(result)
+            RESULT_STATISTIC ->  ResultStatisticFragment().fromInstance(result)
             else -> {
                 TestInfoFragment()
             }
