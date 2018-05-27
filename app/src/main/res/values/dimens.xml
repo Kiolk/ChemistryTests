@@ -23,4 +23,5 @@
     <dimen name="ITEM_ELEVATION">6dp</dimen>
     <dimen name="LABEL">20dp</dimen>
     <dimen name="LABEL_HEIGHT">100dp</dimen>
+    <dimen name="COURSE_BLOCK_HEIGHT">150dp</dimen>
 </resources>

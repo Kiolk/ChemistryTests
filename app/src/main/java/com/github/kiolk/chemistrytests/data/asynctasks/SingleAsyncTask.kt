@@ -5,19 +5,35 @@ import android.os.Handler
 
 interface SingleExecut{
     var callback : ResultCallback
-    fun perform()
+    fun perform(): ResultObject<*>
 }
 
 interface ResultCallback{
-    fun onSuccess()
+    fun <T> onSuccess(any : T? = null)
     fun onError()
 }
 
-class SingleAsyncTask : AsyncTask<SingleExecut, Unit, ResultCallback?>(){
+//interface ResultObjedct(){
+//
+//    fun <T> add(any : T){
+//        resultObject = any
+//    }
+//}
 
-    override fun doInBackground(vararg params: SingleExecut?): ResultCallback? {
+class ResultObject<T>(var resultObject : T, var callback: ResultCallback?){
+
+}
+
+
+class SingleAsyncTask : AsyncTask<SingleExecut, Unit, ResultObject<*>?>(){
+
+    override fun doInBackground(vararg params: SingleExecut?): ResultObject<*>? {
         val singleExecute : SingleExecut? = params[0]
-        singleExecute?.perform()
-        return singleExecute?.callback
+        return singleExecute?.perform()
+    }
+
+    override fun onPostExecute(result: ResultObject<*>?) {
+        super.onPostExecute(result)
+        result?.callback?.onSuccess(result.resultObject)
     }
 }

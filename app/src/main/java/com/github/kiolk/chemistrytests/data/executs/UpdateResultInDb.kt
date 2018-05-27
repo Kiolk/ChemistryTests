@@ -3,6 +3,7 @@ package com.github.kiolk.chemistrytests.data.executs
 import android.service.carrier.CarrierMessagingService
 import android.util.Log
 import com.github.kiolk.chemistrytests.data.asynctasks.ResultCallback
+import com.github.kiolk.chemistrytests.data.asynctasks.ResultObject
 import com.github.kiolk.chemistrytests.data.asynctasks.SingleExecut
 import com.github.kiolk.chemistrytests.data.database.DBOperations
 import com.github.kiolk.chemistrytests.data.models.ResultInformation
@@ -12,11 +13,11 @@ import com.google.firebase.auth.FirebaseUser
 
 class UpdateResultInDb(var result : ResultInformation, override var callback : ResultCallback) : SingleExecut{
 
-    override fun perform() {
-        updateResult()
+    override fun perform(): ResultObject<*> {
+        return updateResult()
     }
 
-    private fun updateResult() {
+    private fun updateResult() : ResultObject<*> {
         val currentUser : FirebaseUser? = FirebaseAuth.getInstance().currentUser
         if(currentUser != null){
             Log.d("MyLogs", "user features idToken${currentUser.uid}")
@@ -33,5 +34,6 @@ class UpdateResultInDb(var result : ResultInformation, override var callback : R
                 DBOperations().insertUser(user)
             }
         }
+        return ResultObject("Sacces", callback)
     }
 }

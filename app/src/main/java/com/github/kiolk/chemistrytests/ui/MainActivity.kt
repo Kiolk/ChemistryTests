@@ -15,7 +15,10 @@ import com.firebase.ui.auth.AuthUI
 import com.github.kiolk.chemistrytests.R
 import com.github.kiolk.chemistrytests.data.adapters.CoursesViewPagerAdapter
 import com.github.kiolk.chemistrytests.data.adapters.MenuCustomArrayAdapter
+import com.github.kiolk.chemistrytests.data.asynctasks.ResultCallback
+import com.github.kiolk.chemistrytests.data.asynctasks.SingleAsyncTask
 import com.github.kiolk.chemistrytests.data.database.DBOperations
+import com.github.kiolk.chemistrytests.data.executs.PrepareCoursesFromDb
 import com.github.kiolk.chemistrytests.data.fragments.AvaliableFragments
 import com.github.kiolk.chemistrytests.data.fragments.AvaliableTestFragment
 import com.github.kiolk.chemistrytests.data.fragments.CompletedTestsFragment
@@ -35,6 +38,7 @@ val TEST_PARAM_INT: String = "params"
 val TESTS_CHILD: String = "tests"
 val DATA_BASE_INFO_CHAILD: String = "DBInformation"
 val DATA_BASE_USERS_CHAILD: String = "Users"
+val DATA_COURSES_CHILD : String = "Courses"
 
 class MainActivity : AppCompatActivity() {
     //
@@ -128,9 +132,13 @@ class MainActivity : AppCompatActivity() {
                     "H2S. Формула органических кислоты содержит карбоксильную функциональную группу -COOH." +
                     "<br> drawable", listOf("https://dic.academic.ru/pictures/wiki/files/76/Lipoic-acid-3D-vdW.png"))))
             val testParams: TestParams = getExampleTest()
-            val res = mFirebaseDatabase.getReference().child(QUESTIONS_CHILDS)
-            val info = QuestionsDataBaseInfo(1, 3, 30)
-            res.child(question.questionId.toString()).setValue(question)
+            val res = mFirebaseDatabase.getReference().child(DATA_COURSES_CHILD)
+            val courses = testCourses()
+            courses.forEach {
+                res.child(it.mCourseId.toString()).setValue(it)
+            }
+//            val info = QuestionsDataBaseInfo(1, 3, 30)
+//            res.child(question.questionId.toString()).setValue(question)
 //            val intent = Intent(this, TestingActivity::class.java)
 //            intent.putExtra(TEST_PARAM_INT, testParams)
 //            startActivity(intent)
@@ -156,8 +164,20 @@ class MainActivity : AppCompatActivity() {
             main_frame_layout.visibility = View.GONE
             start_relative_layout.visibility = View.GONE
             courses_view_pager.visibility = View.VISIBLE
-            val coursesAdapter = CoursesViewPagerAdapter(supportFragmentManager, testCourses())
-            courses_view_pager.adapter = coursesAdapter
+            open_courses_button.isEnabled = false
+            SingleAsyncTask().execute(PrepareCoursesFromDb(object : ResultCallback{
+                override fun <T> onSuccess(any: T?) {
+                    val courses : MutableList<Course> = any as MutableList<Course>
+                    val coursesAdapter = CoursesViewPagerAdapter(supportFragmentManager, courses)
+                    courses_view_pager.adapter = coursesAdapter
+                    open_courses_button.isEnabled = true
+                }
+
+                override fun onError() {
+                    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                }
+            }))
+
         }
         completed_test_button.setOnClickListener {
             main_frame_layout.visibility = View.VISIBLE

@@ -529,7 +529,8 @@ class TestingActivity : AppCompatActivity() {
 
     private fun addResultForUserProfile() {
         SingleAsyncTask().execute(UpdateResultInDb(mResult.mResultInfo, object : ResultCallback {
-            override fun onSuccess() {
+            override fun <T> onSuccess(any: T?) {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
             }
 
             override fun onError() {

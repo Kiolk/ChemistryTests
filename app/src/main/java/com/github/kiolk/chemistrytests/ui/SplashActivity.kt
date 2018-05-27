@@ -64,8 +64,7 @@ class SplashActivity : AppCompatActivity() {
         if(firbaseUser != null){
             Log.d("MyLogs", "User uid when start ${firbaseUser.uid}")
             SingleAsyncTask().execute(UpdateResultInFirebase(firbaseUser.uid, object : ResultCallback{
-                override fun onSuccess() {
-                    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                override fun <T> onSuccess(any: T?) {
                 }
 
                 override fun onError() {
@@ -130,7 +129,7 @@ class SplashActivity : AppCompatActivity() {
         my_progress_bar_image_view.visibility = View.GONE
         setupTimer()
         mResultCallback = object : ResultCallback {
-            override fun onSuccess() {
+            override fun <T> onSuccess(any: T?) {
                 launchMainActivity()
             }
 

@@ -1,6 +1,7 @@
 package com.github.kiolk.chemistrytests.data.executs
 
 import com.github.kiolk.chemistrytests.data.asynctasks.ResultCallback
+import com.github.kiolk.chemistrytests.data.asynctasks.ResultObject
 import com.github.kiolk.chemistrytests.data.asynctasks.SingleExecut
 import com.github.kiolk.chemistrytests.data.database.DBOperations
 import com.github.kiolk.chemistrytests.data.models.User
@@ -13,7 +14,7 @@ class UpdateResultInFirebase(var userId: String, override var callback: ResultCa
     lateinit var mChildEventListener : ChildEventListener
     var user : User? = null
 
-    override fun perform() {
+    override fun perform(): ResultObject<*> {
         mFirebaseDatabase = FirebaseDatabase.getInstance()
         mDatabaseReference = mFirebaseDatabase.getReference().child(DATA_BASE_USERS_CHAILD)
         val users = DBOperations().getAllUsers()
@@ -44,5 +45,6 @@ class UpdateResultInFirebase(var userId: String, override var callback: ResultCa
             }
             mDatabaseReference.addChildEventListener(mChildEventListener)
         }
+        return ResultObject("Sacces", callback)
     }
 }

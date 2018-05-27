@@ -2,6 +2,8 @@ package com.github.kiolk.chemistrytests.data.database
 
 import android.content.ContentValues
 import android.database.Cursor
+import com.github.kiolk.chemistrytests.data.database.CourseDbModel.CourseDB.COURSE_ID
+import com.github.kiolk.chemistrytests.data.database.CourseDbModel.CourseDB.COURSE_JSON
 import com.github.kiolk.chemistrytests.data.database.QuestionDBModel.QuestionDB.QUESTION_ID
 import com.github.kiolk.chemistrytests.data.database.QuestionDBModel.QuestionDB.QUESTION_JSON
 import com.github.kiolk.chemistrytests.data.database.QuestionDBModel.QuestionDB.TABLE_NAME
@@ -9,10 +11,7 @@ import com.github.kiolk.chemistrytests.data.database.TestParamsDBModel.TestParam
 import com.github.kiolk.chemistrytests.data.database.TestParamsDBModel.TestParamsDB.TEST_PARAMS_JSON
 import com.github.kiolk.chemistrytests.data.database.UserDbModel.UserDB.USER_ID
 import com.github.kiolk.chemistrytests.data.database.UserDbModel.UserDB.USER_JSON
-import com.github.kiolk.chemistrytests.data.models.CloseQuestion
-import com.github.kiolk.chemistrytests.data.models.ResultInformation
-import com.github.kiolk.chemistrytests.data.models.TestParams
-import com.github.kiolk.chemistrytests.data.models.User
+import com.github.kiolk.chemistrytests.data.models.*
 import com.google.gson.Gson
 
 class DBOperations {
@@ -186,5 +185,53 @@ class DBOperations {
         val users = getAllUsers()
         val findedUser = users.find { it.userId == uid }
         return findedUser
+    }
+
+    ////////////
+
+    fun getAllCources(): MutableList<Course> {
+        return helper.readableDatabase.query(CourseDbModel.CourseDB.TABLE_NAME,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null).use { cursor -> this.allCoursesFromCursor(cursor) }
+    }
+
+    private fun allCoursesFromCursor(cursor: Cursor): MutableList<Course> {
+        val list = mutableListOf<Course>()
+        while (cursor.moveToNext()) {
+            list.add(courseFromCursor(cursor))
+        }
+        cursor.close()
+        return list
+    }
+
+    private fun courseFromCursor(cursor: Cursor): Course {
+        val json = cursor.getString(cursor.getColumnIndex(CourseDbModel.CourseDB.COURSE_JSON))
+        val ob: Course = Gson().fromJson(json, Course::class.java)
+        return ob
+    }
+
+    fun insertCourse(course: Course) {
+        val contentValue = fromCourse(course)
+        val readableDatabase = helper.readableDatabase
+        try {
+            readableDatabase.beginTransaction()
+            val res = readableDatabase.replace(CourseDbModel.CourseDB.TABLE_NAME, null, contentValue)
+            readableDatabase.setTransactionSuccessful()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        } finally {
+            readableDatabase.endTransaction()
+        }
+    }
+
+    private fun fromCourse(course: Course): ContentValues {
+        return ContentValues().apply {
+            put(COURSE_ID, course.mCourseId)
+            put(COURSE_JSON, Gson().toJson(course))
+        }
     }
 }
