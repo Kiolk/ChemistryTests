@@ -43,6 +43,7 @@
     <string name="REPEAT">Repeat</string>
     <string name="REPEAT_THIS_QUESTION">Repeat same questions</string>
     <string name="REMOVE">Remove test</string>
+    <string name="BACKGROUND">Background</string>
     <string-array name="RESULT_TAB_TITLES">
         <item>Test information</item>
         <item>General result</item>

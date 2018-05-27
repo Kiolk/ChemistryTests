@@ -204,9 +204,9 @@ class MainActivity : AppCompatActivity() {
     private fun getMenuItems(): List<MenuItemModel> {
         val titles: Array<String> = baseContext.resources.getStringArray(R.array.NAVIGATION_MENU_ITEMS)
         val menuItems: List<MenuItemModel> = listOf(
-                MenuItemModel(R.drawable.ic_time_control_tool, titles[0]),
-                MenuItemModel(R.drawable.ic_multiple_check_square, titles[1]),
-                MenuItemModel(R.drawable.ic_single_checked, titles[2]))
+                MenuItemModel(R.drawable.ic_statistic, titles[0]),
+                MenuItemModel(R.drawable.ic_settings_gears, titles[1]),
+                MenuItemModel(R.drawable.ic_sign_out_option, titles[2]))
         return menuItems
     }
 

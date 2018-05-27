@@ -18,4 +18,9 @@
     <dimen name="SMALL_TITLE_SIZE">20sp</dimen>
     <dimen name="GIANT_TEXT_SIZE">160sp</dimen>
     <dimen name="HEADER_HEIGHT">192dp</dimen>
+    <dimen name="MENU_ICON_SIZE">40dp</dimen>
+    <dimen name="ITEM_DIVADER_SIZE">5dp</dimen>
+    <dimen name="ITEM_ELEVATION">6dp</dimen>
+    <dimen name="LABEL">20dp</dimen>
+    <dimen name="LABEL_HEIGHT">100dp</dimen>
 </resources>

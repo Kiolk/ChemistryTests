@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="@dimen/BLOCK_PADDING">
+    android:layout_marginTop="@dimen/ITEM_DIVADER_SIZE"
+    android:background="@drawable/area_neutral_shape"
+    android:elevation="@dimen/ITEM_ELEVATION">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -13,13 +15,15 @@
             android:layout_height="wrap_content">
             <LinearLayout
                 android:id="@+id/color_label_linear_layout"
-                android:layout_width="20dp"
-                android:layout_height="100dp"
+                android:layout_width="@dimen/LABEL"
+                android:background="@color/SECOND_TEXT_COLOR"
+                android:layout_height="@dimen/LABEL_HEIGHT"
                 android:orientation="horizontal"/>
             <ImageView
                 android:layout_toRightOf="@+id/color_label_linear_layout"
                 android:id="@+id/test_icon_image_view"
                 android:layout_width="100dp"
+                android:background="@drawable/area_square_shape_correct"
                 android:scaleType="centerCrop"
                 android:layout_height="100dp" />
 
@@ -44,4 +48,4 @@
                 android:padding="@dimen/BLOCK_PADDING" />
         </RelativeLayout>
     </LinearLayout>
-</android.support.v7.widget.CardView>
+</RelativeLayout>

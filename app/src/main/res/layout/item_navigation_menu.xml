@@ -5,14 +5,16 @@
     <ImageView
         android:padding="@dimen/BLOCK_PADDING"
         android:id="@+id/item_menu_icon_image_view"
-        android:layout_width="@dimen/SMALL_ICON_SIZE"
-        android:layout_height="@dimen/SMALL_ICON_SIZE"
+        android:layout_width="@dimen/MENU_ICON_SIZE"
+        android:layout_height="@dimen/MENU_ICON_SIZE"
         android:scaleType="centerInside"/>
 
     <TextView
         android:padding="@dimen/BLOCK_PADDING"
+        android:layout_alignBaseline="@id/item_menu_icon_image_view"
         android:id="@+id/item_title_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@color/BLACK_TEXT_COLOR"
         android:layout_toRightOf="@+id/item_menu_icon_image_view"/>
 </RelativeLayout>

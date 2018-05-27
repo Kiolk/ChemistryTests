@@ -26,7 +26,7 @@ class CoursePageFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_curse_page, null)
         view?.findViewById<Toolbar>(R.id.course_tool_bar)?.title = mCourse.mCourseTitle
-        Pen.getInstance().getImageFromUrl(mCourse.mCourseIcone).inputTo(view?.findViewById<ImageView>(R.id.course_icon_image_view))
+        Pen.getInstance().getImageFromUrl(mCourse.mCourseIcon).inputTo(view?.findViewById<ImageView>(R.id.course_icon_image_view))
         view?.findViewById<TextView>(R.id.description_course_text_view)?.text = mCourse.mCourseDescription
         return view ?: super.onCreateView(inflater, container, savedInstanceState)
     }

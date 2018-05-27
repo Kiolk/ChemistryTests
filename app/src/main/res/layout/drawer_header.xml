@@ -1,24 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="@dimen/HEADER_HEIGHT"
-    android:background="@color/colorAccent"
-    android:gravity="bottom"
-    android:orientation="vertical"
-    android:padding="@dimen/HEADER_PADDING">
+    android:gravity="bottom">
+
+    <ImageView
+        android:contentDescription="@string/BACKGROUND"
+        android:layout_width="match_parent"
+        android:src="@drawable/chem_background"
+        android:layout_height="match_parent"
+        android:scaleType="center" />
 
     <com.github.kiolk.chemistrytests.ui.customviews.RoundedImageView
         android:id="@+id/user_profile_picture_image_view"
         android:layout_width="100dp"
         android:layout_height="100dp"
+        android:layout_centerInParent="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_margin="@dimen/BLOCK_PADDING"
         android:src="@drawable/area_transparent_shape" />
 
 
     <TextView
+        android:layout_below="@+id/user_profile_picture_image_view"
         android:id="@+id/user_login_text_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="@font/bicubik"
+        android:padding="@dimen/BLOCK_PADDING"
         android:textSize="@dimen/BIG_TEXT_SIZE" />
-
-</LinearLayout>
+</RelativeLayout>

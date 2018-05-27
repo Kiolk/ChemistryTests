@@ -5,7 +5,7 @@ import java.io.Serializable
 class Course(var mCourseId: Int = 0,
              var mCourseTitle: String = "Title",
              var mCourseDescription: String = "Description",
-             var mCourseIcone : String = "Http",
+             var mCourseIcon: String = "Http",
              var mListTestParams: MutableList<TestParams> = mutableListOf()) : Serializable
 
 fun testCourses() : MutableList<Course>{
