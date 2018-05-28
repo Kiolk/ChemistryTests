@@ -23,6 +23,8 @@
                 android:layout_toRightOf="@+id/color_label_linear_layout"
                 android:id="@+id/test_icon_image_view"
                 android:layout_width="100dp"
+                android:layout_centerVertical="true"
+                android:layout_margin="@dimen/ICON_MARGIN"
                 android:background="@drawable/area_square_shape_correct"
                 android:scaleType="centerCrop"
                 android:layout_height="100dp" />

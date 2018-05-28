@@ -63,6 +63,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(main_tool_bar)
+        main_tool_bar.visibility = View.GONE
         main_drawer_layout.setStatusBarBackground(R.color.fui_transparent)
         mAvaliableTests = AvaliableFragments()
         mAvailableTests = AvaliableTestFragment()
@@ -215,7 +216,13 @@ class MainActivity : AppCompatActivity() {
         when(position){
             0 -> Toast.makeText(baseContext, "Show first fragment", Toast.LENGTH_SHORT).show()
             1 -> Toast.makeText(baseContext, "Show second fragment", Toast.LENGTH_SHORT).show()
-            2 -> Toast.makeText(baseContext, "Show third fragment", Toast.LENGTH_SHORT).show()
+            2 -> {
+                Toast.makeText(baseContext, "Show third fragment", Toast.LENGTH_SHORT).show()
+                AuthUI.getInstance().signOut(baseContext)
+                val intent : Intent = Intent(baseContext, SplashActivity::class.java)
+                finish()
+                startActivity(intent)
+            }
         }
     }
 

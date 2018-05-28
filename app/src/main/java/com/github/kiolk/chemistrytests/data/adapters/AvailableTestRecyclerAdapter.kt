@@ -10,6 +10,11 @@ import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
 import com.github.kiolk.chemistrytests.R
+import com.github.kiolk.chemistrytests.data.models.CloseQuestion.Question.COMPLEX_QUESTION
+import com.github.kiolk.chemistrytests.data.models.CloseQuestion.Question.EASY_QUESTION
+import com.github.kiolk.chemistrytests.data.models.CloseQuestion.Question.HARD_QUESTION
+import com.github.kiolk.chemistrytests.data.models.CloseQuestion.Question.NORMAL_QUESTION
+import com.github.kiolk.chemistrytests.data.models.CloseQuestion.Question.SIMPLE_QUESTION
 import com.github.kiolk.chemistrytests.data.models.ResultInformation
 import com.github.kiolk.chemistrytests.data.models.TestParams
 import kiolk.com.github.pen.Pen
@@ -50,7 +55,16 @@ class AvailableTestRecyclerAdapter(var context : Context,
         holder?.title?.text = test?.testInfo?.testTitle
         holder?.author?.text = test?.testInfo?.testAuthor
         Pen.getInstance().getImageFromUrl(test?.testInfo?.testIcon).inputTo(holder?.icon)
-        holder?.lablLayer?.background = context.resources.getDrawable(R.drawable.area_square_shape_correct)
+        holder?.lablLayer?.background = when(test?.questionsStrength){
+            EASY_QUESTION -> context.resources.getDrawable(R.drawable.area_easy_question)
+            SIMPLE_QUESTION -> context.resources.getDrawable(R.drawable.area_simple_question)
+            NORMAL_QUESTION -> context.resources.getDrawable(R.drawable.area_normal_question)
+            COMPLEX_QUESTION -> context.resources.getDrawable(R.drawable.area_strong_question)
+            HARD_QUESTION ->  context.resources.getDrawable(R.drawable.area_hard_question)
+            else -> {
+                context.resources.getDrawable(R.drawable.area_simple_question)
+            }
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): AvaliableTestViewHolder {

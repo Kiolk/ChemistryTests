@@ -12,19 +12,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import com.github.kiolk.chemistrytests.R
 import com.github.kiolk.chemistrytests.data.adapters.AvailableTestRecyclerAdapter
-import com.github.kiolk.chemistrytests.data.fragments.dialogs.RepeatTestDialog
 import com.github.kiolk.chemistrytests.data.listeners.OnItemClickListener
 import com.github.kiolk.chemistrytests.data.listeners.RecyclerTouchListener
 import com.github.kiolk.chemistrytests.data.models.Course
-import com.github.kiolk.chemistrytests.ui.MainActivity
 import com.github.kiolk.chemistrytests.ui.TEST_PARAM_INT
 import com.github.kiolk.chemistrytests.ui.TestingActivity
 import kiolk.com.github.pen.Pen
-import kotlinx.android.synthetic.main.activity_main.*
-import showFragment
 
 val COURSE_BND : String = "course"
 

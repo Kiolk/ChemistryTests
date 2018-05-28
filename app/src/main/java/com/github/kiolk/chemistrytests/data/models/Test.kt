@@ -30,6 +30,7 @@ class Test(var questions: MutableList<CloseQuestion> = mutableListOf(),
         }
         mSortedQuestions = questions
         checkRandomisation()
+        checkStrength()
         checkQuestionType()
         checkTags()
         checkOrder()
@@ -42,6 +43,16 @@ class Test(var questions: MutableList<CloseQuestion> = mutableListOf(),
                 it.randomizedOptions()
             }
         }
+    }
+
+    private fun checkStrength(){
+        val tmpQuestionList = mutableListOf<CloseQuestion>()
+         mSortedQuestions.forEach{
+            if(it.questionStrength <= params.questionsStrength){
+                tmpQuestionList.add(it)
+            }
+        }
+        mSortedQuestions = tmpQuestionList
     }
 
     private fun checkOrder() {

@@ -106,6 +106,7 @@ class SplashActivity : AppCompatActivity() {
 //        handler.postDelayed({if(!isSetupAuth){
 //            setupAuthentication()
 //        }
+//        mAuthentication.addAuthStateListener(mAuthenticationListener)
     }
 
     override fun onPostResume() {
@@ -114,7 +115,7 @@ class SplashActivity : AppCompatActivity() {
 
     override fun onPause() {
         super.onPause()
-
+//        mAuthentication.removeAuthStateListener(mAuthenticationListener)
 
     }
 
@@ -125,6 +126,7 @@ class SplashActivity : AppCompatActivity() {
     }
 
     private fun startLoad() {
+        mAuthentication.removeAuthStateListener(mAuthenticationListener)
         logo_splash_image_view.visibility = View.VISIBLE
         my_progress_bar_image_view.visibility = View.GONE
         setupTimer()

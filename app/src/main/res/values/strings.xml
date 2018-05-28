@@ -19,9 +19,9 @@
     <string name="QUESTION_TYPE">Question type:</string>
     <string name="SINGLE_CHOICE">Single choice</string>
     <string name="MULTIPLE_CHOICE">Multiple choice</string>
-    <string name="INPUT_CHOICE">Inputed answer</string>
+    <string name="INPUT_CHOICE">Inputted answer</string>
     <string name="START_TEST">Start test</string>
-    <string name="LEAV_TEST">Do you want leav page?</string>
+    <string name="LEAV_TEST">Do you want leave page?</string>
     <string name="YES">Yes</string>
     <string name="NO">No</string>
     <string name="SHOW_RESULT">Show result</string>
@@ -39,7 +39,7 @@
     <string name="YOUR_SCORE">Your score:</string>
     <string name="TIMER_CONTROL">Timer control</string>
     <string name="COMPLETED_TESTS">Completed tests</string>
-    <string name="ARE_YOU_WANT">Are you want</string>
+    <string name="ARE_YOU_WANT">Are you want: </string>
     <string name="REPEAT">Repeat</string>
     <string name="REPEAT_THIS_QUESTION">Repeat same questions</string>
     <string name="REMOVE">Remove test</string>

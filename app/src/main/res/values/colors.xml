@@ -18,4 +18,10 @@
     <color name="SELECTED">#5e5d5d</color>
     <color name="TRANSPARENT_COLOR">#00000000</color>
     <color name="DIVIDER_LINE_COLOR">#459023</color>
+
+    <color name="LEVEL_ONE">#7de60e</color>
+    <color name="LEVEL_TWO">#bee60e</color>
+    <color name="LEVEL_THREE">#e6c20e</color>
+    <color name="LEVEL_FOUR">#e6880e</color>
+    <color name="LEVEL_FIVE">#e63d0e</color>
 </resources>

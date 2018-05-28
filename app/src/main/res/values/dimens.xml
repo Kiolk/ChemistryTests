@@ -20,8 +20,9 @@
     <dimen name="HEADER_HEIGHT">192dp</dimen>
     <dimen name="MENU_ICON_SIZE">40dp</dimen>
     <dimen name="ITEM_DIVADER_SIZE">5dp</dimen>
-    <dimen name="ITEM_ELEVATION">6dp</dimen>
-    <dimen name="LABEL">20dp</dimen>
-    <dimen name="LABEL_HEIGHT">100dp</dimen>
+    <dimen name="ITEM_ELEVATION">2dp</dimen>
+    <dimen name="LABEL">5dp</dimen>
+    <dimen name="LABEL_HEIGHT">150dp</dimen>
     <dimen name="COURSE_BLOCK_HEIGHT">150dp</dimen>
+    <dimen name="ICON_MARGIN">10dp</dimen>
 </resources>
