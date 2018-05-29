@@ -25,4 +25,7 @@
     <dimen name="LABEL_HEIGHT">150dp</dimen>
     <dimen name="COURSE_BLOCK_HEIGHT">150dp</dimen>
     <dimen name="ICON_MARGIN">10dp</dimen>
+    <dimen name="DIVIDER_HEIGHT">1dp</dimen>
+    <dimen name="TOP_PADDING_MENU_ITEM">15dp</dimen>
+    <dimen name="ICON_WIDTH">100dp</dimen>
 </resources>

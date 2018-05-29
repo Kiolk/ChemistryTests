@@ -24,4 +24,5 @@
     <color name="LEVEL_THREE">#e6c20e</color>
     <color name="LEVEL_FOUR">#e6880e</color>
     <color name="LEVEL_FIVE">#e63d0e</color>
+    <color name="COMPLETED_TEST_COLOR">#a3f282</color>
 </resources>

@@ -37,7 +37,7 @@ class CoursePageFragment : Fragment() {
         view?.findViewById<Toolbar>(R.id.course_tool_bar)?.title = mCourse.mCourseTitle
         Pen.getInstance().getImageFromUrl(mCourse.mCourseIcon).inputTo(view?.findViewById<ImageView>(R.id.course_icon_image_view))
         view?.findViewById<TextView>(R.id.description_course_text_view)?.text = mCourse.mCourseDescription
-        val adapter = context?.let { AvailableTestRecyclerAdapter(it, mCourse.mCoursTestParams, null) }
+        val adapter = context?.let { AvailableTestRecyclerAdapter(it, mCourse.mCoursTestParams, null, mCourse.mCompletedTests) }
         val recyclerView = view?.findViewById<RecyclerView>(R.id.courses_tests_recycler_view)
         recyclerView?.layoutManager = LinearLayoutManager(context)
         recyclerView?.adapter = adapter

@@ -10,6 +10,7 @@ val TRAINING_TEST: Int = 1
 val ALL_QUESTION: Int = 0
 val FREE_TEST = 0
 val DIRECT_TEST = 1
+val DEFAULT_URL_ICON : String = "https://firebasestorage.googleapis.com/v0/b/myjson-182914.appspot.com/o/gears.png?alt=media&token=3dee1870-9c2c-4c12-b1df-aa9a24be5b5c"
 
 class TestParams(var testId: Int = 1,
                  var order: Int = DIRECT_ORDER,
@@ -30,7 +31,7 @@ class TestInfo(var testTitle: String = "Test",
                var testAuthor: String = "Author",
                var testCreated: Long = 0L,
                var lasModifed: Long = 0L,
-               var testIcon: String? = null) : Serializable
+               var testIcon: String? = DEFAULT_URL_ICON) : Serializable
 
 class ScoredSystem(var scoredTytle: String? = "Scored system") : Serializable {
 

@@ -7,6 +7,12 @@
     android:orientation="vertical"
     tools:context="com.github.kiolk.chemistrytests.ui.TestingActivity">
 
+    <FrameLayout
+        android:id="@+id/result_frame_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone" />
+
     <TextView
         android:id="@+id/test_timer_text_view"
         android:layout_alignParentRight="true"
@@ -179,9 +185,4 @@
                 android:textSize="@dimen/SMALL_TEXT_SIZE" />
         </LinearLayout>
     </LinearLayout>
-    <FrameLayout
-        android:id="@+id/result_frame_layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone" />
 </RelativeLayout>

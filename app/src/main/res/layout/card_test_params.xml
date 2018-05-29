@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/item_test_card_background_relative_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="@dimen/ITEM_DIVADER_SIZE"
@@ -19,15 +20,19 @@
                 android:background="@color/SECOND_TEXT_COLOR"
                 android:layout_height="@dimen/LABEL_HEIGHT"
                 android:orientation="horizontal"/>
-            <ImageView
-                android:layout_toRightOf="@+id/color_label_linear_layout"
-                android:id="@+id/test_icon_image_view"
-                android:layout_width="100dp"
+
+            <RelativeLayout
+                android:layout_width="@dimen/ICON_WIDTH"
+                android:layout_height="@dimen/ICON_WIDTH"
                 android:layout_centerVertical="true"
                 android:layout_margin="@dimen/ICON_MARGIN"
-                android:background="@drawable/area_square_shape_correct"
-                android:scaleType="centerCrop"
-                android:layout_height="100dp" />
+                android:background="@drawable/area_square_shape"
+                android:layout_toRightOf="@+id/color_label_linear_layout">
+                <com.github.kiolk.chemistrytests.ui.customviews.RoundedImageView
+                    android:id="@+id/test_icon_image_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </RelativeLayout>
 
         </RelativeLayout>
         <RelativeLayout

@@ -82,8 +82,11 @@ class CloseQuestion(var questionId: Int = 1,
 }
 
 fun <T> randomSort(collection: List<T>): List<T> {
-    val listOfNumbers: MutableList<Int> = mutableListOf(Random().nextInt(collection.size))
-
+//    var random : Int = Random().nextInt(collection.size)
+//    while(random <= 0){
+//        random = Random().nextInt(collection.size)
+//    }
+    val listOfNumbers: MutableList<Int> = mutableListOf()
     while (listOfNumbers.size != collection.size) {
         val random = Random().nextInt(collection.size)
         if (!listOfNumbers.contains(random)) {

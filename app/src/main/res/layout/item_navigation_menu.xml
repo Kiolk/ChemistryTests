@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+    android:layout_width="match_parent" android:layout_height="match_parent"    >
+
 
     <ImageView
-        android:padding="@dimen/BLOCK_PADDING"
+        android:layout_marginRight="@dimen/BLOCK_PADDING"
+        android:layout_marginLeft="@dimen/BLOCK_PADDING"
+        android:layout_marginBottom="@dimen/TOP_PADDING_MENU_ITEM"
+        android:layout_marginTop="@dimen/TOP_PADDING_MENU_ITEM"
         android:id="@+id/item_menu_icon_image_view"
         android:layout_width="@dimen/MENU_ICON_SIZE"
         android:layout_height="@dimen/MENU_ICON_SIZE"
-        android:scaleType="centerInside"/>
+        android:layout_centerVertical="true"
+        android:scaleType="centerInside"
+        android:contentDescription="@string/ICON" />
 
     <TextView
         android:padding="@dimen/BLOCK_PADDING"
@@ -16,5 +22,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/BLACK_TEXT_COLOR"
-        android:layout_toRightOf="@+id/item_menu_icon_image_view"/>
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/item_menu_icon_image_view"
+        android:layout_toEndOf="@+id/item_menu_icon_image_view" />
+
+    <LinearLayout
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_marginLeft="@dimen/BLOCK_PADDING"
+        android:background="@color/DIVIDER_LINE_COLOR"
+        android:layout_height="@dimen/DIVIDER_HEIGHT"
+        android:orientation="vertical"
+        android:layout_marginRight="@dimen/BLOCK_PADDING" />
 </RelativeLayout>

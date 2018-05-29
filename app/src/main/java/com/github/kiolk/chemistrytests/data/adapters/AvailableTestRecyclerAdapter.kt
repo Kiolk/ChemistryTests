@@ -17,13 +17,15 @@ import com.github.kiolk.chemistrytests.data.models.CloseQuestion.Question.NORMAL
 import com.github.kiolk.chemistrytests.data.models.CloseQuestion.Question.SIMPLE_QUESTION
 import com.github.kiolk.chemistrytests.data.models.ResultInformation
 import com.github.kiolk.chemistrytests.data.models.TestParams
+import com.github.kiolk.chemistrytests.ui.customviews.RoundedImageView
 import kiolk.com.github.pen.Pen
 import kotlinx.android.synthetic.main.card_test_params.view.*
 import reversSort
 
 class AvailableTestRecyclerAdapter(var context : Context,
                                    var avaliableTests : MutableList<TestParams>? = null,
-                                   var completedTests : MutableList<ResultInformation>? = null) : RecyclerView.Adapter<AvailableTestRecyclerAdapter.AvaliableTestViewHolder>(){
+                                   var completedTests : MutableList<ResultInformation>? = null,
+                                   var listCompletedTsts : List<Int>? = null) : RecyclerView.Adapter<AvailableTestRecyclerAdapter.AvaliableTestViewHolder>(){
 
 
 //    init {
@@ -54,6 +56,9 @@ class AvailableTestRecyclerAdapter(var context : Context,
     private fun setupTestInformation(holder: AvaliableTestViewHolder?, test: TestParams?) {
         holder?.title?.text = test?.testInfo?.testTitle
         holder?.author?.text = test?.testInfo?.testAuthor
+        if(listCompletedTsts?.contains(test?.testId)==true){
+            holder?.background?.background = context.resources.getDrawable(R.drawable.area_completed_test_shape)
+        }
         Pen.getInstance().getImageFromUrl(test?.testInfo?.testIcon).inputTo(holder?.icon)
         holder?.lablLayer?.background = when(test?.questionsStrength){
             EASY_QUESTION -> context.resources.getDrawable(R.drawable.area_easy_question)
@@ -84,11 +89,10 @@ class AvailableTestRecyclerAdapter(var context : Context,
         var title : TextView = item.test_title_card_text_view
         var author : TextView = item.author_card_text_view
         var infoBlock : RelativeLayout = item.test_info_block_relative_layout
-        var icon : ImageView = item.test_icon_image_view
+        var icon : RoundedImageView = item.test_icon_image_view
         var lablLayer : LinearLayout = item.color_label_linear_layout
-
+        var background : RelativeLayout = item.item_test_card_background_relative_layout
     }
-
 }
 
 

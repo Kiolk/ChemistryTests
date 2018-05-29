@@ -21,6 +21,7 @@ class ChemistryTestApp : Application(){
                 setContext(baseContext).
                 setTypeOfCache(PenConstantsUtil.INNER_FILE_CACHE).
                 setSavingStrategy(PenConstantsUtil.SAVE_FULL_IMAGE_STRATEGY).
+//                setDefaultDrawable(baseContext.resources.getDrawable(R.drawable.area_neutral_shape)).
                 setUp()
     }
 }
