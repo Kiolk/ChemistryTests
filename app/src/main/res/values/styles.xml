@@ -64,8 +64,10 @@
     <style name="IconTitleStyle">
         <item name="android:layout_gravity">center</item>
         <item name="android:textSize">@dimen/SMALL_TEXT_SIZE</item>
+        <item name="android:visibility">gone</item>
     </style>
 
     <dimen name="SMALL_ICON_SIZE">30dp</dimen>
+    <dimen name="LITTLE_ICON_SIZE">20dp</dimen>
     <dimen name="NORMAL_TEXT_SIZE">16sp</dimen>
 </resources>

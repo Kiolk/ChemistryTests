@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/test_properties_icons_block"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/BLOCK_PADDING"
+    android:orientation="horizontal"
+    tools:showIn="@layout/fragment_test_info">
+
+    <LinearLayout
+        android:id="@+id/exam_test_type_linear_layout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0"
+        android:visibility="gone"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/exam_icon_image_view"
+            style="@style/BottomIconStyle"
+            android:background="@drawable/ic_exam" />
+
+        <TextView
+            android:id="@+id/exam_test_title_icon_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/EXAM_TEST"
+            style="@style/IconTitleStyle" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/training_test_icon_linear_layout"
+        android:layout_width="0dp"
+        android:visibility="gone"
+        android:layout_height="wrap_content"
+        android:layout_weight="0"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/training_icon_image_view"
+            style="@style/BottomIconStyle"
+            android:background="@drawable/ic_pulling_up_training_silhouette" />
+
+        <TextView
+            android:id="@+id/training_test_title_icon_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/IconTitleStyle"
+            android:text="@string/TRAINING_TEST" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/free_direction_icon_linear_layout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/free_icon_image_view"
+            style="@style/BottomIconStyle"
+            android:background="@drawable/ic_recycable" />
+
+        <TextView
+            android:id="@+id/free_direction_title_icon_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/IconTitleStyle"
+            android:text="@string/FREE_DIRECTION" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/direct_order_icon_linear_layout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0"
+        android:visibility="gone"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/order_icon_image_view"
+            style="@style/BottomIconStyle"
+            android:background="@drawable/ic_arrow_pointing_to_right" />
+
+        <TextView
+            android:id="@+id/direct_order_title_icon_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/DIRECT_ORDER"
+            style="@style/IconTitleStyle" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/timer_control_icon_linear_layout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0"
+        android:visibility="gone"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/time_icon_image_view"
+            style="@style/BottomIconStyle"
+            android:background="@drawable/ic_time_control_tool" />
+
+        <TextView
+            android:id="@+id/timer_control_title_icon_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/TIMER_CONTROL"
+            style="@style/IconTitleStyle" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/single_choice_icon_linear_layout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0"
+        android:visibility="gone"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/single_icon_image_view"
+            style="@style/BottomIconStyle"
+            android:background="@drawable/ic_checked" />
+
+        <TextView
+            android:id="@+id/single_choice_title_icon_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/SINGLE_CHOICE"
+            style="@style/IconTitleStyle" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/multiple_choice_icon_linear_layout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0"
+        android:visibility="gone"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/multiple_icon_image_view"
+            style="@style/BottomIconStyle"
+            android:background="@drawable/ic_multiple_square" />
+
+        <TextView
+            android:id="@+id/multiple_choice_title_icon_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/MULTIPLE_CHOICE"
+            style="@style/IconTitleStyle" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/input_choice_icon_linear_layout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0"
+        android:visibility="gone"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/input_icon_image_view"
+            style="@style/BottomIconStyle"
+            android:background="@drawable/ic_input" />
+
+        <TextView
+            android:id="@+id/input_choice_icon_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/INPUT_CHOICE"
+            style="@style/IconTitleStyle" />
+    </LinearLayout>
+
+</LinearLayout>

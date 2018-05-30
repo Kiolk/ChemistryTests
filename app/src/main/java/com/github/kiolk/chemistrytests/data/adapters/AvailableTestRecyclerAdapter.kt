@@ -10,6 +10,7 @@ import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
 import com.github.kiolk.chemistrytests.R
+import com.github.kiolk.chemistrytests.data.fragments.setupIcons
 import com.github.kiolk.chemistrytests.data.models.CloseQuestion.Question.COMPLEX_QUESTION
 import com.github.kiolk.chemistrytests.data.models.CloseQuestion.Question.EASY_QUESTION
 import com.github.kiolk.chemistrytests.data.models.CloseQuestion.Question.HARD_QUESTION
@@ -70,6 +71,7 @@ class AvailableTestRecyclerAdapter(var context : Context,
                 context.resources.getDrawable(R.drawable.area_simple_question)
             }
         }
+        holder?.itemView?.let { setupIcons(it, test, true) }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): AvaliableTestViewHolder {
@@ -89,7 +91,7 @@ class AvailableTestRecyclerAdapter(var context : Context,
         var title : TextView = item.test_title_card_text_view
         var author : TextView = item.author_card_text_view
         var infoBlock : RelativeLayout = item.test_info_block_relative_layout
-        var icon : RoundedImageView = item.test_icon_image_view
+        var icon : ImageView = item.test_icon_image_view
         var lablLayer : LinearLayout = item.color_label_linear_layout
         var background : RelativeLayout = item.item_test_card_background_relative_layout
     }
