@@ -1,4 +1,4 @@
-package com.github.kiolk.chemistrytests.ui
+package com.github.kiolk.chemistrytests.ui.customviews
 
 import android.content.Context
 import android.support.v4.view.ViewPager

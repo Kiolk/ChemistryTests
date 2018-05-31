@@ -5,7 +5,7 @@ import com.github.kiolk.chemistrytests.data.asynctasks.ResultObject
 import com.github.kiolk.chemistrytests.data.asynctasks.SingleExecut
 import com.github.kiolk.chemistrytests.data.database.DBOperations
 import com.github.kiolk.chemistrytests.data.models.User
-import com.github.kiolk.chemistrytests.ui.DATA_BASE_USERS_CHAILD
+import com.github.kiolk.chemistrytests.ui.activities.DATA_BASE_USERS_CHAILD
 import com.google.firebase.database.*
 
 class UpdateResultInFirebase(var userId: String, override var callback: ResultCallback) : SingleExecut {

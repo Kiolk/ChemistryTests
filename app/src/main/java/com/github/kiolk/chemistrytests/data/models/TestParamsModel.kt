@@ -24,7 +24,8 @@ class TestParams(var testId: Int = 1,
                  var testTimer: Long? = null,
                  var scoredSystem: String? = null,
                  var questionList: MutableList<Int>? = null,
-                 var questionsStrength : Int = 1) : Serializable
+                 var questionsStrength : Int = 1,
+                 var minPercentForComplet : Float = 75F) : Serializable
 
 class TestInfo(var testTitle: String = "Test",
                var testDescription: String = "Description",

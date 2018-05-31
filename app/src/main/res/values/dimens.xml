@@ -28,4 +28,5 @@
     <dimen name="DIVIDER_HEIGHT">1dp</dimen>
     <dimen name="TOP_PADDING_MENU_ITEM">15dp</dimen>
     <dimen name="ICON_WIDTH">100dp</dimen>
+    <dimen name="BIG_PADDING">20dp</dimen>
 </resources>

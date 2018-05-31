@@ -19,6 +19,8 @@ import com.github.kiolk.chemistrytests.data.models.CloseQuestion.Question.SIMPLE
 import com.github.kiolk.chemistrytests.data.models.ResultInformation
 import com.github.kiolk.chemistrytests.data.models.TestParams
 import com.github.kiolk.chemistrytests.ui.customviews.RoundedImageView
+import com.github.kiolk.chemistrytests.utils.CONSTANTS.SLASH_DAY_PATERN
+import com.github.kiolk.chemistrytests.utils.convertEpochTime
 import kiolk.com.github.pen.Pen
 import kotlinx.android.synthetic.main.card_test_params.view.*
 import reversSort
@@ -50,15 +52,21 @@ class AvailableTestRecyclerAdapter(var context : Context,
 //            completedTests = tmp
             test = completedTests!![position].testParams
         }
+        holder?.completedTestMark?.visibility = View.GONE
+        if(completedTests != null && completedTests!![position].isCompleted){
+            holder?.completedTestMark?.visibility = View.VISIBLE
+        }
         setupTestInformation(holder, test)
-
     }
 
     private fun setupTestInformation(holder: AvaliableTestViewHolder?, test: TestParams?) {
         holder?.title?.text = test?.testInfo?.testTitle
         holder?.author?.text = test?.testInfo?.testAuthor
+        holder?.createTime?.text = test?.testInfo?.testCreated?.let { convertEpochTime(it, context, SLASH_DAY_PATERN) }
+        holder?.passedIcon?.visibility = View.GONE
         if(listCompletedTsts?.contains(test?.testId)==true){
             holder?.background?.background = context.resources.getDrawable(R.drawable.area_completed_test_shape)
+            holder?.passedIcon?.visibility = View.VISIBLE
         }
         Pen.getInstance().getImageFromUrl(test?.testInfo?.testIcon).inputTo(holder?.icon)
         holder?.lablLayer?.background = when(test?.questionsStrength){
@@ -94,6 +102,9 @@ class AvailableTestRecyclerAdapter(var context : Context,
         var icon : ImageView = item.test_icon_image_view
         var lablLayer : LinearLayout = item.color_label_linear_layout
         var background : RelativeLayout = item.item_test_card_background_relative_layout
+        var completedTestMark : ImageView = item.test_completed_mark_image_view
+        var createTime : TextView = item.test_created_time_text_view
+        var passedIcon : ImageView = item.passed_stamp_image_view
     }
 }
 

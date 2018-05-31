@@ -9,6 +9,7 @@ object CONSTANTS{
     val DATE_PATTERN: String = "dd MMM yyyy - hh:mm:ss"
     val DURATION_TIME : String = "hh:mm:ss"
     val DAY_PATERN : String = "dd.MM.yyyy"
+    val SLASH_DAY_PATERN : String = "dd/MM/yyyy"
 }
 
 fun convertEpochTime(date : Long, context : Context?, pattern : String) : String {

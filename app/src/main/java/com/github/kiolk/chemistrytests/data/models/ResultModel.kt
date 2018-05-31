@@ -74,11 +74,14 @@ class Result(var test: Test = Test(), var endListener: OnEndTestListener? = null
         mResultInfo.askedQuestions = askedQuestions.size
         mResultInfo.correctAnswered = correctAnswers
         mResultInfo.wrongAnswered = mResultInfo.askedQuestions!! - correctAnswers
+        mResultInfo.percentAsked = (mResultInfo.askedQuestions?.div(mResultInfo.totalQuestions?.toFloat() ?: 1F)) ?: 0F
         mResultInfo.startTime = 1111111111111L
         mResultInfo.endTime = 2222222222222L
         mResultInfo.duration = mResultInfo.endTime!! - mResultInfo.startTime!!
         mResultInfo.resultScore = getTestResult()
         mResultInfo.percentCorrect = (mResultInfo.correctAnswered!! / mResultInfo.totalQuestions!!)*100F
+        val percent : Float = mResultInfo.percentCorrect ?: 0F
+        mResultInfo.isCompleted = percent >= test.params.minPercentForComplet
         mResultInfo.resultScore = getTestResult()
         mResultInfo.testMark = getTestMark()
         mResultInfo.testParams = test.params

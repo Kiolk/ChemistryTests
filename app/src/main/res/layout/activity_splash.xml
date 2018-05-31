@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.github.kiolk.chemistrytests.ui.SplashActivity">
+    tools:context="com.github.kiolk.chemistrytests.ui.activities.SplashActivity">
 
     <ImageView
         android:id="@+id/logo_splash_image_view"

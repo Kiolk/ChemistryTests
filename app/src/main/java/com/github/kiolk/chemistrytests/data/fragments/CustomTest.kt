@@ -4,7 +4,6 @@ import android.app.AlertDialog
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.app.DialogFragment
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -18,8 +17,8 @@ import com.github.kiolk.chemistrytests.data.models.*
 import com.github.kiolk.chemistrytests.data.models.CloseQuestion.Question.INPUT_CHOICE
 import com.github.kiolk.chemistrytests.data.models.CloseQuestion.Question.MULTIPLE_CHOICE
 import com.github.kiolk.chemistrytests.data.models.CloseQuestion.Question.SINGLE_CHOICE
-import com.github.kiolk.chemistrytests.ui.TEST_PARAM_INT
-import com.github.kiolk.chemistrytests.ui.TestingActivity
+import com.github.kiolk.chemistrytests.ui.activities.TEST_PARAM_INT
+import com.github.kiolk.chemistrytests.ui.activities.TestingActivity
 
 class CustomTest() : Fragment() {
 

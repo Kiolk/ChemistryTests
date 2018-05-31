@@ -2,8 +2,6 @@ package com.github.kiolk.chemistrytests.data.fragments
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,7 +13,7 @@ import com.github.kiolk.chemistrytests.data.models.CloseQuestion.Question.INPUT_
 import com.github.kiolk.chemistrytests.data.models.CloseQuestion.Question.MULTIPLE_CHOICE
 import com.github.kiolk.chemistrytests.data.models.CloseQuestion.Question.SINGLE_CHOICE
 import com.github.kiolk.chemistrytests.data.models.setFormattedText
-import com.github.kiolk.chemistrytests.ui.TestingActivity
+import com.github.kiolk.chemistrytests.ui.activities.TestingActivity
 import kotlinx.android.synthetic.main.activity_testing.*
 import kotlinx.android.synthetic.main.card_close_question.view.*
 

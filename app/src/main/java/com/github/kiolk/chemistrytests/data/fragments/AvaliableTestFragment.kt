@@ -7,7 +7,6 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import com.github.kiolk.chemistrytests.R
@@ -16,11 +15,10 @@ import com.github.kiolk.chemistrytests.data.database.DBOperations
 import com.github.kiolk.chemistrytests.data.listeners.OnItemClickListener
 import com.github.kiolk.chemistrytests.data.listeners.RecyclerTouchListener
 import com.github.kiolk.chemistrytests.data.models.TestParams
-import com.github.kiolk.chemistrytests.ui.TESTS_CHILD
-import com.github.kiolk.chemistrytests.ui.TEST_PARAM_INT
-import com.github.kiolk.chemistrytests.ui.TestingActivity
+import com.github.kiolk.chemistrytests.ui.activities.TESTS_CHILD
+import com.github.kiolk.chemistrytests.ui.activities.TEST_PARAM_INT
+import com.github.kiolk.chemistrytests.ui.activities.TestingActivity
 import com.google.firebase.database.*
-import kotlinx.android.synthetic.main.fragment_avaliable_tests.view.*
 import reversSort
 
 class AvaliableTestFragment : Fragment(){

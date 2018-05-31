@@ -11,9 +11,9 @@ import android.widget.ListView
 import com.github.kiolk.chemistrytests.R
 import com.github.kiolk.chemistrytests.data.adapters.TestsBaseAdapter
 import com.github.kiolk.chemistrytests.data.models.TestParams
-import com.github.kiolk.chemistrytests.ui.TESTS_CHILD
-import com.github.kiolk.chemistrytests.ui.TEST_PARAM_INT
-import com.github.kiolk.chemistrytests.ui.TestingActivity
+import com.github.kiolk.chemistrytests.ui.activities.TESTS_CHILD
+import com.github.kiolk.chemistrytests.ui.activities.TEST_PARAM_INT
+import com.github.kiolk.chemistrytests.ui.activities.TestingActivity
 import com.google.firebase.database.*
 
 class AvaliableFragments : Fragment(){

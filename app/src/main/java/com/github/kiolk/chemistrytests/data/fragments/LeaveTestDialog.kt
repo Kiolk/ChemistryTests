@@ -5,7 +5,7 @@ import android.app.Dialog
 import android.os.Bundle
 import android.support.v4.app.DialogFragment
 import com.github.kiolk.chemistrytests.R
-import com.github.kiolk.chemistrytests.ui.TestingActivity
+import com.github.kiolk.chemistrytests.ui.activities.TestingActivity
 
 class LeaveTestDialog : DialogFragment(){
 

@@ -8,6 +8,7 @@ class ResultInformation : Serializable{
     var correctAnswered : Int? = null
     var wrongAnswered : Int? = null
     var percentCorrect : Float? = null
+    var percentAsked : Float = 0F
     var resultScore : Float? = null
     var startTime : Long? = null
     var endTime : Long? = null
@@ -15,6 +16,7 @@ class ResultInformation : Serializable{
     var testMark : String? = null
     var testParams : TestParams? = null
     var listAskedQuestionsId : MutableList<Int>? = null
+    var isCompleted: Boolean = false
 //    var sortedQuestions :List<CloseQuestion> = mutableListOf()
 //    var anweredQuestions : MutableList<Answer> = mutableListOf()
 }

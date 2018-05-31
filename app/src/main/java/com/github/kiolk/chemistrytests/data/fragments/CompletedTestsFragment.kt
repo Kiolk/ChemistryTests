@@ -15,7 +15,7 @@ import com.github.kiolk.chemistrytests.data.fragments.dialogs.RepeatTestDialog
 import com.github.kiolk.chemistrytests.data.listeners.OnItemClickListener
 import com.github.kiolk.chemistrytests.data.listeners.RecyclerTouchListener
 import com.github.kiolk.chemistrytests.data.models.ResultInformation
-import com.github.kiolk.chemistrytests.ui.MainActivity
+import com.github.kiolk.chemistrytests.ui.activities.MainActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import showFragment
 

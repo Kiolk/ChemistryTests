@@ -1,4 +1,4 @@
-package com.github.kiolk.chemistrytests.ui
+package com.github.kiolk.chemistrytests.ui.activities
 
 import android.app.Activity
 import android.content.Intent
@@ -13,17 +13,14 @@ import com.firebase.ui.auth.AuthUI
 import com.github.kiolk.chemistrytests.R
 import com.github.kiolk.chemistrytests.data.asynctasks.ResultCallback
 import com.github.kiolk.chemistrytests.data.asynctasks.SingleAsyncTask
-import com.github.kiolk.chemistrytests.data.database.DBConnector
-import com.github.kiolk.chemistrytests.data.database.DBOperations
 import com.github.kiolk.chemistrytests.data.executs.UpdateResultInFirebase
 import com.github.kiolk.chemistrytests.data.executs.UploadDataInDb
-import com.github.kiolk.chemistrytests.data.models.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import kotlinx.android.synthetic.main.activity_splash.*
 
-val SPEED_ROTATION: Long = 200
-val SPLASH_DURATION: Long = 5000
+val SPEED_ROTATION: Long = 1000
+val SPLASH_DURATION: Long = 2000
 val PROVIDERS = listOf<AuthUI.IdpConfig>(AuthUI.IdpConfig.Builder(AuthUI.EMAIL_PROVIDER).build(), AuthUI.IdpConfig.Builder(AuthUI.GOOGLE_PROVIDER).build())
 val RC_SIGN_IN: Int = 1
 
@@ -40,7 +37,8 @@ class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
-        setupAuthentication()
+        setupTimer()
+//        setupAuthentication()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -107,6 +105,7 @@ class SplashActivity : AppCompatActivity() {
 //            setupAuthentication()
 //        }
 //        mAuthentication.addAuthStateListener(mAuthenticationListener)
+//        setupTimer()
     }
 
     override fun onPostResume() {
@@ -129,7 +128,6 @@ class SplashActivity : AppCompatActivity() {
         mAuthentication.removeAuthStateListener(mAuthenticationListener)
         logo_splash_image_view.visibility = View.VISIBLE
         my_progress_bar_image_view.visibility = View.GONE
-        setupTimer()
         mResultCallback = object : ResultCallback {
             override fun <T> onSuccess(any: T?) {
                 launchMainActivity()
@@ -152,7 +150,8 @@ class SplashActivity : AppCompatActivity() {
     private fun setupTimer() {
         mHandler = Handler()
         mRunnable = Runnable {
-            setMyProgressBar()
+            setupAuthentication()
+//            setMyProgressBar()
 //            mHandler.postDelayed(mRunnable, SPEED_ROTATION)
         }
         mHandler.postDelayed(mRunnable, SPEED_ROTATION)

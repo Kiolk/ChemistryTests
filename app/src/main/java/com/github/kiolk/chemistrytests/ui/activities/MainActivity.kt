@@ -1,4 +1,4 @@
-package com.github.kiolk.chemistrytests.ui
+package com.github.kiolk.chemistrytests.ui.activities
 
 import android.app.Activity
 import android.content.Intent

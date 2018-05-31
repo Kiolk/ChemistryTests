@@ -25,6 +25,8 @@
             android:layout_height="0dp"
             android:layout_weight="4">
 
+
+
             <com.github.kiolk.chemistrytests.ui.customviews.RoundCornerLayout
                 android:id="@+id/test_icon_round_corner_layout"
                 android:layout_width="@dimen/ICON_WIDTH"
@@ -39,6 +41,23 @@
                     android:scaleType="centerCrop"
                     android:layout_height="match_parent" />
             </com.github.kiolk.chemistrytests.ui.customviews.RoundCornerLayout>
+
+            <ImageView
+                android:id="@+id/test_completed_mark_image_view"
+                android:layout_width="@dimen/SMALL_ICON_SIZE"
+                android:layout_height="@dimen/SMALL_ICON_SIZE"
+                android:scaleType="centerCrop"
+                android:layout_alignParentRight="true"
+                android:visibility="gone"
+                android:src="@drawable/ic_check"/>
+
+            <ImageView
+                android:id="@+id/passed_stamp_image_view"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:visibility="gone"
+                android:layout_centerInParent="true"
+                android:src="@drawable/ic_passeddd"/>
 
             <RelativeLayout
                 android:id="@+id/test_info_block_relative_layout"
@@ -64,8 +83,18 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:layout_alignParentBottom="true"
             android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/test_created_time_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:paddingStart="@dimen/BLOCK_PADDING"
+                android:paddingEnd="@dimen/BIG_PADDING"
+                android:paddingLeft="@dimen/BLOCK_PADDING"
+                android:paddingRight="@dimen/BIG_PADDING" />
+
             <include layout="@layout/include_property_test_block" />
         </LinearLayout>
     </LinearLayout>

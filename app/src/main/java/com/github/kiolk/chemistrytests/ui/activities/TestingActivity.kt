@@ -1,6 +1,5 @@
-package com.github.kiolk.chemistrytests.ui
+package com.github.kiolk.chemistrytests.ui.activities
 
-import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
 import android.support.design.widget.AppBarLayout
@@ -28,6 +27,7 @@ import com.github.kiolk.chemistrytests.data.fragments.LeaveTestDialog
 import com.github.kiolk.chemistrytests.data.fragments.ResultFragment
 import com.github.kiolk.chemistrytests.data.fragments.TestInfoFragment
 import com.github.kiolk.chemistrytests.data.models.*
+import com.github.kiolk.chemistrytests.ui.customviews.ControledViewPager
 import com.github.kiolk.chemistrytests.utils.SlideAnimationUtil
 import com.github.kiolk.chemistrytests.utils.SlideAnimationUtil.FASTER
 import com.github.kiolk.chemistrytests.utils.SlideAnimationUtil.VERY_FASTER
@@ -37,6 +37,7 @@ import showFragment
 import java.util.*
 
 val QUESTIONS_CHILDS: String = "Questions"
+val MIN_PERCENT_FOR_SAVE_RESULT: Float = 0.75F
 
 class TestingActivity : AppCompatActivity() {
 
@@ -74,7 +75,7 @@ class TestingActivity : AppCompatActivity() {
         animOut(end_test_fab)
 //        animIn(bottom_bar_linear_layout)
 //        animOut(bottom_bar_linear_layout)
-        setupTestingViewPAger(mQuestions)
+        setupTestingViewPager(mQuestions)
         setupBottomBar()
 //        mChaildEventListener = object : ChildEventListener {
 //            override fun onCancelled(p0: DatabaseError?) {
@@ -98,7 +99,7 @@ class TestingActivity : AppCompatActivity() {
 ////                if (question?.questionId == 30){
 ////                    mQuestions = DBOperations().getAllQuestions()
 ////                    questionsList = mQuestions
-////                    setupTestingViewPAger(DBOperations().getAllQuestions())
+////                    setupTestingViewPager(DBOperations().getAllQuestions())
 ////                    setupBottomBar()
 ////                }
 //            }
@@ -173,7 +174,7 @@ class TestingActivity : AppCompatActivity() {
     }
 
 
-    private fun setupTestingViewPAger(questionsList: MutableList<CloseQuestion>) {
+    private fun setupTestingViewPager(questionsList: MutableList<CloseQuestion>) {
 
         val test = Test(questionsList, mParams)
 
@@ -494,12 +495,12 @@ class TestingActivity : AppCompatActivity() {
     fun showResult() {
         mTimer?.cancel()
         isTestEnd = true
-        result_frame_layout.visibility = View.VISIBLE
-        showFragment(R.id.result_frame_layout, mResultFragment)
+//        result_frame_layout.visibility = View.VISIBLE
+//        showFragment(R.id.result_frame_layout, mResultFragment)
+//        mResultFragment.showResult(mResult.mResultInfo)
         mResult.writeResultInformation()
         mResult.mResultInfo.startTime = mStartTest
         mResult.mResultInfo.endTime = System.currentTimeMillis()
-        mResultFragment.showResult(mResult.mResultInfo)
         val resultAdapter: TestingPagerAdapter = TestingPagerAdapter(supportFragmentManager, mResult.test.mSortedQuestions,
                 true, mResult.userResultAnswers())
         testing_view_pager.adapter = resultAdapter
@@ -524,7 +525,12 @@ class TestingActivity : AppCompatActivity() {
             }
             cnt = cnt + 1
         }
-        addResultForUserProfile()
+        result_frame_layout.visibility = View.VISIBLE
+        showFragment(R.id.result_frame_layout, mResultFragment)
+        mResultFragment.showResult(mResult.mResultInfo)
+        if (mResult.mResultInfo.percentAsked >= MIN_PERCENT_FOR_SAVE_RESULT) {
+            addResultForUserProfile()
+        }
     }
 
     private fun addResultForUserProfile() {

@@ -12,17 +12,18 @@ import com.google.firebase.auth.FirebaseAuth
 class PrepareCoursesFromDb(override var callback: ResultCallback) : SingleExecut{
     override fun perform(): ResultObject<*> {
         val courses = DBOperations().getAllCources()
-        val tests = DBOperations().getAllTestsParams()
+        val testsDb = DBOperations().getAllTestsParams()
         val userHistory : MutableList<ResultInformation>? = DBOperations().getUser(FirebaseAuth.getInstance().currentUser?.uid)?.completedTests
         courses.forEach {
-            val tests = it.filterTestParams(tests)
+            val tests = it.filterTestParams(testsDb)
         it.mCoursTestParams = tests}
         courses.forEach {
             val comletedTest : MutableList<Int> = mutableListOf()
             it.mCoursTestParams.forEach {
                 val result : TestParams = it
-                val testParams = userHistory?.find { it.testParams?.testId == result.testId }
-                if(testParams != null){
+
+                val testParams = userHistory?.find { it.testParams?.testId == result.testId && it.isCompleted}
+                if(testParams != null && testParams.isCompleted){
                     testParams.testParams?.testId?.let { it1 -> comletedTest.add(it1) }
                 }
             }

@@ -15,7 +15,7 @@ import com.github.kiolk.chemistrytests.data.models.CloseQuestion.Question.INPUT_
 import com.github.kiolk.chemistrytests.data.models.CloseQuestion.Question.MULTIPLE_CHOICE
 import com.github.kiolk.chemistrytests.data.models.CloseQuestion.Question.SINGLE_CHOICE
 import com.github.kiolk.chemistrytests.data.models.setFormattedText
-import com.github.kiolk.chemistrytests.ui.TestingActivity
+import com.github.kiolk.chemistrytests.ui.activities.TestingActivity
 import kotlinx.android.synthetic.main.activity_testing.*
 import kotlinx.android.synthetic.main.card_close_question.view.*
 
