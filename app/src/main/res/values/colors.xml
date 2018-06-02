@@ -25,4 +25,6 @@
     <color name="LEVEL_FOUR">#e6880e</color>
     <color name="LEVEL_FIVE">#e63d0e</color>
     <color name="COMPLETED_TEST_COLOR">#a3f282</color>
+    <color name="ACTIVE_DOT_COLOR">#ababab</color>
+    <color name="NON_ACTIVE_DOT_COLOR">#000000</color>
 </resources>

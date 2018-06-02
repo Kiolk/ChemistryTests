@@ -29,4 +29,6 @@
     <dimen name="TOP_PADDING_MENU_ITEM">15dp</dimen>
     <dimen name="ICON_WIDTH">100dp</dimen>
     <dimen name="BIG_PADDING">20dp</dimen>
+    <dimen name="ACTIVE_DOT">12dp</dimen>
+    <dimen name="NON_ACTIVE_DOT">8dp</dimen>
 </resources>

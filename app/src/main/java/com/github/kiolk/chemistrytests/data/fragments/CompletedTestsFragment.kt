@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +12,10 @@ import android.widget.Toast
 import closeFragment
 import com.github.kiolk.chemistrytests.R
 import com.github.kiolk.chemistrytests.data.adapters.AvailableTestRecyclerAdapter
+import com.github.kiolk.chemistrytests.data.asynctasks.ResultCallback
+import com.github.kiolk.chemistrytests.data.asynctasks.SingleAsyncTask
+import com.github.kiolk.chemistrytests.data.asynctasks.SingleExecut
+import com.github.kiolk.chemistrytests.data.executs.UpdateResultInDb
 import com.github.kiolk.chemistrytests.data.fragments.dialogs.RepeatTestDialog
 import com.github.kiolk.chemistrytests.data.listeners.OnItemClickListener
 import com.github.kiolk.chemistrytests.data.listeners.RecyclerTouchListener
@@ -62,7 +67,34 @@ class CompletedTestsFragment : Fragment() {
             }
             recyclerView?.addOnItemTouchListener(itemTouchListener)
         }
+
+        val simpleItemTouchHalperCallBack : ItemTouchHelper.SimpleCallback = object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
+
+            override fun onMove(recyclerView: RecyclerView?, viewHolder: RecyclerView.ViewHolder?, target: RecyclerView.ViewHolder?): Boolean {
+            return true
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder?, direction: Int) {
+                val position : Int = viewHolder?.adapterPosition ?: 0
+                val resultingInformation = mResults!![position]
+                SingleAsyncTask().execute(UpdateResultInDb(resultingInformation, object : ResultCallback{
+                    override fun <T> onSuccess(any: T?) {
+                    }
+
+                    override fun onError() {
+                    }
+                }, true))
+                mResults?.removeAt(position)
+                mAdapter?.notifyDataSetChanged()
+                Toast.makeText(context, "Remove item in position $position", Toast.LENGTH_SHORT).show()
+
+            }
+        }
+        val itemTouchHelper : ItemTouchHelper = ItemTouchHelper(simpleItemTouchHalperCallBack)
+        itemTouchHelper.attachToRecyclerView(recyclerView)
+
     }
+
     fun closeResult() : Boolean{
         if(isShowResult) {
             val activityMain = activity as MainActivity

@@ -18,7 +18,8 @@
         <activity android:name=".ui.activities.MainActivity">
         </activity>
         <activity android:name=".ui.activities.TestingActivity" />
-        <activity android:name=".ui.activities.SplashActivity">
+        <activity android:name=".ui.activities.SplashActivity"
+            android:theme="@style/Launcher">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

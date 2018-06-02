@@ -8,6 +8,10 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="Launcher" parent="AppTheme">
+        <item name="android:windowBackground">@drawable/splash_layer_list</item>
+    </style>
+
     <style name="QuestionBlockStyle">
         <item name="android:layout_margin">@dimen/BLOCK_PADDING</item>
         <item name="android:background">@drawable/area_square_shape</item>
