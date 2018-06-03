@@ -8,25 +8,25 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.CheckBox
-import android.widget.SeekBar
-import android.widget.TextView
+import android.widget.*
 import com.github.kiolk.chemistrytests.R
+import com.github.kiolk.chemistrytests.data.adapters.SelectQuestionsArrayAdapter
 import com.github.kiolk.chemistrytests.data.models.*
 import com.github.kiolk.chemistrytests.data.models.CloseQuestion.Question.INPUT_CHOICE
 import com.github.kiolk.chemistrytests.data.models.CloseQuestion.Question.MULTIPLE_CHOICE
 import com.github.kiolk.chemistrytests.data.models.CloseQuestion.Question.SINGLE_CHOICE
 import com.github.kiolk.chemistrytests.ui.activities.TEST_PARAM_INT
 import com.github.kiolk.chemistrytests.ui.activities.TestingActivity
+import kotlinx.android.synthetic.main.fragment_custome_test.*
 
-class CustomTest() : Fragment() {
+class CustomTest : Fragment() {
 
     lateinit var mSelectedTopics: MutableList<String>
     lateinit var mSortedQuestions: MutableList<CloseQuestion>
     lateinit var mSortedQuestionsTmp: MutableList<CloseQuestion>
     lateinit var mQuestions: MutableList<CloseQuestion>
     lateinit var mQuestionType: MutableList<Int>
+    var mQuestionListAdapter: SelectQuestionsArrayAdapter? = null
     var isCheckedSingle: Boolean = false
     var isCheckedMultiple: Boolean = false
     var isCheckedInput: Boolean = false
@@ -37,7 +37,7 @@ class CustomTest() : Fragment() {
         return view ?: super.onCreateView(inflater, container, savedInstanceState)
     }
 
-    fun combineCustomeTest(questions: MutableList<CloseQuestion>) {
+    fun combineCustomTest(questions: MutableList<CloseQuestion>) {
         mQuestions = questions
         view?.findViewById<TextView>(R.id.available_questions_indicator_text_view)?.text = mQuestions.size.toString()
         mSortedQuestionsTmp = mutableListOf()
@@ -45,6 +45,7 @@ class CustomTest() : Fragment() {
         mSortedQuestions = mQuestions
         mSortedQuestionsTmp = mSortedQuestions
         mQuestionType = mutableListOf()
+        setapQuestionListView()
         view?.findViewById<CheckBox>(R.id.single_choice_check_box)?.setOnClickListener {
             isCheckedSingle = view?.findViewById<CheckBox>(R.id.single_choice_check_box)?.isChecked ?: false
             setAvailableQuestions()
@@ -86,6 +87,11 @@ class CustomTest() : Fragment() {
         view?.findViewById<Button>(R.id.start_custom_test_button)?.setOnClickListener {
             startTest()
         }
+    }
+
+    private fun setapQuestionListView() {
+        mQuestionListAdapter = context?.let { SelectQuestionsArrayAdapter(it, -1, mSortedQuestions) }
+        available_questions_list_view.adapter = mQuestionListAdapter
     }
 
     private fun setAvailableQuestions() {
@@ -140,7 +146,7 @@ class CustomTest() : Fragment() {
 
             }
         })
-
+        mQuestionListAdapter?.notifyDataSetChanged()
     }
 
     private fun filteredByTypeQuestion() {
@@ -168,9 +174,22 @@ class CustomTest() : Fragment() {
     }
 
     fun startTest() {
+        var listChoseenQuestions = available_questions_list_view.checkedItemPositions
+        val listQuestionsId: MutableList<Int>? = mutableListOf()
+        if (available_questions_list_view.choiceMode != ListView.CHOICE_MODE_NONE && listChoseenQuestions.size() != 0) {
+            var cnt = 0
+            mSortedQuestions.forEach {
+                if (listChoseenQuestions[cnt]) {
+                    listQuestionsId?.add(it.questionId)
+                }
+                ++cnt
+            }
+        } else {
+            listChoseenQuestions = null
+        }
         val params: TestParams = TestParams(10, RANDOM_ORDER, TRAINING_TEST, mNumberAskedQuestions
                 , true, FREE_TEST,
-                TestInfo(), mSelectedTopics, mQuestionType)
+                TestInfo(), mSelectedTopics, mQuestionType, null, null, listQuestionsId)
         val intent: Intent = Intent(context, TestingActivity::class.java)
         intent.putExtra(TEST_PARAM_INT, params)
         startActivity(intent)

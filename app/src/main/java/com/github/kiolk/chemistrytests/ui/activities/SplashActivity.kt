@@ -154,7 +154,7 @@ class SplashActivity : AppCompatActivity() {
 //            setMyProgressBar()
 //            mHandler.postDelayed(mRunnable, SPEED_ROTATION)
         }
-        mHandler.postDelayed(mRunnable, SPEED_ROTATION)
+        mHandler.postDelayed(mRunnable, 100)
     }
 
     private fun setMyProgressBar() {

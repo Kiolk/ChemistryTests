@@ -1,4 +1,4 @@
-package com.github.kiolk.chemistrytests.data.fragments
+package com.github.kiolk.chemistrytests.data.fragments.dialogs
 
 import android.app.AlertDialog
 import android.app.Dialog

@@ -23,7 +23,7 @@ import com.github.kiolk.chemistrytests.data.asynctasks.SingleAsyncTask
 import com.github.kiolk.chemistrytests.data.database.DBOperations
 import com.github.kiolk.chemistrytests.data.executs.UpdateResultInDb
 import com.github.kiolk.chemistrytests.data.fragments.HintFragment
-import com.github.kiolk.chemistrytests.data.fragments.LeaveTestDialog
+import com.github.kiolk.chemistrytests.data.fragments.dialogs.LeaveTestDialog
 import com.github.kiolk.chemistrytests.data.fragments.ResultFragment
 import com.github.kiolk.chemistrytests.data.fragments.TestInfoFragment
 import com.github.kiolk.chemistrytests.data.models.*

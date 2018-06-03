@@ -158,7 +158,7 @@ class MainActivity : AppCompatActivity() {
                 main_frame_layout.visibility = View.VISIBLE
                 start_relative_layout.visibility = View.GONE
                 showFragment(supportFragmentManager, R.id.main_frame_layout, mCustomTest)
-                mCustomTest.combineCustomeTest(DBOperations().getAllQuestions())
+                mCustomTest.combineCustomTest(DBOperations().getAllQuestions())
             }
         }
         open_courses_button.setOnClickListener {

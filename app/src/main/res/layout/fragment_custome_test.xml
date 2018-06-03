@@ -160,4 +160,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/START_TEST"/>
+    <ListView
+        android:id="@+id/available_questions_list_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:choiceMode="multipleChoice">
+
+    </ListView>
 </LinearLayout>

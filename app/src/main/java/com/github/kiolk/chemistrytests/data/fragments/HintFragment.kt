@@ -3,6 +3,7 @@ package com.github.kiolk.chemistrytests.data.fragments
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.view.ViewPager
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -34,14 +35,16 @@ class HintFragment : Fragment() {
                 image.setImageDrawable(context?.resources?.getDrawable(R.drawable.non_active_dot))
                 val params: LinearLayout.LayoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)
                 params.setMargins(8, 8, 8, 8)
+                params.gravity = Gravity.CENTER
                 image.layoutParams = params
                 dottedIndicatorLayout?.addView(image)
                 image
             }
             imageViewDots[0].setImageDrawable(context?.resources?.getDrawable(R.drawable.active_dot))
             val params: LinearLayout.LayoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)
-            params.setMargins(6, 6, 6, 6)
+            params.setMargins(4, 4, 4, 4)
             imageViewDots[0].layoutParams = params
+            params.gravity = Gravity.CENTER
             viewPager?.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
                 override fun onPageScrollStateChanged(state: Int) {
                 }
@@ -55,10 +58,12 @@ class HintFragment : Fragment() {
                     imageViewDots.forEach {
                         it.setImageDrawable(context?.resources?.getDrawable(R.drawable.non_active_dot))
                         params.setMargins(8, 8, 8, 8)
+                        params.gravity = Gravity.CENTER
                         it.layoutParams = params
                     }
                     imageViewDots[position].setImageDrawable(context?.resources?.getDrawable(R.drawable.active_dot))
-                    params.setMargins(6, 6, 6, 6)
+                    params.setMargins(4, 4, 4, 4)
+                    params.gravity = Gravity.CENTER
                     imageViewDots[position].layoutParams = params
                 }
             })

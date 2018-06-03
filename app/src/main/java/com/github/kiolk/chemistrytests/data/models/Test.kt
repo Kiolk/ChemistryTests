@@ -30,11 +30,27 @@ class Test(var questions: MutableList<CloseQuestion> = mutableListOf(),
         }
         mSortedQuestions = questions
         checkRandomisation()
+//        checkTopics()
+        checkTags()
         checkStrength()
         checkQuestionType()
-        checkTags()
         checkOrder()
 //        filteredQuestions =mSortedQuestions.size
+    }
+
+    private fun checkTopics() {
+        val tmpQuestionList = mutableListOf<CloseQuestion>()
+        var isAdded : Boolean = false
+        mSortedQuestions.forEach{
+            val question = it
+            it.tags?.forEach {
+                if (params.tags.contains(it) && !isAdded) {
+                    tmpQuestionList.add(question)
+                    isAdded = true
+                }
+            }
+        }
+        mSortedQuestions = tmpQuestionList
     }
 
     private fun checkRandomisation() {
