@@ -90,8 +90,8 @@ class CustomTest : Fragment() {
     }
 
     private fun setapQuestionListView() {
-        mQuestionListAdapter = context?.let { SelectQuestionsArrayAdapter(it, -1, mSortedQuestions) }
-        available_questions_list_view.adapter = mQuestionListAdapter
+        mQuestionListAdapter = context?.let { SelectQuestionsArrayAdapter(it, R.layout.item_question_list, mSortedQuestions) }
+        view?.findViewById<ListView>(R.id.available_questions_list_view)?.adapter = mQuestionListAdapter
     }
 
     private fun setAvailableQuestions() {
@@ -146,7 +146,9 @@ class CustomTest : Fragment() {
 
             }
         })
-        mQuestionListAdapter?.notifyDataSetChanged()
+        setapQuestionListView()
+//        mQuestionListAdapter = context?.let { SelectQuestionsArrayAdapter(it, R.layout.item_question_list, mSortedQuestions) }
+//        mQuestionListAdapter?.notifyDataSetChanged()
     }
 
     private fun filteredByTypeQuestion() {

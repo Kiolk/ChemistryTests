@@ -13,8 +13,6 @@ import com.github.kiolk.chemistrytests.data.models.CloseQuestion
 
 class QuestionView (var contextView : Context): LinearLayout(contextView), Checkable {
 
-
-
     var view : View
     var questionTitle : TextView
     var isCheckedItem : Boolean = false
@@ -22,7 +20,7 @@ class QuestionView (var contextView : Context): LinearLayout(contextView), Check
 
     init {
         val layoutInflater : LayoutInflater = LayoutInflater.from(contextView)
-        view = layoutInflater.inflate(R.layout.item_question_list, null)
+        view = layoutInflater.inflate(R.layout.item_question_list, this, true)
         questionTitle = view.findViewById(R.id.question_title_text_view)
         itemLayout = view.findViewById(R.id.question_item_relative_layout)
     }
