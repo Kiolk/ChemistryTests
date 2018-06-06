@@ -19,10 +19,7 @@ import com.github.kiolk.chemistrytests.data.asynctasks.ResultCallback
 import com.github.kiolk.chemistrytests.data.asynctasks.SingleAsyncTask
 import com.github.kiolk.chemistrytests.data.database.DBOperations
 import com.github.kiolk.chemistrytests.data.executs.PrepareCoursesFromDb
-import com.github.kiolk.chemistrytests.data.fragments.AvaliableFragments
-import com.github.kiolk.chemistrytests.data.fragments.AvaliableTestFragment
-import com.github.kiolk.chemistrytests.data.fragments.CompletedTestsFragment
-import com.github.kiolk.chemistrytests.data.fragments.CustomTest
+import com.github.kiolk.chemistrytests.data.fragments.*
 import com.github.kiolk.chemistrytests.data.models.*
 import com.github.kiolk.chemistrytests.data.models.CloseQuestion.Question.EASY_QUESTION
 import com.github.kiolk.chemistrytests.data.models.CloseQuestion.Question.MULTIPLE_CHOICE
@@ -54,6 +51,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var mAvailableTests: AvaliableTestFragment
     lateinit var mCompletedTsts: CompletedTestsFragment
     lateinit var mCustomTest: CustomTest
+    lateinit var mCustomTestFragment : CustomTestFragment
     lateinit var mTestDataBaseReference: DatabaseReference
     lateinit var mChildEventListener: ChildEventListener
     var cnt = 0
@@ -71,6 +69,7 @@ class MainActivity : AppCompatActivity() {
         mAuthentication = FirebaseAuth.getInstance()
         mFirebaseDatabase = FirebaseDatabase.getInstance()
         mCompletedTsts = CompletedTestsFragment()
+        mCustomTestFragment = CustomTestFragment()
         setupNavigationDrawer()
 
 //        splashScreenSetup()
@@ -157,8 +156,9 @@ class MainActivity : AppCompatActivity() {
             if (main_frame_layout.visibility != View.VISIBLE) {
                 main_frame_layout.visibility = View.VISIBLE
                 start_relative_layout.visibility = View.GONE
-                showFragment(supportFragmentManager, R.id.main_frame_layout, mCustomTest)
-                mCustomTest.combineCustomTest(DBOperations().getAllQuestions())
+                showFragment(supportFragmentManager, R.id.main_frame_layout, mCustomTestFragment)
+//                showFragment(supportFragmentManager, R.id.main_frame_layout, mCustomTest)
+//                mCustomTest.combineCustomTest(DBOperations().getAllQuestions())
             }
         }
         open_courses_button.setOnClickListener {
@@ -352,7 +352,8 @@ class MainActivity : AppCompatActivity() {
                 main_frame_layout.visibility = View.GONE
                 start_relative_layout.visibility = View.VISIBLE
                 closeFragment(supportFragmentManager, mAvailableTests)
-                closeFragment(supportFragmentManager, mCustomTest)
+//                closeFragment(supportFragmentManager, mCustomTest)
+                closeFragment(supportFragmentManager, mCustomTestFragment)
                 closeFragment(supportFragmentManager, mCompletedTsts)
             }
         } else if (courses_view_pager.visibility == View.VISIBLE) {

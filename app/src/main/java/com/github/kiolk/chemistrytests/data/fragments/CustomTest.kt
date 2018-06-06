@@ -26,6 +26,7 @@ class CustomTest : Fragment() {
     lateinit var mSortedQuestionsTmp: MutableList<CloseQuestion>
     lateinit var mQuestions: MutableList<CloseQuestion>
     lateinit var mQuestionType: MutableList<Int>
+    lateinit var mListQuestionId : MutableList<Int>
     var mQuestionListAdapter: SelectQuestionsArrayAdapter? = null
     var isCheckedSingle: Boolean = false
     var isCheckedMultiple: Boolean = false
@@ -176,24 +177,28 @@ class CustomTest : Fragment() {
     }
 
     fun startTest() {
-        var listChoseenQuestions = available_questions_list_view.checkedItemPositions
-        val listQuestionsId: MutableList<Int>? = mutableListOf()
-        if (available_questions_list_view.choiceMode != ListView.CHOICE_MODE_NONE && listChoseenQuestions.size() != 0) {
-            var cnt = 0
-            mSortedQuestions.forEach {
-                if (listChoseenQuestions[cnt]) {
-                    listQuestionsId?.add(it.questionId)
-                }
-                ++cnt
-            }
-        } else {
-            listChoseenQuestions = null
-        }
+//        var listChoseenQuestions = available_questions_list_view.checkedItemPositions
+//        mListQuestionId = mutableListOf()
+//        if (available_questions_list_view.choiceMode != ListView.CHOICE_MODE_NONE && listChoseenQuestions.size() != 0) {
+//            var cnt = 0
+//            mSortedQuestions.forEach {
+//                if (listChoseenQuestions[cnt]) {
+//                    mListQuestionId.add(it.questionId)
+//                }
+//                ++cnt
+//            }
+//        } else {
+//            listChoseenQuestions = null
+//        }
         val params: TestParams = TestParams(10, RANDOM_ORDER, TRAINING_TEST, mNumberAskedQuestions
                 , true, FREE_TEST,
-                TestInfo(), mSelectedTopics, mQuestionType, null, null, listQuestionsId)
+                TestInfo(), mSelectedTopics, mQuestionType, null, null, mListQuestionId)
         val intent: Intent = Intent(context, TestingActivity::class.java)
         intent.putExtra(TEST_PARAM_INT, params)
         startActivity(intent)
+    }
+
+    fun getAvailableQuestions(): MutableList<CloseQuestion> {
+        return mSortedQuestions ?: mutableListOf()
     }
 }
