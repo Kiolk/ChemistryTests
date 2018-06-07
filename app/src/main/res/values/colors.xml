@@ -27,4 +27,7 @@
     <color name="COMPLETED_TEST_COLOR">#a3f282</color>
     <color name="ACTIVE_DOT_COLOR">#ababab</color>
     <color name="NON_ACTIVE_DOT_COLOR">#000000</color>
+    <color name="DARK_BACKGROUND">#000000</color>
+    <color name="WHITE_TEXT_COLOR">#ffffff</color>
+    <color name="WHITE_SELECTED_COLOR">#6b6b6b</color>
 </resources>

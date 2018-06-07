@@ -156,6 +156,7 @@ class MainActivity : AppCompatActivity() {
             if (main_frame_layout.visibility != View.VISIBLE) {
                 main_frame_layout.visibility = View.VISIBLE
                 start_relative_layout.visibility = View.GONE
+                mCustomTestFragment = CustomTestFragment()
                 showFragment(supportFragmentManager, R.id.main_frame_layout, mCustomTestFragment)
 //                showFragment(supportFragmentManager, R.id.main_frame_layout, mCustomTest)
 //                mCustomTest.combineCustomTest(DBOperations().getAllQuestions())

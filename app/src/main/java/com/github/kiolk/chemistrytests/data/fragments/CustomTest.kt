@@ -17,6 +17,7 @@ import com.github.kiolk.chemistrytests.data.models.CloseQuestion.Question.MULTIP
 import com.github.kiolk.chemistrytests.data.models.CloseQuestion.Question.SINGLE_CHOICE
 import com.github.kiolk.chemistrytests.ui.activities.TEST_PARAM_INT
 import com.github.kiolk.chemistrytests.ui.activities.TestingActivity
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.fragment_custome_test.*
 
 class CustomTest : Fragment() {
@@ -26,7 +27,8 @@ class CustomTest : Fragment() {
     lateinit var mSortedQuestionsTmp: MutableList<CloseQuestion>
     lateinit var mQuestions: MutableList<CloseQuestion>
     lateinit var mQuestionType: MutableList<Int>
-    lateinit var mListQuestionId : MutableList<Int>
+    var mListQuestionId: MutableList<Int>? = null
+    var mTestInfo: TestInfo = TestInfo()
     var mQuestionListAdapter: SelectQuestionsArrayAdapter? = null
     var isCheckedSingle: Boolean = false
     var isCheckedMultiple: Boolean = false
@@ -46,7 +48,7 @@ class CustomTest : Fragment() {
         mSortedQuestions = mQuestions
         mSortedQuestionsTmp = mSortedQuestions
         mQuestionType = mutableListOf()
-        setapQuestionListView()
+//        setapQuestionListView()
         view?.findViewById<CheckBox>(R.id.single_choice_check_box)?.setOnClickListener {
             isCheckedSingle = view?.findViewById<CheckBox>(R.id.single_choice_check_box)?.isChecked ?: false
             setAvailableQuestions()
@@ -90,10 +92,10 @@ class CustomTest : Fragment() {
         }
     }
 
-    private fun setapQuestionListView() {
-        mQuestionListAdapter = context?.let { SelectQuestionsArrayAdapter(it, R.layout.item_question_list, mSortedQuestions) }
-        view?.findViewById<ListView>(R.id.available_questions_list_view)?.adapter = mQuestionListAdapter
-    }
+//    private fun setapQuestionListView() {
+//        mQuestionListAdapter = context?.let { SelectQuestionsArrayAdapter(it, R.layout.item_question_list, mSortedQuestions) }
+//        view?.findViewById<ListView>(R.id.available_questions_list_view)?.adapter = mQuestionListAdapter
+//    }
 
     private fun setAvailableQuestions() {
         val tmpSortedQuestions: MutableList<CloseQuestion> = mutableListOf()
@@ -147,7 +149,7 @@ class CustomTest : Fragment() {
 
             }
         })
-        setapQuestionListView()
+//        setapQuestionListView()
 //        mQuestionListAdapter = context?.let { SelectQuestionsArrayAdapter(it, R.layout.item_question_list, mSortedQuestions) }
 //        mQuestionListAdapter?.notifyDataSetChanged()
     }
@@ -190,12 +192,40 @@ class CustomTest : Fragment() {
 //        } else {
 //            listChoseenQuestions = null
 //        }
+//        if (mListQuestionId?.size == 0) {
+//            mListQuestionId = null
+//        } else if (mListQuestionId != null) {
+////            if (mListQuestionId?.size ?: 0 > mNumberAskedQuestions) {
+////                mListQuestionId = mListQuestionId?.subList(0, mNumberAskedQuestions - 1)
+////            }
+//        }
+        updateQuestionList()
+        updateTestInformation()
         val params: TestParams = TestParams(10, RANDOM_ORDER, TRAINING_TEST, mNumberAskedQuestions
                 , true, FREE_TEST,
-                TestInfo(), mSelectedTopics, mQuestionType, null, null, mListQuestionId)
+                mTestInfo, mSelectedTopics, mQuestionType, null, null, mListQuestionId)
         val intent: Intent = Intent(context, TestingActivity::class.java)
         intent.putExtra(TEST_PARAM_INT, params)
         startActivity(intent)
+    }
+
+    private fun updateQuestionList() {
+        if (mListQuestionId?.size == 0) {
+            mListQuestionId = null
+        } else if (mListQuestionId != null) {
+            if (mListQuestionId?.size ?: 0 > mNumberAskedQuestions) {
+//                val tmp = mListQuestionId
+//                mListQuestionId = tmp?.subList(0, mNumberAskedQuestions - 1)
+            }
+//                mListQuestionId = mListQuestionId?.subList(0, mNumberAskedQuestions - 1)
+////            }
+        }
+    }
+
+    private fun updateTestInformation() {
+        mTestInfo.testCreated = System.currentTimeMillis()
+        mTestInfo.lasModifed = System.currentTimeMillis()
+        mTestInfo.testAuthor = FirebaseAuth.getInstance().currentUser?.displayName ?: "User"
     }
 
     fun getAvailableQuestions(): MutableList<CloseQuestion> {

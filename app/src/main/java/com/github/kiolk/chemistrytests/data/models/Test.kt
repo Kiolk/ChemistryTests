@@ -35,7 +35,14 @@ class Test(var questions: MutableList<CloseQuestion> = mutableListOf(),
         checkStrength()
         checkQuestionType()
         checkOrder()
+//        checkQuestionsList()
 //        filteredQuestions =mSortedQuestions.size
+    }
+
+    private fun checkQuestionsList() {
+        if(params.questionList != null && params.questionList?.size ?: 0> params.numberOfQuestions){
+
+        }
     }
 
     private fun checkTopics() {

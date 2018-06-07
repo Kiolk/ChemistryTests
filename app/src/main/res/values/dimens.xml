@@ -31,4 +31,5 @@
     <dimen name="BIG_PADDING">20dp</dimen>
     <dimen name="ACTIVE_DOT">12dp</dimen>
     <dimen name="NON_ACTIVE_DOT">8dp</dimen>
+    <dimen name="TITLE_HEIGHT">100dp</dimen>
 </resources>

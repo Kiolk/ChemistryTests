@@ -45,6 +45,10 @@
     <string name="REMOVE">Remove test</string>
     <string name="BACKGROUND">Background</string>
     <string name="ICON">Icon</string>
+    <string name="QUESTIONS">Questions</string>
+    <string name="TEST_PARAMS">Settings</string>
+    <string name="TEST_DESCRIPTION">Description</string>
+    <string name="TEST_TITLE">Test title</string>
     <string-array name="RESULT_TAB_TITLES">
         <item>Test information</item>
         <item>General result</item>
