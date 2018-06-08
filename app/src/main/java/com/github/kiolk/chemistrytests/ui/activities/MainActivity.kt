@@ -23,6 +23,7 @@ import com.github.kiolk.chemistrytests.data.fragments.*
 import com.github.kiolk.chemistrytests.data.models.*
 import com.github.kiolk.chemistrytests.data.models.CloseQuestion.Question.EASY_QUESTION
 import com.github.kiolk.chemistrytests.data.models.CloseQuestion.Question.MULTIPLE_CHOICE
+import com.github.kiolk.chemistrytests.data.models.CloseQuestion.Question.SINGLE_CHOICE
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import kiolk.com.github.pen.Pen
@@ -119,24 +120,24 @@ class MainActivity : AppCompatActivity() {
 
 //        setFormattedText(question_text_view, "X^2^^<br> drawable <br> H_2__SO_4__", "http://teacher-chem.ru/wp-content/uploads/2014/12/olimp-11.jpg")
         testing_activity_button.setOnClickListener { view: View ->
-            val question = CloseQuestion(32, "Из указанных веществ выберите кислоты.", null, MULTIPLE_CHOICE,
-                    listOf("Неорганическая химия", "Кислоты", "Химическая формула"),
+            val question = CloseQuestion(33, "Из указанных структурных формул выберите формулу толуола", null, SINGLE_CHOICE,
+                    listOf("Органическая химия"),
                     1.0F,
                     "ru",
-                    listOf(Option("H_2__SO_4__", null),
-                            Option("HNO_3__", null),
-                            Option("H_2__O", null),
-                            Option("NaOH", null),
-                            Option("Al_2__(SO_4__)_3__", null)),
-                    listOf(1, 2), EASY_QUESTION, listOf(Hint("Как правило, формула кислоты начинается с водорода HClO_4__, " +
+                    listOf(Option("drawable", "https://firebasestorage.googleapis.com/v0/b/myjson-182914.appspot.com/o/OrganicMolecules%2FAromaticCompound%2Ftoluene.png?alt=media&token=f252560c-7b58-459e-8502-7c9f93f1661e"),
+                            Option("drawable", "https://firebasestorage.googleapis.com/v0/b/myjson-182914.appspot.com/o/OrganicMolecules%2FAromaticCompound%2Fmetdimetylbenzene.png?alt=media&token=c540e99a-c266-4b96-a6ed-eaa3ef250c73"),
+                            Option("drawable", "https://firebasestorage.googleapis.com/v0/b/myjson-182914.appspot.com/o/OrganicMolecules%2FAromaticCompound%2Fethylbenzene.png?alt=media&token=21fa6ce8-3230-4731-a2e6-cc914ac34e71"),
+                            Option("drawable", "https://firebasestorage.googleapis.com/v0/b/myjson-182914.appspot.com/o/OrganicMolecules%2FAromaticCompound%2Fcumol.png?alt=media&token=21aeb0e6-8bef-44d1-ae8b-9d1ddb7c5bdf")),
+                    listOf(1), EASY_QUESTION, listOf(Hint("Как правило, формула кислоты начинается с водорода HClO_4__, " +
                     "H2S. Формула органических кислоты содержит карбоксильную функциональную группу -COOH." +
                     "<br> drawable", listOf("https://dic.academic.ru/pictures/wiki/files/76/Lipoic-acid-3D-vdW.png"))))
             val testParams: TestParams = getExampleTest()
-            val res = mFirebaseDatabase.getReference().child(DATA_COURSES_CHILD)
-            val courses = testCourses()
-            courses.forEach {
-                res.child(it.mCourseId.toString()).setValue(it)
-            }
+            val res = mFirebaseDatabase.getReference().child(QUESTIONS_CHILDS)
+//            val courses = testCourses()
+//            courses.forEach {
+//                res.child(it.mCourseId.toString()).setValue(it)
+//            }
+            res.child(question.questionId.toString()).setValue(question)
 //            val info = QuestionsDataBaseInfo(1, 3, 30)
 //            res.child(question.questionId.toString()).setValue(question)
 //            val intent = Intent(this, TestingActivity::class.java)
@@ -215,9 +216,12 @@ class MainActivity : AppCompatActivity() {
 
     private fun selectPosition(position: Int) {
         when(position){
-            0 -> Toast.makeText(baseContext, "Show first fragment", Toast.LENGTH_SHORT).show()
-            1 -> Toast.makeText(baseContext, "Show second fragment", Toast.LENGTH_SHORT).show()
-            2 -> {
+            0 -> {
+                showCustomTest()
+                Toast.makeText(baseContext, "Show first fragment", Toast.LENGTH_SHORT).show()}
+            1 -> Toast.makeText(baseContext, "Show first fragment", Toast.LENGTH_SHORT).show()
+            2 -> Toast.makeText(baseContext, "Show second fragment", Toast.LENGTH_SHORT).show()
+            3 -> {
                 Toast.makeText(baseContext, "Show third fragment", Toast.LENGTH_SHORT).show()
                 AuthUI.getInstance().signOut(baseContext)
                 val intent : Intent = Intent(baseContext, SplashActivity::class.java)
@@ -225,16 +229,26 @@ class MainActivity : AppCompatActivity() {
                 startActivity(intent)
             }
         }
+        main_drawer_layout.closeDrawer(navigation_relative_layout)
     }
 
+    private fun showCustomTest() {
+        if (main_frame_layout.visibility != View.VISIBLE) {
+            main_frame_layout.visibility = View.VISIBLE
+            start_relative_layout.visibility = View.GONE
+            mCustomTestFragment = CustomTestFragment()
+            showFragment(supportFragmentManager, R.id.main_frame_layout, mCustomTestFragment)
+        }
+    }
 
 
     private fun getMenuItems(): List<MenuItemModel> {
         val titles: Array<String> = baseContext.resources.getStringArray(R.array.NAVIGATION_MENU_ITEMS)
         val menuItems: List<MenuItemModel> = listOf(
-                MenuItemModel(R.drawable.ic_statistic, titles[0]),
-                MenuItemModel(R.drawable.ic_settings_gears, titles[1]),
-                MenuItemModel(R.drawable.ic_sign_out_option, titles[2]))
+                MenuItemModel(R.drawable.ic_check, titles[0]),
+                MenuItemModel(R.drawable.ic_statistic, titles[1]),
+                MenuItemModel(R.drawable.ic_settings_gears, titles[2]),
+                MenuItemModel(R.drawable.ic_sign_out_option, titles[3]))
         return menuItems
     }
 

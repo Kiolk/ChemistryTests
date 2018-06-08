@@ -18,7 +18,7 @@ class Test(var questions: MutableList<CloseQuestion> = mutableListOf(),
     init {
 //        allQuestions = questions
 //        mSortedQuestions2 = mutableListOf()
-        if(params.questionList != null){
+        if(params.questionList != null && params.questionList?.size != 0){
             val list = params.questionList
             val tmpList : MutableList<CloseQuestion> = mutableListOf()
             questions.forEach {

@@ -3,7 +3,11 @@ package com.github.kiolk.chemistrytests.data.fragments
 import android.os.Bundle
 import android.support.design.widget.TabLayout
 import android.support.v4.app.Fragment
+import android.support.v4.view.GravityCompat
 import android.support.v4.view.ViewPager
+import android.support.v4.widget.DrawerLayout
+import android.support.v7.widget.Toolbar
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,6 +19,8 @@ import com.github.kiolk.chemistrytests.data.adapters.CustomTestPageAdapter.Compa
 import com.github.kiolk.chemistrytests.data.database.DBOperations
 import com.github.kiolk.chemistrytests.data.models.CloseQuestion
 import com.github.kiolk.chemistrytests.data.models.TestInfo
+import com.github.kiolk.chemistrytests.ui.activities.MainActivity
+import kotlinx.android.synthetic.main.activity_main.*
 
 class CustomTestFragment : Fragment() {
 
@@ -29,7 +35,6 @@ class CustomTestFragment : Fragment() {
         customTestAdapter = fragmentManager?.let { context?.let { it1 -> CustomTestPageAdapter(it1, it) } }
         customTestAdapter?.mCustomFragment?.combineCustomTest(mQuestions)
         view?.findViewById<ViewPager>(R.id.custom_test_view_pager)?.currentItem = 1
-
         changeStateListener = object : ViewPager.OnPageChangeListener {
             override fun onPageScrollStateChanged(state: Int) {
             }
@@ -60,6 +65,17 @@ class CustomTestFragment : Fragment() {
         super.onCreate(savedInstanceState)
     }
 
+    private fun setupToolBar(view : View) {
+        val toolBar = view.findViewById<Toolbar>(R.id.custom_test_tool_bar)
+        val navigation = object : View.OnClickListener {
+            override fun onClick(v: View?) {
+                val mainActivity = activity as MainActivity
+                mainActivity.findViewById<DrawerLayout>(R.id.main_drawer_layout).openDrawer(Gravity.START)
+            }
+        }
+        toolBar?.setNavigationOnClickListener(navigation)
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_custom_test, null)
         val viewPager: ViewPager = view.findViewById(R.id.custom_test_view_pager)
@@ -69,6 +85,7 @@ class CustomTestFragment : Fragment() {
 //        viewPager.currentItem = 1
         viewPager.addOnPageChangeListener(changeStateListener)
         tabLayout.setupWithViewPager(viewPager)
+        setupToolBar(view)
 //        customTestAdapter?.mCustomFragment?.combineCustomTest(mQuestions)
         return view //super.onCreateView(inflater, container, savedInstanceState)
     }
