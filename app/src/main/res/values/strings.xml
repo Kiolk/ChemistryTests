@@ -56,6 +56,7 @@
     </string-array>
     <string-array name="NAVIGATION_MENU_ITEMS">
         <item>Tests</item>
+        <item>Courses</item>
         <item>Custom test</item>
         <item>Tests history</item>
         <item>Configuration</item>

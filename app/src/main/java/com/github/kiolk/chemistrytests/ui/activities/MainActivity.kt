@@ -22,7 +22,6 @@ import com.github.kiolk.chemistrytests.data.executs.PrepareCoursesFromDb
 import com.github.kiolk.chemistrytests.data.fragments.*
 import com.github.kiolk.chemistrytests.data.models.*
 import com.github.kiolk.chemistrytests.data.models.CloseQuestion.Question.EASY_QUESTION
-import com.github.kiolk.chemistrytests.data.models.CloseQuestion.Question.MULTIPLE_CHOICE
 import com.github.kiolk.chemistrytests.data.models.CloseQuestion.Question.SINGLE_CHOICE
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
@@ -36,7 +35,7 @@ val TEST_PARAM_INT: String = "params"
 val TESTS_CHILD: String = "tests"
 val DATA_BASE_INFO_CHAILD: String = "DBInformation"
 val DATA_BASE_USERS_CHAILD: String = "Users"
-val DATA_COURSES_CHILD : String = "Courses"
+val DATA_COURSES_CHILD: String = "Courses"
 
 class MainActivity : AppCompatActivity() {
     //
@@ -52,11 +51,11 @@ class MainActivity : AppCompatActivity() {
     lateinit var mAvailableTests: AvaliableTestFragment
     lateinit var mCompletedTsts: CompletedTestsFragment
     lateinit var mCustomTest: CustomTest
-    lateinit var mCustomTestFragment : CustomTestFragment
-    lateinit var mTestsFragment : TestsFragment
+    lateinit var mCustomTestFragment: CustomTestFragment
+    lateinit var mTestsFragment: TestsFragment
     lateinit var mTestDataBaseReference: DatabaseReference
     lateinit var mChildEventListener: ChildEventListener
-    var isTestFragmentShow : Boolean = false
+    var isTestFragmentShow: Boolean = false
     var cnt = 0
     var cnt2 = 0
 
@@ -171,9 +170,9 @@ class MainActivity : AppCompatActivity() {
             start_relative_layout.visibility = View.GONE
             courses_view_pager.visibility = View.VISIBLE
             open_courses_button.isEnabled = false
-            SingleAsyncTask().execute(PrepareCoursesFromDb(object : ResultCallback{
+            SingleAsyncTask().execute(PrepareCoursesFromDb(object : ResultCallback {
                 override fun <T> onSuccess(any: T?) {
-                    val courses : MutableList<Course> = any as MutableList<Course>
+                    val courses: MutableList<Course> = any as MutableList<Course>
                     val coursesAdapter = CoursesViewPagerAdapter(supportFragmentManager, courses)
                     courses_view_pager.adapter = coursesAdapter
                     open_courses_button.isEnabled = true
@@ -210,7 +209,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupNavigationMenu() {
         val itemArray: List<MenuItemModel> = getMenuItems()
-        val listAdapter : MenuCustomArrayAdapter = MenuCustomArrayAdapter(applicationContext, R.layout.item_navigation_menu, itemArray)
+        val listAdapter: MenuCustomArrayAdapter = MenuCustomArrayAdapter(applicationContext, R.layout.item_navigation_menu, itemArray)
         navigation_menu_list_view.adapter = listAdapter
         navigation_menu_list_view.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
             selectPosition(position)
@@ -218,17 +217,28 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun selectPosition(position: Int) {
-        when(position){
-            0 -> {showTests()}
+        if (position != 1) {
+            courses_view_pager.visibility = View.GONE
+        }
+        closeFragments()
+        when (position) {
+            0 -> {
+                showTests()
+            }
             1 -> {
+                showCourses()
+            }
+            2 -> {
                 showCustomTest()
-                Toast.makeText(baseContext, "Show first fragment", Toast.LENGTH_SHORT).show()}
-            2 -> Toast.makeText(baseContext, "Show first fragment", Toast.LENGTH_SHORT).show()
-            3 -> Toast.makeText(baseContext, "Show second fragment", Toast.LENGTH_SHORT).show()
-            4 -> {
+            }
+            3 -> {
+                showHistory()
+            }
+            4 -> Toast.makeText(baseContext, "Show second fragment", Toast.LENGTH_SHORT).show()
+            5 -> {
                 Toast.makeText(baseContext, "Show third fragment", Toast.LENGTH_SHORT).show()
                 AuthUI.getInstance().signOut(baseContext)
-                val intent : Intent = Intent(baseContext, SplashActivity::class.java)
+                val intent: Intent = Intent(baseContext, SplashActivity::class.java)
                 finish()
                 startActivity(intent)
             }
@@ -237,20 +247,20 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showCustomTest() {
-        if (main_frame_layout.visibility != View.VISIBLE) {
+//        if (main_frame_layout.visibility != View.VISIBLE) {
             main_frame_layout.visibility = View.VISIBLE
             start_relative_layout.visibility = View.GONE
             mCustomTestFragment = CustomTestFragment()
             showFragment(supportFragmentManager, R.id.main_frame_layout, mCustomTestFragment)
-        }
+//        }
     }
 
-    private fun showTests(){
-        if(!isTestFragmentShow) {
+    private fun showTests() {
+        if (!isTestFragmentShow) {
             if (main_frame_layout.visibility != View.VISIBLE) {
                 main_frame_layout.visibility = View.VISIBLE
                 start_relative_layout.visibility = View.GONE
-            }else{
+            } else {
                 closeFragments()
             }
             mTestsFragment = TestsFragment()
@@ -259,16 +269,43 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun showCourses() {
+        main_frame_layout.visibility = View.GONE
+        start_relative_layout.visibility = View.GONE
+        courses_view_pager.visibility = View.VISIBLE
+        open_courses_button.isEnabled = false
+        SingleAsyncTask().execute(PrepareCoursesFromDb(object : ResultCallback {
+            override fun <T> onSuccess(any: T?) {
+                val courses: MutableList<Course> = any as MutableList<Course>
+                val coursesAdapter = CoursesViewPagerAdapter(supportFragmentManager, courses)
+                courses_view_pager.adapter = coursesAdapter
+                open_courses_button.isEnabled = true
+            }
+
+            override fun onError() {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+        }))
+    }
+
+    private fun showHistory() {
+        main_frame_layout.visibility = View.VISIBLE
+        start_relative_layout.visibility = View.GONE
+        showFragment(supportFragmentManager, R.id.main_frame_layout, mCompletedTsts)
+        var resultTests = DBOperations().getUser(mAuthentication.currentUser?.uid)?.completedTests
+        resultTests = resultTests?.let { it1 -> reversSort(it1) }
+        resultTests?.let { it1 -> mCompletedTsts.showResults(it1) }
+    }
 
     private fun getMenuItems(): List<MenuItemModel> {
         val titles: Array<String> = baseContext.resources.getStringArray(R.array.NAVIGATION_MENU_ITEMS)
-        val menuItems: List<MenuItemModel> = listOf(
+        return listOf(
                 MenuItemModel(R.drawable.ic_checked, titles[0]),
-                MenuItemModel(R.drawable.ic_check, titles[1]),
-                MenuItemModel(R.drawable.ic_statistic, titles[2]),
-                MenuItemModel(R.drawable.ic_settings_gears, titles[3]),
-                MenuItemModel(R.drawable.ic_sign_out_option, titles[4]))
-        return menuItems
+                MenuItemModel(R.drawable.ic_dot_right_arrow, titles[1]),
+                MenuItemModel(R.drawable.ic_check, titles[2]),
+                MenuItemModel(R.drawable.ic_statistic, titles[3]),
+                MenuItemModel(R.drawable.ic_settings_gears, titles[4]),
+                MenuItemModel(R.drawable.ic_sign_out_option, titles[5]))
     }
 
     private fun splashScreenSetup() {
@@ -382,10 +419,11 @@ class MainActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         if (main_frame_layout.visibility == View.VISIBLE) {
-            if(!mCompletedTsts.closeResult()) {
+            if (!mCompletedTsts.closeResult()) {
                 main_frame_layout.visibility = View.GONE
                 start_relative_layout.visibility = View.VISIBLE
-              closeFragments()
+                closeFragments()
+                return
             }
         }
         if (courses_view_pager.visibility == View.VISIBLE) {
@@ -396,7 +434,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun closeFragments(){
+    private fun closeFragments() {
         closeFragment(supportFragmentManager, mAvailableTests)
 //                closeFragment(supportFragmentManager, mCustomTest)
         closeFragment(supportFragmentManager, mCustomTestFragment)
