@@ -22,7 +22,7 @@ import com.github.kiolk.chemistrytests.data.models.TestInfo
 import com.github.kiolk.chemistrytests.ui.activities.MainActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
-class CustomTestFragment : Fragment() {
+class CustomTestFragment : BaseFragment() {
 
     lateinit var mQuestions: MutableList<CloseQuestion>
     lateinit var changeStateListener: ViewPager.OnPageChangeListener
@@ -65,16 +65,16 @@ class CustomTestFragment : Fragment() {
         super.onCreate(savedInstanceState)
     }
 
-    private fun setupToolBar(view : View) {
-        val toolBar = view.findViewById<Toolbar>(R.id.custom_test_tool_bar)
-        val navigation = object : View.OnClickListener {
-            override fun onClick(v: View?) {
-                val mainActivity = activity as MainActivity
-                mainActivity.findViewById<DrawerLayout>(R.id.main_drawer_layout).openDrawer(Gravity.START)
-            }
-        }
-        toolBar?.setNavigationOnClickListener(navigation)
-    }
+//    private fun setupToolBar(view : View) {
+//        val toolBar = view.findViewById<Toolbar>(R.id.custom_test_tool_bar)
+//        val navigation = object : View.OnClickListener {
+//            override fun onClick(v: View?) {
+//                val mainActivity = activity as MainActivity
+//                mainActivity.findViewById<DrawerLayout>(R.id.main_drawer_layout).openDrawer(Gravity.START)
+//            }
+//        }
+//        toolBar?.setNavigationOnClickListener(navigation)
+//    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_custom_test, null)

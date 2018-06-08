@@ -53,8 +53,10 @@ class MainActivity : AppCompatActivity() {
     lateinit var mCompletedTsts: CompletedTestsFragment
     lateinit var mCustomTest: CustomTest
     lateinit var mCustomTestFragment : CustomTestFragment
+    lateinit var mTestsFragment : TestsFragment
     lateinit var mTestDataBaseReference: DatabaseReference
     lateinit var mChildEventListener: ChildEventListener
+    var isTestFragmentShow : Boolean = false
     var cnt = 0
     var cnt2 = 0
 
@@ -71,6 +73,7 @@ class MainActivity : AppCompatActivity() {
         mFirebaseDatabase = FirebaseDatabase.getInstance()
         mCompletedTsts = CompletedTestsFragment()
         mCustomTestFragment = CustomTestFragment()
+        mTestsFragment = TestsFragment()
         setupNavigationDrawer()
 
 //        splashScreenSetup()
@@ -216,12 +219,13 @@ class MainActivity : AppCompatActivity() {
 
     private fun selectPosition(position: Int) {
         when(position){
-            0 -> {
+            0 -> {showTests()}
+            1 -> {
                 showCustomTest()
                 Toast.makeText(baseContext, "Show first fragment", Toast.LENGTH_SHORT).show()}
-            1 -> Toast.makeText(baseContext, "Show first fragment", Toast.LENGTH_SHORT).show()
-            2 -> Toast.makeText(baseContext, "Show second fragment", Toast.LENGTH_SHORT).show()
-            3 -> {
+            2 -> Toast.makeText(baseContext, "Show first fragment", Toast.LENGTH_SHORT).show()
+            3 -> Toast.makeText(baseContext, "Show second fragment", Toast.LENGTH_SHORT).show()
+            4 -> {
                 Toast.makeText(baseContext, "Show third fragment", Toast.LENGTH_SHORT).show()
                 AuthUI.getInstance().signOut(baseContext)
                 val intent : Intent = Intent(baseContext, SplashActivity::class.java)
@@ -241,14 +245,29 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun showTests(){
+        if(!isTestFragmentShow) {
+            if (main_frame_layout.visibility != View.VISIBLE) {
+                main_frame_layout.visibility = View.VISIBLE
+                start_relative_layout.visibility = View.GONE
+            }else{
+                closeFragments()
+            }
+            mTestsFragment = TestsFragment()
+            showFragment(supportFragmentManager, R.id.main_frame_layout, mTestsFragment)
+            isTestFragmentShow = true
+        }
+    }
+
 
     private fun getMenuItems(): List<MenuItemModel> {
         val titles: Array<String> = baseContext.resources.getStringArray(R.array.NAVIGATION_MENU_ITEMS)
         val menuItems: List<MenuItemModel> = listOf(
-                MenuItemModel(R.drawable.ic_check, titles[0]),
-                MenuItemModel(R.drawable.ic_statistic, titles[1]),
-                MenuItemModel(R.drawable.ic_settings_gears, titles[2]),
-                MenuItemModel(R.drawable.ic_sign_out_option, titles[3]))
+                MenuItemModel(R.drawable.ic_checked, titles[0]),
+                MenuItemModel(R.drawable.ic_check, titles[1]),
+                MenuItemModel(R.drawable.ic_statistic, titles[2]),
+                MenuItemModel(R.drawable.ic_settings_gears, titles[3]),
+                MenuItemModel(R.drawable.ic_sign_out_option, titles[4]))
         return menuItems
     }
 
@@ -366,17 +385,24 @@ class MainActivity : AppCompatActivity() {
             if(!mCompletedTsts.closeResult()) {
                 main_frame_layout.visibility = View.GONE
                 start_relative_layout.visibility = View.VISIBLE
-                closeFragment(supportFragmentManager, mAvailableTests)
-//                closeFragment(supportFragmentManager, mCustomTest)
-                closeFragment(supportFragmentManager, mCustomTestFragment)
-                closeFragment(supportFragmentManager, mCompletedTsts)
+              closeFragments()
             }
-        } else if (courses_view_pager.visibility == View.VISIBLE) {
+        }
+        if (courses_view_pager.visibility == View.VISIBLE) {
             start_relative_layout.visibility = View.VISIBLE
             courses_view_pager.visibility = View.GONE
         } else {
             super.onBackPressed()
         }
+    }
+
+    private fun closeFragments(){
+        closeFragment(supportFragmentManager, mAvailableTests)
+//                closeFragment(supportFragmentManager, mCustomTest)
+        closeFragment(supportFragmentManager, mCustomTestFragment)
+        closeFragment(supportFragmentManager, mCompletedTsts)
+        closeFragment(supportFragmentManager, mTestsFragment)
+        isTestFragmentShow = false
     }
 //
 //   private  fun showFragment(container: Int, fragment: Fragment) {
