@@ -85,7 +85,7 @@ class CustomTestFragment : BaseFragment() {
 //        viewPager.currentItem = 1
         viewPager.addOnPageChangeListener(changeStateListener)
         tabLayout.setupWithViewPager(viewPager)
-        setupToolBar(view)
+        setupToolBar(view, R.id.custom_test_tool_bar)
 //        customTestAdapter?.mCustomFragment?.combineCustomTest(mQuestions)
         return view //super.onCreateView(inflater, container, savedInstanceState)
     }

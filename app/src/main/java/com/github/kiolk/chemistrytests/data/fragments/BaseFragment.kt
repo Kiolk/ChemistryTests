@@ -10,14 +10,16 @@ import com.github.kiolk.chemistrytests.ui.activities.MainActivity
 
 open class BaseFragment : Fragment(){
 
+    companion object {
+        val DRAWER_LAYOUT_ID : Int = R.id.main_drawer_layout
+    }
 
-    fun setupToolBar(view : View) {
-        val toolBar = view.findViewById<Toolbar>(R.id.custom_test_tool_bar)
-        val navigation = object : View.OnClickListener {
-            override fun onClick(v: View?) {
-                val mainActivity = activity as MainActivity
-                mainActivity.findViewById<DrawerLayout>(R.id.main_drawer_layout).openDrawer(Gravity.START)
-            }
+
+    fun setupToolBar(view : View, viewId : Int) {
+        val toolBar = view.findViewById<Toolbar>(viewId)
+        val navigation = View.OnClickListener {
+            val mainActivity = activity as MainActivity
+            mainActivity.findViewById<DrawerLayout>(DRAWER_LAYOUT_ID).openDrawer(Gravity.START)
         }
         toolBar?.setNavigationOnClickListener(navigation)
     }

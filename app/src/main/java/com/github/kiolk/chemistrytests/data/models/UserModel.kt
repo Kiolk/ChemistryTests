@@ -6,4 +6,5 @@ class User (var userId : String = "UserId",
             var userName : String = "User",
             var email : String? = null,
             var avatarUrl : String? = null,
-            var completedTests : MutableList<ResultInformation> = mutableListOf()) : Serializable
+            var completedTests : MutableList<ResultInformation> = mutableListOf(),
+            var userCustomTests : MutableList<TestParams> = mutableListOf()) : Serializable

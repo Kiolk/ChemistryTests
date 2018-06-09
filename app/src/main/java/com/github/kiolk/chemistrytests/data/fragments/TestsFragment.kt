@@ -67,6 +67,6 @@ class TestsFragment : BaseFragment(){
         viewPager?.adapter = mAdapter
         viewPager?.addOnPageChangeListener(mListener)
         view?.findViewById<TabLayout>(R.id.available_test_tab_layout)?.setupWithViewPager(viewPager)
-        setupToolBar(view)
+        setupToolBar(view,  R.id.custom_test_tool_bar)
     }
 }

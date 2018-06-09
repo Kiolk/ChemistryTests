@@ -49,6 +49,7 @@
     <string name="TEST_PARAMS">Settings</string>
     <string name="TEST_DESCRIPTION">Description</string>
     <string name="TEST_TITLE">Test title</string>
+    <string name="AVAILABLE_TESTS">Available tests</string>
     <string-array name="RESULT_TAB_TITLES">
         <item>Test information</item>
         <item>General result</item>
