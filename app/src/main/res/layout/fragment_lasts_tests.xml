@@ -3,6 +3,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <ProgressBar
+        android:layout_centerInParent="true"
+        android:id="@+id/update_tests_progress_bar"
+        android:layout_width="@dimen/PROGRESS_BAR_SIZE"
+        android:layout_height="@dimen/PROGRESS_BAR_SIZE"
+        android:visibility="visible"
+        android:indeterminate="true"/>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/lasts_tests_recycler_view"
         android:layout_width="match_parent"

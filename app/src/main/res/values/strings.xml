@@ -55,6 +55,12 @@
         <item>General result</item>
         <item>Statistic</item>
     </string-array>
+    <string-array name="TEST_TITLES">
+        <item>Last</item>
+        <item>Custom</item>
+        <item>Updated</item>
+        <item>Favorite</item>
+    </string-array>
     <string-array name="NAVIGATION_MENU_ITEMS">
         <item>Tests</item>
         <item>Courses</item>

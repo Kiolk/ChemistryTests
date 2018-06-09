@@ -11,7 +11,7 @@ interface OnItemClickListener{
     fun onLongClick(view: View, position: Int)
 }
 
-class RecyclerTouchListener(var context : Context?, var recycler : RecyclerView, var onItemClickListener: OnItemClickListener) : RecyclerView.OnItemTouchListener{
+ class RecyclerTouchListener(var context : Context?, var recycler : RecyclerView, var onItemClickListener: OnItemClickListener) : RecyclerView.OnItemTouchListener{
         var detector : GestureDetector
     init {
         detector = object : GestureDetector(context, object : GestureDetector.SimpleOnGestureListener() {

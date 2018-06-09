@@ -10,7 +10,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import com.github.kiolk.chemistrytests.R
+import com.github.kiolk.chemistrytests.data.TestsPresenter
 import com.github.kiolk.chemistrytests.data.adapters.SelectQuestionsArrayAdapter
+import com.github.kiolk.chemistrytests.data.asynctasks.ResultCallback
+import com.github.kiolk.chemistrytests.data.asynctasks.SingleAsyncTask
+import com.github.kiolk.chemistrytests.data.executs.AddCustomTestInUserDB
 import com.github.kiolk.chemistrytests.data.models.*
 import com.github.kiolk.chemistrytests.data.models.CloseQuestion.Question.INPUT_CHOICE
 import com.github.kiolk.chemistrytests.data.models.CloseQuestion.Question.MULTIPLE_CHOICE
@@ -205,6 +209,9 @@ class CustomTest : Fragment() {
                 , true, FREE_TEST,
                 mTestInfo, mSelectedTopics, mQuestionType, null, null, mListQuestionId)
         val intent: Intent = Intent(context, TestingActivity::class.java)
+        if(true){
+            TestsPresenter.saveCustomTest(params)
+        }
         intent.putExtra(TEST_PARAM_INT, params)
         startActivity(intent)
     }

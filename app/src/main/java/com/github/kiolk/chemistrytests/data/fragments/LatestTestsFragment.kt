@@ -10,8 +10,11 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import com.github.kiolk.chemistrytests.R
+import com.github.kiolk.chemistrytests.data.TestsPresenter
 import com.github.kiolk.chemistrytests.data.adapters.AvailableTestRecyclerAdapter
+import com.github.kiolk.chemistrytests.data.asynctasks.ResultCallback
 import com.github.kiolk.chemistrytests.data.database.DBOperations
 import com.github.kiolk.chemistrytests.data.listeners.OnItemClickListener
 import com.github.kiolk.chemistrytests.data.listeners.RecyclerTouchListener
@@ -41,13 +44,13 @@ class LatestTestsFragment : Fragment() {
     }
 
     fun addLastsTests(view : View) {
-        mTests = DBOperations().getAllTestsParams()
-        mTests = reversSort(mTests)
+//        mTests = DBOperations().getAllTestsParams()
+//        mTests = reversSort(mTests)
         mRecyclerAdapter = context?.let { AvailableTestRecyclerAdapter(it, mTests) }
-        val recycler = view?.findViewById<RecyclerView>(R.id.lasts_tests_recycler_view)
+        val recycler = view.findViewById<RecyclerView>(R.id.lasts_tests_recycler_view)
         recycler?.layoutManager =LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         recycler?.adapter = mRecyclerAdapter
-        recycler?.isNestedScrollingEnabled = true
+        recycler.isNestedScrollingEnabled = true
         recycler?.addOnItemTouchListener(RecyclerTouchListener(context, recycler, object : OnItemClickListener {
             override fun onClick(view: View, position: Int) {
                 val intent = Intent(context, TestingActivity::class.java)
@@ -61,5 +64,17 @@ class LatestTestsFragment : Fragment() {
 
             }
         }))
+
+        TestsPresenter.setAvailableTests(object :ResultCallback{
+            override fun <T> onSuccess(any: T?) {
+               val tests = any as MutableList<TestParams>
+                tests.forEach { mTests.add(it) }
+                recycler?.adapter?.notifyDataSetChanged()
+                view.findViewById<ProgressBar>(R.id.update_tests_progress_bar).visibility = View.GONE
+            }
+
+            override fun onError() {
+            }
+        })
     }
 }

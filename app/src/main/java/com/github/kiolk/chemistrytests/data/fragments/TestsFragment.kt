@@ -9,36 +9,19 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.ViewParent
 import com.github.kiolk.chemistrytests.R
+import com.github.kiolk.chemistrytests.data.TestsPresenter
 import com.github.kiolk.chemistrytests.data.adapters.TestsPageAdapter
 import com.github.kiolk.chemistrytests.data.database.DBOperations
+import com.github.kiolk.chemistrytests.data.models.TestFragmentModel
 import com.github.kiolk.chemistrytests.data.models.TestParams
 
 class TestsFragment : BaseFragment(){
 
-    lateinit var mListener : ViewPager.OnPageChangeListener
+//    lateinit var mListener : ViewPager.OnPageChangeListener
      var mAdapter : TestsPageAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        val params = DBOperations().getAllTestsParams()
-//        params.sortBy { it.testInfo.lasModifed }
-//        val list = listOf<MutableList<TestParams>>(params)
-//        mListener = object  : ViewPager.OnPageChangeListener{
-//            override fun onPageScrollStateChanged(state: Int) {
-//            }
-//
-//            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
-//            }
-//
-//            override fun onPageSelected(position: Int) {
-//                mAdapter?.mLastsTestFragment?.addLastsTests(list[0])
-//            }
-//        }
-//        mAdapter = context?.let { fragmentManager?.let { it1 -> TestsPageAdapter(it, list, it1) } }
-//        val viewPager = view?.findViewById<ViewPager>(R.id.available_test_view_pager)
-//        viewPager?.adapter = mAdapter
-//        viewPager?.addOnPageChangeListener(mListener)
-//        view?.findViewById<TabLayout>(R.id.available_test_tab_layout)?.setupWithViewPager(viewPager)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -48,25 +31,28 @@ class TestsFragment : BaseFragment(){
     }
 
     private fun setupViewPager(view: View) {
-        val params = DBOperations().getAllTestsParams()
-        params.sortBy { it.testInfo.lasModifed }
-        val list = listOf<MutableList<TestParams>>(params)
-        mListener = object  : ViewPager.OnPageChangeListener{
-            override fun onPageScrollStateChanged(state: Int) {
-            }
-
-            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
-            }
-
-            override fun onPageSelected(position: Int) {
-//                mAdapter?.mLastsTestFragment?.addLastsTests(list[0])
-            }
-        }
-        mAdapter = context?.let { fragmentManager?.let { it1 -> TestsPageAdapter(it, list, it1) } }
-        val viewPager = view?.findViewById<ViewPager>(R.id.available_test_view_pager)
+//        val params = DBOperations().getAllTestsParams()
+//        params.sortBy { it.testInfo.lasModifed }
+//        val lastsTestFragments = LatestTestsFragment()
+//        val customUserTestsFragment = CustomUserTestsFragment()
+//        val list = listOf(TestFragmentModel("Lasts", lastsTestFragments),
+//                TestFragmentModel("Custom", customUserTestsFragment))
+//        mListener = object  : ViewPager.OnPageChangeListener{
+//            override fun onPageScrollStateChanged(state: Int) {
+//            }
+//
+//            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+//            }
+//
+//            override fun onPageSelected(position: Int) {
+////                mAdapter?.mLastsTestFragment?.addLastsTests(list[0])
+//            }
+//        }
+        mAdapter = context?.let { fragmentManager?.let { it1 -> TestsPageAdapter(it, TestsPresenter.getAvailableTestsFragments(it), it1) } }
+        val viewPager = view.findViewById<ViewPager>(R.id.available_test_view_pager)
         viewPager?.adapter = mAdapter
-        viewPager?.addOnPageChangeListener(mListener)
-        view?.findViewById<TabLayout>(R.id.available_test_tab_layout)?.setupWithViewPager(viewPager)
+//        viewPager?.addOnPageChangeListener(mListener)
+        view.findViewById<TabLayout>(R.id.available_test_tab_layout)?.setupWithViewPager(viewPager)
         setupToolBar(view,  R.id.custom_test_tool_bar)
     }
 }
