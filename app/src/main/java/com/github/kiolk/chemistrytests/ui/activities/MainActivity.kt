@@ -74,53 +74,6 @@ class MainActivity : AppCompatActivity() {
         mCustomTestFragment = CustomTestFragment()
         mTestsFragment = TestsFragment()
         setupNavigationDrawer()
-
-//        splashScreenSetup()
-//        upload_data_progress_bar.visibility = View.GONE
-//        splash_frame_layout.visibility = View.GONE
-//        mAuthenticationListener = object : FirebaseAuth.AuthStateListener {
-//            override fun onAuthStateChanged(p0: FirebaseAuth) {
-//                val firebaseUser: FirebaseUser? = p0.currentUser
-//                if (firebaseUser != null) {
-//                    Toast.makeText(baseContext,
-//                            resources.getString(R.string.SUCCES_LOGGIN),
-//                            Toast.LENGTH_LONG)
-//                            .show()
-//                } else {
-//                    startActivityForResult(AuthUI.getInstance().
-//                            createSignInIntentBuilder().
-//                            setIsSmartLockEnabled(false).
-//                            setAvailableProviders(mProviders).
-//                            build(), RC_SIGN_IN)
-//
-//                }
-//            }
-//        }
-
-
-//        text2.text = Html.fromHtml("H<sub>2</sub>SO<sup>4</sup> + Al = Al<sub>2</sub>(SO<sub>4</sub>)<sub>3</sub> + H<sub>2</sub>")
-//        val sbb = SpannableStringBuilder("Hello")
-//        val drawwable : Drawable = resources.getDrawable(R.drawable.sun)
-//        val lineHeight = text2.lineHeight.times(3)
-//        drawwable.setBounds(0, 0, lineHeight, lineHeight)
-//        sbb.setSpan(ImageSpan(drawwable), 2, 3, Spannable.SPAN_INCLUSIVE_INCLUSIVE)
-//        sbb.append("World!")
-//        text2.setText(sbb, TextView.BufferType.SPANNABLE)
-//        Pen.getInstance().getImageFromUrl("https://i.stack.imgur.com/qoQ46.png").getBitmapDirect(object : GetBitmapCallback{
-//            override fun getBitmap(pBitmapFromLoader: Bitmap?){
-//                val drawable = BitmapDrawable(resources, pBitmapFromLoader)
-//                val lineHeight = text2.lineHeight.times(5)
-//                drawable.setBounds(0, 0, lineHeight, lineHeight)
-//                sbb.setSpan(ImageSpan(drawable, ALIGN_BASELINE), 2, 3, Spannable.SPAN_INCLUSIVE_INCLUSIVE)
-//                sbb.append("World!")
-//                sbb.append(Html.fromHtml("H<sub>2</sub>SO<sup>4</sup> + Al = Al<sub>2</sub>(SO<sub>4</sub>)<sub>3</sub> + H<sub>2</sub>"))
-//
-//                text2.setText(sbb, TextView.BufferType.SPANNABLE)
-////                return pBitmapFromLoader ?: drawable.bitmap
-//            }
-//        })
-
-//        setFormattedText(question_text_view, "X^2^^<br> drawable <br> H_2__SO_4__", "http://teacher-chem.ru/wp-content/uploads/2014/12/olimp-11.jpg")
         testing_activity_button.setOnClickListener { view: View ->
             val question = CloseQuestion(33, "Из указанных структурных формул выберите формулу толуола", null, SINGLE_CHOICE,
                     listOf("Органическая химия"),
@@ -235,7 +188,7 @@ class MainActivity : AppCompatActivity() {
                 showHistory()
             }
             4 -> Toast.makeText(baseContext, "Show second fragment", Toast.LENGTH_SHORT).show()
-            5 -> {
+            7 -> {
                 Toast.makeText(baseContext, "Show third fragment", Toast.LENGTH_SHORT).show()
                 AuthUI.getInstance().signOut(baseContext)
                 val intent: Intent = Intent(baseContext, SplashActivity::class.java)
@@ -305,7 +258,9 @@ class MainActivity : AppCompatActivity() {
                 MenuItemModel(R.drawable.ic_check, titles[2]),
                 MenuItemModel(R.drawable.ic_statistic, titles[3]),
                 MenuItemModel(R.drawable.ic_settings_gears, titles[4]),
-                MenuItemModel(R.drawable.ic_sign_out_option, titles[5]))
+                MenuItemModel(R.drawable.ic_settings_gears, titles[5]),
+                MenuItemModel(R.drawable.ic_settings_gears, titles[6]),
+                MenuItemModel(R.drawable.ic_sign_out_option, titles[7]))
     }
 
     private fun splashScreenSetup() {

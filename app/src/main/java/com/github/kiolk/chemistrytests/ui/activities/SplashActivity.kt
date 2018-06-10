@@ -11,10 +11,13 @@ import android.widget.Toast
 import checkConnection
 import com.firebase.ui.auth.AuthUI
 import com.github.kiolk.chemistrytests.R
+import com.github.kiolk.chemistrytests.data.adapters.FeaturesPageAdapter
 import com.github.kiolk.chemistrytests.data.asynctasks.ResultCallback
 import com.github.kiolk.chemistrytests.data.asynctasks.SingleAsyncTask
 import com.github.kiolk.chemistrytests.data.executs.UpdateResultInFirebase
 import com.github.kiolk.chemistrytests.data.executs.UploadDataInDb
+import com.github.kiolk.chemistrytests.data.fragments.FeatureFragment
+import com.github.kiolk.chemistrytests.data.models.TestFragmentModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import kotlinx.android.synthetic.main.activity_splash.*
@@ -32,6 +35,7 @@ class SplashActivity : AppCompatActivity() {
     lateinit var mAuthentication: FirebaseAuth
     lateinit var mAuthenticationListener: FirebaseAuth.AuthStateListener
     var isSetupAuth: Boolean = false
+    var isUserStartLogin : Boolean = false
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -84,18 +88,40 @@ class SplashActivity : AppCompatActivity() {
                             resources.getString(R.string.SUCCES_LOGGIN),
                             Toast.LENGTH_LONG)
                             .show()
-                    updateUserInformation()
-                    startLoad()
+                    if(!isUserStartLogin) {
+                        updateUserInformation()
+                        startLoad()
+                    }
                 } else {
-                    startActivityForResult(AuthUI.getInstance().
-                            createSignInIntentBuilder().
-                            setIsSmartLockEnabled(false).
-                            setAvailableProviders(PROVIDERS).
-                            build(), RC_SIGN_IN)
+                    showMainFeaturesPager()
+                    isUserStartLogin = true
                 }
             }
         }
         mAuthentication.addAuthStateListener(mAuthenticationListener)
+    }
+
+    private fun showMainFeaturesPager(){
+        main_features_view_pager.visibility = View.VISIBLE
+        val adapter = FeaturesPageAdapter(supportFragmentManager, getMainFeatures() )
+        main_features_view_pager.adapter = adapter
+    }
+
+    private fun closeMainFeaturesPager(){
+        main_features_view_pager.visibility = View.GONE
+    }
+
+    private fun getMainFeatures(): MutableList<TestFragmentModel> {
+        return mutableListOf(TestFragmentModel("Simple", FeatureFragment()),
+                TestFragmentModel("Second", FeatureFragment()))
+    }
+
+    fun startAuthenticationPage(){
+        startActivityForResult(AuthUI.getInstance().
+                createSignInIntentBuilder().
+                setIsSmartLockEnabled(false).
+                setAvailableProviders(PROVIDERS).
+                build(), RC_SIGN_IN)
     }
 
     override fun onResume() {
@@ -125,6 +151,7 @@ class SplashActivity : AppCompatActivity() {
     }
 
     private fun startLoad() {
+        closeMainFeaturesPager()
         mAuthentication.removeAuthStateListener(mAuthenticationListener)
         logo_splash_image_view.visibility = View.VISIBLE
         my_progress_bar_image_view.visibility = View.GONE
