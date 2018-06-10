@@ -68,7 +68,9 @@ class LatestTestsFragment : Fragment() {
         TestsPresenter.setAvailableTests(object :ResultCallback{
             override fun <T> onSuccess(any: T?) {
                val tests = any as MutableList<TestParams>
-                tests.forEach { mTests.add(it) }
+                mTests.removeAll{true}
+                tests.forEach {  mTests.add(it)
+                 }
                 recycler?.adapter?.notifyDataSetChanged()
                 view.findViewById<ProgressBar>(R.id.update_tests_progress_bar).visibility = View.GONE
             }

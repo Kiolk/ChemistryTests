@@ -15,12 +15,16 @@ class TestsPageAdapter(var context: Context, var listFragments : List<TestFragme
     companion object {
         val LASTS_TEST : Int = 0
         val CUSTOM_TESTS : Int = 1
+        val UPDATED_TESTS : Int = 2
+        val FAVORITE_TESTS : Int = 3
     }
 
     override fun getItem(position: Int): Fragment {
         return when (position){
             LASTS_TEST -> listFragments[position].fragment
             CUSTOM_TESTS -> listFragments[position].fragment
+            UPDATED_TESTS -> listFragments[position].fragment
+            FAVORITE_TESTS -> listFragments[position].fragment
             else -> {
                 LatestTestsFragment()
             }
