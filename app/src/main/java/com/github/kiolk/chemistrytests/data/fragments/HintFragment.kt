@@ -1,5 +1,6 @@
 package com.github.kiolk.chemistrytests.data.fragments
 
+import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.view.ViewPager
@@ -30,44 +31,87 @@ class HintFragment : Fragment() {
             viewPager?.adapter = adapter
             val dottedIndicatorLayout: LinearLayout? = view?.findViewById(R.id.dot_indicator_linear_layout)
             val dotCount: Int = adapter?.count ?: 0
-            val imageViewDots: List<ImageView> = List<ImageView>(dotCount) {
-                val image: ImageView = ImageView(context)
-                image.setImageDrawable(context?.resources?.getDrawable(R.drawable.non_active_dot))
-                val params: LinearLayout.LayoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)
-                params.setMargins(8, 8, 8, 8)
-                params.gravity = Gravity.CENTER
-                image.layoutParams = params
-                dottedIndicatorLayout?.addView(image)
-                image
-            }
-            imageViewDots[0].setImageDrawable(context?.resources?.getDrawable(R.drawable.active_dot))
-            val params: LinearLayout.LayoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)
-            params.setMargins(4, 4, 4, 4)
-            imageViewDots[0].layoutParams = params
-            params.gravity = Gravity.CENTER
-            viewPager?.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
-                override fun onPageScrollStateChanged(state: Int) {
-                }
-
-                override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
-
-                }
-
-                override fun onPageSelected(position: Int) {
-                    val params: LinearLayout.LayoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)
-                    imageViewDots.forEach {
-                        it.setImageDrawable(context?.resources?.getDrawable(R.drawable.non_active_dot))
-                        params.setMargins(8, 8, 8, 8)
-                        params.gravity = Gravity.CENTER
-                        it.layoutParams = params
-                    }
-                    imageViewDots[position].setImageDrawable(context?.resources?.getDrawable(R.drawable.active_dot))
-                    params.setMargins(4, 4, 4, 4)
-                    params.gravity = Gravity.CENTER
-                    imageViewDots[position].layoutParams = params
-                }
-            })
+            attachRoundIndicators(context, dottedIndicatorLayout, viewPager, dotCount)
+//            val imageViewDots: List<ImageView> = List<ImageView>(dotCount) {
+//                val image: ImageView = ImageView(context)
+//                image.setImageDrawable(context?.resources?.getDrawable(R.drawable.non_active_dot))
+//                val params: LinearLayout.LayoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+//                params.setMargins(8, 8, 8, 8)
+//                params.gravity = Gravity.CENTER
+//                image.layoutParams = params
+//                dottedIndicatorLayout?.addView(image)
+//                image
+//            }
+//            imageViewDots[0].setImageDrawable(context?.resources?.getDrawable(R.drawable.active_dot))
+//            val params: LinearLayout.LayoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+//            params.setMargins(4, 4, 4, 4)
+//            imageViewDots[0].layoutParams = params
+//            params.gravity = Gravity.CENTER
+//            viewPager?.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+//                override fun onPageScrollStateChanged(state: Int) {
+//                }
+//
+//                override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+//
+//                }
+//
+//                override fun onPageSelected(position: Int) {
+//                    val params: LinearLayout.LayoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+//                    imageViewDots.forEach {
+//                        it.setImageDrawable(context?.resources?.getDrawable(R.drawable.non_active_dot))
+//                        params.setMargins(8, 8, 8, 8)
+//                        params.gravity = Gravity.CENTER
+//                        it.layoutParams = params
+//                    }
+//                    imageViewDots[position].setImageDrawable(context?.resources?.getDrawable(R.drawable.active_dot))
+//                    params.setMargins(4, 4, 4, 4)
+//                    params.gravity = Gravity.CENTER
+//                    imageViewDots[position].layoutParams = params
+//                }
+//            })
 
         }
     }
+
+
+}
+
+    fun attachRoundIndicators(context : Context?, dottedIndicatorLayout: LinearLayout?, viewPager: ViewPager?, dotCount: Int) {
+        val imageViewDots: List<ImageView> = List<ImageView>(dotCount) {
+            val image: ImageView = ImageView(context)
+            image.setImageDrawable(context?.resources?.getDrawable(R.drawable.non_active_dot))
+            val params: LinearLayout.LayoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+            params.setMargins(8, 8, 8, 8)
+            params.gravity = Gravity.CENTER
+            image.layoutParams = params
+            dottedIndicatorLayout?.addView(image)
+            image
+        }
+        imageViewDots[0].setImageDrawable(context?.resources?.getDrawable(R.drawable.active_dot))
+        val params: LinearLayout.LayoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+        params.setMargins(4, 4, 4, 4)
+        imageViewDots[0].layoutParams = params
+        params.gravity = Gravity.CENTER
+        viewPager?.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+            override fun onPageScrollStateChanged(state: Int) {
+            }
+
+            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+
+            }
+
+            override fun onPageSelected(position: Int) {
+                val params: LinearLayout.LayoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+                imageViewDots.forEach {
+                    it.setImageDrawable(context?.resources?.getDrawable(R.drawable.non_active_dot))
+                    params.setMargins(8, 8, 8, 8)
+                    params.gravity = Gravity.CENTER
+                    it.layoutParams = params
+                }
+                imageViewDots[position].setImageDrawable(context?.resources?.getDrawable(R.drawable.active_dot))
+                params.setMargins(4, 4, 4, 4)
+                params.gravity = Gravity.CENTER
+                imageViewDots[position].layoutParams = params
+            }
+        })
 }

@@ -34,6 +34,17 @@
 
     </android.support.v4.view.ViewPager>
 
+    <LinearLayout
+        android:id="@+id/dot_indicator_linear_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true"
+        android:layout_centerInParent="true"
+        android:visibility="gone"
+        android:layout_marginBottom="100dp">
+    </LinearLayout>
+
     <ProgressBar
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

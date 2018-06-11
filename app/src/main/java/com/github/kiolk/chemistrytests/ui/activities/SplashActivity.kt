@@ -17,6 +17,7 @@ import com.github.kiolk.chemistrytests.data.asynctasks.SingleAsyncTask
 import com.github.kiolk.chemistrytests.data.executs.UpdateResultInFirebase
 import com.github.kiolk.chemistrytests.data.executs.UploadDataInDb
 import com.github.kiolk.chemistrytests.data.fragments.FeatureFragment
+import com.github.kiolk.chemistrytests.data.fragments.attachRoundIndicators
 import com.github.kiolk.chemistrytests.data.models.TestFragmentModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -103,17 +104,38 @@ class SplashActivity : AppCompatActivity() {
 
     private fun showMainFeaturesPager(){
         main_features_view_pager.visibility = View.VISIBLE
-        val adapter = FeaturesPageAdapter(supportFragmentManager, getMainFeatures() )
+        dot_indicator_linear_layout.visibility = View.VISIBLE
+        val mainFeatures = getMainFeatures()
+        val adapter = FeaturesPageAdapter(supportFragmentManager, mainFeatures )
         main_features_view_pager.adapter = adapter
+        val dotCounter = mainFeatures.size
+        attachRoundIndicators(baseContext, dot_indicator_linear_layout, main_features_view_pager, dotCounter )
+        mHandler = Handler()
+        var currentItem = 0
+        mRunnable = Runnable {
+            currentItem = main_features_view_pager.currentItem
+            if(currentItem < dotCounter - 1 ){
+                ++currentItem
+            }else {
+                currentItem = 0
+            }
+            main_features_view_pager.currentItem = currentItem
+            mHandler.postDelayed(mRunnable, 5000)
+        }
+        mHandler.postDelayed(mRunnable, 5000)
     }
 
     private fun closeMainFeaturesPager(){
         main_features_view_pager.visibility = View.GONE
+        dot_indicator_linear_layout.visibility = View.GONE
+        mHandler.removeCallbacks(mRunnable)
     }
 
     private fun getMainFeatures(): MutableList<TestFragmentModel> {
-        return mutableListOf(TestFragmentModel("Simple", FeatureFragment()),
-                TestFragmentModel("Second", FeatureFragment()))
+        return mutableListOf(TestFragmentModel("First", FeatureFragment()),
+                TestFragmentModel("Second", FeatureFragment()),
+                TestFragmentModel("Third", FeatureFragment()),
+                TestFragmentModel("Fourth", FeatureFragment()))
     }
 
     fun startAuthenticationPage(){
