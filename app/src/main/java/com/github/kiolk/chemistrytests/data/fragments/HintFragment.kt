@@ -13,8 +13,10 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import com.github.kiolk.chemistrytests.R
 import com.github.kiolk.chemistrytests.data.adapters.HintDottedPagerAdapter
+import com.github.kiolk.chemistrytests.data.adapters.InfinityPagerAdapter
 import com.github.kiolk.chemistrytests.data.models.Hint
 import com.github.kiolk.chemistrytests.data.models.setFormattedText
+import com.github.kiolk.chemistrytests.ui.activities.UserTouchListener
 
 class HintFragment : Fragment() {
 
@@ -76,7 +78,7 @@ class HintFragment : Fragment() {
 
 }
 
-    fun attachRoundIndicators(context : Context?, dottedIndicatorLayout: LinearLayout?, viewPager: ViewPager?, dotCount: Int) {
+    fun attachRoundIndicators(context : Context?, dottedIndicatorLayout: LinearLayout?, viewPager: ViewPager?, dotCount: Int, listener : UserTouchListener? = null) {
         val imageViewDots: List<ImageView> = List<ImageView>(dotCount) {
             val image: ImageView = ImageView(context)
             image.setImageDrawable(context?.resources?.getDrawable(R.drawable.non_active_dot))
@@ -97,10 +99,15 @@ class HintFragment : Fragment() {
             }
 
             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
-
             }
 
             override fun onPageSelected(position: Int) {
+                var realPosition = position
+                if(viewPager.adapter is InfinityPagerAdapter){
+                    val infAdapter = viewPager.adapter as InfinityPagerAdapter
+//                    realPosition = position % infAdapter.realCount()
+                    realPosition = viewPager.currentItem
+                }
                 val params: LinearLayout.LayoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)
                 imageViewDots.forEach {
                     it.setImageDrawable(context?.resources?.getDrawable(R.drawable.non_active_dot))
@@ -108,10 +115,11 @@ class HintFragment : Fragment() {
                     params.gravity = Gravity.CENTER
                     it.layoutParams = params
                 }
-                imageViewDots[position].setImageDrawable(context?.resources?.getDrawable(R.drawable.active_dot))
+                listener?.userTouch(realPosition)
+                imageViewDots[realPosition].setImageDrawable(context?.resources?.getDrawable(R.drawable.active_dot))
                 params.setMargins(4, 4, 4, 4)
                 params.gravity = Gravity.CENTER
-                imageViewDots[position].layoutParams = params
+                imageViewDots[realPosition].layoutParams = params
             }
         })
 }

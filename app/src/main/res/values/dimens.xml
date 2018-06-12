@@ -33,4 +33,5 @@
     <dimen name="NON_ACTIVE_DOT">8dp</dimen>
     <dimen name="TITLE_HEIGHT">100dp</dimen>
     <dimen name="PROGRESS_BAR_SIZE">20dp</dimen>
+    <dimen name="LOGIN_BUTTON_WIDTH">200dp</dimen>
 </resources>

@@ -12,23 +12,37 @@ import checkConnection
 import com.firebase.ui.auth.AuthUI
 import com.github.kiolk.chemistrytests.R
 import com.github.kiolk.chemistrytests.data.adapters.FeaturesPageAdapter
+import com.github.kiolk.chemistrytests.data.adapters.InfinityPagerAdapter
 import com.github.kiolk.chemistrytests.data.asynctasks.ResultCallback
 import com.github.kiolk.chemistrytests.data.asynctasks.SingleAsyncTask
 import com.github.kiolk.chemistrytests.data.executs.UpdateResultInFirebase
 import com.github.kiolk.chemistrytests.data.executs.UploadDataInDb
 import com.github.kiolk.chemistrytests.data.fragments.FeatureFragment
+import com.github.kiolk.chemistrytests.data.fragments.FeatureFragment.Companion.IDE_SLIDE
+import com.github.kiolk.chemistrytests.data.fragments.FeatureFragment.Companion.ROCKET_SLIDE
+import com.github.kiolk.chemistrytests.data.fragments.FeatureFragment.Companion.STUDENT_SLIDE
+import com.github.kiolk.chemistrytests.data.fragments.FeatureFragment.Companion.TARGET_SLIDE
 import com.github.kiolk.chemistrytests.data.fragments.attachRoundIndicators
 import com.github.kiolk.chemistrytests.data.models.TestFragmentModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import kotlinx.android.synthetic.main.activity_splash.*
+import java.util.*
 
 val SPEED_ROTATION: Long = 1000
 val SPLASH_DURATION: Long = 2000
 val PROVIDERS = listOf<AuthUI.IdpConfig>(AuthUI.IdpConfig.Builder(AuthUI.EMAIL_PROVIDER).build(), AuthUI.IdpConfig.Builder(AuthUI.GOOGLE_PROVIDER).build())
 val RC_SIGN_IN: Int = 1
 
+interface UserTouchListener{
+    fun userTouch(int : Int)
+}
+
 class SplashActivity : AppCompatActivity() {
+
+    companion object {
+        val DURATION_SHOW_ONE_FEATURE : Long = 5000
+    }
 
     lateinit var mHandler: Handler
     lateinit var mRunnable: Runnable
@@ -107,22 +121,65 @@ class SplashActivity : AppCompatActivity() {
         dot_indicator_linear_layout.visibility = View.VISIBLE
         val mainFeatures = getMainFeatures()
         val adapter = FeaturesPageAdapter(supportFragmentManager, mainFeatures )
-        main_features_view_pager.adapter = adapter
+        val infinityPagerAdapter = InfinityPagerAdapter(adapter)
+        main_features_view_pager.adapter = infinityPagerAdapter
         val dotCounter = mainFeatures.size
-        attachRoundIndicators(baseContext, dot_indicator_linear_layout, main_features_view_pager, dotCounter )
+        login_button.visibility = View.VISIBLE
+        login_button.setOnClickListener{
+            startAuthenticationPage()
+        }
+//        setupFeatureTimer(dotCounter)
+
+        val touchListener = object : UserTouchListener{
+            override fun userTouch(int: Int) {
+                changeButtonColor(int)
+            }
+        }
+        attachRoundIndicators(baseContext, dot_indicator_linear_layout, main_features_view_pager, dotCounter, touchListener)
+        val randomNumber = Random().nextInt(dotCounter)
+        main_features_view_pager.currentItem = randomNumber
+        changeButtonColor(randomNumber)
+//
+// mHandler = Handler()
+//        var currentItem = 0
+//        mRunnable = Runnable {
+//            currentItem = main_features_view_pager.currentItem
+//            if(currentItem < dotCounter - 1 ){
+//                ++currentItem
+//            }else {
+//                currentItem = 0
+//            }
+//            main_features_view_pager.setCurrentItem(currentItem)
+//            mHandler.postDelayed(mRunnable, DURATION_SHOW_ONE_FEATURE)
+//        }
+//        mHandler.postDelayed(mRunnable, DURATION_SHOW_ONE_FEATURE)
+    }
+
+    private fun changeButtonColor(int : Int){
+        when(int){
+            STUDENT_SLIDE -> login_button.setTextColor(resources.getColor(R.color.STUDENT_COLOR))
+            ROCKET_SLIDE -> login_button.setTextColor(resources.getColor(R.color.ROCKET_COLOR))
+            IDE_SLIDE -> login_button.setTextColor(resources.getColor(R.color.IDEA_COLOR))
+            TARGET_SLIDE -> login_button.setTextColor(resources.getColor(R.color.TARGET_COLOR))
+        }
+    }
+
+    private fun setupFeatureTimer(dotCounter: Int) {
         mHandler = Handler()
         var currentItem = 0
         mRunnable = Runnable {
             currentItem = main_features_view_pager.currentItem
             if(currentItem < dotCounter - 1 ){
                 ++currentItem
-            }else {
-                currentItem = 0
+                main_features_view_pager.setCurrentItem(currentItem)
+                mHandler.postDelayed(mRunnable, DURATION_SHOW_ONE_FEATURE)
+            } else {
+                currentItem = 1
+                main_features_view_pager.setCurrentItem(currentItem)
+                mHandler.postDelayed(mRunnable, DURATION_SHOW_ONE_FEATURE)
             }
-            main_features_view_pager.currentItem = currentItem
-            mHandler.postDelayed(mRunnable, 5000)
         }
-        mHandler.postDelayed(mRunnable, 5000)
+        mHandler.postDelayed(mRunnable, DURATION_SHOW_ONE_FEATURE)
     }
 
     private fun closeMainFeaturesPager(){
@@ -154,6 +211,7 @@ class SplashActivity : AppCompatActivity() {
 //        }
 //        mAuthentication.addAuthStateListener(mAuthenticationListener)
 //        setupTimer()
+//        mHandler.postDelayed(mRunnable, DURATION_SHOW_ONE_FEATURE)
     }
 
     override fun onPostResume() {
@@ -162,6 +220,7 @@ class SplashActivity : AppCompatActivity() {
 
     override fun onPause() {
         super.onPause()
+//        mHandler.removeCallbacks(mRunnable)
 //        mAuthentication.removeAuthStateListener(mAuthenticationListener)
 
     }

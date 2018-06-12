@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
 import com.github.kiolk.chemistrytests.R
 import com.github.kiolk.chemistrytests.data.fragments.bases.FeatureBaseFragment
@@ -28,7 +29,7 @@ class FeatureFragment : FeatureBaseFragment(){
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_feature, null)
-        attachLoginButton(view.findViewById(R.id.login_feature_fragment_button))
+        attachLoginButton(view.findViewById<Button>(R.id.login_feature_fragment_button))
         val drawable = when(mPosition){
             STUDENT_SLIDE -> context?.resources?.getDrawable(R.drawable.student)
             ROCKET_SLIDE -> context?.resources?.getDrawable(R.drawable.rocket)
