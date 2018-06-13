@@ -22,6 +22,7 @@ import com.github.kiolk.chemistrytests.data.asynctasks.ResultCallback
 import com.github.kiolk.chemistrytests.data.asynctasks.SingleAsyncTask
 import com.github.kiolk.chemistrytests.data.database.DBOperations
 import com.github.kiolk.chemistrytests.data.executs.UpdateResultInDb
+import com.github.kiolk.chemistrytests.data.fragments.ChemTheoryFragment
 import com.github.kiolk.chemistrytests.data.fragments.HintFragment
 import com.github.kiolk.chemistrytests.data.fragments.dialogs.LeaveTestDialog
 import com.github.kiolk.chemistrytests.data.fragments.ResultFragment
@@ -45,6 +46,7 @@ class TestingActivity : AppCompatActivity() {
     lateinit var listener: CheckResultListener
     var mResultFragment = ResultFragment()
     var mHintFragment = HintFragment()
+    var mTheoryFragment = ChemTheoryFragment()
     lateinit var mResult: Result
     lateinit var adapter: TestingPagerAdapter
     //    lateinit var mFirebaseDatabase: FirebaseDatabase
@@ -132,6 +134,7 @@ class TestingActivity : AppCompatActivity() {
                         bottom_bar_linear_layout.visibility = View.VISIBLE
                         SlideAnimationUtil.slideInToTop(baseContext, bottom_bar_linear_layout, null, VERY_FASTER)
                         checkHintPresent()
+                        checkTheoryPresent()
                     }
                     isShowBottomBar = true
                 }
@@ -361,6 +364,7 @@ class TestingActivity : AppCompatActivity() {
                     return
                 }
                 checkHintPresent()
+                checkTheoryPresent()
                 if (end_test_fab.visibility == View.VISIBLE && !isTestEnd && mResult.test.mSortedQuestions.size != mResult.askedQuestions.size) {
 //                    end_test_fab.visibility = View.GONE
                     animOut(end_test_fab)
@@ -474,6 +478,33 @@ class TestingActivity : AppCompatActivity() {
         } else {
             hint_button_image_view.background = resources.getDrawable(R.drawable.ic_help)
             setupHintListener()
+        }
+    }
+
+    private fun checkTheoryPresent() {
+        val position = testing_view_pager.currentItem
+        val theoryListId: List<Long>? = mResult.test.mSortedQuestions[position].theoryListId
+        if (theoryListId == null) {
+            theory_button_image_view.background = resources.getDrawable(R.drawable.ic_benzolring)
+            theory_button_image_view.setOnClickListener(null)
+        } else {
+            theory_button_image_view.background = resources.getDrawable(R.drawable.ic_benzolring2)
+            setupTheory()
+        }
+    }
+
+    private fun setupTheory() {
+        theory_button_image_view.setOnClickListener {
+            val position = testing_view_pager.currentItem
+            val theoryListId: List<Long>? = mResult.test.mSortedQuestions[position].theoryListId
+            if (theoryListId != null) {
+                result_frame_layout.setPadding(0, 0, 0,0)
+                if (result_frame_layout.visibility != View.VISIBLE) {
+                    result_frame_layout.visibility = View.VISIBLE
+                    showFragment(R.id.result_frame_layout, mTheoryFragment)
+                    mTheoryFragment.setTheory(theoryListId)
+                }
+            }
         }
     }
 

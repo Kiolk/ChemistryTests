@@ -52,6 +52,7 @@
     <string name="AVAILABLE_TESTS">Available tests</string>
     <string name="NOT_HAVE_UPDATED_TESTS">Not have tests</string>
     <string name="LOGIN">Log in</string>
+    <string name="THEORY">Theory</string>
     <string-array name="RESULT_TAB_TITLES">
         <item>Test information</item>
         <item>General result</item>

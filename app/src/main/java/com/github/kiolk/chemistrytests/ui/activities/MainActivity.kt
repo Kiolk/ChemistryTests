@@ -36,6 +36,7 @@ val TESTS_CHILD: String = "tests"
 val DATA_BASE_INFO_CHAILD: String = "DBInformation"
 val DATA_BASE_USERS_CHAILD: String = "Users"
 val DATA_COURSES_CHILD: String = "Courses"
+val DATA_THEORY_CHILD : String = "Theory"
 
 class MainActivity : AppCompatActivity() {
     //
@@ -87,12 +88,15 @@ class MainActivity : AppCompatActivity() {
                     "H2S. Формула органических кислоты содержит карбоксильную функциональную группу -COOH." +
                     "<br> drawable", listOf("https://dic.academic.ru/pictures/wiki/files/76/Lipoic-acid-3D-vdW.png"))))
             val testParams: TestParams = getExampleTest()
-            val res = mFirebaseDatabase.getReference().child(QUESTIONS_CHILDS)
+//            val res = mFirebaseDatabase.getReference().child(QUESTIONS_CHILDS)
+            val theory = ChemTheoryModel(1, "Valency", mutableListOf(Hint("Definition", listOf("http")), Hint("Element with constant valency", listOf("hhhtp"))))
+            val res = mFirebaseDatabase.getReference().child(DATA_THEORY_CHILD)
+            res.child(theory.theoryId.toString()).setValue(theory)
 //            val courses = testCourses()
 //            courses.forEach {
 //                res.child(it.mCourseId.toString()).setValue(it)
 //            }
-            res.child(question.questionId.toString()).setValue(question)
+//            res.child(question.questionId.toString()).setValue(question)
 //            val info = QuestionsDataBaseInfo(1, 3, 30)
 //            res.child(question.questionId.toString()).setValue(question)
 //            val intent = Intent(this, TestingActivity::class.java)

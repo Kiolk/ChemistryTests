@@ -35,4 +35,5 @@
     <color name="ROCKET_COLOR">#cccccc</color>
     <color name="IDEA_COLOR">#75b13a</color>
     <color name="TARGET_COLOR">#e9afdd</color>
+    <color name="THEORY_TITLE_COLOR">#1b35f9</color>
 </resources>

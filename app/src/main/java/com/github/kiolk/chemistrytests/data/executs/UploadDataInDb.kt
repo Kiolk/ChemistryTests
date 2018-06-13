@@ -5,14 +5,8 @@ import com.github.kiolk.chemistrytests.data.asynctasks.ResultCallback
 import com.github.kiolk.chemistrytests.data.asynctasks.ResultObject
 import com.github.kiolk.chemistrytests.data.asynctasks.SingleExecut
 import com.github.kiolk.chemistrytests.data.database.DBOperations
-import com.github.kiolk.chemistrytests.data.models.CloseQuestion
-import com.github.kiolk.chemistrytests.data.models.Course
-import com.github.kiolk.chemistrytests.data.models.QuestionsDataBaseInfo
-import com.github.kiolk.chemistrytests.data.models.TestParams
-import com.github.kiolk.chemistrytests.ui.activities.DATA_BASE_INFO_CHAILD
-import com.github.kiolk.chemistrytests.ui.activities.DATA_COURSES_CHILD
-import com.github.kiolk.chemistrytests.ui.activities.QUESTIONS_CHILDS
-import com.github.kiolk.chemistrytests.ui.activities.TESTS_CHILD
+import com.github.kiolk.chemistrytests.data.models.*
+import com.github.kiolk.chemistrytests.ui.activities.*
 import com.google.firebase.database.*
 
 class UploadDataInDb(override var callback: ResultCallback) : SingleExecut {
@@ -22,16 +16,20 @@ class UploadDataInDb(override var callback: ResultCallback) : SingleExecut {
     lateinit var mChaildEventListener: ChildEventListener
     lateinit var mTestDataBaseReference: DatabaseReference
     lateinit var mCoursesDataBaseReference: DatabaseReference
+    lateinit var mTheoryDataBaseReference: DatabaseReference
     lateinit var mChildEventListener: ChildEventListener
     lateinit var mChidInforListener: ChildEventListener
     lateinit var mChidCoursesListener: ChildEventListener
+    lateinit var mChildTheoryListener: ChildEventListener
     lateinit var mInfoDatabaseReference: DatabaseReference
     var uploadTests: Boolean = false
     var uploadQuestions: Boolean = false
     var isUpdateCources : Boolean = false
+    var isTheoryUpload : Boolean = true
     var cnt = 0
     var cnt2 = 0
     var cnt3 = 0
+    var cntTheory = 0
     var dbInfo: QuestionsDataBaseInfo? = null
 
     override fun perform(): ResultObject<*> {
@@ -81,7 +79,7 @@ class UploadDataInDb(override var callback: ResultCallback) : SingleExecut {
             }
 
             override fun onChildAdded(p0: DataSnapshot?, p1: String?) {
-                val question = p0?.getValue(CloseQuestion::class.java)
+                val question : CloseQuestion? = p0?.getValue(CloseQuestion::class.java)
                 question?.let { DBOperations().insertQuestion(it) }
                 cnt = cnt + 1
                 Log.d("MyLogs", question?.questionId?.toString())
@@ -130,6 +128,37 @@ class UploadDataInDb(override var callback: ResultCallback) : SingleExecut {
         updateCourses()
     }
 
+    private fun updateTheory(){
+        mTheoryDataBaseReference = mFirebaseDatabase.reference.child(DATA_THEORY_CHILD)
+        mChildTheoryListener = object : ChildEventListener{
+            override fun onCancelled(p0: DatabaseError?) {
+            }
+
+            override fun onChildMoved(p0: DataSnapshot?, p1: String?) {
+            }
+
+            override fun onChildChanged(p0: DataSnapshot?, p1: String?) {
+            }
+
+            override fun onChildAdded(p0: DataSnapshot?, p1: String?) {
+                val theory : ChemTheoryModel? = p0?.getValue(ChemTheoryModel::class.java)
+                if(theory != null){
+                    cntTheory = cntTheory +1
+                    DBOperations().insertTheory(theory)
+                    if(cntTheory == dbInfo?.availableTheory){
+                        isTheoryUpload = true
+                        mTheoryDataBaseReference.removeEventListener(mChildTheoryListener)
+                        setOnSuccess()
+                    }
+                }
+            }
+
+            override fun onChildRemoved(p0: DataSnapshot?) {
+            }
+        }
+        mTheoryDataBaseReference.addChildEventListener(mChildTheoryListener)
+    }
+
     private fun updateCourses() {
         mCoursesDataBaseReference = mFirebaseDatabase.reference.child(DATA_COURSES_CHILD)
         mChidCoursesListener = object : ChildEventListener {
@@ -162,7 +191,7 @@ class UploadDataInDb(override var callback: ResultCallback) : SingleExecut {
     }
 
     private fun setOnSuccess(){
-        if(uploadTests && uploadQuestions && isUpdateCources){
+        if(uploadTests && uploadQuestions && (isUpdateCources && isTheoryUpload)){
 //            callback.onSuccess("Success")
             perform()
         }

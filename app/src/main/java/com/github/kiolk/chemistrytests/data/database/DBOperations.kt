@@ -2,6 +2,8 @@ package com.github.kiolk.chemistrytests.data.database
 
 import android.content.ContentValues
 import android.database.Cursor
+import com.github.kiolk.chemistrytests.data.database.ChemTheoryDBModel.ChemTheoryDB.CHEM_THEORY_ID
+import com.github.kiolk.chemistrytests.data.database.ChemTheoryDBModel.ChemTheoryDB.CHEM_THEORY_JSON
 import com.github.kiolk.chemistrytests.data.database.CourseDbModel.CourseDB.COURSE_ID
 import com.github.kiolk.chemistrytests.data.database.CourseDbModel.CourseDB.COURSE_JSON
 import com.github.kiolk.chemistrytests.data.database.QuestionDBModel.QuestionDB.QUESTION_ID
@@ -187,8 +189,6 @@ class DBOperations {
         return findedUser
     }
 
-    ////////////
-
     fun getAllCources(): MutableList<Course> {
         return helper.readableDatabase.query(CourseDbModel.CourseDB.TABLE_NAME,
                 null,
@@ -232,6 +232,54 @@ class DBOperations {
         return ContentValues().apply {
             put(COURSE_ID, course.mCourseId)
             put(COURSE_JSON, Gson().toJson(course))
+        }
+    }
+
+    //////
+
+    fun getAllTheory(): MutableList<ChemTheoryModel> {
+        return helper.readableDatabase.query(ChemTheoryDBModel.ChemTheoryDB.TABLE_NAME,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null).use { cursor -> this.allTheoryFromCursor(cursor) }
+    }
+
+    private fun allTheoryFromCursor(cursor: Cursor): MutableList<ChemTheoryModel> {
+        val list = mutableListOf<ChemTheoryModel>()
+        while (cursor.moveToNext()) {
+            list.add(theoryFromCursor(cursor))
+        }
+        cursor.close()
+        return list
+    }
+
+    private fun theoryFromCursor(cursor: Cursor): ChemTheoryModel {
+        val json = cursor.getString(cursor.getColumnIndex(ChemTheoryDBModel.ChemTheoryDB.CHEM_THEORY_JSON))
+        val ob: ChemTheoryModel = Gson().fromJson(json, ChemTheoryModel::class.java)
+        return ob
+    }
+
+    fun insertTheory(theory: ChemTheoryModel) {
+        val contentValue = fromTheory(theory)
+        val readableDatabase = helper.readableDatabase
+        try {
+            readableDatabase.beginTransaction()
+            val res = readableDatabase.replace(ChemTheoryDBModel.ChemTheoryDB.TABLE_NAME, null, contentValue)
+            readableDatabase.setTransactionSuccessful()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        } finally {
+            readableDatabase.endTransaction()
+        }
+    }
+
+    private fun fromTheory(theory: ChemTheoryModel): ContentValues {
+        return ContentValues().apply {
+            put(CHEM_THEORY_ID, theory.theoryId)
+            put(CHEM_THEORY_JSON, Gson().toJson(theory))
         }
     }
 }

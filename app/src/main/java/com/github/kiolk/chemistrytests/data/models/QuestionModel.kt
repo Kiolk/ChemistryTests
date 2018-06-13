@@ -34,7 +34,8 @@ class CloseQuestion(var questionId: Int = 1,
                     var correctOptions : List<Int> = mutableListOf(),
                     var questionStrength : Int = Question.EASY_QUESTION,
                     var hints : List<Hint>? = null,
-                    var answerExplanations : List<Hint>? = null) : Serializable {
+                    var answerExplanations : List<Hint>? = null,
+                    var theoryListId : List<Long>? = mutableListOf()) : Serializable {
 
      var correctAnswers : List<Option>
 
