@@ -23,6 +23,7 @@ import com.github.kiolk.chemistrytests.data.asynctasks.SingleAsyncTask
 import com.github.kiolk.chemistrytests.data.database.DBOperations
 import com.github.kiolk.chemistrytests.data.executs.UpdateResultInDb
 import com.github.kiolk.chemistrytests.data.fragments.ChemTheoryFragment
+import com.github.kiolk.chemistrytests.data.fragments.ChemTheoryFragment.Companion.THEORY_FRAGMENT_TAG
 import com.github.kiolk.chemistrytests.data.fragments.HintFragment
 import com.github.kiolk.chemistrytests.data.fragments.dialogs.LeaveTestDialog
 import com.github.kiolk.chemistrytests.data.fragments.ResultFragment
@@ -61,6 +62,7 @@ class TestingActivity : AppCompatActivity() {
     var isTestEnd: Boolean = false
     var isTestForeground: Boolean = false
     var isTimeEnd: Boolean = false
+    var isTheoryShow : Boolean = false
     var mQuestions: MutableList<CloseQuestion> = mutableListOf()
     var mTimer: Timer? = null
 
@@ -143,19 +145,26 @@ class TestingActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
+        if (photo_web_view.visibility == View.VISIBLE) {
+            photo_web_view.visibility = View.GONE
+            //TODO find solution for jumping of pictures
+            return
+        }
         if (result_frame_layout.visibility == View.VISIBLE) {
+            val theoryFragment = supportFragmentManager.findFragmentByTag(THEORY_FRAGMENT_TAG)
+            if(theoryFragment != null && isTheoryShow){
+                closeFragment(theoryFragment)
+                isTheoryShow = false
+                return
+            }
             closeFragment(mResultFragment)
             closeFragment(mHintFragment)
+            closeFragment(mTheoryFragment)
             result_frame_layout.visibility = View.GONE
             return
         }
         if (test_info_frame_layout.visibility == View.VISIBLE) {
             closeTestInfo()
-            return
-        }
-        if (photo_web_view.visibility == View.VISIBLE) {
-            photo_web_view.visibility = View.GONE
-            //TODO find solution for jumping of pictures
             return
         }
         if (!isTestEnd) {
@@ -574,9 +583,14 @@ class TestingActivity : AppCompatActivity() {
         }))
     }
 
-    fun showFragment(container: Int, fragment: Fragment) {
+    fun showFragment(container: Int, fragment: Fragment, fragmentTag : String? = null) {
         val transaction = supportFragmentManager.beginTransaction()
-        transaction.add(container, fragment)
+        if(fragmentTag != null){
+            transaction.add(container, fragment, fragmentTag)
+            transaction.addToBackStack(fragmentTag)
+        }else{
+            transaction.add(container, fragment)
+        }
         transaction.commit()
         supportFragmentManager.executePendingTransactions()
     }

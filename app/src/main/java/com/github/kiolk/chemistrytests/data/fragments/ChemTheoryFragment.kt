@@ -15,8 +15,13 @@ import com.github.kiolk.chemistrytests.data.executs.GetTheoryFromDB
 import com.github.kiolk.chemistrytests.data.listeners.OnItemClickListener
 import com.github.kiolk.chemistrytests.data.listeners.RecyclerTouchListener
 import com.github.kiolk.chemistrytests.data.models.ChemTheoryModel
+import com.github.kiolk.chemistrytests.ui.activities.TestingActivity
 
 class ChemTheoryFragment : Fragment() {
+
+    companion object {
+        val THEORY_FRAGMENT_TAG : String = "ChemTheoryTag"
+    }
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -36,6 +41,10 @@ class ChemTheoryFragment : Fragment() {
                     val itemTouchListener = recycler?.let { it1 ->
                         RecyclerTouchListener(it, it1, object : OnItemClickListener {
                             override fun onClick(view: View, position: Int) {
+                                val testingActivity = activity as TestingActivity
+                                testingActivity.showFragment(R.id.result_frame_layout, testingActivity.mHintFragment, THEORY_FRAGMENT_TAG )
+                                testingActivity.mHintFragment.showHint(list[position].chemTheoryList)
+                                testingActivity.isTheoryShow = true
                             }
 
                             override fun onLongClick(view: View, position: Int) {

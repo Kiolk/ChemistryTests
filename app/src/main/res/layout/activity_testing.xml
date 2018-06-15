@@ -102,14 +102,6 @@
             app:layout_anchorGravity="bottom|right|end" />
     </android.support.design.widget.CoordinatorLayout>
 
-    <WebView
-        android:id="@+id/photo_web_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_centerInParent="true"
-        android:background="#88000000"
-        android:visibility="gone" />
-
     <LinearLayout
         android:id="@+id/bottom_bar_linear_layout"
         android:layout_width="match_parent"
@@ -202,5 +194,14 @@
         android:id="@+id/result_frame_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:visibility="gone" />
+
+    <WebView
+        android:id="@+id/photo_web_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:background="#88000000"
+        android:elevation="13dp"
         android:visibility="gone" />
 </RelativeLayout>
