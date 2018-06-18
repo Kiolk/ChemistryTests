@@ -10,8 +10,8 @@ class GetTheoryFromDB (val listTheoryId : List<Long>, override var callback: Res
     override fun perform(): ResultObject<*> {
         val listChemTheory : MutableList<ChemTheoryModel> = DBOperations().getAllTheory()
         val tmp : MutableList<ChemTheoryModel> = mutableListOf()
-        listChemTheory.forEach {
-            val id = it.theoryId
+        listTheoryId.forEach {
+            val id : Long = it
             val theory = listChemTheory.find { it.theoryId == id }
             if(theory != null){
                 tmp.add(theory)

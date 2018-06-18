@@ -269,7 +269,7 @@ class DBOperations {
             readableDatabase.beginTransaction()
             val res = readableDatabase.replace(ChemTheoryDBModel.ChemTheoryDB.TABLE_NAME, null, contentValue)
             readableDatabase.setTransactionSuccessful()
-        } catch (e: Exception) {
+        } catch (e : Exception) {
             e.printStackTrace()
         } finally {
             readableDatabase.endTransaction()

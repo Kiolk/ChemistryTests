@@ -76,27 +76,25 @@ class MainActivity : AppCompatActivity() {
         mTestsFragment = TestsFragment()
         setupNavigationDrawer()
         testing_activity_button.setOnClickListener { view: View ->
-            val question = CloseQuestion(33, "Из указанных структурных формул выберите формулу толуола", null, SINGLE_CHOICE,
-                    listOf("Органическая химия"),
+            val question = CloseQuestion(34, "Из предложенных вариантов, выберите символ химического элемента", null, SINGLE_CHOICE,
+                    listOf("Общая химия", "Химическая формула"),
                     1.0F,
                     "ru",
-                    listOf(Option("drawable", "https://firebasestorage.googleapis.com/v0/b/myjson-182914.appspot.com/o/OrganicMolecules%2FAromaticCompound%2Ftoluene.png?alt=media&token=f252560c-7b58-459e-8502-7c9f93f1661e"),
-                            Option("drawable", "https://firebasestorage.googleapis.com/v0/b/myjson-182914.appspot.com/o/OrganicMolecules%2FAromaticCompound%2Fmetdimetylbenzene.png?alt=media&token=c540e99a-c266-4b96-a6ed-eaa3ef250c73"),
-                            Option("drawable", "https://firebasestorage.googleapis.com/v0/b/myjson-182914.appspot.com/o/OrganicMolecules%2FAromaticCompound%2Fethylbenzene.png?alt=media&token=21fa6ce8-3230-4731-a2e6-cc914ac34e71"),
-                            Option("drawable", "https://firebasestorage.googleapis.com/v0/b/myjson-182914.appspot.com/o/OrganicMolecules%2FAromaticCompound%2Fcumol.png?alt=media&token=21aeb0e6-8bef-44d1-ae8b-9d1ddb7c5bdf")),
-                    listOf(1), EASY_QUESTION, listOf(Hint("Как правило, формула кислоты начинается с водорода HClO_4__, " +
-                    "H2S. Формула органических кислоты содержит карбоксильную функциональную группу -COOH." +
-                    "<br> drawable", listOf("https://dic.academic.ru/pictures/wiki/files/76/Lipoic-acid-3D-vdW.png"))))
+                    listOf(Option("N__2_", null),
+                            Option("C--60_", null),
+                            Option("He", null),
+                            Option("S__8_", null)),
+                    listOf(1), EASY_QUESTION, null, null, listOf(3), listOf("ЦТ2015", "ЧастьА"))
             val testParams: TestParams = getExampleTest()
-//            val res = mFirebaseDatabase.getReference().child(QUESTIONS_CHILDS)
-            val theory = ChemTheoryModel(1, "Valency", mutableListOf(Hint("Definition", listOf("http")), Hint("Element with constant valency", listOf("hhhtp"))))
-            val res = mFirebaseDatabase.getReference().child(DATA_THEORY_CHILD)
-            res.child(theory.theoryId.toString()).setValue(theory)
+            val res = mFirebaseDatabase.getReference().child(QUESTIONS_CHILDS)
+//            val theory = ChemTheoryModel(1, "Valency", mutableListOf(Hint("Definition", listOf("http")), Hint("Element with constant valency", listOf("hhhtp"))))
+//            val res = mFirebaseDatabase.getReference().child(DATA_THEORY_CHILD)
+//            res.child(theory.theoryId.toString()).setValue(theory)
 //            val courses = testCourses()
 //            courses.forEach {
 //                res.child(it.mCourseId.toString()).setValue(it)
 //            }
-//            res.child(question.questionId.toString()).setValue(question)
+            res.child(question.questionId.toString()).setValue(question)
 //            val info = QuestionsDataBaseInfo(1, 3, 30)
 //            res.child(question.questionId.toString()).setValue(question)
 //            val intent = Intent(this, TestingActivity::class.java)

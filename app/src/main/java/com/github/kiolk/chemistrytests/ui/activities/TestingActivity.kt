@@ -493,7 +493,7 @@ class TestingActivity : AppCompatActivity() {
     private fun checkTheoryPresent() {
         val position = testing_view_pager.currentItem
         val theoryListId: List<Long>? = mResult.test.mSortedQuestions[position].theoryListId
-        if (theoryListId == null) {
+        if (theoryListId == null || theoryListId.isEmpty()) {
             theory_button_image_view.background = resources.getDrawable(R.drawable.ic_benzolring)
             theory_button_image_view.setOnClickListener(null)
         } else {
@@ -506,7 +506,7 @@ class TestingActivity : AppCompatActivity() {
         theory_button_image_view.setOnClickListener {
             val position = testing_view_pager.currentItem
             val theoryListId: List<Long>? = mResult.test.mSortedQuestions[position].theoryListId
-            if (theoryListId != null) {
+            if (theoryListId != null && theoryListId.isNotEmpty()) {
                 result_frame_layout.setPadding(0, 0, 0,0)
                 if (result_frame_layout.visibility != View.VISIBLE) {
                     result_frame_layout.visibility = View.VISIBLE

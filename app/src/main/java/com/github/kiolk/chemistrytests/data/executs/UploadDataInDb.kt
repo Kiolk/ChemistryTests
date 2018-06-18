@@ -25,7 +25,7 @@ class UploadDataInDb(override var callback: ResultCallback) : SingleExecut {
     var uploadTests: Boolean = false
     var uploadQuestions: Boolean = false
     var isUpdateCources : Boolean = false
-    var isTheoryUpload : Boolean = true
+    var isTheoryUpload : Boolean = false
     var cnt = 0
     var cnt2 = 0
     var cnt3 = 0
@@ -126,6 +126,7 @@ class UploadDataInDb(override var callback: ResultCallback) : SingleExecut {
         mTestDataBaseReference.addChildEventListener(mChildEventListener)
 
         updateCourses()
+        updateTheory()
     }
 
     private fun updateTheory(){

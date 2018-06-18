@@ -81,7 +81,7 @@ class Result(var test: Test = Test(), var endListener: OnEndTestListener? = null
         mResultInfo.resultScore = getTestResult()
         mResultInfo.percentCorrect = (mResultInfo.correctAnswered!! / mResultInfo.totalQuestions!!)*100F
         val percent : Float = mResultInfo.percentCorrect ?: 0F
-        mResultInfo.isCompleted = percent >= test.params.minPercentForComplet
+        mResultInfo.isCompleted = percent >= test.params.minPercentForComplete
         mResultInfo.resultScore = getTestResult()
         mResultInfo.testMark = getTestMark()
         mResultInfo.testParams = test.params

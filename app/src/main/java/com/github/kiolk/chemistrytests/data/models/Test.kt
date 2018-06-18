@@ -1,54 +1,45 @@
 package com.github.kiolk.chemistrytests.data.models
 
-import android.graphics.Path
 import java.io.Serializable
 
 
 class Test(var questions: MutableList<CloseQuestion> = mutableListOf(),
-           var params: TestParams = TestParams()) : Serializable{
+           var params: TestParams = TestParams()) : Serializable {
 
-    //    var questionNumber = -1
     var resultingScore = 0F
-    //    var allQuestions: List<CloseQuestion>
     var mSortedQuestions: List<CloseQuestion>
-//    var mSortedQuestions2: List<CloseQuestion>
-//    var filteredQuestions : Int
 
 
     init {
-//        allQuestions = questions
-//        mSortedQuestions2 = mutableListOf()
-        if(params.questionList != null && params.questionList?.size != 0){
+        if (params.questionList != null && params.questionList?.size != 0) {
             val list = params.questionList
-            val tmpList : MutableList<CloseQuestion> = mutableListOf()
+            val tmpList: MutableList<CloseQuestion> = mutableListOf()
             questions.forEach {
-                if(list?.contains(it.questionId) == true){
-                tmpList.add(it)
-            }
+                if (list?.contains(it.questionId) == true) {
+                    tmpList.add(it)
+                }
             }
             questions = tmpList
         }
         mSortedQuestions = questions
         checkRandomisation()
-//        checkTopics()
         checkTags()
+        checkByListString(params.keyWords, false)
         checkStrength()
         checkQuestionType()
         checkOrder()
-//        checkQuestionsList()
-//        filteredQuestions =mSortedQuestions.size
     }
 
     private fun checkQuestionsList() {
-        if(params.questionList != null && params.questionList?.size ?: 0> params.numberOfQuestions){
+        if (params.questionList != null && params.questionList?.size ?: 0 > params.numberOfQuestions) {
 
         }
     }
 
     private fun checkTopics() {
         val tmpQuestionList = mutableListOf<CloseQuestion>()
-        var isAdded : Boolean = false
-        mSortedQuestions.forEach{
+        var isAdded: Boolean = false
+        mSortedQuestions.forEach {
             val question = it
             it.tags?.forEach {
                 if (params.tags.contains(it) && !isAdded) {
@@ -68,11 +59,19 @@ class Test(var questions: MutableList<CloseQuestion> = mutableListOf(),
         }
     }
 
-    private fun checkStrength(){
+    private fun checkStrength() {
         val tmpQuestionList = mutableListOf<CloseQuestion>()
-         mSortedQuestions.forEach{
-            if(it.questionStrength <= params.questionsStrength){
-                tmpQuestionList.add(it)
+        if (params.strengthInRange) {
+            mSortedQuestions.forEach {
+                if (it.questionStrength <= params.questionsStrength) {
+                    tmpQuestionList.add(it)
+                }
+            }
+        } else {
+            mSortedQuestions.forEach {
+                if (it.questionStrength == params.questionsStrength) {
+                    tmpQuestionList.add(it)
+                }
             }
         }
         mSortedQuestions = tmpQuestionList
@@ -103,11 +102,29 @@ class Test(var questions: MutableList<CloseQuestion> = mutableListOf(),
                         tmpQuestionList.add(it)
                     }
                 }
-//                tmpQuestionList.addAll(mSortedQuestions.filter { it.tags?.contains(tag) == true })
-//                tmpQuestionList.toList()
             }
             mSortedQuestions = tmpQuestionList
-//            mSortedQuestions2 = tmpQuestionList
+        }
+    }
+
+    private fun checkByListString(list: List<String>?, isTags: Boolean) {
+        if (list != null) {
+            val tmpQuestionList = mutableListOf<CloseQuestion>()
+            list.forEach {
+                val item = it
+                var filtered = listOf<CloseQuestion>()
+                if (isTags) {
+                    filtered = mSortedQuestions.filter { it.tags?.contains(item) == true }
+                } else {
+                    filtered = mSortedQuestions.filter { it.keyWords?.contains(item) == true }
+                }
+                filtered.forEach {
+                    if (!tmpQuestionList.contains(it)) {
+                        tmpQuestionList.add(it)
+                    }
+                }
+            }
+            mSortedQuestions = tmpQuestionList
         }
     }
 
@@ -123,29 +140,4 @@ class Test(var questions: MutableList<CloseQuestion> = mutableListOf(),
     }
 
     fun getQuestion(questionNumber: Int) = mSortedQuestions[questionNumber]
-
-//    fun getNext(): Question {
-//        if (!isStartTest) {
-//            isStartTest = true
-//            questionNumber = -1
-//        }
-//        questionNumber++
-//        val question = questions[questionNumber]
-//        return question
-//    }
-//
-//    fun checkAnswer(answer: Option): Boolean {
-//        if (questions[questionNumber].checkAnswer(answer)) {
-//            resultingScore = resultingScore.plus(questions[questionNumber].questionCost)
-//            return true
-//        }
-//        return false
-//    }
-//
-//    fun getCorrectAnswer(): Option {
-//        return questions[questionNumber].getAnswer()
-//    }
-
-
-//    fun hasNext(): Boolean = questionNumber < questions.size - 1
 }

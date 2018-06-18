@@ -15,11 +15,12 @@ import com.github.kiolk.chemistrytests.data.models.User
 import com.github.kiolk.chemistrytests.ui.activities.TEST_PARAM_INT
 import com.github.kiolk.chemistrytests.ui.activities.TestingActivity
 import com.google.firebase.auth.FirebaseAuth
+import reversSort
 
 class CustomUserTestsFragment : RecyclerTestBaseFragment(){
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_custom_user_tests, null)
-        val tests = getCurrentUser()?.userCustomTests
+        val tests = getCurrentUser()?.userCustomTests?.let { reversSort(it) }
         val adapter = context?.let { AvailableTestRecyclerAdapter(it, tests, null) }
         val listener = object  : OnItemClickListener {
             override fun onClick(view: View, position: Int) {
