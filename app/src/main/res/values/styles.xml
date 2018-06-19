@@ -71,6 +71,21 @@
         <item name="android:visibility">gone</item>
     </style>
 
+    <style name="DeviderLineStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/DIVIDER_HEIGHT</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:background">@color/DARK_GREEN_BACKGROUND</item>
+        <item name="android:layout_marginRight">@dimen/BLOCK_PADDING</item>
+        <item name="android:layout_marginLeft">@dimen/BLOCK_PADDING</item>
+    </style>
+
+    <style name="CustomBlockStyle">
+        <item name="android:layout_height">@dimen/CUSTOM_ITEM_HEIGHT</item>
+        <item name="android:gravity">center</item>
+        <item name="android:orientation">horizontal</item>
+    </style>
+
     <dimen name="SMALL_ICON_SIZE">30dp</dimen>
     <dimen name="LITTLE_ICON_SIZE">20dp</dimen>
     <dimen name="NORMAL_TEXT_SIZE">16sp</dimen>

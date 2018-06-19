@@ -12,9 +12,7 @@ import android.widget.*
 import com.github.kiolk.chemistrytests.R
 import com.github.kiolk.chemistrytests.data.TestsPresenter
 import com.github.kiolk.chemistrytests.data.adapters.SelectQuestionsArrayAdapter
-import com.github.kiolk.chemistrytests.data.asynctasks.ResultCallback
-import com.github.kiolk.chemistrytests.data.asynctasks.SingleAsyncTask
-import com.github.kiolk.chemistrytests.data.executs.AddCustomTestInUserDB
+import com.github.kiolk.chemistrytests.data.database.DBOperations
 import com.github.kiolk.chemistrytests.data.models.*
 import com.github.kiolk.chemistrytests.data.models.CloseQuestion.Question.INPUT_CHOICE
 import com.github.kiolk.chemistrytests.data.models.CloseQuestion.Question.MULTIPLE_CHOICE
@@ -22,21 +20,23 @@ import com.github.kiolk.chemistrytests.data.models.CloseQuestion.Question.SINGLE
 import com.github.kiolk.chemistrytests.ui.activities.TEST_PARAM_INT
 import com.github.kiolk.chemistrytests.ui.activities.TestingActivity
 import com.google.firebase.auth.FirebaseAuth
-import kotlinx.android.synthetic.main.fragment_custome_test.*
 
 class CustomTest : Fragment() {
 
-    lateinit var mSelectedTopics: MutableList<String>
+    var mSelectedTopics: MutableList<String> = mutableListOf()
     lateinit var mSortedQuestions: MutableList<CloseQuestion>
     lateinit var mSortedQuestionsTmp: MutableList<CloseQuestion>
     lateinit var mQuestions: MutableList<CloseQuestion>
     lateinit var mQuestionType: MutableList<Int>
+    lateinit var mCheckedArray : BooleanArray
     var mListQuestionId: MutableList<Int>? = null
     var mTestInfo: TestInfo = TestInfo()
     var mQuestionListAdapter: SelectQuestionsArrayAdapter? = null
     var isCheckedSingle: Boolean = false
     var isCheckedMultiple: Boolean = false
     var isCheckedInput: Boolean = false
+    var isCheckedArrayInitialize : Boolean = false
+    var isFirstTime : Boolean = true
     var mNumberAskedQuestions: Int = 0
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -45,14 +45,11 @@ class CustomTest : Fragment() {
     }
 
     fun combineCustomTest(questions: MutableList<CloseQuestion>) {
-        mQuestions = questions
+        if(isFirstTime){
+            initialisation()
+            isFirstTime = false
+        }
         view?.findViewById<TextView>(R.id.available_questions_indicator_text_view)?.text = mQuestions.size.toString()
-        mSortedQuestionsTmp = mutableListOf()
-        mSelectedTopics = mutableListOf()
-        mSortedQuestions = mQuestions
-        mSortedQuestionsTmp = mSortedQuestions
-        mQuestionType = mutableListOf()
-//        setapQuestionListView()
         view?.findViewById<CheckBox>(R.id.single_choice_check_box)?.setOnClickListener {
             isCheckedSingle = view?.findViewById<CheckBox>(R.id.single_choice_check_box)?.isChecked ?: false
             setAvailableQuestions()
@@ -66,26 +63,27 @@ class CustomTest : Fragment() {
             setAvailableQuestions()
         }
         view?.findViewById<TextView>(R.id.filtered_questions_indicator_text_view)?.text = mSortedQuestions.size.toString()
-        var topics: MutableList<String> = mutableListOf()
-        questions.forEach { it.tags?.forEach { topics.add(it) } }
-        val arrayTopic = topics.toSet().toTypedArray()
-        arrayTopic.sortBy { it }
-        var isChackedArray: BooleanArray = kotlin.BooleanArray(arrayTopic.size)
-        view?.findViewById<Button>(R.id.select_topic_button)?.setOnClickListener {
-            val dialog: AlertDialog.Builder = AlertDialog.Builder(context)
-            dialog.setTitle("Available topics").setMultiChoiceItems(arrayTopic, isChackedArray, object : DialogInterface.OnMultiChoiceClickListener {
-                override fun onClick(dialog: DialogInterface?, which: Int, isChecked: Boolean) {
-                    if (isChecked) {
-                        mSelectedTopics.add(arrayTopic[which])
-                    } else if (mSelectedTopics.contains(arrayTopic[which])) {
-                        mSelectedTopics.remove(arrayTopic[which])
-                    }
-                    setAvailableQuestions()
-                }
-            })
-            val alertDialog = dialog.create()
-            alertDialog.show()
-        }
+        setupTagDialog()
+//        var topics: MutableList<String> = mutableListOf()
+//        questions.forEach { it.tags?.forEach { topics.add(it) } }
+//        val arrayTopic = topics.toSet().toTypedArray()
+//        arrayTopic.sortBy { it }
+//        var isChackedArray: BooleanArray = kotlin.BooleanArray(arrayTopic.size)
+//        view?.findViewById<Button>(R.id.select_topic_button)?.setOnClickListener {
+//            val dialog: AlertDialog.Builder = AlertDialog.Builder(context)
+//            dialog.setTitle("Available topics").setMultiChoiceItems(arrayTopic, isChackedArray, object : DialogInterface.OnMultiChoiceClickListener {
+//                override fun onClick(dialog: DialogInterface?, which: Int, isChecked: Boolean) {
+//                    if (isChecked) {
+//                        mSelectedTopics.add(arrayTopic[which])
+//                    } else if (mSelectedTopics.contains(arrayTopic[which])) {
+//                        mSelectedTopics.remove(arrayTopic[which])
+//                    }
+//                    setAvailableQuestions()
+//                }
+//            })
+//            val alertDialog = dialog.create()
+//            alertDialog.show()
+//        }
         view?.findViewById<CheckBox>(R.id.fixed_tags_check_box)?.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
                 setAvailableQuestions()
@@ -96,10 +94,41 @@ class CustomTest : Fragment() {
         }
     }
 
-//    private fun setapQuestionListView() {
-//        mQuestionListAdapter = context?.let { SelectQuestionsArrayAdapter(it, R.layout.item_question_list, mSortedQuestions) }
-//        view?.findViewById<ListView>(R.id.available_questions_list_view)?.adapter = mQuestionListAdapter
-//    }
+    private fun initialisation() {
+        mQuestions = DBOperations().getAllQuestions()
+        mSortedQuestionsTmp = mutableListOf()
+        mSortedQuestions = mQuestions
+        mSortedQuestionsTmp = mSortedQuestions
+        mQuestionType = mutableListOf()
+    }
+
+    private fun setupTagDialog() {
+        var topics: MutableList<String> = mutableListOf()
+        mQuestions.forEach { it.tags?.forEach { topics.add(it) } }
+        val arrayTopic = topics.toSet().toTypedArray()
+        arrayTopic.sortBy { it }
+        if(!isCheckedArrayInitialize) {
+            mCheckedArray = kotlin.BooleanArray(arrayTopic.size)
+            isCheckedArrayInitialize = true
+        }
+        view?.findViewById<Button>(R.id.select_topic_button)?.setOnClickListener {
+            val dialog: AlertDialog.Builder = AlertDialog.Builder(context)
+            dialog.setTitle("Available topics").setMultiChoiceItems(arrayTopic, mCheckedArray, object : DialogInterface.OnMultiChoiceClickListener {
+                override fun onClick(dialog: DialogInterface?, which: Int, isChecked: Boolean) {
+                    if (isChecked) {
+                        mSelectedTopics.add(arrayTopic[which])
+                        mCheckedArray[which]= true
+                    } else if (mSelectedTopics.contains(arrayTopic[which])) {
+                        mSelectedTopics.remove(arrayTopic[which])
+                        mCheckedArray[which] = false
+                    }
+                    setAvailableQuestions()
+                }
+            })
+            val alertDialog = dialog.create()
+            alertDialog.show()
+        }
+    }
 
     private fun setAvailableQuestions() {
         val tmpSortedQuestions: MutableList<CloseQuestion> = mutableListOf()
@@ -183,26 +212,6 @@ class CustomTest : Fragment() {
     }
 
     fun startTest() {
-//        var listChoseenQuestions = available_questions_list_view.checkedItemPositions
-//        mListQuestionId = mutableListOf()
-//        if (available_questions_list_view.choiceMode != ListView.CHOICE_MODE_NONE && listChoseenQuestions.size() != 0) {
-//            var cnt = 0
-//            mSortedQuestions.forEach {
-//                if (listChoseenQuestions[cnt]) {
-//                    mListQuestionId.add(it.questionId)
-//                }
-//                ++cnt
-//            }
-//        } else {
-//            listChoseenQuestions = null
-//        }
-//        if (mListQuestionId?.size == 0) {
-//            mListQuestionId = null
-//        } else if (mListQuestionId != null) {
-////            if (mListQuestionId?.size ?: 0 > mNumberAskedQuestions) {
-////                mListQuestionId = mListQuestionId?.subList(0, mNumberAskedQuestions - 1)
-////            }
-//        }
         updateQuestionList()
         updateTestInformation()
         val params: TestParams = TestParams(10, RANDOM_ORDER, TRAINING_TEST, mNumberAskedQuestions
@@ -236,6 +245,6 @@ class CustomTest : Fragment() {
     }
 
     fun getAvailableQuestions(): MutableList<CloseQuestion> {
-        return mSortedQuestions ?: mutableListOf()
+        return mSortedQuestions //?: mutableListOf()
     }
 }

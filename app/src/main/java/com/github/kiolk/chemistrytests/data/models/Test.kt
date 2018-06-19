@@ -24,10 +24,27 @@ class Test(var questions: MutableList<CloseQuestion> = mutableListOf(),
         mSortedQuestions = questions
         checkRandomisation()
         checkTags()
+        checkKeyWords()
         checkByListString(params.keyWords, false)
         checkStrength()
         checkQuestionType()
         checkOrder()
+    }
+
+    private fun checkKeyWords() {
+        if (params.keyWords != null && params.keyWords?.size != 0) {
+            val tmpQuestionList = mutableListOf<CloseQuestion>()
+            params.keyWords?.forEach {
+                val keyWord = it
+                val filtered = mSortedQuestions.filter { it.keyWords?.contains(keyWord) == true }
+                filtered.forEach {
+                    if (!tmpQuestionList.contains(it)) {
+                        tmpQuestionList.add(it)
+                    }
+                }
+            }
+            mSortedQuestions = tmpQuestionList
+        }
     }
 
     private fun checkQuestionsList() {

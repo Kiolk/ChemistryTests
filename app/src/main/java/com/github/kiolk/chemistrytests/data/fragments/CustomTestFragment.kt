@@ -24,16 +24,16 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class CustomTestFragment : BaseFragment() {
 
-    lateinit var mQuestions: MutableList<CloseQuestion>
+//    lateinit var mQuestions: MutableList<CloseQuestion>
     lateinit var changeStateListener: ViewPager.OnPageChangeListener
     var customTestAdapter: CustomTestPageAdapter? = null
     var mSelectedQuestions: MutableList<Int>? = null
-    var mFromTestInfo: Boolean = false
+    var mFromTestInfo: Boolean = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        mQuestions = DBOperations().getAllQuestions()
+//        mQuestions = DBOperations().getAllQuestions()
         customTestAdapter = fragmentManager?.let { context?.let { it1 -> CustomTestPageAdapter(it1, it) } }
-        customTestAdapter?.mCustomFragment?.combineCustomTest(mQuestions)
+        customTestAdapter?.mCustomFragment?.combineCustomTest()
         view?.findViewById<ViewPager>(R.id.custom_test_view_pager)?.currentItem = 1
         changeStateListener = object : ViewPager.OnPageChangeListener {
             override fun onPageScrollStateChanged(state: Int) {
@@ -47,7 +47,7 @@ class CustomTestFragment : BaseFragment() {
                 when (position) {
                     QUESTIONS_LIST -> customTestAdapter?.mQuestionsListFragment?.setAvailableQuestions(customTestAdapter?.mCustomFragment?.getAvailableQuestions())
                     CUSTOM_TEST_PARAMS -> {
-                        customTestAdapter?.mCustomFragment?.combineCustomTest(mQuestions)
+                        customTestAdapter?.mCustomFragment?.combineCustomTest()
                         mSelectedQuestions = customTestAdapter?.mQuestionsListFragment?.setSelectedQuestions()
                         customTestAdapter?.mCustomFragment?.mListQuestionId = mSelectedQuestions ?: mutableListOf(3, 4)
                         if (mFromTestInfo) {

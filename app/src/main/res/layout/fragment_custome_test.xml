@@ -5,8 +5,7 @@
 
 <LinearLayout
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal">
+    style="@style/CustomBlockStyle">
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -16,7 +15,7 @@
             android:id="@+id/available_questions_indicator_text_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:gravity="center"
             android:textSize="@dimen/BIG_TEXT_SIZE"
             android:textColor="@color/GRAY_TEXT_COLOR"/>
         <TextView
@@ -34,7 +33,7 @@
         <TextView
             android:id="@+id/filtered_questions_indicator_text_view"
             android:layout_width="match_parent"
-            android:layout_gravity="center"
+            android:gravity="center"
             android:layout_height="wrap_content"
             android:textSize="@dimen/BIG_TEXT_SIZE"
             android:textColor="@color/BLACK_TEXT_COLOR"/>
@@ -54,7 +53,7 @@
         android:id="@+id/will_ask_questions_indicator_text_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
+        android:gravity="center"
         android:text="@string/ZERO"
         android:textSize="@dimen/BIG_TEXT_SIZE"
         android:textColor="@color/RED_TEXT_COLOR"/>
@@ -66,23 +65,48 @@
         android:text="@string/TOTAL_QUESTIONS"/>
 </LinearLayout>
 </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <Button
-            android:id="@+id/select_topic_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/CHOSE_TOPICS"/>
-        <CheckBox
-            android:id="@+id/fixed_tags_check_box"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+    <LinearLayout style="@style/DeviderLineStyle">
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/CustomBlockStyle">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal">
+            <Button
+                android:id="@+id/select_topic_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/CHOSE_TOPICS"/>
+            <CheckBox
+                android:id="@+id/fixed_tags_check_box"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal">
+            <Button
+                android:id="@+id/select_keywords_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/CHOSE_TOPICS"/>
+            <CheckBox
+                android:id="@+id/fixed_keywords_check_box"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout style="@style/DeviderLineStyle"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        style="@style/CustomBlockStyle"
         android:orientation="vertical">
         <TextView
             android:layout_width="wrap_content"
@@ -142,10 +166,10 @@
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
+    <LinearLayout style="@style/DeviderLineStyle"/>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+       style="@style/CustomBlockStyle">
         <SeekBar
             android:padding="@dimen/BLOCK_PADDING"
             android:id="@+id/number_asked_question_seek_bar"
@@ -153,7 +177,7 @@
             style="@style/Base.Widget.AppCompat.SeekBar.Discrete"
             android:layout_height="30dp" />
     </LinearLayout>
-
+    <LinearLayout style="@style/DeviderLineStyle"/>
     <Button
         android:layout_gravity="bottom"
         android:id="@+id/start_custom_test_button"
