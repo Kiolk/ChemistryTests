@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import com.github.kiolk.chemistrytests.R
+import com.github.kiolk.chemistrytests.R.color.LEVEL_ONE
 import com.github.kiolk.chemistrytests.data.TestsPresenter
 import com.github.kiolk.chemistrytests.data.adapters.SelectQuestionsArrayAdapter
 import com.github.kiolk.chemistrytests.data.database.DBOperations
@@ -38,13 +39,14 @@ class CustomTest : Fragment() {
     var isCheckedArrayInitialize : Boolean = false
     var isFirstTime : Boolean = true
     var mNumberAskedQuestions: Int = 0
+    var mQuestionsStrength : Int = 1
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_custome_test, null)
         return view ?: super.onCreateView(inflater, container, savedInstanceState)
     }
 
-    fun combineCustomTest(questions: MutableList<CloseQuestion>) {
+    fun combineCustomTest() {
         if(isFirstTime){
             initialisation()
             isFirstTime = false
@@ -92,6 +94,7 @@ class CustomTest : Fragment() {
         view?.findViewById<Button>(R.id.start_custom_test_button)?.setOnClickListener {
             startTest()
         }
+        setupQuestionsStrengthBlock()
     }
 
     private fun initialisation() {
@@ -100,6 +103,49 @@ class CustomTest : Fragment() {
         mSortedQuestions = mQuestions
         mSortedQuestionsTmp = mSortedQuestions
         mQuestionType = mutableListOf()
+    }
+
+    private fun setupQuestionsStrengthBlock(){
+        val strengthSeekBar = view?.findViewById<SeekBar>(R.id.strength_questionS_seek_bar)
+        mQuestionsStrength = (strengthSeekBar?.progress ?: 0) + 1
+        strengthSeekBar?.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener{
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                mQuestionsStrength = progress + 1
+                val indicator = view?.findViewById<ImageView>(R.id.strength_indicator_image_view)
+                val strengthText = view?.findViewById<TextView>(R.id.strength_title_text_view)
+                val titleArray = resources.getStringArray(R.array.QUESTIONS_STRENGTH_TYPE)
+                when(progress){
+                     0 -> {
+                         indicator?.setImageDrawable(resources.getDrawable(R.drawable.ic_strength_one))
+                         strengthText?.text = titleArray[progress]
+                     }
+                    1 -> {
+                        indicator?.setImageDrawable(resources.getDrawable(R.drawable.ic_strength_two))
+                        strengthText?.text = titleArray[progress]
+                    }
+                    2 -> {
+                        indicator?.setImageDrawable(resources.getDrawable(R.drawable.ic_strength_three))
+                        strengthText?.text = titleArray[progress]
+                    }
+                    3 -> {
+                        indicator?.setImageDrawable(resources.getDrawable(R.drawable.ic_strength_four))
+                        strengthText?.text = titleArray[progress]
+                    }
+                    4 -> {
+                        indicator?.setImageDrawable(resources.getDrawable(R.drawable.ic_strength_five))
+                        strengthText?.text = titleArray[progress]
+                    }
+                }
+                setAvailableQuestions()
+            }
+
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {
+            }
+
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {
+            }
+        })
+        setAvailableQuestions()
     }
 
     private fun setupTagDialog() {
@@ -164,6 +210,7 @@ class CustomTest : Fragment() {
             }
         }
         filteredByTypeQuestion()
+        filtererByStrengthQuestions()
         view?.findViewById<TextView>(R.id.filtered_questions_indicator_text_view)?.text = mSortedQuestions.size.toString()
         view?.findViewById<SeekBar>(R.id.number_asked_question_seek_bar)?.max = mSortedQuestions.size
         view?.findViewById<SeekBar>(R.id.number_asked_question_seek_bar)?.progress = mSortedQuestions.size
@@ -185,6 +232,16 @@ class CustomTest : Fragment() {
 //        setapQuestionListView()
 //        mQuestionListAdapter = context?.let { SelectQuestionsArrayAdapter(it, R.layout.item_question_list, mSortedQuestions) }
 //        mQuestionListAdapter?.notifyDataSetChanged()
+    }
+
+    private fun filtererByStrengthQuestions() {
+        val tmpSortedQuestions: MutableList<CloseQuestion> = mutableListOf()
+        mSortedQuestions.forEach {
+            if (it.questionStrength == mQuestionsStrength) {
+                tmpSortedQuestions.add(it)
+            }
+        }
+        mSortedQuestions = tmpSortedQuestions
     }
 
     private fun filteredByTypeQuestion() {
@@ -216,7 +273,7 @@ class CustomTest : Fragment() {
         updateTestInformation()
         val params: TestParams = TestParams(10, RANDOM_ORDER, TRAINING_TEST, mNumberAskedQuestions
                 , true, FREE_TEST,
-                mTestInfo, mSelectedTopics, mQuestionType, null, null, mListQuestionId)
+                mTestInfo, mSelectedTopics, mQuestionType, null, null, mListQuestionId, mQuestionsStrength)
         val intent: Intent = Intent(context, TestingActivity::class.java)
         if(true){
             TestsPresenter.saveCustomTest(params)

@@ -53,10 +53,18 @@
     <string name="NOT_HAVE_UPDATED_TESTS">Not have tests</string>
     <string name="LOGIN">Log in</string>
     <string name="THEORY">Theory</string>
+    <string name="QUESTION_STRENGTH">Questions strength</string>
     <string-array name="RESULT_TAB_TITLES">
         <item>Test information</item>
         <item>General result</item>
         <item>Statistic</item>
+    </string-array>
+    <string-array name="QUESTIONS_STRENGTH_TYPE">
+        <item>Easy</item>
+        <item>Simple</item>
+        <item>Normal</item>
+        <item>Complex</item>
+        <item>Hard</item>
     </string-array>
     <string-array name="TEST_TITLES">
         <item>Last</item>

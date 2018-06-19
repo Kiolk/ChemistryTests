@@ -81,6 +81,8 @@
     </style>
 
     <style name="CustomBlockStyle">
+        <item name="android:paddingRight">@dimen/BLOCK_PADDING</item>
+        <item name="android:paddingLeft">@dimen/BLOCK_PADDING</item>
         <item name="android:layout_height">@dimen/CUSTOM_ITEM_HEIGHT</item>
         <item name="android:gravity">center</item>
         <item name="android:orientation">horizontal</item>

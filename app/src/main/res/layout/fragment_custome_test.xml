@@ -107,6 +107,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         style="@style/CustomBlockStyle"
+        android:gravity="left"
         android:orientation="vertical">
         <TextView
             android:layout_width="wrap_content"
@@ -177,6 +178,49 @@
             style="@style/Base.Widget.AppCompat.SeekBar.Discrete"
             android:layout_height="30dp" />
     </LinearLayout>
+    <LinearLayout style="@style/DeviderLineStyle"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        style="@style/CustomBlockStyle"
+        android:gravity="left">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/QUESTION_STRENGTH"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="horizontal">
+            <SeekBar
+                android:id="@+id/strength_questionS_seek_bar"
+                android:layout_width="0dp"
+                android:max="4"
+                style="@style/Base.Widget.AppCompat.SeekBar.Discrete"
+                android:layout_height="wrap_content"
+                android:layout_weight="4"/>
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="3"
+                android:orientation="vertical">
+                <ImageView
+                    android:paddingTop="@dimen/BLOCK_PADDING"
+                    android:id="@+id/strength_indicator_image_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_strength_one"/>
+                <TextView
+                    android:id="@+id/strength_title_text_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/CUSTOM_TEST"
+                    android:layout_alignParentBottom="true"
+                    android:gravity="center_horizontal"/>
+
+            </RelativeLayout>
+        </LinearLayout>
+    </RelativeLayout>
     <LinearLayout style="@style/DeviderLineStyle"/>
     <Button
         android:layout_gravity="bottom"
