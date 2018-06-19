@@ -54,6 +54,7 @@
     <string name="LOGIN">Log in</string>
     <string name="THEORY">Theory</string>
     <string name="QUESTION_STRENGTH">Questions strength</string>
+    <string name="SAVE_TEST">Save test in customs test</string>
     <string-array name="RESULT_TAB_TITLES">
         <item>Test information</item>
         <item>General result</item>

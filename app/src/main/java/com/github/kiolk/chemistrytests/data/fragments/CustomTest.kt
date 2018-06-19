@@ -40,6 +40,7 @@ class CustomTest : Fragment() {
     var isFirstTime : Boolean = true
     var mNumberAskedQuestions: Int = 0
     var mQuestionsStrength : Int = 1
+    var isSaveTest: Boolean = false
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_custome_test, null)
@@ -275,7 +276,7 @@ class CustomTest : Fragment() {
                 , true, FREE_TEST,
                 mTestInfo, mSelectedTopics, mQuestionType, null, null, mListQuestionId, mQuestionsStrength)
         val intent: Intent = Intent(context, TestingActivity::class.java)
-        if(true){
+        if(isSaveTest){
             TestsPresenter.saveCustomTest(params)
         }
         intent.putExtra(TEST_PARAM_INT, params)

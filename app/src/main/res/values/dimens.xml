@@ -35,4 +35,5 @@
     <dimen name="PROGRESS_BAR_SIZE">20dp</dimen>
     <dimen name="LOGIN_BUTTON_WIDTH">200dp</dimen>
     <dimen name="CUSTOM_ITEM_HEIGHT">80dp</dimen>
+    <dimen name="CUSTOM_DESCRIPTION_HEIGHT">240dp</dimen>
 </resources>

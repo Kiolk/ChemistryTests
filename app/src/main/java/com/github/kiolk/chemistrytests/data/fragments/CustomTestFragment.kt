@@ -47,6 +47,7 @@ class CustomTestFragment : BaseFragment() {
                 when (position) {
                     QUESTIONS_LIST -> customTestAdapter?.mQuestionsListFragment?.setAvailableQuestions(customTestAdapter?.mCustomFragment?.getAvailableQuestions())
                     CUSTOM_TEST_PARAMS -> {
+                        customTestAdapter?.mCustomFragment?.isSaveTest = customTestAdapter?.mTestDescriptionFragment?.isSaveTest ?: false
                         customTestAdapter?.mCustomFragment?.combineCustomTest()
                         mSelectedQuestions = customTestAdapter?.mQuestionsListFragment?.setSelectedQuestions()
                         customTestAdapter?.mCustomFragment?.mListQuestionId = mSelectedQuestions ?: mutableListOf(3, 4)
@@ -56,6 +57,7 @@ class CustomTestFragment : BaseFragment() {
                         }
                     }
                     TEST_INFORMATION -> {
+                        customTestAdapter?.mTestDescriptionFragment?.isSaveTest = customTestAdapter?.mCustomFragment?.isSaveTest ?: false
                         customTestAdapter?.mCustomFragment?.mTestInfo?.let { customTestAdapter?.mTestDescriptionFragment?.setDescription(it) }
                         mFromTestInfo = true
                     }

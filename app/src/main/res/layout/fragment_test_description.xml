@@ -5,40 +5,61 @@
     android:orientation="vertical"
     android:padding="@dimen/BLOCK_PADDING">
 
-    <TextView
-        android:id="@+id/custom_test_title_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/TEST_TITLE" />
-
-    <EditText
-        android:id="@+id/custom_test_title_edit_text"
+    <LinearLayout
+        style="@style/CustomBlockStyle"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="text"
-        android:lines="@integer/TITLE_LINES"
-        android:paddingTop="@dimen/BLOCK_PADDING" />
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/custom_test_title_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/TEST_TITLE" />
+
+        <EditText
+            android:id="@+id/custom_test_title_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:lines="@integer/TITLE_LINES"
+            android:paddingTop="@dimen/BLOCK_PADDING" />
+    </LinearLayout>
+
+    <LinearLayout style="@style/DeviderLineStyle" />
 
     <LinearLayout
+        style="@style/CustomBlockStyle"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/DIVIDER_HEIGHT"
-        android:background="@color/DIVIDER_LINE_COLOR"
-        android:orientation="horizontal"
-        android:paddingTop="@dimen/BLOCK_PADDING" />
+        android:layout_height="@dimen/CUSTOM_DESCRIPTION_HEIGHT"
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/custom_test_description_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingTop="@dimen/BLOCK_PADDING"
-        android:text="@string/TEST_DESCRIPTION" />
+        <TextView
+            android:id="@+id/custom_test_description_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/BLOCK_PADDING"
+            android:text="@string/TEST_DESCRIPTION" />
 
-    <EditText
-        android:id="@+id/custom_test_description_edit_text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="text"
-        android:lines="@integer/DESCRIPTION_LINES"
-        android:paddingTop="@dimen/BLOCK_PADDING" />
+        <EditText
+            android:id="@+id/custom_test_description_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:lines="@integer/DESCRIPTION_LINES"
+            android:paddingTop="@dimen/BLOCK_PADDING" />
+    </LinearLayout>
 
+    <LinearLayout style="@style/DeviderLineStyle" />
+
+    <LinearLayout
+        style="@style/CustomBlockStyle"
+        android:layout_width="match_parent">
+
+        <CheckBox
+            android:id="@+id/save_test_check_box"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="false"
+            android:text="@string/SAVE_TEST" />
+    </LinearLayout>
 </LinearLayout>
