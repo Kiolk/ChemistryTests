@@ -494,10 +494,10 @@ class TestingActivity : AppCompatActivity() {
         val position = testing_view_pager.currentItem
         val theoryListId: List<Long>? = mResult.test.mSortedQuestions[position].theoryListId
         if (theoryListId == null || theoryListId.isEmpty()) {
-            theory_button_image_view.background = resources.getDrawable(R.drawable.ic_benzolring)
+            theory_button_image_view.background = resources.getDrawable(R.drawable.ic_theory_gray)
             theory_button_image_view.setOnClickListener(null)
         } else {
-            theory_button_image_view.background = resources.getDrawable(R.drawable.ic_benzolring2)
+            theory_button_image_view.background = resources.getDrawable(R.drawable.ic_theory)
             setupTheory()
         }
     }

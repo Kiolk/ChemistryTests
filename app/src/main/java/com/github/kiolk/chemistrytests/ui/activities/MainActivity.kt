@@ -23,6 +23,7 @@ import com.github.kiolk.chemistrytests.data.fragments.*
 import com.github.kiolk.chemistrytests.data.models.*
 import com.github.kiolk.chemistrytests.data.models.CloseQuestion.Question.EASY_QUESTION
 import com.github.kiolk.chemistrytests.data.models.CloseQuestion.Question.SINGLE_CHOICE
+import com.github.kiolk.chemistrytests.data.presenters.StatisticPresenter
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import kiolk.com.github.pen.Pen
@@ -56,6 +57,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var mTestsFragment: TestsFragment
     lateinit var mTestDataBaseReference: DatabaseReference
     lateinit var mChildEventListener: ChildEventListener
+    var mStatisticFragment : GeneralStatisticFragment = GeneralStatisticFragment()
     var isTestFragmentShow: Boolean = false
     var cnt = 0
     var cnt2 = 0
@@ -189,7 +191,9 @@ class MainActivity : AppCompatActivity() {
             3 -> {
                 showHistory()
             }
-            4 -> Toast.makeText(baseContext, "Show second fragment", Toast.LENGTH_SHORT).show()
+            4 ->{
+                showStatistic()
+            }
             7 -> {
                 Toast.makeText(baseContext, "Show third fragment", Toast.LENGTH_SHORT).show()
                 AuthUI.getInstance().signOut(baseContext)
@@ -199,6 +203,15 @@ class MainActivity : AppCompatActivity() {
             }
         }
         main_drawer_layout.closeDrawer(navigation_relative_layout)
+    }
+
+    private fun showStatistic() {
+        main_frame_layout.visibility = View.VISIBLE
+        start_relative_layout.visibility = View.GONE
+        mStatisticFragment = GeneralStatisticFragment()
+        showFragment(supportFragmentManager, R.id.main_frame_layout, mStatisticFragment)
+        val presenter = StatisticPresenter(mStatisticFragment)
+        presenter.presentStatistic()
     }
 
     private fun showCustomTest() {
@@ -255,14 +268,15 @@ class MainActivity : AppCompatActivity() {
     private fun getMenuItems(): List<MenuItemModel> {
         val titles: Array<String> = baseContext.resources.getStringArray(R.array.NAVIGATION_MENU_ITEMS)
         return listOf(
-                MenuItemModel(R.drawable.ic_checked, titles[0]),
-                MenuItemModel(R.drawable.ic_dot_right_arrow, titles[1]),
-                MenuItemModel(R.drawable.ic_check, titles[2]),
-                MenuItemModel(R.drawable.ic_statistic, titles[3]),
-                MenuItemModel(R.drawable.ic_settings_gears, titles[4]),
+                MenuItemModel(R.drawable.ic_test, titles[0]),
+                MenuItemModel(R.drawable.ic_study_notes, titles[1]),
+                MenuItemModel(R.drawable.ic_puzzle, titles[2]),
+                MenuItemModel(R.drawable.ic_history, titles[3]),
+                MenuItemModel(R.drawable.ic_statistic, titles[4]),
                 MenuItemModel(R.drawable.ic_settings_gears, titles[5]),
                 MenuItemModel(R.drawable.ic_settings_gears, titles[6]),
-                MenuItemModel(R.drawable.ic_sign_out_option, titles[7]))
+                MenuItemModel(R.drawable.ic_settings_gears, titles[7]),
+                MenuItemModel(R.drawable.ic_sign_out_option, titles[8]))
     }
 
     private fun splashScreenSetup() {
@@ -397,6 +411,7 @@ class MainActivity : AppCompatActivity() {
         closeFragment(supportFragmentManager, mCustomTestFragment)
         closeFragment(supportFragmentManager, mCompletedTsts)
         closeFragment(supportFragmentManager, mTestsFragment)
+        closeFragment(supportFragmentManager, mStatisticFragment)
         isTestFragmentShow = false
     }
 //
