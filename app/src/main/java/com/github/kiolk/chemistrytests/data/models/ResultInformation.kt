@@ -17,6 +17,7 @@ class ResultInformation : Serializable{
     var testParams : TestParams? = null
     var listAskedQuestionsId : MutableList<Int>? = null
     var isCompleted: Boolean = false
+    var listQuestionsIdByResult : MutableList<Pair<Boolean, Int>>? = null
 //    var sortedQuestions :List<CloseQuestion> = mutableListOf()
 //    var anweredQuestions : MutableList<Answer> = mutableListOf()
 }

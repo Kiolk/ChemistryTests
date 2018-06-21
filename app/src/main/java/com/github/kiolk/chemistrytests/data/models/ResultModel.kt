@@ -86,7 +86,17 @@ class Result(var test: Test = Test(), var endListener: OnEndTestListener? = null
         mResultInfo.testMark = getTestMark()
         mResultInfo.testParams = test.params
         mResultInfo.listAskedQuestionsId = mutableListOf()
-        askedQuestions.forEach { mResultInfo.listAskedQuestionsId?.add(it.question.questionId)  }
+        mResultInfo.listQuestionsIdByResult = mutableListOf()
+        askedQuestions.forEach {
+            val questionId = it.question.questionId
+            val result : Boolean = if(it.userAnswers.isNotEmpty()){
+                it.question.checkCorrectAnswersByNumbers(it.userAnswers)
+            }else{
+                it.question.checkOpenQuestionAnswers(it.userInput)
+            }
+            mResultInfo.listAskedQuestionsId?.add(questionId)
+            mResultInfo.listQuestionsIdByResult?.add(Pair(result, questionId))
+        }
 
 //        mResultInfo.sortedQuestions = test.mSortedQuestions //as MutableList<CloseQuestion>
 //        mResultInfo.anweredQuestions = askedQuestions

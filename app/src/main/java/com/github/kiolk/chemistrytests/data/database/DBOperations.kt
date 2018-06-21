@@ -282,4 +282,15 @@ class DBOperations {
             put(CHEM_THEORY_JSON, Gson().toJson(theory))
         }
     }
+
+    fun getQuestionsById(ofQuestionsId: Set<Int>): MutableList<CloseQuestion> {
+        val questions = getAllQuestions()
+        val questionsList : MutableList<CloseQuestion> = mutableListOf()
+        ofQuestionsId.forEach{
+            val id = it
+            val question = questions.find { it.questionId == id}
+            question?.let { it1 -> questionsList.add(it1) }
+        }
+        return questionsList
+    }
 }
