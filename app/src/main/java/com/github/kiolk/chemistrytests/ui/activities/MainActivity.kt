@@ -20,6 +20,7 @@ import com.github.kiolk.chemistrytests.data.asynctasks.SingleAsyncTask
 import com.github.kiolk.chemistrytests.data.database.DBOperations
 import com.github.kiolk.chemistrytests.data.executs.PrepareCoursesFromDb
 import com.github.kiolk.chemistrytests.data.fragments.*
+import com.github.kiolk.chemistrytests.data.fragments.CompletedTestsFragment.Companion.RESULT_TEST_TAG
 import com.github.kiolk.chemistrytests.data.models.*
 import com.github.kiolk.chemistrytests.data.models.CloseQuestion.Question.EASY_QUESTION
 import com.github.kiolk.chemistrytests.data.models.CloseQuestion.Question.SINGLE_CHOICE
@@ -391,10 +392,13 @@ class MainActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         if (main_frame_layout.visibility == View.VISIBLE) {
-            if (!mCompletedTsts.closeResult()) {
+            if (!mCompletedTsts.isShowResult) {
                 main_frame_layout.visibility = View.GONE
                 start_relative_layout.visibility = View.VISIBLE
                 closeFragments()
+                return
+            }else{
+               closeResultStatisticFragment()
                 return
             }
         }
@@ -406,26 +410,20 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun closeResultStatisticFragment() {
+        closeFragment(supportFragmentManager, mCompletedTsts, RESULT_TEST_TAG)
+        mCompletedTsts.isShowResult = false
+    }
+
     private fun closeFragments() {
+        if(mCompletedTsts.isShowResult){
+            closeResultStatisticFragment()
+        }
         closeFragment(supportFragmentManager, mAvailableTests)
-//                closeFragment(supportFragmentManager, mCustomTest)
         closeFragment(supportFragmentManager, mCustomTestFragment)
         closeFragment(supportFragmentManager, mCompletedTsts)
         closeFragment(supportFragmentManager, mTestsFragment)
         closeFragment(supportFragmentManager, mUserStatisticFragment)
         isTestFragmentShow = false
     }
-//
-//   private  fun showFragment(container: Int, mGeneralStatistic: Fragment) {
-//        val transaction = supportFragmentManager.beginTransaction()
-//        transaction.add(container, mGeneralStatistic)
-//        transaction.commit()
-//        supportFragmentManager.executePendingTransactions()
-//    }
-//
-//    private fun closeFragment(mGeneralStatistic: Fragment) {
-//        val transaction = supportFragmentManager.beginTransaction()
-//        transaction.remove(mGeneralStatistic)
-//        transaction.commit()
-//    }
 }

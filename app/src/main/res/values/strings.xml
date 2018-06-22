@@ -55,6 +55,13 @@
     <string name="THEORY">Theory</string>
     <string name="QUESTION_STRENGTH">Questions strength</string>
     <string name="SAVE_TEST">Save test in customs test</string>
+    <string name="END_TEST_TIME">End test:</string>
+    <string name="DURATION_TEST_TIME">Duration:</string>
+    <string name="AVERIG_DIFFICULTY">Difficulty:</string>
+    <string name="FASTER_CORRECT">Faster correct:</string>
+    <string name="FASTER_WRONG">Faster wrong:</string>
+    <string name="LONGER_CORRECT">Longer correct:</string>
+    <string name="LONGER_WRONG">Longer wrong:</string>
     <string-array name="RESULT_TAB_TITLES">
         <item>Test information</item>
         <item>General result</item>

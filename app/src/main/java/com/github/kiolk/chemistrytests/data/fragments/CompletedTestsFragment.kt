@@ -26,6 +26,10 @@ import showFragment
 
 class CompletedTestsFragment : Fragment() {
 
+    companion object {
+        val RESULT_TEST_TAG : String = "ResultTag"
+    }
+
     var mResults: MutableList<ResultInformation>? = null
     var mAdapter: AvailableTestRecyclerAdapter? = null
     var mFragment : ResultFragment = ResultFragment()
@@ -51,7 +55,8 @@ class CompletedTestsFragment : Fragment() {
                         val container = activity?.main_frame_layout?.id
 //                        val fragment = ResultFragment()
                         if (container != null && manager != null) {
-                            showFragment(manager, container, mFragment)
+                            mFragment = ResultFragment()
+                            showFragment(manager, container, mFragment, RESULT_TEST_TAG)
 //                            val result = Result(Test(params = (results[position].testParams!!)))
 //                            result.mResultInfo = results[position]
                             mFragment.showResult(results[position])

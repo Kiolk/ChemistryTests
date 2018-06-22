@@ -48,7 +48,7 @@
 
     <style name="ResultInformationStyle">
         <item name="android:padding">@dimen/BLOCK_PADDING</item>
-        <item name="android:textSize">@dimen/SMALL_TITLE_SIZE</item>
+        <item name="android:textSize">@dimen/NORMAL_TEXT_SIZE</item>
     </style>
 
     <style name="ResultInformationStyle.Right" parent="ResultInformationStyle">

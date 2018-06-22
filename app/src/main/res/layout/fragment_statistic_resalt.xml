@@ -7,7 +7,8 @@
         android:id="@+id/test_title_result_text_view"
         style="@style/BigTitleStyle"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:visibility="gone"/>
 
     <LinearLayout
         android:id="@+id/separate_line_linear_layout"
@@ -16,6 +17,7 @@
         android:layout_below="@+id/test_title_result_text_view"
         android:background="@color/DIVIDER_LINE_COLOR"
         android:orientation="vertical"
+        android:visibility="gone"
         android:paddingLeft="@dimen/BLOCK_PADDING"
         android:paddingRight="@dimen/BLOCK_PADDING">
 
@@ -126,6 +128,153 @@
 
         <TextView
             android:id="@+id/start_test_text_view"
+            style="@style/ResultInformationStyle.Left"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/end_time_linear_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/start_time_linear_layout"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/ResultInformationStyle.Right"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/END_TEST_TIME" />
+
+        <TextView
+            android:id="@+id/end_test_text_view"
+            style="@style/ResultInformationStyle.Left"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/duration_time_linear_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/end_time_linear_layout"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/ResultInformationStyle.Right"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/DURATION_TEST_TIME" />
+
+        <TextView
+            android:id="@+id/duration_test_text_view"
+            style="@style/ResultInformationStyle.Left"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/difficulty_linear_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/duration_time_linear_layout"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/ResultInformationStyle.Right"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/AVERIG_DIFFICULTY" />
+
+        <TextView
+            android:id="@+id/difficulty_text_view"
+            style="@style/ResultInformationStyle.Left"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/faster_correct_linear_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/difficulty_linear_layout"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/ResultInformationStyle.Right"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/FASTER_CORRECT" />
+
+        <TextView
+            android:id="@+id/faster_correct_text_view"
+            style="@style/ResultInformationStyle.Left"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/faster_wrong_linear_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/faster_correct_linear_layout"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/ResultInformationStyle.Right"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/FASTER_WRONG" />
+
+        <TextView
+            android:id="@+id/faster_wrong_text_view"
+            style="@style/ResultInformationStyle.Left"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/longer_correct_linear_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/faster_wrong_linear_layout"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/ResultInformationStyle.Right"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/LONGER_CORRECT" />
+
+        <TextView
+            android:id="@+id/longer_correct_text_view"
+            style="@style/ResultInformationStyle.Left"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/longer_wrong_linear_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/longer_correct_linear_layout"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/ResultInformationStyle.Right"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/LONGER_WRONG" />
+
+        <TextView
+            android:id="@+id/longer_wrong_text_view"
             style="@style/ResultInformationStyle.Left"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

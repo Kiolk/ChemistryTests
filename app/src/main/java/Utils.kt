@@ -22,17 +22,27 @@ fun isPresentDrawable(text : String) : Boolean{
     return result
 }
 
-fun showFragment(manager: FragmentManager, container: Int, fragment: Fragment) {
+fun showFragment(manager: FragmentManager, container: Int, fragment: Fragment, tag : String? = null) {
     val transaction = manager.beginTransaction()
-    transaction.add(container, fragment)
+    if(tag != null){
+        transaction.add(container, fragment, tag)
+        transaction.addToBackStack(tag)
+    }else{
+        transaction.add(container, fragment)
+    }
     transaction.commit()
     manager.executePendingTransactions()
 }
 
 
-fun closeFragment(manager: FragmentManager, fragment: Fragment) {
+fun closeFragment(manager: FragmentManager, fragment: Fragment, tag : String? = null) {
     val transaction = manager.beginTransaction()
-    transaction.remove(fragment)
+    if(tag != null){
+        val foundFragment = manager.findFragmentByTag(tag)
+        transaction.remove(foundFragment)
+    }else{
+        transaction.remove(fragment)
+    }
     transaction.commit()
 }
 
