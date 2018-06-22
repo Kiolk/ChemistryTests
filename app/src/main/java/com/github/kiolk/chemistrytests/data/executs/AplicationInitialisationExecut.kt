@@ -1,6 +1,7 @@
 package com.github.kiolk.chemistrytests.data.executs
 
 import android.content.Context
+import com.github.kiolk.chemistrytests.R
 import com.github.kiolk.chemistrytests.data.asynctasks.ResultCallback
 import com.github.kiolk.chemistrytests.data.asynctasks.ResultObject
 import com.github.kiolk.chemistrytests.data.asynctasks.SingleExecut
@@ -17,7 +18,7 @@ class AplicationInitialisationExecut(var baseContext: Context, override var call
                 setContext(baseContext).
                 setTypeOfCache(PenConstantsUtil.INNER_FILE_CACHE).
                 setSavingStrategy(PenConstantsUtil.SAVE_FULL_IMAGE_STRATEGY).
-//                setDefaultDrawable(baseContext.resources.getDrawable(R.drawable.area_neutral_shape)).
+                setDefaultDrawable(baseContext.resources.getDrawable(R.drawable.sun)).
                 setUp()
 
         DBConnector.initInstance(baseContext)

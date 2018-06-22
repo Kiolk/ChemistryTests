@@ -17,6 +17,11 @@ fun toHtml(pString: String): String {
     return result
 }
 
+fun isPresentDrawable(text : String) : Boolean{
+   val result : Boolean =  text.findAnyOf(listOf(PHOTO_TAG), 0, false) != null
+    return result
+}
+
 fun showFragment(manager: FragmentManager, container: Int, fragment: Fragment) {
     val transaction = manager.beginTransaction()
     transaction.add(container, fragment)

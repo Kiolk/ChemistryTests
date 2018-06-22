@@ -507,7 +507,7 @@ class TestingActivity : AppCompatActivity() {
             val position = testing_view_pager.currentItem
             val theoryListId: List<Long>? = mResult.test.mSortedQuestions[position].theoryListId
             if (theoryListId != null && theoryListId.isNotEmpty()) {
-                result_frame_layout.setPadding(0, 0, 0,0)
+                result_frame_layout.setPadding(0, 0, 0,bottom_bar_linear_layout.height)
                 if (result_frame_layout.visibility != View.VISIBLE) {
                     result_frame_layout.visibility = View.VISIBLE
                     showFragment(R.id.result_frame_layout, mTheoryFragment)

@@ -8,6 +8,7 @@ import android.graphics.PorterDuff.Mode
 import android.util.AttributeSet
 import android.widget.ImageView
 import com.github.kiolk.chemistrytests.R
+import com.github.kiolk.chemistrytests.utils.SomeDrawable
 
 class RoundedImageView : ImageView {
 
@@ -26,12 +27,13 @@ mBitmap = bm
 
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
-        val drawable: Drawable? = drawable ?: return
+        var drawable: Drawable = drawable ?: return
         if (height == 0 || width == 0) {
             return
         }
 //        val bit: Bitmap = (drawable as BitmapDrawable).bitmap
-        val bit: Bitmap = mBitmap ?: (drawable as BitmapDrawable).bitmap
+//       drawable = SomeDrawable()
+        val bit: Bitmap = mBitmap ?: (context?.resources?.getDrawable(R.drawable.table) as BitmapDrawable).bitmap //drawable as BitmapDrawable).bitmap
         val bitmap = bit.copy(Bitmap.Config.ARGB_8888, true)
 
         val bitWidth: Int = bitmap.width

@@ -8,6 +8,7 @@ import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.text.style.ImageSpan
 import android.widget.TextView
+import isPresentDrawable
 import kiolk.com.github.pen.Pen
 import toHtml
 import java.io.Serializable
@@ -114,7 +115,7 @@ class OpenQuestion(var question: String = "",
 
 fun setFormattedText(view: TextView, text: String, photoUrl: String?) {
     val context = view.context
-    if (photoUrl == null) {
+    if (photoUrl == null || !isPresentDrawable(text)) {
         view.text = Html.fromHtml(toHtml(text))
     } else {
         Pen.getInstance().getImageFromUrl(photoUrl).getBitmapDirect { pBitmapFromLoader ->
