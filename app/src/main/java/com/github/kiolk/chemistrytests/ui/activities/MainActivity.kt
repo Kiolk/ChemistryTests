@@ -58,6 +58,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var mTestDataBaseReference: DatabaseReference
     lateinit var mChildEventListener: ChildEventListener
     var mStatisticFragment : GeneralStatisticFragment = GeneralStatisticFragment()
+    var mUserStatisticFragment : UserStatisticFragment = UserStatisticFragment()
     var isTestFragmentShow: Boolean = false
     var cnt = 0
     var cnt2 = 0
@@ -195,7 +196,7 @@ class MainActivity : AppCompatActivity() {
                 showStatistic()
             }
             7 -> {
-                Toast.makeText(baseContext, "Show third fragment", Toast.LENGTH_SHORT).show()
+                Toast.makeText(baseContext, "Show third mGeneralStatistic", Toast.LENGTH_SHORT).show()
                 AuthUI.getInstance().signOut(baseContext)
                 val intent: Intent = Intent(baseContext, SplashActivity::class.java)
                 finish()
@@ -208,10 +209,10 @@ class MainActivity : AppCompatActivity() {
     private fun showStatistic() {
         main_frame_layout.visibility = View.VISIBLE
         start_relative_layout.visibility = View.GONE
-        mStatisticFragment = GeneralStatisticFragment()
-        showFragment(supportFragmentManager, R.id.main_frame_layout, mStatisticFragment)
-        val presenter = StatisticPresenter(mStatisticFragment)
-        presenter.presentStatistic()
+        mUserStatisticFragment = UserStatisticFragment()
+        showFragment(supportFragmentManager, R.id.main_frame_layout, mUserStatisticFragment)
+//        val presenter = StatisticPresenter(mStatisticFragment)
+//        presenter.presentStatistic()
     }
 
     private fun showCustomTest() {
@@ -411,20 +412,20 @@ class MainActivity : AppCompatActivity() {
         closeFragment(supportFragmentManager, mCustomTestFragment)
         closeFragment(supportFragmentManager, mCompletedTsts)
         closeFragment(supportFragmentManager, mTestsFragment)
-        closeFragment(supportFragmentManager, mStatisticFragment)
+        closeFragment(supportFragmentManager, mUserStatisticFragment)
         isTestFragmentShow = false
     }
 //
-//   private  fun showFragment(container: Int, fragment: Fragment) {
+//   private  fun showFragment(container: Int, mGeneralStatistic: Fragment) {
 //        val transaction = supportFragmentManager.beginTransaction()
-//        transaction.add(container, fragment)
+//        transaction.add(container, mGeneralStatistic)
 //        transaction.commit()
 //        supportFragmentManager.executePendingTransactions()
 //    }
 //
-//    private fun closeFragment(fragment: Fragment) {
+//    private fun closeFragment(mGeneralStatistic: Fragment) {
 //        val transaction = supportFragmentManager.beginTransaction()
-//        transaction.remove(fragment)
+//        transaction.remove(mGeneralStatistic)
 //        transaction.commit()
 //    }
 }

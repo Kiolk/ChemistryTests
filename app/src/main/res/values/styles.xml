@@ -88,6 +88,14 @@
         <item name="android:orientation">horizontal</item>
     </style>
 
+    <style name="GeneralProgressBarStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_centerInParent">true</item>
+        <item name="android:indeterminate">true</item>
+        <item name="android:visibility">visible</item>
+    </style>
+
     <dimen name="SMALL_ICON_SIZE">30dp</dimen>
     <dimen name="LITTLE_ICON_SIZE">20dp</dimen>
     <dimen name="NORMAL_TEXT_SIZE">16sp</dimen>
