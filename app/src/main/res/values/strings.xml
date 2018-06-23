@@ -62,6 +62,7 @@
     <string name="FASTER_WRONG">Faster wrong:</string>
     <string name="LONGER_CORRECT">Longer correct:</string>
     <string name="LONGER_WRONG">Longer wrong:</string>
+    <string name="DIFFICULTY_IN_RANGE">In range</string>
     <string-array name="RESULT_TAB_TITLES">
         <item>Test information</item>
         <item>General result</item>

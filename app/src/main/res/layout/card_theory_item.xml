@@ -7,6 +7,7 @@
         android:id="@+id/theory_item_title_text_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/temporarium"
         android:textColor="@color/THEORY_TITLE_COLOR"
         android:textSize="@dimen/BIG_TEXT_SIZE"
         android:padding="@dimen/BLOCK_PADDING"/>

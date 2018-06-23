@@ -24,14 +24,12 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class CustomTestFragment : BaseFragment() {
 
-//    lateinit var mQuestions: MutableList<CloseQuestion>
     lateinit var changeStateListener: ViewPager.OnPageChangeListener
     var customTestAdapter: CustomTestPageAdapter? = null
     var mSelectedQuestions: MutableList<Int>? = null
     var mFromTestInfo: Boolean = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
-//        mQuestions = DBOperations().getAllQuestions()
         customTestAdapter = fragmentManager?.let { context?.let { it1 -> CustomTestPageAdapter(it1, it) } }
         customTestAdapter?.mCustomFragment?.combineCustomTest()
         view?.findViewById<ViewPager>(R.id.custom_test_view_pager)?.currentItem = 1
@@ -67,28 +65,15 @@ class CustomTestFragment : BaseFragment() {
         super.onCreate(savedInstanceState)
     }
 
-//    private fun setupToolBar(view : View) {
-//        val toolBar = view.findViewById<Toolbar>(R.id.custom_test_tool_bar)
-//        val navigation = object : View.OnClickListener {
-//            override fun onClick(v: View?) {
-//                val mainActivity = activity as MainActivity
-//                mainActivity.findViewById<DrawerLayout>(R.id.main_drawer_layout).openDrawer(Gravity.START)
-//            }
-//        }
-//        toolBar?.setNavigationOnClickListener(navigation)
-//    }
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_custom_test, null)
         val viewPager: ViewPager = view.findViewById(R.id.custom_test_view_pager)
         val tabLayout: TabLayout = view.findViewById(R.id.custom_test_tab_layout)
         viewPager.adapter = customTestAdapter
         viewPager.currentItem = 2
-//        viewPager.currentItem = 1
         viewPager.addOnPageChangeListener(changeStateListener)
         tabLayout.setupWithViewPager(viewPager)
         setupToolBar(view, R.id.custom_test_tool_bar)
-//        customTestAdapter?.mCustomFragment?.combineCustomTest(mQuestions)
-        return view //super.onCreateView(inflater, container, savedInstanceState)
+        return view
     }
 }

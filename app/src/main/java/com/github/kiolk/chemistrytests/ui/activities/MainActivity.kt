@@ -196,7 +196,7 @@ class MainActivity : AppCompatActivity() {
             4 ->{
                 showStatistic()
             }
-            7 -> {
+            8 -> {
                 Toast.makeText(baseContext, "Show third mGeneralStatistic", Toast.LENGTH_SHORT).show()
                 AuthUI.getInstance().signOut(baseContext)
                 val intent: Intent = Intent(baseContext, SplashActivity::class.java)
@@ -276,8 +276,8 @@ class MainActivity : AppCompatActivity() {
                 MenuItemModel(R.drawable.ic_history, titles[3]),
                 MenuItemModel(R.drawable.ic_statistic, titles[4]),
                 MenuItemModel(R.drawable.ic_settings_gears, titles[5]),
-                MenuItemModel(R.drawable.ic_settings_gears, titles[6]),
-                MenuItemModel(R.drawable.ic_settings_gears, titles[7]),
+                MenuItemModel(R.drawable.ic_doubts_button, titles[6]),
+                MenuItemModel(R.drawable.ic_info_sign, titles[7]),
                 MenuItemModel(R.drawable.ic_sign_out_option, titles[8]))
     }
 

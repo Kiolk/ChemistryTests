@@ -10,7 +10,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import com.github.kiolk.chemistrytests.R
-import com.github.kiolk.chemistrytests.R.color.LEVEL_ONE
 import com.github.kiolk.chemistrytests.data.TestsPresenter
 import com.github.kiolk.chemistrytests.data.adapters.SelectQuestionsArrayAdapter
 import com.github.kiolk.chemistrytests.data.database.DBOperations
@@ -41,6 +40,7 @@ class CustomTest : Fragment() {
     var mNumberAskedQuestions: Int = 0
     var mQuestionsStrength : Int = 1
     var isSaveTest: Boolean = false
+    var inRangeDifficulty : Boolean = false
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_custome_test, null)
@@ -96,6 +96,13 @@ class CustomTest : Fragment() {
             startTest()
         }
         setupQuestionsStrengthBlock()
+        setupDifficultyRange()
+    }
+
+    private fun setupDifficultyRange() {
+        val difficulty = view?.findViewById<CheckBox>(R.id.difficulty_in_range_check_box)
+                difficulty?.setOnClickListener { inRangeDifficulty = difficulty.isChecked
+                setAvailableQuestions()}
     }
 
     private fun initialisation() {
@@ -238,8 +245,14 @@ class CustomTest : Fragment() {
     private fun filtererByStrengthQuestions() {
         val tmpSortedQuestions: MutableList<CloseQuestion> = mutableListOf()
         mSortedQuestions.forEach {
-            if (it.questionStrength == mQuestionsStrength) {
-                tmpSortedQuestions.add(it)
+            if(inRangeDifficulty){
+                if (it.questionStrength <= mQuestionsStrength) {
+                    tmpSortedQuestions.add(it)
+                }
+            }else{
+                if (it.questionStrength == mQuestionsStrength) {
+                    tmpSortedQuestions.add(it)
+                }
             }
         }
         mSortedQuestions = tmpSortedQuestions
@@ -272,9 +285,10 @@ class CustomTest : Fragment() {
     fun startTest() {
         updateQuestionList()
         updateTestInformation()
-        val params: TestParams = TestParams(10, RANDOM_ORDER, TRAINING_TEST, mNumberAskedQuestions
-                , true, FREE_TEST,
-                mTestInfo, mSelectedTopics, mQuestionType, null, null, mListQuestionId, mQuestionsStrength)
+        val params: TestParams = TestParams(10, RANDOM_ORDER, TRAINING_TEST,
+                mNumberAskedQuestions, true, FREE_TEST, mTestInfo, mSelectedTopics,
+                mQuestionType, null, null, mListQuestionId,
+                mQuestionsStrength, 75F, null, inRangeDifficulty)
         val intent: Intent = Intent(context, TestingActivity::class.java)
         if(isSaveTest){
             TestsPresenter.saveCustomTest(params)
