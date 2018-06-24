@@ -7,6 +7,7 @@ import java.util.*
 object CONSTANTS{
     val DATE_PATTERN: String = "dd MMM yyyy - hh:mm:ss"
     val DURATION_TIME : String = "KK:mm:ss"
+    val SHORT_DURATION_TIME : String = "KK:mm"
     val DAY_PATERN : String = "dd.MM.yyyy"
     val SLASH_DAY_PATERN : String = "dd/MM/yyyy"
 }

@@ -50,9 +50,6 @@ class TestingActivity : AppCompatActivity() {
     var mTheoryFragment = ChemTheoryFragment()
     lateinit var mResult: Result
     lateinit var adapter: TestingPagerAdapter
-    //    lateinit var mFirebaseDatabase: FirebaseDatabase
-//    lateinit var mDatabaseReference: DatabaseReference
-//    lateinit var mChaildEventListener: ChildEventListener
     lateinit var mParams: TestParams
     lateinit var mViewPager: ControledViewPager
     var mStartTest: Long = 0L
@@ -71,8 +68,6 @@ class TestingActivity : AppCompatActivity() {
         setContentView(R.layout.activity_testing)
         mParams = intent.extras.get(TEST_PARAM_INT) as TestParams
         mStartTest = System.currentTimeMillis()
-//        mFirebaseDatabase = FirebaseDatabase.getInstance()
-//        mDatabaseReference = mFirebaseDatabase.getReference().child(QUESTIONS_CHILDS)
         mViewPager = findViewById(R.id.testing_view_pager)
         mQuestions = DBOperations().getAllQuestions()
         animIn(end_test_fab)
@@ -137,6 +132,7 @@ class TestingActivity : AppCompatActivity() {
                         SlideAnimationUtil.slideInToTop(baseContext, bottom_bar_linear_layout, null, VERY_FASTER)
                         checkHintPresent()
                         checkTheoryPresent()
+                        checkExplanationPresent()
                     }
                     isShowBottomBar = true
                 }
@@ -374,6 +370,7 @@ class TestingActivity : AppCompatActivity() {
                 }
                 checkHintPresent()
                 checkTheoryPresent()
+                checkExplanationPresent()
                 if (end_test_fab.visibility == View.VISIBLE && !isTestEnd && mResult.test.mSortedQuestions.size != mResult.askedQuestions.size) {
 //                    end_test_fab.visibility = View.GONE
                     animOut(end_test_fab)
@@ -499,6 +496,36 @@ class TestingActivity : AppCompatActivity() {
         } else {
             theory_button_image_view.background = resources.getDrawable(R.drawable.ic_theory)
             setupTheory()
+        }
+    }
+
+    private fun checkExplanationPresent(){
+        if(isTestEnd) {
+            explanation_linear_layout.visibility = View.VISIBLE
+            val position = testing_view_pager.currentItem
+            val explanationList: List<Hint>? = mResult.test.mSortedQuestions[position].answerExplanations
+            if (explanationList == null || explanationList.isEmpty()) {
+                explanation_button_image_view.background = resources.getDrawable(R.drawable.ic_explanation_gray)
+                explanation_button_image_view.setOnClickListener(null)
+            } else {
+                explanation_button_image_view.background = resources.getDrawable(R.drawable.ic_explanation)
+                setupExplanation()
+            }
+        }
+    }
+
+    private fun setupExplanation(){
+        explanation_button_image_view.setOnClickListener{
+            val position = testing_view_pager.currentItem
+            val explanationList: List<Hint>? = mResult.test.mSortedQuestions[position].answerExplanations
+            if (explanationList != null && explanationList.isNotEmpty()) {
+                result_frame_layout.setPadding(0, 0, 0,bottom_bar_linear_layout.height)
+                if (result_frame_layout.visibility != View.VISIBLE) {
+                    result_frame_layout.visibility = View.VISIBLE
+                    showFragment(R.id.result_frame_layout, mHintFragment)
+                    mHintFragment.showHint(explanationList)
+                }
+            }
         }
     }
 

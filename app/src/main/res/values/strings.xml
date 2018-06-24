@@ -63,6 +63,12 @@
     <string name="LONGER_CORRECT">Longer correct:</string>
     <string name="LONGER_WRONG">Longer wrong:</string>
     <string name="DIFFICULTY_IN_RANGE">In range</string>
+    <string name="ADDITIONAL_INFORMATION">Adittional information</string>
+    <string name="EXPLANATION">Explanation</string>
+    <string name="HINT">Hint</string>
+    <string name="SETUP_TIMER">Setup timer</string>
+    <string name="DEFAULT_TIME">00:05</string>
+    <string name="SELECT_TIME">Select time</string>
     <string-array name="RESULT_TAB_TITLES">
         <item>Test information</item>
         <item>General result</item>

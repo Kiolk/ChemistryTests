@@ -1,244 +1,497 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-<LinearLayout
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    style="@style/CustomBlockStyle">
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:orientation="vertical">
-        <TextView
-            android:id="@+id/available_questions_indicator_text_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:textSize="@dimen/BIG_TEXT_SIZE"
-            android:textColor="@color/GRAY_TEXT_COLOR"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:textColor="@color/GRAY_TEXT_COLOR"
-            android:text="@string/TOTAL_QUESTIONS"/>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:orientation="vertical">
-        <TextView
-            android:id="@+id/filtered_questions_indicator_text_view"
-            android:layout_width="match_parent"
-            android:gravity="center"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/BIG_TEXT_SIZE"
-            android:textColor="@color/BLACK_TEXT_COLOR"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:textColor="@color/BLACK_TEXT_COLOR"
-            android:text="@string/TOTAL_QUESTIONS"/>
-    </LinearLayout>
-    <LinearLayout
-    android:layout_width="0dp"
-    android:layout_height="wrap_content"
-    android:layout_weight="1"
+    android:layout_height="match_parent"
     android:orientation="vertical">
-    <TextView
-        android:id="@+id/will_ask_questions_indicator_text_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="@string/ZERO"
-        android:textSize="@dimen/BIG_TEXT_SIZE"
-        android:textColor="@color/RED_TEXT_COLOR"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:textColor="@color/RED_TEXT_COLOR"
-        android:text="@string/TOTAL_QUESTIONS"/>
-</LinearLayout>
-</LinearLayout>
-    <LinearLayout style="@style/DeviderLineStyle">
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        style="@style/CustomBlockStyle">
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="horizontal">
-            <Button
-                android:id="@+id/select_topic_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/CHOSE_TOPICS"/>
-            <CheckBox
-                android:id="@+id/fixed_tags_check_box"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="horizontal">
-            <Button
-                android:id="@+id/select_keywords_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/CHOSE_TOPICS"/>
-            <CheckBox
-                android:id="@+id/fixed_keywords_check_box"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-    </LinearLayout>
-    <LinearLayout style="@style/DeviderLineStyle"/>
-    <LinearLayout
-        android:layout_width="match_parent"
-        style="@style/CustomBlockStyle"
-        android:gravity="left"
-        android:orientation="vertical">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/QUESTION_TYPE"/>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
-                <CheckBox
-                    android:id="@+id/single_choice_check_box"
-                    android:layout_width="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_height="wrap_content" />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="@string/SINGLE_CHOICE"/>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
-                <CheckBox
-                    android:id="@+id/multiple_choice_check_box"
-                    android:layout_width="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_height="wrap_content" />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="@string/MULTIPLE_CHOICE"/>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
-                <CheckBox
-                    android:id="@+id/input_choice_check_box"
-                    android:layout_width="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_height="wrap_content" />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="@string/INPUT_CHOICE"/>
-            </LinearLayout>
-        </LinearLayout>
-    </LinearLayout>
-    <LinearLayout style="@style/DeviderLineStyle"/>
-    <LinearLayout
-        android:layout_width="match_parent"
-       style="@style/CustomBlockStyle">
-        <SeekBar
-            android:padding="@dimen/BLOCK_PADDING"
-            android:id="@+id/number_asked_question_seek_bar"
-            android:layout_width="match_parent"
-            style="@style/Base.Widget.AppCompat.SeekBar.Discrete"
-            android:layout_height="30dp" />
-    </LinearLayout>
-    <LinearLayout style="@style/DeviderLineStyle"/>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        style="@style/CustomBlockStyle"
-        android:gravity="left">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/QUESTION_STRENGTH"/>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:orientation="horizontal">
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="4"
-                android:orientation="vertical">
-                <SeekBar
-                    android:id="@+id/strength_questionS_seek_bar"
-                    android:layout_width="match_parent"
-                    android:max="4"
-                    android:layout_gravity="bottom"
-                    style="@style/Base.Widget.AppCompat.SeekBar.Discrete"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="4"/>
-                <CheckBox
-                    android:id="@+id/difficulty_in_range_check_box"
-                    android:checked="false"
-                    android:layout_width="match_parent"
-                    android:text="@string/DIFFICULTY_IN_RANGE"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
-            <RelativeLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="3"
-                android:orientation="vertical">
-                <ImageView
-                    android:paddingTop="@dimen/BLOCK_PADDING"
-                    android:id="@+id/strength_indicator_image_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_strength_one"/>
-                <TextView
-                    android:id="@+id/strength_title_text_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/CUSTOM_TEST"
-                    android:layout_alignParentBottom="true"
-                    android:gravity="center_horizontal"/>
 
-            </RelativeLayout>
+    <LinearLayout
+        android:id="@+id/information_bar_linear_layout"
+        style="@style/CustomBlockStyle"
+        android:layout_width="match_parent">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/available_questions_indicator_text_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textColor="@color/GRAY_TEXT_COLOR"
+                android:textSize="@dimen/BIG_TEXT_SIZE" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/TOTAL_QUESTIONS"
+                android:textColor="@color/GRAY_TEXT_COLOR" />
         </LinearLayout>
-    </RelativeLayout>
-    <LinearLayout style="@style/DeviderLineStyle"/>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/filtered_questions_indicator_text_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textColor="@color/BLACK_TEXT_COLOR"
+                android:textSize="@dimen/BIG_TEXT_SIZE" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/TOTAL_QUESTIONS"
+                android:textColor="@color/BLACK_TEXT_COLOR" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/will_ask_questions_indicator_text_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/ZERO"
+                android:textColor="@color/RED_TEXT_COLOR"
+                android:textSize="@dimen/BIG_TEXT_SIZE" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/TOTAL_QUESTIONS"
+                android:textColor="@color/RED_TEXT_COLOR" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/first_separate_line"
+        style="@style/DeviderLineStyle"
+        android:layout_below="@+id/information_bar_linear_layout" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/first_separate_line"
+        android:paddingBottom="@dimen/CUSTOM_ITEM_HEIGHT">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                style="@style/CustomBlockStyle"
+                android:layout_width="match_parent">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/select_topic_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/CHOSE_TOPICS" />
+
+                    <CheckBox
+                        android:id="@+id/fixed_tags_check_box"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/select_keywords_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/CHOSE_TOPICS" />
+
+                    <CheckBox
+                        android:id="@+id/fixed_keywords_check_box"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout style="@style/DeviderLineStyle" />
+
+            <LinearLayout
+                style="@style/CustomBlockStyle"
+                android:layout_width="match_parent"
+                android:gravity="left"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/QUESTION_TYPE" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <CheckBox
+                            android:id="@+id/single_choice_check_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="@string/SINGLE_CHOICE" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <CheckBox
+                            android:id="@+id/multiple_choice_check_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="@string/MULTIPLE_CHOICE" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <CheckBox
+                            android:id="@+id/input_choice_check_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="@string/INPUT_CHOICE" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout style="@style/DeviderLineStyle" />
+
+            <LinearLayout
+                style="@style/CustomBlockStyle"
+                android:layout_width="match_parent">
+
+                <SeekBar
+                    android:id="@+id/number_asked_question_seek_bar"
+                    style="@style/Base.Widget.AppCompat.SeekBar.Discrete"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:padding="@dimen/BLOCK_PADDING" />
+            </LinearLayout>
+
+            <LinearLayout style="@style/DeviderLineStyle" />
+
+            <RelativeLayout
+                style="@style/CustomBlockStyle"
+                android:layout_width="match_parent"
+                android:gravity="left">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/QUESTION_STRENGTH" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="4"
+                        android:orientation="vertical">
+
+                        <SeekBar
+                            android:id="@+id/strength_questionS_seek_bar"
+                            style="@style/Base.Widget.AppCompat.SeekBar.Discrete"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="bottom"
+                            android:layout_weight="4"
+                            android:max="4" />
+
+                        <CheckBox
+                            android:id="@+id/difficulty_in_range_check_box"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:checked="false"
+                            android:text="@string/DIFFICULTY_IN_RANGE" />
+                    </LinearLayout>
+
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="3"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/strength_indicator_image_view"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingTop="@dimen/BLOCK_PADDING"
+                            android:src="@drawable/ic_strength_one" />
+
+                        <TextView
+                            android:id="@+id/strength_title_text_view"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentBottom="true"
+                            android:gravity="center_horizontal"
+                            android:text="@string/CUSTOM_TEST" />
+
+                    </RelativeLayout>
+                </LinearLayout>
+            </RelativeLayout>
+
+            <LinearLayout style="@style/DeviderLineStyle" />
+            <LinearLayout
+                style="@style/CustomBlockStyle"
+                android:layout_width="match_parent"
+                android:gravity="left"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/ADDITIONAL_INFORMATION" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center_horizontal">
+                            <ImageView
+                                android:id="@+id/theory_image_view"
+                                android:layout_width="@dimen/SMALL_ICON_SIZE"
+                                android:layout_height="@dimen/SMALL_ICON_SIZE"
+                                android:src="@drawable/ic_theory"/>
+                            <CheckBox
+                                android:gravity="center"
+                                android:id="@+id/theory_choice_check_box"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center" />
+                        </LinearLayout>
+                        <TextView
+                            android:layout_gravity="center_horizontal"
+                            android:gravity="center_horizontal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/THEORY" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center_horizontal">
+                            <ImageView
+                                android:id="@+id/hint_image_view"
+                                android:layout_width="@dimen/SMALL_ICON_SIZE"
+                                android:layout_height="@dimen/SMALL_ICON_SIZE"
+                                android:src="@drawable/ic_help"/>
+                            <CheckBox
+                                android:gravity="center"
+                                android:id="@+id/hint_choice_check_box"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center" />
+                        </LinearLayout>
+                        <TextView
+                            android:layout_gravity="center_horizontal"
+                            android:gravity="center_horizontal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/HINT" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center_horizontal">
+                            <ImageView
+                                android:id="@+id/explanation_image_view"
+                                android:layout_width="@dimen/SMALL_ICON_SIZE"
+                                android:layout_height="@dimen/SMALL_ICON_SIZE"
+                                android:src="@drawable/ic_explanation_gray"/>
+                            <CheckBox
+                                android:gravity="center"
+                                android:id="@+id/explanation_choice_check_box"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center" />
+                        </LinearLayout>
+                        <TextView
+                            android:layout_gravity="center_horizontal"
+                            android:gravity="center_horizontal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/EXPLANATION" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout style="@style/DeviderLineStyle" />
+
+            <LinearLayout
+                style="@style/CustomBlockStyle"
+                android:layout_width="match_parent"
+                android:orientation="horizontal">
+
+                <CheckBox
+                    android:id="@+id/setup_timer_check_box"
+                    android:layout_width="0dp"
+                    android:text="@string/SETUP_TIMER"
+                    android:layout_weight="1"
+                    android:textColor="@color/INACTIVE_ICON"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@+id/setup_time_text_view"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:textSize="@dimen/BIG_TEXT_SIZE"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/digital"
+                    android:textColor="@color/INACTIVE_ICON"
+                    android:layout_height="wrap_content"
+                    android:text="@string/DEFAULT_TIME"/>
+                <Button
+                    android:id="@+id/setup_time_button"
+                    android:layout_width="0dp"
+                    android:enabled="false"
+                    android:layout_weight="1"
+                    android:textColor="@color/INACTIVE_ICON"
+                    android:layout_height="wrap_content"
+                    android:text="@string/SELECT_TIME"/>
+
+            </LinearLayout>
+
+            <LinearLayout style="@style/DeviderLineStyle" />
+            <LinearLayout
+                style="@style/CustomBlockStyle"
+                android:layout_width="match_parent"
+                android:orientation="horizontal">
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_gravity="center"
+                    android:orientation="horizontal">
+                    <ImageView
+                        android:layout_width="@dimen/SMALL_ICON_SIZE"
+                        android:layout_height="@dimen/SMALL_ICON_SIZE"
+                        android:src="@drawable/ic_pulling_up_training_silhouette"/>
+                    <Switch
+                        android:id="@+id/type_of_question_switch"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    <ImageView
+                        android:layout_width="@dimen/SMALL_ICON_SIZE"
+                        android:layout_height="@dimen/SMALL_ICON_SIZE"
+                        android:src="@drawable/ic_exam"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_gravity="center"
+                    android:orientation="horizontal">
+                    <ImageView
+                        android:layout_width="@dimen/SMALL_ICON_SIZE"
+                        android:layout_height="@dimen/SMALL_ICON_SIZE"
+                        android:src="@drawable/ic_recycable"/>
+                    <Switch
+                        android:id="@+id/order_of_question_switch"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    <ImageView
+                        android:layout_width="@dimen/SMALL_ICON_SIZE"
+                        android:layout_height="@dimen/SMALL_ICON_SIZE"
+                        android:src="@drawable/ic_arrow_pointing_to_right"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout style="@style/DeviderLineStyle" />
+        </LinearLayout>
+    </ScrollView>
+
     <Button
-        android:layout_gravity="bottom"
         android:id="@+id/start_custom_test_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/START_TEST"/>
-</LinearLayout>
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/CUSTOM_ITEM_HEIGHT"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom"
+        android:text="@string/START_TEST" />
+</RelativeLayout>

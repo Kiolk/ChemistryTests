@@ -25,10 +25,47 @@ class Test(var questions: MutableList<CloseQuestion> = mutableListOf(),
         checkRandomisation()
         checkTags()
         checkKeyWords()
-        checkByListString(params.keyWords, false)
+//        checkByListString(params.keyWords, false)
         checkStrength()
         checkQuestionType()
+        filteredByAdditionalInformation()
         checkOrder()
+    }
+
+    private fun filteredByAdditionalInformation() {
+        var tmpSortedQuestions: MutableList<CloseQuestion> = mutableListOf()
+        mSortedQuestions.forEach {
+            if (params.withHint) {
+                if(it.hints != null){
+                    tmpSortedQuestions.add(it)
+                }
+            }else{
+                tmpSortedQuestions.add(it)
+            }
+        }
+        mSortedQuestions = tmpSortedQuestions
+        tmpSortedQuestions = mutableListOf()
+        mSortedQuestions.forEach {
+            if(params.withTheory){
+                if(it.theoryListId?.isNotEmpty()==true){
+                    tmpSortedQuestions.add(it)
+                }
+            }else{
+                tmpSortedQuestions.add(it)
+            }
+        }
+        mSortedQuestions = tmpSortedQuestions
+        tmpSortedQuestions = mutableListOf()
+        mSortedQuestions.forEach {
+            if(params.withExplanation){
+                if(it.answerExplanations != null){
+                    tmpSortedQuestions.add(it)
+                }
+            }else{
+                tmpSortedQuestions.add(it)
+            }
+        }
+        mSortedQuestions = tmpSortedQuestions
     }
 
     private fun checkKeyWords() {

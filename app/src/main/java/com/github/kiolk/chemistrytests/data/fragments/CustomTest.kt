@@ -1,8 +1,10 @@
 package com.github.kiolk.chemistrytests.data.fragments
 
 import android.app.AlertDialog
+import android.app.TimePickerDialog
 import android.content.DialogInterface
 import android.content.Intent
+import android.content.res.ColorStateList
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
@@ -19,28 +21,43 @@ import com.github.kiolk.chemistrytests.data.models.CloseQuestion.Question.MULTIP
 import com.github.kiolk.chemistrytests.data.models.CloseQuestion.Question.SINGLE_CHOICE
 import com.github.kiolk.chemistrytests.ui.activities.TEST_PARAM_INT
 import com.github.kiolk.chemistrytests.ui.activities.TestingActivity
+import com.github.kiolk.chemistrytests.utils.CONSTANTS.SHORT_DURATION_TIME
+import com.github.kiolk.chemistrytests.utils.convertEpochTime
 import com.google.firebase.auth.FirebaseAuth
+import kotlinx.android.synthetic.main.fragment_custome_test.*
 
 class CustomTest : Fragment() {
+
+    companion object {
+        val DEFAULT_TIMER_TIME: Long = 300000L
+        val ONE_HOURE: Long = 3600000L
+        val ONE_MINUTE: Long = 60000L
+    }
 
     var mSelectedTopics: MutableList<String> = mutableListOf()
     lateinit var mSortedQuestions: MutableList<CloseQuestion>
     lateinit var mSortedQuestionsTmp: MutableList<CloseQuestion>
     lateinit var mQuestions: MutableList<CloseQuestion>
     lateinit var mQuestionType: MutableList<Int>
-    lateinit var mCheckedArray : BooleanArray
+    lateinit var mCheckedArray: BooleanArray
     var mListQuestionId: MutableList<Int>? = null
     var mTestInfo: TestInfo = TestInfo()
     var mQuestionListAdapter: SelectQuestionsArrayAdapter? = null
     var isCheckedSingle: Boolean = false
     var isCheckedMultiple: Boolean = false
     var isCheckedInput: Boolean = false
-    var isCheckedArrayInitialize : Boolean = false
-    var isFirstTime : Boolean = true
+    var isCheckedArrayInitialize: Boolean = false
+    var isFirstTime: Boolean = true
     var mNumberAskedQuestions: Int = 0
-    var mQuestionsStrength : Int = 1
+    var mQuestionsStrength: Int = 1
     var isSaveTest: Boolean = false
-    var inRangeDifficulty : Boolean = false
+    var inRangeDifficulty: Boolean = false
+    var withHint: Boolean = false
+    var withTheory: Boolean = false
+    var withExplanation: Boolean = false
+    var mTimerTime: Long? = null
+    var mOrder : Int = RUNDOM_ORDER
+    var mTypeOfTest : Int = TRAINING_TEST
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_custome_test, null)
@@ -48,7 +65,7 @@ class CustomTest : Fragment() {
     }
 
     fun combineCustomTest() {
-        if(isFirstTime){
+        if (isFirstTime) {
             initialisation()
             isFirstTime = false
         }
@@ -97,12 +114,84 @@ class CustomTest : Fragment() {
         }
         setupQuestionsStrengthBlock()
         setupDifficultyRange()
+        setupAdditionalInformation()
+        setAvailableQuestions()
+        setupSelectedTimeBlock()
+        setupTypeAndDirect()
+    }
+
+    private fun setupTypeAndDirect() {
+        val typeSwitch = view?.findViewById<Switch>(R.id.type_of_question_switch)
+        typeSwitch?.setOnClickListener{
+            if(typeSwitch.isChecked){
+                mTypeOfTest = TRAINING_TEST
+            }else{
+                mTypeOfTest = EXAM_TEST
+            }
+        }
+    }
+
+    private fun setupSelectedTimeBlock() {
+        val timerCheckBox = view?.findViewById<CheckBox>(R.id.setup_timer_check_box)
+        val button = view?.findViewById<Button>(R.id.setup_time_button)
+        val selectedTimeTitle = view?.findViewById<TextView>(R.id.setup_time_text_view)
+
+        timerCheckBox?.setOnClickListener {
+            if (timerCheckBox.isChecked) {
+                mTimerTime = DEFAULT_TIMER_TIME
+                button?.isEnabled = true
+                selectedTimeTitle?.setTextColor(resources.getColor(R.color.ACTIVE_BLACK_TEXT_COLOR))
+                timerCheckBox.setTextColor(resources.getColor(R.color.ACTIVE_BLACK_TEXT_COLOR))
+                button?.setTextColor(resources.getColor(R.color.ACTIVE_BLACK_TEXT_COLOR))
+
+            } else {
+                mTimerTime = null
+                button?.isEnabled = false
+                selectedTimeTitle?.text = convertEpochTime(DEFAULT_TIMER_TIME, context, SHORT_DURATION_TIME, true)
+                selectedTimeTitle?.setTextColor(resources.getColor(R.color.INACTIVE_ICON))
+                timerCheckBox.setTextColor(resources.getColor(R.color.INACTIVE_ICON))
+                button?.setTextColor(resources.getColor(R.color.INACTIVE_ICON))
+            }
+        }
+
+        button?.setOnClickListener {
+            val hour = mTimerTime?.div(ONE_HOURE) ?: 0
+            val minutes = (mTimerTime?.mod(ONE_HOURE))?.div(ONE_MINUTE) ?: 5
+            val dialog: TimePickerDialog = TimePickerDialog(context, TimePickerDialog.OnTimeSetListener { view, hourOfDay, minute ->
+                mTimerTime = (hourOfDay * ONE_HOURE) + (minute * ONE_MINUTE)
+//                hour = mTimerTime?.div(ONE_HOURE) ?: 0
+//                minutes = (mTimerTime?.mod(ONE_HOURE))?.div(ONE_MINUTE) ?: 5
+                selectedTimeTitle?.text = convertEpochTime(mTimerTime ?: 0, context, SHORT_DURATION_TIME, true)
+            }, hour.toInt(), minutes.toInt(), true)
+            dialog.setTitle(resources.getString(R.string.SETUP_TIMER))
+            dialog.show()
+        }
+    }
+
+    private fun setupAdditionalInformation() {
+        val hint = view?.findViewById<CheckBox>(R.id.hint_choice_check_box)
+        hint?.setOnClickListener {
+            withHint = hint.isChecked
+            setAvailableQuestions()
+        }
+        val theory = view?.findViewById<CheckBox>(R.id.theory_choice_check_box)
+        theory?.setOnClickListener {
+            withTheory = theory.isChecked
+            setAvailableQuestions()
+        }
+        val explanation = view?.findViewById<CheckBox>(R.id.explanation_choice_check_box)
+        explanation?.setOnClickListener {
+            withExplanation = explanation.isChecked
+            setAvailableQuestions()
+        }
     }
 
     private fun setupDifficultyRange() {
         val difficulty = view?.findViewById<CheckBox>(R.id.difficulty_in_range_check_box)
-                difficulty?.setOnClickListener { inRangeDifficulty = difficulty.isChecked
-                setAvailableQuestions()}
+        difficulty?.setOnClickListener {
+            inRangeDifficulty = difficulty.isChecked
+            setAvailableQuestions()
+        }
     }
 
     private fun initialisation() {
@@ -113,20 +202,20 @@ class CustomTest : Fragment() {
         mQuestionType = mutableListOf()
     }
 
-    private fun setupQuestionsStrengthBlock(){
+    private fun setupQuestionsStrengthBlock() {
         val strengthSeekBar = view?.findViewById<SeekBar>(R.id.strength_questionS_seek_bar)
         mQuestionsStrength = (strengthSeekBar?.progress ?: 0) + 1
-        strengthSeekBar?.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener{
+        strengthSeekBar?.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 mQuestionsStrength = progress + 1
                 val indicator = view?.findViewById<ImageView>(R.id.strength_indicator_image_view)
                 val strengthText = view?.findViewById<TextView>(R.id.strength_title_text_view)
                 val titleArray = resources.getStringArray(R.array.QUESTIONS_STRENGTH_TYPE)
-                when(progress){
-                     0 -> {
-                         indicator?.setImageDrawable(resources.getDrawable(R.drawable.ic_strength_one))
-                         strengthText?.text = titleArray[progress]
-                     }
+                when (progress) {
+                    0 -> {
+                        indicator?.setImageDrawable(resources.getDrawable(R.drawable.ic_strength_one))
+                        strengthText?.text = titleArray[progress]
+                    }
                     1 -> {
                         indicator?.setImageDrawable(resources.getDrawable(R.drawable.ic_strength_two))
                         strengthText?.text = titleArray[progress]
@@ -161,7 +250,7 @@ class CustomTest : Fragment() {
         mQuestions.forEach { it.tags?.forEach { topics.add(it) } }
         val arrayTopic = topics.toSet().toTypedArray()
         arrayTopic.sortBy { it }
-        if(!isCheckedArrayInitialize) {
+        if (!isCheckedArrayInitialize) {
             mCheckedArray = kotlin.BooleanArray(arrayTopic.size)
             isCheckedArrayInitialize = true
         }
@@ -171,7 +260,7 @@ class CustomTest : Fragment() {
                 override fun onClick(dialog: DialogInterface?, which: Int, isChecked: Boolean) {
                     if (isChecked) {
                         mSelectedTopics.add(arrayTopic[which])
-                        mCheckedArray[which]= true
+                        mCheckedArray[which] = true
                     } else if (mSelectedTopics.contains(arrayTopic[which])) {
                         mSelectedTopics.remove(arrayTopic[which])
                         mCheckedArray[which] = false
@@ -219,6 +308,7 @@ class CustomTest : Fragment() {
         }
         filteredByTypeQuestion()
         filtererByStrengthQuestions()
+        filteredByAdditionalInformation()
         view?.findViewById<TextView>(R.id.filtered_questions_indicator_text_view)?.text = mSortedQuestions.size.toString()
         view?.findViewById<SeekBar>(R.id.number_asked_question_seek_bar)?.max = mSortedQuestions.size
         view?.findViewById<SeekBar>(R.id.number_asked_question_seek_bar)?.progress = mSortedQuestions.size
@@ -242,14 +332,50 @@ class CustomTest : Fragment() {
 //        mQuestionListAdapter?.notifyDataSetChanged()
     }
 
+    private fun filteredByAdditionalInformation() {
+        var tmpSortedQuestions: MutableList<CloseQuestion> = mutableListOf()
+        mSortedQuestions.forEach {
+            if (withHint) {
+                if (it.hints != null) {
+                    tmpSortedQuestions.add(it)
+                }
+            } else {
+                tmpSortedQuestions.add(it)
+            }
+        }
+        mSortedQuestions = tmpSortedQuestions
+        tmpSortedQuestions = mutableListOf()
+        mSortedQuestions.forEach {
+            if (withTheory) {
+                if (it.theoryListId?.isNotEmpty() == true) {
+                    tmpSortedQuestions.add(it)
+                }
+            } else {
+                tmpSortedQuestions.add(it)
+            }
+        }
+        mSortedQuestions = tmpSortedQuestions
+        tmpSortedQuestions = mutableListOf()
+        mSortedQuestions.forEach {
+            if (withExplanation) {
+                if (it.answerExplanations != null) {
+                    tmpSortedQuestions.add(it)
+                }
+            } else {
+                tmpSortedQuestions.add(it)
+            }
+        }
+        mSortedQuestions = tmpSortedQuestions
+    }
+
     private fun filtererByStrengthQuestions() {
         val tmpSortedQuestions: MutableList<CloseQuestion> = mutableListOf()
         mSortedQuestions.forEach {
-            if(inRangeDifficulty){
+            if (inRangeDifficulty) {
                 if (it.questionStrength <= mQuestionsStrength) {
                     tmpSortedQuestions.add(it)
                 }
-            }else{
+            } else {
                 if (it.questionStrength == mQuestionsStrength) {
                     tmpSortedQuestions.add(it)
                 }
@@ -287,10 +413,11 @@ class CustomTest : Fragment() {
         updateTestInformation()
         val params: TestParams = TestParams(10, RANDOM_ORDER, TRAINING_TEST,
                 mNumberAskedQuestions, true, FREE_TEST, mTestInfo, mSelectedTopics,
-                mQuestionType, null, null, mListQuestionId,
-                mQuestionsStrength, 75F, null, inRangeDifficulty)
+                mQuestionType, mTimerTime, null, mListQuestionId,
+                mQuestionsStrength, 75F, null, inRangeDifficulty,
+                withHint, withTheory, withExplanation)
         val intent: Intent = Intent(context, TestingActivity::class.java)
-        if(isSaveTest){
+        if (isSaveTest) {
             TestsPresenter.saveCustomTest(params)
         }
         intent.putExtra(TEST_PARAM_INT, params)
