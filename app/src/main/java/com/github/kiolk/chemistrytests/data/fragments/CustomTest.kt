@@ -56,7 +56,7 @@ class CustomTest : Fragment() {
     var withTheory: Boolean = false
     var withExplanation: Boolean = false
     var mTimerTime: Long? = null
-    var mOrder : Int = RUNDOM_ORDER
+    var mOrder : Int = RANDOM_ORDER
     var mTypeOfTest : Int = TRAINING_TEST
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -127,6 +127,14 @@ class CustomTest : Fragment() {
                 mTypeOfTest = TRAINING_TEST
             }else{
                 mTypeOfTest = EXAM_TEST
+            }
+        }
+        val orderSwitch = view?.findViewById<Switch>(R.id.order_of_question_switch)
+        orderSwitch?.setOnClickListener{
+            if(orderSwitch.isChecked){
+                mOrder = RANDOM_ORDER
+            }else{
+                mOrder = DIRECT_ORDER
             }
         }
     }
@@ -411,7 +419,7 @@ class CustomTest : Fragment() {
     fun startTest() {
         updateQuestionList()
         updateTestInformation()
-        val params: TestParams = TestParams(10, RANDOM_ORDER, TRAINING_TEST,
+        val params: TestParams = TestParams(10, mOrder, mTypeOfTest,
                 mNumberAskedQuestions, true, FREE_TEST, mTestInfo, mSelectedTopics,
                 mQuestionType, mTimerTime, null, mListQuestionId,
                 mQuestionsStrength, 75F, null, inRangeDifficulty,
