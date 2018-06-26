@@ -1,22 +1,19 @@
 package com.github.kiolk.chemistrytests.data.executs
 
 import com.github.kiolk.chemistrytests.data.asynctasks.ResultCallback
-import com.github.kiolk.chemistrytests.data.asynctasks.ResultObject
-import com.github.kiolk.chemistrytests.data.asynctasks.SingleExecut
 import com.github.kiolk.chemistrytests.data.models.QuestionsDataBaseInfo
 import com.github.kiolk.chemistrytests.ui.activities.DATA_BASE_INFO_CHAILD
 import com.google.firebase.database.*
 
-class GetDataBaseInformation(override var callback: ResultCallback) : SingleExecut{
+class GetDataBaseInformation(var callback: ResultCallback) {
 
     lateinit var mChidInforListener: ChildEventListener
     lateinit var mFirebaseDatabase: FirebaseDatabase
     lateinit var mInfoDatabaseReference: DatabaseReference
-    var dbInfo : QuestionsDataBaseInfo? = null
+    var dbInfo: QuestionsDataBaseInfo? = null
 
-    override fun perform(): ResultObject<*> {
+    init {
         getDBInformation()
-        return ResultObject(dbInfo, callback)
     }
 
     private fun getDBInformation() {
@@ -35,6 +32,7 @@ class GetDataBaseInformation(override var callback: ResultCallback) : SingleExec
             override fun onChildAdded(p0: DataSnapshot?, p1: String?) {
                 dbInfo = p0?.getValue(QuestionsDataBaseInfo::class.java)
                 mInfoDatabaseReference.removeEventListener(mChidInforListener)
+                callback.onSuccess(dbInfo)
             }
 
             override fun onChildRemoved(p0: DataSnapshot?) {

@@ -2,7 +2,7 @@ package com.github.kiolk.chemistrytests.data.fragments
 
 import com.github.kiolk.chemistrytests.data.models.QuestionsDataBaseInfo
 
-interface AppInformationModel{
+interface AppInformationView {
     fun setAppInfo(dataBaseInfo : QuestionsDataBaseInfo)
 
     fun showProgressBar(show : Boolean)

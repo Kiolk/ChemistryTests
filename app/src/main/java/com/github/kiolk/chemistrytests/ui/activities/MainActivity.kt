@@ -60,6 +60,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var mChildEventListener: ChildEventListener
     var mStatisticFragment : GeneralStatisticFragment = GeneralStatisticFragment()
     var mUserStatisticFragment : UserStatisticFragment = UserStatisticFragment()
+    var mAppInformationViewFragment : AppInformationViewFragment = AppInformationViewFragment()
     var isTestFragmentShow: Boolean = false
     var cnt = 0
     var cnt2 = 0
@@ -196,6 +197,9 @@ class MainActivity : AppCompatActivity() {
             4 ->{
                 showStatistic()
             }
+            7 -> {
+                showInformation()
+            }
             8 -> {
                 Toast.makeText(baseContext, "Show third mGeneralStatistic", Toast.LENGTH_SHORT).show()
                 AuthUI.getInstance().signOut(baseContext)
@@ -205,6 +209,14 @@ class MainActivity : AppCompatActivity() {
             }
         }
         main_drawer_layout.closeDrawer(navigation_relative_layout)
+    }
+
+    private fun showInformation() {
+        main_frame_layout.visibility = View.VISIBLE
+        start_relative_layout.visibility = View.GONE
+//        mUserStatisticFragment = UserStatisticFragment()
+        showFragment(supportFragmentManager, R.id.main_frame_layout, mAppInformationViewFragment)
+        mAppInformationViewFragment.presenter.getActualDataInformation()
     }
 
     private fun showStatistic() {
@@ -424,6 +436,7 @@ class MainActivity : AppCompatActivity() {
         closeFragment(supportFragmentManager, mCompletedTsts)
         closeFragment(supportFragmentManager, mTestsFragment)
         closeFragment(supportFragmentManager, mUserStatisticFragment)
+        closeFragment(supportFragmentManager, mAppInformationViewFragment)
         isTestFragmentShow = false
     }
 }
