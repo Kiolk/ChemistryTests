@@ -2,30 +2,23 @@ package com.github.kiolk.chemistrytests.data.fragments
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.helper.ItemTouchHelper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
 import com.github.kiolk.chemistrytests.R
-import com.github.kiolk.chemistrytests.data.TestsPresenter
+import com.github.kiolk.chemistrytests.data.fragments.tests.TestsPresenter
 import com.github.kiolk.chemistrytests.data.adapters.AvailableTestRecyclerAdapter
 import com.github.kiolk.chemistrytests.data.asynctasks.ResultCallback
-import com.github.kiolk.chemistrytests.data.database.DBOperations
 import com.github.kiolk.chemistrytests.data.fragments.bases.RecyclerTestBaseFragment
 import com.github.kiolk.chemistrytests.data.listeners.OnItemClickListener
 import com.github.kiolk.chemistrytests.data.listeners.RecyclerTouchListener
 import com.github.kiolk.chemistrytests.data.models.TestParams
 import com.github.kiolk.chemistrytests.ui.activities.TEST_PARAM_INT
 import com.github.kiolk.chemistrytests.ui.activities.TestingActivity
-import com.google.firebase.database.ChildEventListener
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
-import reversSort
 
 class LatestTestsFragment : RecyclerTestBaseFragment() {
     override val titleId: Int

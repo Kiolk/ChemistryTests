@@ -2,15 +2,14 @@ package com.github.kiolk.chemistrytests.data.fragments
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.github.kiolk.chemistrytests.R
-import com.github.kiolk.chemistrytests.data.OnTestCallback
-import com.github.kiolk.chemistrytests.data.TestsPresenter
+import com.github.kiolk.chemistrytests.data.fragments.tests.OnTestCallback
+import com.github.kiolk.chemistrytests.data.fragments.tests.TestsPresenter
 import com.github.kiolk.chemistrytests.data.adapters.AvailableTestRecyclerAdapter
 import com.github.kiolk.chemistrytests.data.fragments.bases.RecyclerTestBaseFragment
 import com.github.kiolk.chemistrytests.data.listeners.OnItemClickListener

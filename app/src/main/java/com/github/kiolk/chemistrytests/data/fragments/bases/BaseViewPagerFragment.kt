@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewParent
+import android.widget.ProgressBar
 import com.github.kiolk.chemistrytests.R
 import kotlinx.android.synthetic.main.tabbed_view_pager.view.*
 
@@ -29,5 +30,7 @@ abstract class BaseViewPagerFragment : Fragment(){
     fun getTabLayout() : TabLayout?{
         return view?.findViewById(R.id.tab_layout)
     }
+
+    fun getProgerssBas() = view?.findViewById<ProgressBar>(R.id.progress_bar)
 }
 

@@ -1,13 +1,11 @@
-package com.github.kiolk.chemistrytests.data
+package com.github.kiolk.chemistrytests.data.fragments.tests
 
 import android.content.Context
-import android.support.v7.widget.RecyclerView
 import com.github.kiolk.chemistrytests.R
 import com.github.kiolk.chemistrytests.data.adapters.TestsPageAdapter.Companion.CUSTOM_TESTS
 import com.github.kiolk.chemistrytests.data.adapters.TestsPageAdapter.Companion.LASTS_TEST
 import com.github.kiolk.chemistrytests.data.asynctasks.ResultCallback
 import com.github.kiolk.chemistrytests.data.asynctasks.SingleAsyncTask
-import com.github.kiolk.chemistrytests.data.asynctasks.SingleExecut
 import com.github.kiolk.chemistrytests.data.database.DBOperations
 import com.github.kiolk.chemistrytests.data.executs.AddCustomTestInUserDB
 import com.github.kiolk.chemistrytests.data.executs.GetDataFromDb
@@ -15,7 +13,6 @@ import com.github.kiolk.chemistrytests.data.fragments.CustomUserTestsFragment
 import com.github.kiolk.chemistrytests.data.fragments.FavaoriteTestFragment
 import com.github.kiolk.chemistrytests.data.fragments.LastModifiedFragment
 import com.github.kiolk.chemistrytests.data.fragments.LatestTestsFragment
-import com.github.kiolk.chemistrytests.data.models.Test
 import com.github.kiolk.chemistrytests.data.models.TestFragmentModel
 import com.github.kiolk.chemistrytests.data.models.TestParams
 

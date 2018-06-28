@@ -22,6 +22,7 @@ import com.github.kiolk.chemistrytests.data.executs.PrepareCoursesFromDb
 import com.github.kiolk.chemistrytests.data.fragments.*
 import com.github.kiolk.chemistrytests.data.fragments.CompletedTestsFragment.Companion.RESULT_TEST_TAG
 import com.github.kiolk.chemistrytests.data.fragments.help.HelpFragment
+import com.github.kiolk.chemistrytests.data.fragments.tests.TestsFragment
 import com.github.kiolk.chemistrytests.data.models.*
 import com.github.kiolk.chemistrytests.data.models.CloseQuestion.Question.EASY_QUESTION
 import com.github.kiolk.chemistrytests.data.models.CloseQuestion.Question.SINGLE_CHOICE
@@ -256,6 +257,7 @@ class MainActivity : AppCompatActivity() {
             }
             mTestsFragment = TestsFragment()
             showFragment(supportFragmentManager, R.id.main_frame_layout, mTestsFragment)
+            mTestsFragment.showTests()
             isTestFragmentShow = true
         }
     }

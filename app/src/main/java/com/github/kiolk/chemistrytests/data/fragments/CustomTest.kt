@@ -4,7 +4,6 @@ import android.app.AlertDialog
 import android.app.TimePickerDialog
 import android.content.DialogInterface
 import android.content.Intent
-import android.content.res.ColorStateList
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
@@ -12,7 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import com.github.kiolk.chemistrytests.R
-import com.github.kiolk.chemistrytests.data.TestsPresenter
+import com.github.kiolk.chemistrytests.data.fragments.tests.TestsPresenter
 import com.github.kiolk.chemistrytests.data.adapters.SelectQuestionsArrayAdapter
 import com.github.kiolk.chemistrytests.data.database.DBOperations
 import com.github.kiolk.chemistrytests.data.models.*
@@ -24,7 +23,6 @@ import com.github.kiolk.chemistrytests.ui.activities.TestingActivity
 import com.github.kiolk.chemistrytests.utils.CONSTANTS.SHORT_DURATION_TIME
 import com.github.kiolk.chemistrytests.utils.convertEpochTime
 import com.google.firebase.auth.FirebaseAuth
-import kotlinx.android.synthetic.main.fragment_custome_test.*
 
 class CustomTest : Fragment() {
 

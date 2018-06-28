@@ -15,7 +15,7 @@ abstract class RecyclerTestBaseFragment : BaseFragment(){
         val recycler = view.findViewById<RecyclerView>(recyclerId)
         recycler?.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         recycler?.adapter = adapter
-        recycler?.isNestedScrollingEnabled = false
+        recycler?.isNestedScrollingEnabled = true
         recycler?.addOnItemTouchListener(RecyclerTouchListener(context, recycler, itemTouchListener))
     }
 }
