@@ -23,6 +23,8 @@ import com.github.kiolk.chemistrytests.ui.activities.MainActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
 class CustomTestFragment : BaseFragment() {
+    override val titleId: Int
+        get() = R.string.CUSTOM_TEST
 
     lateinit var changeStateListener: ViewPager.OnPageChangeListener
     var customTestAdapter: CustomTestPageAdapter? = null
@@ -73,7 +75,8 @@ class CustomTestFragment : BaseFragment() {
         viewPager.currentItem = 2
         viewPager.addOnPageChangeListener(changeStateListener)
         tabLayout.setupWithViewPager(viewPager)
-        setupToolBar(view, R.id.custom_test_tool_bar)
+        setupToolBar()
+//        setupToolBar(view, R.id.custom_test_tool_bar)
         return view
     }
 }

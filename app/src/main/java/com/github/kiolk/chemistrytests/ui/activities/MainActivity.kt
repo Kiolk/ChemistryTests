@@ -21,10 +21,10 @@ import com.github.kiolk.chemistrytests.data.database.DBOperations
 import com.github.kiolk.chemistrytests.data.executs.PrepareCoursesFromDb
 import com.github.kiolk.chemistrytests.data.fragments.*
 import com.github.kiolk.chemistrytests.data.fragments.CompletedTestsFragment.Companion.RESULT_TEST_TAG
+import com.github.kiolk.chemistrytests.data.fragments.help.HelpFragment
 import com.github.kiolk.chemistrytests.data.models.*
 import com.github.kiolk.chemistrytests.data.models.CloseQuestion.Question.EASY_QUESTION
 import com.github.kiolk.chemistrytests.data.models.CloseQuestion.Question.SINGLE_CHOICE
-import com.github.kiolk.chemistrytests.data.presenters.StatisticPresenter
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import kiolk.com.github.pen.Pen
@@ -32,7 +32,6 @@ import kotlinx.android.synthetic.main.activity_main.*
 import reversSort
 import showFragment
 
-//val RC_SIGN_IN: Int = 1
 val TEST_PARAM_INT: String = "params"
 val TESTS_CHILD: String = "tests"
 val DATA_BASE_INFO_CHAILD: String = "DBInformation"
@@ -58,6 +57,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var mTestsFragment: TestsFragment
     lateinit var mTestDataBaseReference: DatabaseReference
     lateinit var mChildEventListener: ChildEventListener
+    var mHelpFragment : HelpFragment = HelpFragment()
     var mStatisticFragment : GeneralStatisticFragment = GeneralStatisticFragment()
     var mUserStatisticFragment : UserStatisticFragment = UserStatisticFragment()
     var mAppInformationViewFragment : AppInformationViewFragment = AppInformationViewFragment()
@@ -69,7 +69,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(main_tool_bar)
-        main_tool_bar.visibility = View.GONE
+//        main_tool_bar.visibility = View.GONE
         main_drawer_layout.setStatusBarBackground(R.color.fui_transparent)
         mAvaliableTests = AvaliableFragments()
         mAvailableTests = AvaliableTestFragment()
@@ -197,6 +197,7 @@ class MainActivity : AppCompatActivity() {
             4 ->{
                 showStatistic()
             }
+            6 -> showHelpInformation()
             7 -> {
                 showInformation()
             }
@@ -209,6 +210,14 @@ class MainActivity : AppCompatActivity() {
             }
         }
         main_drawer_layout.closeDrawer(navigation_relative_layout)
+    }
+
+    private fun showHelpInformation() {
+        main_frame_layout.visibility = View.VISIBLE
+        start_relative_layout.visibility = View.GONE
+//        mUserStatisticFragment = UserStatisticFragment()
+        showFragment(supportFragmentManager, R.id.main_frame_layout, mHelpFragment)
+        mHelpFragment.presenter.executeHelpInformation()
     }
 
     private fun showInformation() {
@@ -437,6 +446,7 @@ class MainActivity : AppCompatActivity() {
         closeFragment(supportFragmentManager, mTestsFragment)
         closeFragment(supportFragmentManager, mUserStatisticFragment)
         closeFragment(supportFragmentManager, mAppInformationViewFragment)
+        closeFragment(supportFragmentManager, mHelpFragment)
         isTestFragmentShow = false
     }
 }

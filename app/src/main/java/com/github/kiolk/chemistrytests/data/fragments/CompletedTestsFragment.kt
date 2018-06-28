@@ -24,7 +24,9 @@ import com.github.kiolk.chemistrytests.ui.activities.MainActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import showFragment
 
-class CompletedTestsFragment : Fragment() {
+class CompletedTestsFragment : BaseFragment() {
+    override val titleId: Int
+        get() = R.string.HISTORY
 
     companion object {
         val RESULT_TEST_TAG : String = "ResultTag"
@@ -36,6 +38,7 @@ class CompletedTestsFragment : Fragment() {
     var isShowResult : Boolean = false
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        setupToolBar()
         return inflater.inflate(R.layout.fragment_last_user_tests, null)
     }
 

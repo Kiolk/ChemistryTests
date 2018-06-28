@@ -17,7 +17,10 @@ import com.github.kiolk.chemistrytests.data.models.TestParams
 
 class TestsFragment : BaseFragment(){
 
-//    lateinit var mListener : ViewPager.OnPageChangeListener
+    override val titleId: Int
+        get() = R.string.CUSTOM_TEST
+
+    //    lateinit var mListener : ViewPager.OnPageChangeListener
      var mAdapter : TestsPageAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,6 +56,6 @@ class TestsFragment : BaseFragment(){
         viewPager?.adapter = mAdapter
 //        viewPager?.addOnPageChangeListener(mListener)
         view.findViewById<TabLayout>(R.id.available_test_tab_layout)?.setupWithViewPager(viewPager)
-        setupToolBar(view,  R.id.custom_test_tool_bar)
+//        setupToolBar(view,  R.id.custom_test_tool_bar)
     }
 }

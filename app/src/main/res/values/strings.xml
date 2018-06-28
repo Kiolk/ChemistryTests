@@ -69,6 +69,8 @@
     <string name="SETUP_TIMER">Setup timer</string>
     <string name="DEFAULT_TIME">00:05</string>
     <string name="SELECT_TIME">Select time</string>
+    <string name="STATISTICS">Statistic</string>
+    <string name="HISTORY">History</string>
     <string-array name="RESULT_TAB_TITLES">
         <item>Test information</item>
         <item>General result</item>

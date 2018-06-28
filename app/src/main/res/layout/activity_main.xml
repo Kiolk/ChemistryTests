@@ -12,18 +12,34 @@
         android:id="@+id/main_conataine_relative_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+        <android.support.design.widget.CoordinatorLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/main_tool_bar"
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/main_app_bar_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:minHeight="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"/>
+            app:expanded="true"
+            android:orientation="vertical">
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/main_tool_bar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@color/DARK_GREEN_BACKGROUND"
+                android:elevation="0dp"
+                app:layout_scrollFlags="scroll|enterAlways"
+                app:navigationIcon="@drawable/ic_menu_white"
+                app:title="@string/AVAILABLE_TESTS"
+                app:titleTextColor="@color/WHITE_TEXT_COLOR" />
+        </android.support.design.widget.AppBarLayout>
         <FrameLayout
             android:id="@+id/main_frame_layout"
-            android:layout_below="@+id/main_tool_bar"
+            android:layout_below="@+id/main_app_bar_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
             android:visibility="gone"/>
         <android.support.v4.view.ViewPager
             android:id="@+id/courses_view_pager"
@@ -32,10 +48,11 @@
             android:visibility="gone"/>
 
         <RelativeLayout
-            android:layout_below="@id/main_tool_bar"
+            android:layout_below="@id/main_app_bar_layout"
             android:id="@+id/start_relative_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
             android:background="@color/SECOND_TEXT_COLOR"
             android:visibility="visible">
             <Button
@@ -88,7 +105,9 @@
                 android:layout_below="@id/custom_test_button"
                 android:background="@drawable/button_styling"/>
         </RelativeLayout>
+        </android.support.design.widget.CoordinatorLayout>
     </RelativeLayout>
+
     <android.support.design.widget.NavigationView
         android:id="@+id/navigation_relative_layout"
         android:layout_width="280dp"

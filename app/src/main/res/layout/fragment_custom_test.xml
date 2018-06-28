@@ -18,6 +18,7 @@
                 android:layout_height="?attr/actionBarSize"
                 android:background="@color/DARK_BACKGROUND"
                 app:title="@string/CUSTOM_TEST"
+                android:visibility="gone"
                 app:titleTextColor="@color/WHITE_TEXT_COLOR"
                 app:layout_scrollFlags="scroll|enterAlwaysCollapsed"
                 app:navigationIcon="@drawable/ic_menu_white">

@@ -16,6 +16,7 @@ import com.github.kiolk.chemistrytests.data.TestsPresenter
 import com.github.kiolk.chemistrytests.data.adapters.AvailableTestRecyclerAdapter
 import com.github.kiolk.chemistrytests.data.asynctasks.ResultCallback
 import com.github.kiolk.chemistrytests.data.database.DBOperations
+import com.github.kiolk.chemistrytests.data.fragments.bases.RecyclerTestBaseFragment
 import com.github.kiolk.chemistrytests.data.listeners.OnItemClickListener
 import com.github.kiolk.chemistrytests.data.listeners.RecyclerTouchListener
 import com.github.kiolk.chemistrytests.data.models.TestParams
@@ -26,7 +27,9 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import reversSort
 
-class LatestTestsFragment : Fragment() {
+class LatestTestsFragment : RecyclerTestBaseFragment() {
+    override val titleId: Int
+        get() = R.string.CUSTOM_TEST
 
     var mTests: MutableList<TestParams> = mutableListOf()
     var mRecyclerAdapter: AvailableTestRecyclerAdapter? = null

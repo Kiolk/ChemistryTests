@@ -19,6 +19,8 @@ import com.github.kiolk.chemistrytests.ui.activities.TEST_PARAM_INT
 import com.github.kiolk.chemistrytests.ui.activities.TestingActivity
 
 class FavaoriteTestFragment : RecyclerTestBaseFragment(){
+    override val titleId: Int
+        get() = R.string.CUSTOM_TEST
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_favorite_tests, null)

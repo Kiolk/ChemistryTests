@@ -18,6 +18,10 @@ import com.google.firebase.auth.FirebaseAuth
 import reversSort
 
 class CustomUserTestsFragment : RecyclerTestBaseFragment(){
+    override val titleId: Int
+        get() = R.string.CUSTOM_TEST
+
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_custom_user_tests, null)
         val tests = getCurrentUser()?.userCustomTests?.let { reversSort(it) }

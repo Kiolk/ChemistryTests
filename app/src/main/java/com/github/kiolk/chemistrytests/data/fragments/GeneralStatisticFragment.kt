@@ -13,15 +13,18 @@ interface StatisticView{
     fun setupGeneralStatistic(statistic : StatisticModel)
 }
 
-class GeneralStatisticFragment : Fragment(), StatisticView {
+class GeneralStatisticFragment : BaseFragment(), StatisticView {
+
+    override val titleId: Int
+        get() = R.string.STATISTICS
+
 
     lateinit var mView : View
     var mStatistic : StatisticModel = StatisticModel()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         mView = inflater.inflate(R.layout.fragment_general_statistic, null)
-
-//        setupProgressBar()
+        setupToolBar()
         return mView
     }
 
