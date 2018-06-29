@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.design.widget.NavigationView
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
@@ -21,6 +22,7 @@ import com.github.kiolk.chemistrytests.data.database.DBOperations
 import com.github.kiolk.chemistrytests.data.executs.PrepareCoursesFromDb
 import com.github.kiolk.chemistrytests.data.fragments.*
 import com.github.kiolk.chemistrytests.data.fragments.CompletedTestsFragment.Companion.RESULT_TEST_TAG
+import com.github.kiolk.chemistrytests.data.fragments.configuration.ConfigurationFragment
 import com.github.kiolk.chemistrytests.data.fragments.help.HelpFragment
 import com.github.kiolk.chemistrytests.data.fragments.tests.TestsFragment
 import com.github.kiolk.chemistrytests.data.models.*
@@ -38,7 +40,7 @@ val TESTS_CHILD: String = "tests"
 val DATA_BASE_INFO_CHAILD: String = "DBInformation"
 val DATA_BASE_USERS_CHAILD: String = "Users"
 val DATA_COURSES_CHILD: String = "Courses"
-val DATA_THEORY_CHILD : String = "Theory"
+val DATA_THEORY_CHILD: String = "Theory"
 
 class MainActivity : AppCompatActivity() {
     //
@@ -58,10 +60,11 @@ class MainActivity : AppCompatActivity() {
     lateinit var mTestsFragment: TestsFragment
     lateinit var mTestDataBaseReference: DatabaseReference
     lateinit var mChildEventListener: ChildEventListener
-    var mHelpFragment : HelpFragment = HelpFragment()
-    var mStatisticFragment : GeneralStatisticFragment = GeneralStatisticFragment()
-    var mUserStatisticFragment : UserStatisticFragment = UserStatisticFragment()
-    var mAppInformationViewFragment : AppInformationViewFragment = AppInformationViewFragment()
+    var mHelpFragment: HelpFragment = HelpFragment()
+    var mConfigurationFragment: ConfigurationFragment = ConfigurationFragment()
+    var mStatisticFragment: GeneralStatisticFragment = GeneralStatisticFragment()
+    var mUserStatisticFragment: UserStatisticFragment = UserStatisticFragment()
+    var mAppInformationViewFragment: AppInformationViewFragment = AppInformationViewFragment()
     var isTestFragmentShow: Boolean = false
     var cnt = 0
     var cnt2 = 0
@@ -69,7 +72,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        setSupportActionBar(main_tool_bar)
+//        setSupportActionBar(main_tool_bar)
 //        main_tool_bar.visibility = View.GONE
         main_drawer_layout.setStatusBarBackground(R.color.fui_transparent)
         mAvaliableTests = AvaliableFragments()
@@ -170,11 +173,67 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupNavigationMenu() {
         val itemArray: List<MenuItemModel> = getMenuItems()
-        val listAdapter: MenuCustomArrayAdapter = MenuCustomArrayAdapter(applicationContext, R.layout.item_navigation_menu, itemArray)
+        val listAdapter: MenuCustomArrayAdapter = MenuCustomArrayAdapter(baseContext, R.layout.item_navigation_menu, itemArray)
         navigation_menu_list_view.adapter = listAdapter
         navigation_menu_list_view.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
             selectPosition(position)
         }
+        navigation_relative_layout.setNavigationItemSelectedListener( object : NavigationView.OnNavigationItemSelectedListener{
+            override fun onNavigationItemSelected(item: MenuItem): Boolean {
+                if (item.itemId != R.id.courses_item_menu) {
+                    courses_view_pager.visibility = View.GONE
+                }
+                closeFragments()
+                main_drawer_layout.closeDrawer(navigation_relative_layout)
+                when (item.itemId) {
+                    R.id.sign_out_menu_item -> {
+                        AuthUI.getInstance().signOut(baseContext)
+                        return true
+                    }
+                    R.id.test_item_menu -> {
+                        showTests()
+                        return true
+                    }
+                    R.id.courses_item_menu -> {
+                        showCourses()
+                        return true
+                    }
+                    R.id.custom_test_item_menu -> {
+                        showCustomTest()
+                        return true
+                    }
+                    R.id.tests_history_item_menu -> {
+                        showHistory()
+                        return true
+                    }
+                    R.id.statistic_item_menu -> {
+                        showStatistic()
+                        return true
+                    }
+                    R.id.settings_item_menu -> {
+                        showConfiguration()
+                        return true
+                    }
+                    R.id.help_item_menu -> {
+                        showHelpInformation()
+                        return true
+                    }
+                    R.id.about_item_menu -> {
+                        showInformation()
+                        return true
+                    }
+                    R.id.log_out_item_menu -> {
+                        Toast.makeText(baseContext, "Show third mGeneralStatistic", Toast.LENGTH_SHORT).show()
+                        AuthUI.getInstance().signOut(baseContext)
+                        val intent: Intent = Intent(baseContext, SplashActivity::class.java)
+                        finish()
+                        startActivity(intent)
+                        return true
+                    }
+                }
+                return false
+            }
+        })
     }
 
     private fun selectPosition(position: Int) {
@@ -195,9 +254,10 @@ class MainActivity : AppCompatActivity() {
             3 -> {
                 showHistory()
             }
-            4 ->{
+            4 -> {
                 showStatistic()
             }
+            5 -> showConfiguration()
             6 -> showHelpInformation()
             7 -> {
                 showInformation()
@@ -211,6 +271,13 @@ class MainActivity : AppCompatActivity() {
             }
         }
         main_drawer_layout.closeDrawer(navigation_relative_layout)
+    }
+
+    private fun showConfiguration() {
+        main_frame_layout.visibility = View.VISIBLE
+        start_relative_layout.visibility = View.GONE
+        showFragment(supportFragmentManager, R.id.main_frame_layout, mConfigurationFragment)
+        mConfigurationFragment.mPresenter.prepareSettings()
     }
 
     private fun showHelpInformation() {
@@ -240,10 +307,10 @@ class MainActivity : AppCompatActivity() {
 
     private fun showCustomTest() {
 //        if (main_frame_layout.visibility != View.VISIBLE) {
-            main_frame_layout.visibility = View.VISIBLE
-            start_relative_layout.visibility = View.GONE
-            mCustomTestFragment = CustomTestFragment()
-            showFragment(supportFragmentManager, R.id.main_frame_layout, mCustomTestFragment)
+        main_frame_layout.visibility = View.VISIBLE
+        start_relative_layout.visibility = View.GONE
+        mCustomTestFragment = CustomTestFragment()
+        showFragment(supportFragmentManager, R.id.main_frame_layout, mCustomTestFragment)
 //        }
     }
 
@@ -377,10 +444,53 @@ class MainActivity : AppCompatActivity() {
         return super.onCreateOptionsMenu(menu)
     }
 
+
+
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        main_drawer_layout.closeDrawer(navigation_relative_layout)
         when (item?.itemId) {
             R.id.sign_out_menu_item -> {
                 AuthUI.getInstance().signOut(baseContext)
+                return true
+            }
+            R.id.test_item_menu -> {
+                showTests()
+                return true
+            }
+            R.id.courses_item_menu -> {
+                showCourses()
+                return true
+            }
+            R.id.custom_test_item_menu -> {
+                showCustomTest()
+                return true
+            }
+            R.id.tests_history_item_menu -> {
+                showHistory()
+                return true
+            }
+            R.id.statistic_item_menu -> {
+                showStatistic()
+                return true
+            }
+            R.id.settings_item_menu -> {
+                showConfiguration()
+                return true
+            }
+            R.id.help_item_menu -> {
+                showHelpInformation()
+                return true
+            }
+            R.id.about_item_menu -> {
+                showInformation()
+                return true
+            }
+            R.id.log_out_item_menu -> {
+                Toast.makeText(baseContext, "Show third mGeneralStatistic", Toast.LENGTH_SHORT).show()
+                AuthUI.getInstance().signOut(baseContext)
+                val intent: Intent = Intent(baseContext, SplashActivity::class.java)
+                finish()
+                startActivity(intent)
                 return true
             }
         }
@@ -420,8 +530,8 @@ class MainActivity : AppCompatActivity() {
                 start_relative_layout.visibility = View.VISIBLE
                 closeFragments()
                 return
-            }else{
-               closeResultStatisticFragment()
+            } else {
+                closeResultStatisticFragment()
                 return
             }
         }
@@ -439,7 +549,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun closeFragments() {
-        if(mCompletedTsts.isShowResult){
+        if (mCompletedTsts.isShowResult) {
             closeResultStatisticFragment()
         }
         closeFragment(supportFragmentManager, mAvailableTests)
@@ -449,6 +559,7 @@ class MainActivity : AppCompatActivity() {
         closeFragment(supportFragmentManager, mUserStatisticFragment)
         closeFragment(supportFragmentManager, mAppInformationViewFragment)
         closeFragment(supportFragmentManager, mHelpFragment)
+        closeFragment(supportFragmentManager, mConfigurationFragment)
         isTestFragmentShow = false
     }
 }

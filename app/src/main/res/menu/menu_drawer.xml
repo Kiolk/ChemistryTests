@@ -1,17 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <group android:checkableBehavior="single">
-        <!--<item-->
-            <!--android:id="@+id/profile_setting_menu"-->
-            <!--android:icon="@android:color/secondary_text_dark"-->
-            <!--android:title="@string/PROFILE_SETTING" />-->
-    <!--</group>-->
-
-    <!--<group android:checkableBehavior="single">-->
-
+    <group android:id="@+id/tests_group">
         <item
-            android:id="@+id/login_out_menu"
-            android:icon="@android:drawable/ic_lock_idle_alarm"
+            android:id="@+id/test_item_menu"
+            android:icon="@drawable/ic_test"
+            android:title="@string/TESTS"
+            android:visible="true"/>
+        <item
+            android:id="@+id/courses_item_menu"
+            android:icon="@drawable/ic_study_notes"
+            android:title="@string/COURSES" />
+        <item
+            android:id="@+id/custom_test_item_menu"
+            android:icon="@drawable/ic_puzzle"
+            android:title="@string/COURSES" />
+    </group>
+    <group android:id="@+id/statistic_group">
+        <item android:id="@+id/tests_history_item_menu"
+            android:icon="@drawable/ic_history"
+            android:title="@string/HISTORY"/>
+        <item
+            android:id="@+id/statistic_item_menu"
+            android:icon="@drawable/ic_statistic"
+            android:title="@string/STATISTICS" />
+    </group>
+    <group android:id="@+id/settings_group">
+        <item
+            android:id="@+id/settings_item_menu"
+            android:icon="@drawable/ic_settings_gears"
+            android:title="@string/PROFILE_SETTING" />
+        <item
+            android:id="@+id/help_item_menu"
+            android:icon="@drawable/ic_doubts_button"
+            android:title="@string/COURSES" />
+        <item
+            android:id="@+id/about_item_menu"
+            android:icon="@drawable/ic_info_sign"
+            android:title="@string/ADDITIONAL_INFORMATION" />
+    </group>
+    <group android:id="@+id/log_out_group">
+        <item
+            android:id="@+id/log_out_item_menu"
+            android:icon="@drawable/ic_sign_out_option"
             android:title="@string/LOG_OUT" />
     </group>
+
+
+
+
+
+
 </menu>

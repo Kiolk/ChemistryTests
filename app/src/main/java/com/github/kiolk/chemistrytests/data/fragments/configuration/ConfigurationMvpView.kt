@@ -1,5 +1,7 @@
 package com.github.kiolk.chemistrytests.data.fragments.configuration
 
-interface ConfigurationMvpView{
+import com.github.kiolk.chemistrytests.data.models.MenuItemModel
 
+interface ConfigurationMvpView{
+    fun setupListSettings(itemsArray: List<MenuItemModel>)
 }

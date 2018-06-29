@@ -114,13 +114,17 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="false"
+        app:itemIconTint="@color/colorAccent"
+        app:itemTextColor="@color/colorAccent"
+        app:menu="@menu/menu_drawer"
         app:headerLayout="@layout/drawer_header">
             <ListView
                 android:paddingTop="@dimen/HEADER_HEIGHT"
                 android:id="@+id/navigation_menu_list_view"
                 android:layout_width="match_parent"
                 android:divider="@color/TRANSPARENT_COLOR"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:visibility="gone">
 
             </ListView>
     </android.support.design.widget.NavigationView>

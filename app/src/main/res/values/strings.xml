@@ -71,6 +71,8 @@
     <string name="SELECT_TIME">Select time</string>
     <string name="STATISTICS">Statistic</string>
     <string name="HISTORY">History</string>
+    <string name="CONFIGURATION">Configuration</string>
+    <string name="TESTS">Tests</string>
     <string-array name="RESULT_TAB_TITLES">
         <item>Test information</item>
         <item>General result</item>
