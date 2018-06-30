@@ -20,8 +20,9 @@
                     android:id="@+id/question_linear_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:elevation="@dimen/ELEVATION"
-                    android:orientation="vertical">
+                    android:background="@color/WHITE_TEXT_COLOR"
+                    android:orientation="vertical"
+                    android:layout_marginBottom="@dimen/HALF_BLOCK_PADDING">
 
                     <android.support.v4.widget.NestedScrollView
                         android:layout_width="match_parent"
@@ -31,16 +32,13 @@
                             android:id="@+id/question_text_view"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_margin="@dimen/BLOCK_PADDING"
-                            android:fontFamily="@font/forum"
-                            android:background="@drawable/area_square_shape"
-                            android:padding="@dimen/BLOCK_PADDING" />
+                            style="@style/QuestionStyle" />
                     </android.support.v4.widget.NestedScrollView>
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/LINE_WIDTH"
-                        android:background="@color/SECOND_TEXT_COLOR" />
+                    <!--<LinearLayout-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="@dimen/LINE_WIDTH"-->
+                        <!--android:background="@color/SECOND_TEXT_COLOR" />-->
                 </LinearLayout>
 
                 <android.support.v4.widget.NestedScrollView
@@ -64,14 +62,14 @@
 
                                 <TextView
                                     android:id="@+id/question_one_label_text_view"
-                                    style="@style/QuestionBlockStyle"
+                                    style="@style/Right.Rounded"
                                     android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
+                                    android:layout_height="match_parent"
                                     android:text="@string/ONE" />
 
                                 <TextView
                                     android:id="@+id/option_one_text_view"
-                                    style="@style/QuestionBlockStyle"
+                                    style="@style/Left.Rounded"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_toEndOf="@+id/question_one_label_text_view"
@@ -84,39 +82,38 @@
 
                                 <TextView
                                     android:id="@+id/question_two_label_text_view"
-                                    style="@style/QuestionBlockStyle"
+                                    style="@style/Right.Rounded"
                                     android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
+                                    android:layout_height="match_parent"
                                     android:text="@string/TWO" />
 
                                 <TextView
                                     android:id="@+id/option_two_text_view"
-                                    style="@style/QuestionBlockStyle"
+                                    style="@style/Left.Rounded"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_toEndOf="@+id/question_two_label_text_view"
                                     android:layout_toRightOf="@+id/question_two_label_text_view" />
                             </RelativeLayout>
 
-                            <RelativeLayout
+                            <LinearLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content">
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
 
                                 <TextView
                                     android:id="@+id/question_three_label_text_view"
-                                    style="@style/QuestionBlockStyle"
+                                    style="@style/Right.Rounded"
                                     android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="@string/THREE" />
+                                    android:layout_height="match_parent"
+                                    android:text="@string/THREE"/>
 
                                 <TextView
                                     android:id="@+id/option_three_text_view"
-                                    style="@style/QuestionBlockStyle"
+                                    style="@style/Left.Rounded"
                                     android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_toEndOf="@+id/question_three_label_text_view"
-                                    android:layout_toRightOf="@+id/question_three_label_text_view" />
-                            </RelativeLayout>
+                                    android:layout_height="wrap_content"/>
+                            </LinearLayout>
 
                             <RelativeLayout
                                 android:layout_width="match_parent"
@@ -124,14 +121,14 @@
 
                                 <TextView
                                     android:id="@+id/question_four_label_text_view"
-                                    style="@style/QuestionBlockStyle"
+                                    style="@style/Right.Rounded"
                                     android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
+                                    android:layout_height="match_parent"
                                     android:text="@string/FOUR" />
 
                                 <TextView
                                     android:id="@+id/option_four_text_view"
-                                    style="@style/QuestionBlockStyle"
+                                    style="@style/Left.Rounded"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_toEndOf="@+id/question_four_label_text_view"
@@ -144,22 +141,20 @@
 
                                 <TextView
                                     android:id="@+id/question_five_label_text_view"
-                                    style="@style/QuestionBlockStyle"
+                                    style="@style/Right.Rounded"
                                     android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
+                                    android:layout_height="match_parent"
                                     android:text="@string/FIVE" />
 
                                 <TextView
                                     android:id="@+id/option_five_text_view"
-                                    style="@style/QuestionBlockStyle"
+                                    style="@style/Left.Rounded"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_toEndOf="@+id/question_five_label_text_view"
                                     android:layout_toRightOf="@+id/question_five_label_text_view" />
                             </RelativeLayout>
                         </LinearLayout>
-
-
                     </ScrollView>
                 </android.support.v4.widget.NestedScrollView>
 
@@ -174,8 +169,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/LINE_WIDTH"
-                        android:background="@color/SECOND_TEXT_COLOR"
-                        android:elevation="@dimen/ELEVATION" />
+                        android:background="@color/SECOND_TEXT_COLOR" />
 
                     <EditText
                         android:id="@+id/input_answer_edit_text"
@@ -196,8 +190,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/LINE_WIDTH"
-                        android:background="@color/SECOND_TEXT_COLOR"
-                        android:elevation="@dimen/ELEVATION" />
+                        android:background="@color/SECOND_TEXT_COLOR" />
 
                     <RadioGroup
                         android:id="@+id/answers_radio_group"

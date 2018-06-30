@@ -12,11 +12,22 @@
         <item name="android:windowBackground">@drawable/splash_layer_list</item>
     </style>
 
-    <style name="QuestionBlockStyle">
-        <item name="android:layout_margin">@dimen/BLOCK_PADDING</item>
-        <item name="android:background">@drawable/area_square_shape</item>
+    <style name="QuestionBlockStyle" parent="BaseQuestionStyle">
+        <item name="android:fontFamily">@font/forum</item>
         <item name="android:padding">@dimen/BLOCK_PADDING</item>
         <item name="android:visibility">invisible</item>
+        <item name="background">@drawable/area_square_shape</item>
+        <item name="android:layout_marginTop">@dimen/HALF_BLOCK_PADDING</item>
+        <item name="android:layout_marginBottom">@dimen/HALF_BLOCK_PADDING</item>
+    </style>
+
+    <style name="Right" parent="QuestionBlockStyle">
+        <item name="android:layout_marginRight">@dimen/HALF_BLOCK_PADDING</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="Left" parent="QuestionBlockStyle">
+        <item name="android:layout_marginLeft">@dimen/HALF_BLOCK_PADDING</item>
     </style>
 
     <style name="CheckBoxStyle">
@@ -96,7 +107,26 @@
         <item name="android:visibility">visible</item>
     </style>
 
+    <style name="Left.Rounded">
+        <item name="android:background">@drawable/area_left_round_shape</item>
+    </style>
+
+    <style name="Right.Rounded">
+        <item name="android:background">@drawable/area_right_round_shape</item>
+    </style>
+
+    <style name="QuestionStyle" parent="BaseQuestionStyle">
+        <item name="android:layout_margin">@dimen/BLOCK_PADDING</item>
+        <item name="android:fontFamily">@font/forum</item>
+    </style>
+
+    <style name="BaseQuestionStyle">
+        <item name="android:fontFamily">@font/forum</item>
+        <item name="android:textSize">@dimen/QUESTION_TEXT_SIZE</item>
+    </style>
+
     <dimen name="SMALL_ICON_SIZE">30dp</dimen>
     <dimen name="LITTLE_ICON_SIZE">20dp</dimen>
     <dimen name="NORMAL_TEXT_SIZE">16sp</dimen>
+    <dimen name="HALF_BLOCK_PADDING">2dp</dimen>
 </resources>

@@ -12,15 +12,15 @@ import com.github.kiolk.chemistrytests.data.models.CloseQuestion
 import com.github.kiolk.chemistrytests.data.models.CloseQuestion.Question.INPUT_CHOICE
 import com.github.kiolk.chemistrytests.data.models.CloseQuestion.Question.MULTIPLE_CHOICE
 import com.github.kiolk.chemistrytests.data.models.CloseQuestion.Question.SINGLE_CHOICE
-import com.github.kiolk.chemistrytests.data.models.setFormattedText
 import com.github.kiolk.chemistrytests.ui.activities.TestingActivity
+import com.github.kiolk.chemistrytests.utils.setFormattedText
 import kotlinx.android.synthetic.main.activity_testing.*
 import kotlinx.android.synthetic.main.card_close_question.view.*
 
 class QuestionAnsweredFragment : Fragment() {
 
     lateinit var mQuestion: CloseQuestion
-    lateinit var mAnswer : Answer
+    lateinit var mAnswer: Answer
     lateinit var listener: View.OnClickListener
     lateinit var photoListener: View.OnClickListener
     var userAnswers: MutableList<Int> = mutableListOf<Int>()
@@ -51,26 +51,30 @@ class QuestionAnsweredFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater?.inflate(R.layout.fragment_question, null)
-        var input : String = ""
+        var input: String = ""
         if (view != null) {
-            val inputText =  view.findViewById<TextView>(R.id.question_text_view)
+            val inputText = view.findViewById<TextView>(R.id.question_text_view)
             setFormattedText(view.findViewById(R.id.question_text_view), mQuestion.questionEn, mQuestion.photoUrl)
             inputText.setOnClickListener(photoListener)
 
 
             if (mQuestion.questionType == INPUT_CHOICE) {
                 val firstOption = view.findViewById<TextView>(R.id.option_one_text_view)
-                view.findViewById<TextView>(R.id.question_one_label_text_view).visibility = View.VISIBLE
-                view.findViewById<TextView>(R.id.question_one_label_text_view).text = resources.getString(R.string.CORRECT)
+                val firstLabel = view.findViewById<TextView>(R.id.question_one_label_text_view)
+                firstLabel.visibility = View.VISIBLE
+                firstLabel.text = resources.getString(R.string.CORRECT)
+                firstLabel.background = resources.getDrawable(R.drawable.area_right_round_shape_correct)
                 firstOption.visibility = View.VISIBLE
-                firstOption.background = resources.getDrawable(R.drawable.area_square_shape_correct)
+//                firstOption.background = resources.getDrawable(R.drawable.area_square_shape_correct)
                 firstOption.text = mQuestion.correctAnswers[0].text
-                if(mAnswer.userInput != null && mAnswer.userInput?.toUpperCase() != mQuestion.correctAnswers[0].text.toUpperCase()){
-                   view.findViewById<TextView>(R.id.question_two_label_text_view).visibility = View.VISIBLE
-                   view.findViewById<TextView>(R.id.question_two_label_text_view).text = resources.getString(R.string.YOU_ANSWER)
+                if (mAnswer.userInput != null && mAnswer.userInput?.toUpperCase() != mQuestion.correctAnswers[0].text.toUpperCase()) {
+                    val secondLabel = view.findViewById<TextView>(R.id.question_two_label_text_view)
+                    secondLabel.visibility = View.VISIBLE
+                    secondLabel.text = resources.getString(R.string.YOU_ANSWER)
+                    secondLabel.background = resources.getDrawable(R.drawable.area_right_round_shape_wrong)
                     val secondOption = view.findViewById<TextView>(R.id.option_two_text_view)
                     secondOption.visibility = View.VISIBLE
-                    secondOption.background = resources.getDrawable(R.drawable.area_square_shape_wrong)
+//                    secondOption.background = resources.getDrawable(R.drawable.area_square_shape_wrong)
                     secondOption.text = mAnswer.userInput
                 }
                 return view
@@ -78,11 +82,13 @@ class QuestionAnsweredFragment : Fragment() {
 
             if (mQuestion.questionOptions.size > 0) {
                 setFormattedText(view.findViewById(R.id.option_one_text_view), mQuestion.questionOptions[0].text, mQuestion.questionOptions[0].optionPhotoUtl)
-                if(mAnswer.getAnsweredOptions().contains(mQuestion.questionOptions[0])){
-                    view.findViewById<TextView>(R.id.option_one_text_view).background = resources.getDrawable(R.drawable.area_square_shape_wrong)
+                if (mAnswer.getAnsweredOptions().contains(mQuestion.questionOptions[0])) {
+//                    view.findViewById<TextView>(R.id.option_one_text_view).background = resources.getDrawable(R.drawable.area_square_shape_wrong)
+                    view.findViewById<TextView>(R.id.question_one_label_text_view).background = resources.getDrawable(R.drawable.area_right_round_shape_wrong)
                 }
-                if(mQuestion.correctAnswers.contains(mQuestion.questionOptions[0])){
-                    view.findViewById<TextView>(R.id.option_one_text_view).background = resources.getDrawable(R.drawable.area_square_shape_correct)
+                if (mQuestion.correctAnswers.contains(mQuestion.questionOptions[0])) {
+//                    view.findViewById<TextView>(R.id.option_one_text_view).background = resources.getDrawable(R.drawable.area_square_shape_correct)
+                    view.findViewById<TextView>(R.id.question_one_label_text_view).background = resources.getDrawable(R.drawable.area_right_round_shape_correct)
                 }
                 view.findViewById<TextView>(R.id.option_one_text_view).visibility = View.VISIBLE
                 view.findViewById<TextView>(R.id.question_one_label_text_view).visibility = View.VISIBLE
@@ -98,11 +104,13 @@ class QuestionAnsweredFragment : Fragment() {
 
             if (mQuestion.questionOptions.size > 1) {
                 setFormattedText(view.findViewById(R.id.option_two_text_view), mQuestion.questionOptions[1].text, mQuestion.questionOptions[1].optionPhotoUtl)
-                if(mAnswer.getAnsweredOptions().contains(mQuestion.questionOptions[1])){
-                    view.findViewById<TextView>(R.id.option_two_text_view).background = resources.getDrawable(R.drawable.area_square_shape_wrong)
+                if (mAnswer.getAnsweredOptions().contains(mQuestion.questionOptions[1])) {
+//                    view.findViewById<TextView>(R.id.option_two_text_view).background = resources.getDrawable(R.drawable.area_square_shape_wrong)
+                    view.findViewById<TextView>(R.id.question_two_label_text_view).background = resources.getDrawable(R.drawable.area_right_round_shape_wrong)
                 }
-                if(mQuestion.correctAnswers.contains(mQuestion.questionOptions[1])){
-                    view.findViewById<TextView>(R.id.option_two_text_view).background = resources.getDrawable(R.drawable.area_square_shape_correct)
+                if (mQuestion.correctAnswers.contains(mQuestion.questionOptions[1])) {
+//                    view.findViewById<TextView>(R.id.option_two_text_view).background = resources.getDrawable(R.drawable.area_square_shape_correct)
+                    view.findViewById<TextView>(R.id.question_two_label_text_view).background = resources.getDrawable(R.drawable.area_right_round_shape_correct)
                 }
                 view.findViewById<TextView>(R.id.option_two_text_view).visibility = View.VISIBLE
                 view.findViewById<TextView>(R.id.question_two_label_text_view).visibility = View.VISIBLE
@@ -118,11 +126,13 @@ class QuestionAnsweredFragment : Fragment() {
 
             if (mQuestion.questionOptions.size > 2) {
                 setFormattedText(view.findViewById(R.id.option_three_text_view), mQuestion.questionOptions[2].text, mQuestion.questionOptions[2].optionPhotoUtl)
-                if(mAnswer.getAnsweredOptions().contains(mQuestion.questionOptions[2])){
-                    view.findViewById<TextView>(R.id.option_three_text_view).background = resources.getDrawable(R.drawable.area_square_shape_wrong)
+                if (mAnswer.getAnsweredOptions().contains(mQuestion.questionOptions[2])) {
+//                    view.findViewById<TextView>(R.id.option_three_text_view).background = resources.getDrawable(R.drawable.area_square_shape_wrong)
+                    view.findViewById<TextView>(R.id.question_three_label_text_view).background = resources.getDrawable(R.drawable.area_right_round_shape_wrong)
                 }
-                if(mQuestion.correctAnswers.contains(mQuestion.questionOptions[2])){
-                    view.findViewById<TextView>(R.id.option_three_text_view).background = resources.getDrawable(R.drawable.area_square_shape_correct)
+                if (mQuestion.correctAnswers.contains(mQuestion.questionOptions[2])) {
+//                    view.findViewById<TextView>(R.id.option_three_text_view).background = resources.getDrawable(R.drawable.area_square_shape_correct)
+                    view.findViewById<TextView>(R.id.question_three_label_text_view).background = resources.getDrawable(R.drawable.area_right_round_shape_correct)
                 }
                 view.findViewById<TextView>(R.id.option_three_text_view).visibility = View.VISIBLE
                 view.findViewById<TextView>(R.id.question_three_label_text_view).visibility = View.VISIBLE
@@ -138,11 +148,13 @@ class QuestionAnsweredFragment : Fragment() {
 
             if (mQuestion.questionOptions.size > 3) {
                 setFormattedText(view.findViewById(R.id.option_four_text_view), mQuestion.questionOptions[3].text, mQuestion.questionOptions[3].optionPhotoUtl)
-                if(mAnswer.getAnsweredOptions().contains(mQuestion.questionOptions[3])){
-                    view.findViewById<TextView>(R.id.option_four_text_view).background = resources.getDrawable(R.drawable.area_square_shape_wrong)
+                if (mAnswer.getAnsweredOptions().contains(mQuestion.questionOptions[3])) {
+//                    view.findViewById<TextView>(R.id.option_four_text_view).background = resources.getDrawable(R.drawable.area_square_shape_wrong)
+                    view.findViewById<TextView>(R.id.question_four_label_text_view).background = resources.getDrawable(R.drawable.area_right_round_shape_wrong)
                 }
-                if(mQuestion.correctAnswers.contains(mQuestion.questionOptions[3])){
-                    view.findViewById<TextView>(R.id.option_four_text_view).background = resources.getDrawable(R.drawable.area_square_shape_correct)
+                if (mQuestion.correctAnswers.contains(mQuestion.questionOptions[3])) {
+//                    view.findViewById<TextView>(R.id.option_four_text_view).background = resources.getDrawable(R.drawable.area_square_shape_correct)
+                    view.findViewById<TextView>(R.id.question_four_label_text_view).background = resources.getDrawable(R.drawable.area_right_round_shape_correct)
                 }
                 view.findViewById<TextView>(R.id.option_four_text_view).visibility = View.VISIBLE
                 view.findViewById<TextView>(R.id.question_four_label_text_view).visibility = View.VISIBLE
@@ -158,11 +170,14 @@ class QuestionAnsweredFragment : Fragment() {
 
             if (mQuestion.questionOptions.size > 4) {
                 setFormattedText(view.findViewById(R.id.option_five_text_view), mQuestion.questionOptions[4].text, mQuestion.questionOptions[4].optionPhotoUtl)
-                if(mAnswer.getAnsweredOptions().contains(mQuestion.questionOptions[4])){
-                    view.findViewById<TextView>(R.id.option_five_text_view).background = resources.getDrawable(R.drawable.area_square_shape_wrong)
+                if (mAnswer.getAnsweredOptions().contains(mQuestion.questionOptions[4])) {
+//                    view.findViewById<TextView>(R.id.option_five_text_view).background = resources.getDrawable(R.drawable.area_square_shape_wrong)
+                    view.findViewById<TextView>(R.id.question_five_label_text_view).background = resources.getDrawable(R.drawable.area_right_round_shape_wrong)
                 }
-                if(mQuestion.correctAnswers.contains(mQuestion.questionOptions[4])){
-                    view.findViewById<TextView>(R.id.option_four_text_view).background = resources.getDrawable(R.drawable.area_square_shape_correct)
+                if (mQuestion.correctAnswers.contains(mQuestion.questionOptions[4])) {
+//                    view.findViewById<TextView>(R.id.option_four_text_view).background = resources.getDrawable(R.drawable.area_square_shape_correct)
+                    view.findViewById<TextView>(R.id.question_five_label_text_view).background = resources.getDrawable(R.drawable.area_right_round_shape_correct)
+
                 }
                 view.findViewById<TextView>(R.id.option_five_text_view).visibility = View.VISIBLE
                 view.findViewById<TextView>(R.id.question_five_label_text_view).visibility = View.VISIBLE
@@ -237,10 +252,11 @@ class QuestionAnsweredFragment : Fragment() {
 //            }
     }
 
-    private fun updateIndicator(progressBar: ProgressBar?, size: Int, total : Int) {
-        val percentAnswered : Int = size.times(100).div(total)
+    private fun updateIndicator(progressBar: ProgressBar?, size: Int, total: Int) {
+        val percentAnswered: Int = size.times(100).div(total)
         progressBar?.progress = percentAnswered
     }
+
     private fun setUpClickListener() {
         if (mQuestion.questionType == SINGLE_CHOICE) {
             listener = View.OnClickListener { viewTarget: View ->
@@ -355,7 +371,7 @@ class QuestionAnsweredFragment : Fragment() {
         return fragment
     }
 
-    fun getInputAnswer() : String{
+    fun getInputAnswer(): String {
         return ""
     }
 }
