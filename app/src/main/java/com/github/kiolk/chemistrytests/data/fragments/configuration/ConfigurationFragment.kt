@@ -11,6 +11,8 @@ import com.github.kiolk.chemistrytests.data.fragments.BaseFragment
 import com.github.kiolk.chemistrytests.data.models.MenuItemModel
 
 class ConfigurationFragment : BaseFragment(), ConfigurationMvpView{
+    override val menuId: Int?
+        get() = null
 
 
     var mPresenter = ConfigurationPresenter(this)

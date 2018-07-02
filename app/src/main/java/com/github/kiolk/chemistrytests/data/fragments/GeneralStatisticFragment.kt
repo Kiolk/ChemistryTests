@@ -14,6 +14,8 @@ interface StatisticView{
 }
 
 class GeneralStatisticFragment : BaseFragment(), StatisticView {
+    override val menuId: Int?
+        get() = null
 
     override val titleId: Int
         get() = R.string.STATISTICS

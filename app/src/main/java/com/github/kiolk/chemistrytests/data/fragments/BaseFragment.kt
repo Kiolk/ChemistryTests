@@ -4,10 +4,7 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.widget.Toolbar
-import android.view.Gravity
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import com.github.kiolk.chemistrytests.R
 import com.github.kiolk.chemistrytests.ui.activities.MainActivity
 import kotlinx.android.synthetic.main.activity_main.*
@@ -19,6 +16,7 @@ abstract class BaseFragment : Fragment(){
     }
 
     abstract val titleId : Int
+    abstract val menuId : Int?
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         setupToolBar()
@@ -39,5 +37,17 @@ abstract class BaseFragment : Fragment(){
             mainActivity.findViewById<DrawerLayout>(DRAWER_LAYOUT_ID).openDrawer(Gravity.START)
         }
         toolBar?.setTitle(titleId)
+        menuId?.let { toolBar?.menu?.findItem(it)}?.isVisible = true
+        menuId?.let { mainActivity.updateMenu(it) }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater?.inflate(R.menu.menu_main, menu)
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu?) {
+        menuId?.let { menu?.findItem(it) }?.isVisible = true
+        super.onPrepareOptionsMenu(menu)
     }
 }

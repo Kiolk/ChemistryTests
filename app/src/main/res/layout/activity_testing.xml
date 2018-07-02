@@ -70,6 +70,7 @@
                     android:id="@+id/questions_tab_layout"
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
+                    android:background="@color/TAB_QUESTION_COLOR"
                     app:tabMode="scrollable" />
             </android.support.v4.widget.NestedScrollView>
 

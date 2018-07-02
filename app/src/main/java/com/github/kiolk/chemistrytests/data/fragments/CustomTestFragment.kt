@@ -23,6 +23,8 @@ import com.github.kiolk.chemistrytests.ui.activities.MainActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
 class CustomTestFragment : BaseFragment() {
+    override val menuId: Int?
+        get() = null
     override val titleId: Int
         get() = R.string.CUSTOM_TEST
 

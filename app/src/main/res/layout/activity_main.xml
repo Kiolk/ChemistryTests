@@ -54,7 +54,7 @@
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             android:background="@color/SECOND_TEXT_COLOR"
-            android:visibility="visible">
+            android:visibility="gone">
             <Button
                 android:id="@+id/open_courses_button"
                 android:layout_margin="@dimen/BLOCK_PADDING"
@@ -114,8 +114,8 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="false"
-        app:itemIconTint="@color/colorAccent"
-        app:itemTextColor="@color/colorAccent"
+        app:itemIconTint="@color/GRAY_TEXT_COLOR"
+        app:itemTextColor="@color/GRAY_TEXT_COLOR"
         app:menu="@menu/menu_drawer"
         app:headerLayout="@layout/drawer_header">
             <ListView

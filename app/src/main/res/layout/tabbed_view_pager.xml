@@ -5,7 +5,7 @@
     <android.support.design.widget.TabLayout
         android:id="@+id/tab_layout"
         android:layout_width="match_parent"
-        android:background="@color/colorAccent"
+        android:background="@color/DARK_GREEN_BACKGROUND"
         android:layout_height="?attr/actionBarSize">
 
     </android.support.design.widget.TabLayout>

@@ -2,12 +2,14 @@ package com.github.kiolk.chemistrytests.ui.activities
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.PorterDuff
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.design.widget.NavigationView
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.MotionEvent
 import android.view.View
 import android.widget.*
 import checkConnection
@@ -66,14 +68,15 @@ class MainActivity : AppCompatActivity() {
     var mUserStatisticFragment: UserStatisticFragment = UserStatisticFragment()
     var mAppInformationViewFragment: AppInformationViewFragment = AppInformationViewFragment()
     var isTestFragmentShow: Boolean = false
+    var mSelectedMenuItem: Int = R.id.test_item_menu
+
     var cnt = 0
     var cnt2 = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-//        setSupportActionBar(main_tool_bar)
-//        main_tool_bar.visibility = View.GONE
+        setSupportActionBar(main_tool_bar)
         main_drawer_layout.setStatusBarBackground(R.color.fui_transparent)
         mAvaliableTests = AvaliableFragments()
         mAvailableTests = AvaliableTestFragment()
@@ -157,7 +160,11 @@ class MainActivity : AppCompatActivity() {
             resultTests = resultTests?.let { it1 -> reversSort(it1) }
             resultTests?.let { it1 -> mCompletedTsts.showResults(it1) }
         }
-//        mDatabaseReference.addChildEventListener(mChaildEventLisgettener)
+    }
+
+    override fun onPostResume() {
+        super.onPostResume()
+        showTests()
     }
 
     private fun setupNavigationDrawer() {
@@ -168,28 +175,27 @@ class MainActivity : AppCompatActivity() {
             val imageView: ImageView = navigation_relative_layout.getHeaderView(0).findViewById(R.id.user_profile_picture_image_view)
             Pen.getInstance().getImageFromUrl(mAuthentication.currentUser?.photoUrl?.toString()).inputTo(imageView)
         }
-        setupNavigationMenu()
-    }
-
-    private fun setupNavigationMenu() {
-        val itemArray: List<MenuItemModel> = getMenuItems()
-        val listAdapter: MenuCustomArrayAdapter = MenuCustomArrayAdapter(baseContext, R.layout.item_navigation_menu, itemArray)
-        navigation_menu_list_view.adapter = listAdapter
-        navigation_menu_list_view.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
-            selectPosition(position)
-        }
-        navigation_relative_layout.setNavigationItemSelectedListener( object : NavigationView.OnNavigationItemSelectedListener{
+//        setupNavigationMenu()
+//    }
+//
+//    private fun setupNavigationMenu() {
+//        val itemArray: List<MenuItemModel> = getMenuItems()
+//        val listAdapter: MenuCustomArrayAdapter = MenuCustomArrayAdapter(baseContext, R.layout.item_navigation_menu, itemArray)
+//        navigation_menu_list_view.adapter = listAdapter
+//        navigation_menu_list_view.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
+//            selectPosition(position)
+//        }
+        navigation_relative_layout.setNavigationItemSelectedListener(object : NavigationView.OnNavigationItemSelectedListener {
             override fun onNavigationItemSelected(item: MenuItem): Boolean {
                 if (item.itemId != R.id.courses_item_menu) {
                     courses_view_pager.visibility = View.GONE
                 }
                 closeFragments()
+                navigation_relative_layout.menu.findItem(mSelectedMenuItem).icon.setColorFilter(resources.getColor(R.color.GRAY_TEXT_COLOR), PorterDuff.Mode.ADD)
+                item.icon.setColorFilter(resources.getColor(R.color.BLACK_TEXT_COLOR), PorterDuff.Mode.ADD)
                 main_drawer_layout.closeDrawer(navigation_relative_layout)
+                mSelectedMenuItem = item.itemId
                 when (item.itemId) {
-                    R.id.sign_out_menu_item -> {
-                        AuthUI.getInstance().signOut(baseContext)
-                        return true
-                    }
                     R.id.test_item_menu -> {
                         showTests()
                         return true
@@ -318,7 +324,7 @@ class MainActivity : AppCompatActivity() {
         if (!isTestFragmentShow) {
             if (main_frame_layout.visibility != View.VISIBLE) {
                 main_frame_layout.visibility = View.VISIBLE
-                start_relative_layout.visibility = View.GONE
+//                start_relative_layout.visibility = View.GONE
             } else {
                 closeFragments()
             }
@@ -441,18 +447,23 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
-        return super.onCreateOptionsMenu(menu)
+        return true
     }
 
+    override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
+//        menuInflater.inflate(R.menu.menu_main, menu)
+        menu?.findItem(mSelectedMenuItem)?.isVisible = true
+        return super.onPrepareOptionsMenu(menu)
+    }
 
+    fun updateMenu(menuId: Int) {
+        mSelectedMenuItem = menuId
+        invalidateOptionsMenu()
+    }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         main_drawer_layout.closeDrawer(navigation_relative_layout)
         when (item?.itemId) {
-            R.id.sign_out_menu_item -> {
-                AuthUI.getInstance().signOut(baseContext)
-                return true
-            }
             R.id.test_item_menu -> {
                 showTests()
                 return true
@@ -485,6 +496,10 @@ class MainActivity : AppCompatActivity() {
                 showInformation()
                 return true
             }
+            R.id.add_item_menu -> {
+                addNewObject()
+                return true
+            }
             R.id.log_out_item_menu -> {
                 Toast.makeText(baseContext, "Show third mGeneralStatistic", Toast.LENGTH_SHORT).show()
                 AuthUI.getInstance().signOut(baseContext)
@@ -495,6 +510,33 @@ class MainActivity : AppCompatActivity() {
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun addNewObject() {
+        val question = CloseQuestion(34, "Из предложенных вариантов, выберите символ химического элемента", null, SINGLE_CHOICE,
+                listOf("Общая химия", "Химическая формула"),
+                1.0F,
+                "ru",
+                listOf(Option("N__2_", null),
+                        Option("C--60_", null),
+                        Option("He", null),
+                        Option("S__8_", null)),
+                listOf(1), EASY_QUESTION, null, null, listOf(3), listOf("ЦТ2015", "ЧастьА"))
+        val testParams: TestParams = getExampleTest()
+        val res = mFirebaseDatabase.getReference().child(QUESTIONS_CHILDS)
+//            val theory = ChemTheoryModel(1, "Valency", mutableListOf(Hint("Definition", listOf("http")), Hint("Element with constant valency", listOf("hhhtp"))))
+//            val res = mFirebaseDatabase.getReference().child(DATA_THEORY_CHILD)
+//            res.child(theory.theoryId.toString()).setValue(theory)
+//            val courses = testCourses()
+//            courses.forEach {
+//                res.child(it.mCourseId.toString()).setValue(it)
+//            }
+        res.child(question.questionId.toString()).setValue(question)
+//            val info = QuestionsDataBaseInfo(1, 3, 30)
+//            res.child(question.questionId.toString()).setValue(question)
+//            val intent = Intent(this, TestingActivity::class.java)
+//            intent.putExtra(TEST_PARAM_INT, testParams)
+//            startActivity(intent)
     }
 
     override fun onResume() {
@@ -524,16 +566,27 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
+        if (main_drawer_layout.isDrawerOpen(navigation_relative_layout)) {
+            main_drawer_layout.closeDrawer(navigation_relative_layout)
+            return
+        }
         if (main_frame_layout.visibility == View.VISIBLE) {
             if (!mCompletedTsts.isShowResult) {
-                main_frame_layout.visibility = View.GONE
-                start_relative_layout.visibility = View.VISIBLE
-                closeFragments()
+                if (isTestFragmentShow) {
+                    super.onBackPressed()
+                    return
+                }
+//                main_frame_layout.visibility = View.GONE
+//                start_relative_layout.visibility = View.VISIBLE
+                showTests()
+                navigation_relative_layout.menu.findItem(R.id.test_item_menu)?.isChecked = true
+                navigation_relative_layout.menu.findItem(R.id.test_item_menu).icon.setColorFilter(resources.getColor(R.color.BLACK_TEXT_COLOR), PorterDuff.Mode.ADD)
                 return
             } else {
                 closeResultStatisticFragment()
                 return
             }
+            return
         }
         if (courses_view_pager.visibility == View.VISIBLE) {
             start_relative_layout.visibility = View.VISIBLE

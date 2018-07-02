@@ -10,6 +10,8 @@ import com.github.kiolk.chemistrytests.data.listeners.OnItemClickListener
 import com.github.kiolk.chemistrytests.data.listeners.RecyclerTouchListener
 
 abstract class RecyclerTestBaseFragment : BaseFragment(){
+    override val menuId: Int?
+        get() = null
 
     fun attachRecyclerView(view : View, recyclerId: Int, adapter : AvailableTestRecyclerAdapter?, itemTouchListener : OnItemClickListener){
         val recycler = view.findViewById<RecyclerView>(recyclerId)

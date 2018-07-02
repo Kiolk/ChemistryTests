@@ -25,6 +25,8 @@ import kotlinx.android.synthetic.main.activity_main.*
 import showFragment
 
 class CompletedTestsFragment : BaseFragment() {
+    override val menuId: Int?
+        get() = R.id.reset_history_menu_item
     override val titleId: Int
         get() = R.string.HISTORY
 

@@ -129,4 +129,5 @@
     <dimen name="LITTLE_ICON_SIZE">20dp</dimen>
     <dimen name="NORMAL_TEXT_SIZE">16sp</dimen>
     <dimen name="HALF_BLOCK_PADDING">2dp</dimen>
+    <dimen name="OPTION_LABEL_WIDTH">30dp</dimen>
 </resources>
