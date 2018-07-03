@@ -5,6 +5,12 @@
         android:id="@+id/reset_history_menu_item"
         android:title="@string/RESET"
         android:visible="false"
-        android:icon="@drawable/ic_theory"
-        app:showAsAction="always"/>
+        android:icon="@drawable/ic_garbage_bin"
+        app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/search_menu_item"
+        android:title="@string/RESET"
+        android:visible="false"
+        android:icon="@drawable/ic_search_magnifier_interface_symbol"
+        app:showAsAction="ifRoom"/>
 </menu>

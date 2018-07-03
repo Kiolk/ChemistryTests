@@ -7,37 +7,33 @@ import android.support.v7.widget.Toolbar
 import android.view.*
 import com.github.kiolk.chemistrytests.R
 import com.github.kiolk.chemistrytests.ui.activities.MainActivity
-import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.tool_bar_main.*
 
-abstract class BaseFragment : Fragment(){
+abstract class BaseFragment : Fragment() {
 
     companion object {
-        val DRAWER_LAYOUT_ID : Int = R.id.main_drawer_layout
+        val DRAWER_LAYOUT_ID: Int = R.id.main_drawer_layout
     }
 
-    abstract val titleId : Int
-    abstract val menuId : Int?
+    abstract val titleId: Int
+    abstract val menuId: Int?
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         setupToolBar()
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
-    fun setupToolBar(view : View? = null, viewId : Int = 0) {
+    fun setupToolBar(view: View? = null, viewId: Int = 0) {
         val mainActivity = activity as MainActivity
         var toolBar = view?.findViewById<Toolbar>(viewId)
-        if(toolBar == null){
+        if (toolBar == null) {
             toolBar = mainActivity.main_tool_bar
         }
-//        val navigation = View.OnClickListener {
-//            val mainActivity = activity as MainActivity
-//            mainActivity.findViewById<DrawerLayout>(DRAWER_LAYOUT_ID).openDrawer(Gravity.START)
-//        }
-        toolBar?.setNavigationOnClickListener{
+        toolBar?.setNavigationOnClickListener {
             mainActivity.findViewById<DrawerLayout>(DRAWER_LAYOUT_ID).openDrawer(Gravity.START)
         }
         toolBar?.setTitle(titleId)
-        menuId?.let { toolBar?.menu?.findItem(it)}?.isVisible = true
+        menuId?.let { toolBar?.menu?.findItem(it) }?.isVisible = true
         menuId?.let { mainActivity.updateMenu(it) }
     }
 

@@ -23,16 +23,7 @@
             app:expanded="true"
             android:orientation="vertical">
 
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/main_tool_bar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:background="@color/DARK_GREEN_BACKGROUND"
-                android:elevation="0dp"
-                app:layout_scrollFlags="scroll|enterAlways"
-                app:navigationIcon="@drawable/ic_menu_white"
-                app:title="@string/AVAILABLE_TESTS"
-                app:titleTextColor="@color/WHITE_TEXT_COLOR" />
+            <include layout="@layout/tool_bar_main" />
         </android.support.design.widget.AppBarLayout>
         <FrameLayout
             android:id="@+id/main_frame_layout"

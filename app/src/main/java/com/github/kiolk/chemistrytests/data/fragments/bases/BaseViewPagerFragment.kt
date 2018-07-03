@@ -10,9 +10,10 @@ import android.view.ViewGroup
 import android.view.ViewParent
 import android.widget.ProgressBar
 import com.github.kiolk.chemistrytests.R
+import com.github.kiolk.chemistrytests.data.fragments.BaseFragment
 import kotlinx.android.synthetic.main.tabbed_view_pager.view.*
 
-abstract class BaseViewPagerFragment : Fragment(){
+abstract class BaseViewPagerFragment : BaseFragment(){
 
     abstract fun fragmentLayout() : Int?
 

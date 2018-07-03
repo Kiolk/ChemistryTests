@@ -30,7 +30,7 @@
     <color name="DARK_BACKGROUND">#000000</color>
     <color name="WHITE_TEXT_COLOR">#ffffff</color>
     <color name="WHITE_SELECTED_COLOR">#6b6b6b</color>
-    <color name="DARK_GREEN_BACKGROUND">#083501</color>
+    <color name="DARK_GREEN_BACKGROUND">#000000</color>
     <color name="STUDENT_COLOR">#d4867b</color>
     <color name="ROCKET_COLOR">#cccccc</color>
     <color name="IDEA_COLOR">#75b13a</color>

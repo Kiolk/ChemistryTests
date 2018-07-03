@@ -9,20 +9,20 @@ import android.widget.ProgressBar
 import com.github.kiolk.chemistrytests.R
 import com.github.kiolk.chemistrytests.data.models.StatisticModel
 
-interface StatisticView{
-    fun setupGeneralStatistic(statistic : StatisticModel)
+interface StatisticView {
+    fun setupGeneralStatistic(statistic: StatisticModel)
 }
 
 class GeneralStatisticFragment : BaseFragment(), StatisticView {
     override val menuId: Int?
-        get() = null
+        get() = R.id.reset_history_menu_item
 
     override val titleId: Int
         get() = R.string.STATISTICS
 
 
-    lateinit var mView : View
-    var mStatistic : StatisticModel = StatisticModel()
+    lateinit var mView: View
+    var mStatistic: StatisticModel = StatisticModel()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         mView = inflater.inflate(R.layout.fragment_general_statistic, null)
@@ -41,7 +41,7 @@ class GeneralStatisticFragment : BaseFragment(), StatisticView {
 
     override fun setupGeneralStatistic(statistic: StatisticModel) {
         mStatistic = statistic
-        if(view != null){
+        if (view != null) {
             setupProgressBar()
         }
     }

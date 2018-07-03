@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.Toolbar xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_tool_bar"
+    android:layout_width="match_parent"
+    android:layout_height="?attr/actionBarSize"
+    android:background="@color/DARK_GREEN_BACKGROUND"
+    app:layout_scrollFlags="scroll|enterAlways"
+    app:navigationIcon="@drawable/ic_menu_white"
+    app:title="@string/AVAILABLE_TESTS"
+    app:titleTextColor="@color/WHITE_TEXT_COLOR"
+    tools:showIn="@layout/activity_main" />
