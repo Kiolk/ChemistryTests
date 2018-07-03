@@ -16,6 +16,7 @@ import checkConnection
 import closeFragment
 import com.firebase.ui.auth.AuthUI
 import com.github.kiolk.chemistrytests.R
+import com.github.kiolk.chemistrytests.R.string.PERIODIC_TABLE
 import com.github.kiolk.chemistrytests.data.adapters.CoursesViewPagerAdapter
 import com.github.kiolk.chemistrytests.data.adapters.MenuCustomArrayAdapter
 import com.github.kiolk.chemistrytests.data.asynctasks.ResultCallback
@@ -32,6 +33,9 @@ import com.github.kiolk.chemistrytests.data.models.CloseQuestion.Question.EASY_Q
 import com.github.kiolk.chemistrytests.data.models.CloseQuestion.Question.SINGLE_CHOICE
 import com.github.kiolk.chemistrytests.ui.activities.main.MainMvp
 import com.github.kiolk.chemistrytests.ui.activities.main.MainPresenter
+import com.github.kiolk.chemistrytests.utils.Constants.PERIODIC_TABLE_NAME
+import com.github.kiolk.chemistrytests.utils.Constants.SOLUBILITY_CHART_NAME
+import com.github.kiolk.chemistrytests.utils.showWebView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import kiolk.com.github.pen.Pen
@@ -102,7 +106,10 @@ class MainActivity : AppCompatActivity(), MainMvp {
                 if (item.itemId != R.id.courses_item_menu) {
                     courses_view_pager.visibility = View.GONE
                 }
-                closeFragments()
+                if(item.itemId != R.id.periodic_table_item_menu && item.itemId != R.id.solubility_chart_item_menu && item.itemId != R.id.molar_calculator_item_menu ) {
+                    closeFragments()
+                }
+
 //                navigation_relative_layout.menu.findItem(mSelectedMenuItem).icon.setColorFilter(resources.getColor(R.color.GRAY_TEXT_COLOR), PorterDuff.Mode.ADD)
 //                item.icon.setColorFilter(resources.getColor(R.color.BLACK_TEXT_COLOR), PorterDuff.Mode.ADD)
                 main_drawer_layout.closeDrawer(navigation_relative_layout)
@@ -128,6 +135,17 @@ class MainActivity : AppCompatActivity(), MainMvp {
                     }
                     R.id.statistic_item_menu -> {
                         showStatistic()
+                        return true
+                    }
+                    R.id.periodic_table_item_menu -> {
+                        showWebView(baseContext, PERIODIC_TABLE_NAME, main_web_view)
+                        return true
+                    }
+                    R.id.solubility_chart_item_menu -> {
+                        showWebView(baseContext, SOLUBILITY_CHART_NAME, main_web_view)
+                        return true
+                    }
+                    R.id.molar_calculator_item_menu -> {
                         return true
                     }
                     R.id.settings_item_menu -> {
@@ -318,6 +336,10 @@ class MainActivity : AppCompatActivity(), MainMvp {
     override fun onBackPressed() {
         if (main_drawer_layout.isDrawerOpen(navigation_relative_layout)) {
             main_drawer_layout.closeDrawer(navigation_relative_layout)
+            return
+        }
+        if(main_web_view.visibility == View.VISIBLE){
+            main_web_view.visibility = View.GONE
             return
         }
         if (main_frame_layout.visibility == View.VISIBLE) {

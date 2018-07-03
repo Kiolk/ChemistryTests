@@ -27,6 +27,20 @@
             android:icon="@drawable/ic_statistic"
             android:title="@string/STATISTICS" />
     </group>
+    <group android:id="@+id/information_group"
+        android:checkableBehavior="single">
+        <item android:id="@+id/periodic_table_item_menu"
+            android:icon="@drawable/ic_element"
+            android:title="@string/PERIODIC_TABLE"/>
+        <item
+            android:id="@+id/solubility_chart_item_menu"
+            android:icon="@drawable/ic_spreadshee"
+            android:title="@string/SOLUBILITY_CHART" />
+        <item
+            android:id="@+id/molar_calculator_item_menu"
+            android:icon="@drawable/ic_school_calculator"
+            android:title="@string/MOLAR_MASS_CALCULATOR" />
+    </group>
     <group android:id="@+id/settings_group"
         android:checkableBehavior="single">
         <item

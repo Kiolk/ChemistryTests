@@ -75,6 +75,8 @@
     <string name="TESTS">Tests</string>
     <string name="RESET">Reset history</string>
     <string name="HELP">Help</string>
+    <string name="SOLUBILITY_CHART">Solubility chart</string>
+    <string name="MOLAR_MASS_CALCULATOR">Molar mass calculator</string>
     <string-array name="RESULT_TAB_TITLES">
         <item>Test information</item>
         <item>General result</item>

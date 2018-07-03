@@ -18,7 +18,7 @@ class AplicationInitialisationExecut(var baseContext: Context, override var call
                 setContext(baseContext).
                 setTypeOfCache(PenConstantsUtil.INNER_FILE_CACHE).
                 setSavingStrategy(PenConstantsUtil.SAVE_FULL_IMAGE_STRATEGY).
-                setDefaultDrawable(baseContext.resources.getDrawable(R.drawable.sun)).
+                setDefaultDrawable(baseContext.resources.getDrawable(R.drawable.empty)).
                 setUp()
 
         DBConnector.initInstance(baseContext)
