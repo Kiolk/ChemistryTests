@@ -1,12 +1,12 @@
-package com.github.kiolk.chemistrytests.data.fragments
+package com.github.kiolk.chemistrytests.data.fragments.statistic
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
 import com.github.kiolk.chemistrytests.R
+import com.github.kiolk.chemistrytests.data.fragments.BaseFragment
 import com.github.kiolk.chemistrytests.data.models.StatisticModel
 
 interface StatisticView {

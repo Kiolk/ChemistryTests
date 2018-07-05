@@ -1,4 +1,4 @@
-package com.github.kiolk.chemistrytests.data.fragments
+package com.github.kiolk.chemistrytests.data.fragments.statistic
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -16,7 +16,7 @@ interface TopicStatisticView{
     fun showTopicStatistic(topicsStatistic : MutableList<TopicStatisticModel>)
 }
 
-class TopicStatisticFragment : Fragment(), TopicStatisticView{
+class TopicStatisticFragment : Fragment(), TopicStatisticView {
 
     lateinit var mTopicStatistic :  MutableList<TopicStatisticModel>
     lateinit var mView : View

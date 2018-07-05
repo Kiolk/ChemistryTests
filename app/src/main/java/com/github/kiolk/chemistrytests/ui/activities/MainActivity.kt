@@ -2,23 +2,17 @@ package com.github.kiolk.chemistrytests.ui.activities
 
 import android.app.Activity
 import android.content.Intent
-import android.graphics.PorterDuff
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.design.widget.NavigationView
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.view.MotionEvent
 import android.view.View
 import android.widget.*
-import checkConnection
 import closeFragment
 import com.firebase.ui.auth.AuthUI
 import com.github.kiolk.chemistrytests.R
-import com.github.kiolk.chemistrytests.R.string.PERIODIC_TABLE
 import com.github.kiolk.chemistrytests.data.adapters.CoursesViewPagerAdapter
-import com.github.kiolk.chemistrytests.data.adapters.MenuCustomArrayAdapter
 import com.github.kiolk.chemistrytests.data.asynctasks.ResultCallback
 import com.github.kiolk.chemistrytests.data.asynctasks.SingleAsyncTask
 import com.github.kiolk.chemistrytests.data.database.DBOperations
@@ -27,6 +21,7 @@ import com.github.kiolk.chemistrytests.data.fragments.*
 import com.github.kiolk.chemistrytests.data.fragments.CompletedTestsFragment.Companion.RESULT_TEST_TAG
 import com.github.kiolk.chemistrytests.data.fragments.configuration.ConfigurationFragment
 import com.github.kiolk.chemistrytests.data.fragments.help.HelpFragment
+import com.github.kiolk.chemistrytests.data.fragments.statistic.UserStatisticFragment
 import com.github.kiolk.chemistrytests.data.fragments.tests.TestsFragment
 import com.github.kiolk.chemistrytests.data.models.*
 import com.github.kiolk.chemistrytests.data.models.CloseQuestion.Question.EASY_QUESTION
@@ -202,6 +197,7 @@ class MainActivity : AppCompatActivity(), MainMvp {
         start_relative_layout.visibility = View.GONE
         mUserStatisticFragment = UserStatisticFragment()
         showFragment(supportFragmentManager, R.id.main_frame_layout, mUserStatisticFragment)
+        mUserStatisticFragment.showStatistic()
 //        val presenter = StatisticPresenter(mStatisticFragment)
 //        presenter.presentStatistic()
     }

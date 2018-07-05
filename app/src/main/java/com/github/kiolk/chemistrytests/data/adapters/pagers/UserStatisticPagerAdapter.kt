@@ -4,9 +4,9 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentStatePagerAdapter
 import com.github.kiolk.chemistrytests.data.asynctasks.ResultCallback
-import com.github.kiolk.chemistrytests.data.fragments.GeneralStatisticFragment
-import com.github.kiolk.chemistrytests.data.fragments.TopicStatisticFragment
-import com.github.kiolk.chemistrytests.data.presenters.StatisticPresenter
+import com.github.kiolk.chemistrytests.data.fragments.statistic.GeneralStatisticFragment
+import com.github.kiolk.chemistrytests.data.fragments.statistic.TopicStatisticFragment
+import com.github.kiolk.chemistrytests.data.fragments.statistic.StatisticPresenter
 
 class UserStatisticPagerAdapter(fm: FragmentManager) : FragmentStatePagerAdapter(fm) {
 
@@ -20,8 +20,6 @@ class UserStatisticPagerAdapter(fm: FragmentManager) : FragmentStatePagerAdapter
         statisticPresenter.prepareStatistic(object : ResultCallback{
             override fun <T> onSuccess(any: T?) {
                 notifyDataSetChanged()
-//                statisticPresenter.presentStatistic()
-//                statisticPresenter.presentTopicsStatistic()
             }
 
 
@@ -29,8 +27,6 @@ class UserStatisticPagerAdapter(fm: FragmentManager) : FragmentStatePagerAdapter
             }
 
         })
-//        statisticPresenter.presentStatistic()
-//        statisticPresenter.presentTopicsStatistic()
     }
 
     companion object {
@@ -39,31 +35,13 @@ class UserStatisticPagerAdapter(fm: FragmentManager) : FragmentStatePagerAdapter
         val NUMBER_VIEW_PAGER_ITEMS: Int = 2
     }
 
-//    override fun instantiateItem(container: View, position: Int): Any {
-//       return when (position) {
-//           GENERAL_STATISTIC -> {
-//                statisticPresenter.presentStatistic()
-//               generalStatisticFragment
-//           }
-//           TOPICS_STATISTIC -> {
-//                statisticPresenter.presentTopicsStatistic()
-//               mTopicStatisticFragment
-//           }
-//           else -> {
-//               return generalStatisticFragment
-//           }
-//       }
-//    }
-
     override fun getItem(position: Int): Fragment {
         return when (position) {
             GENERAL_STATISTIC -> {
                 statisticPresenter.presentStatistic()
-//                generalStatisticFragment
             }
             TOPICS_STATISTIC -> {
                 statisticPresenter.presentTopicsStatistic()
-//                mTopicStatisticFragment
             }
             else -> {
                 return generalStatisticFragment
@@ -73,5 +51,14 @@ class UserStatisticPagerAdapter(fm: FragmentManager) : FragmentStatePagerAdapter
 
     override fun getCount(): Int {
         return NUMBER_VIEW_PAGER_ITEMS
+    }
+
+    override fun getPageTitle(position: Int): CharSequence? {
+        return when(position){
+            GENERAL_STATISTIC -> "General"
+            TOPICS_STATISTIC -> "Topics"
+            //TODO change naming of tab items from resource file
+            else -> super.getPageTitle(position)
+        }
     }
 }
