@@ -49,7 +49,7 @@
     <string name="TEST_PARAMS">Settings</string>
     <string name="TEST_DESCRIPTION">Description</string>
     <string name="TEST_TITLE">Test title</string>
-    <string name="AVAILABLE_TESTS">Available tests</string>
+    <string name="AVAILABLE_TESTS">Доступные тэсты</string>
     <string name="NOT_HAVE_UPDATED_TESTS">Not have tests</string>
     <string name="LOGIN">Log in</string>
     <string name="THEORY">Theory</string>
@@ -71,7 +71,7 @@
     <string name="SELECT_TIME">Select time</string>
     <string name="STATISTICS">Statistic</string>
     <string name="HISTORY">History</string>
-    <string name="CONFIGURATION">Configuration</string>
+    <string name="CONFIGURATION">Конф</string>
     <string name="TESTS">Tests</string>
     <string name="RESET">Reset history</string>
     <string name="HELP">Help</string>
@@ -84,17 +84,17 @@
         <item>General result</item>
         <item>Statistic</item>
     </string-array>
-    <string-array name="QUESTIONS_STRENGTH_TYPE">
-        <item>Easy</item>
+    <string-array name="SETTINGS_TITLE_ARRAY">
+        <item>Language</item>
         <item>Simple</item>
         <item>Normal</item>
         <item>Complex</item>
         <item>Hard</item>
     </string-array>
-    <string-array name="SETTINGS_TITLE_ARRAY">
-        <item>Language</item>
-        <item>Accent color</item>
-        <item>Theme</item>
+    <string-array name="QUESTIONS_STRENGTH_TYPE">
+        <item>Easy</item>
+        <item>Simple</item>
+        <item>Normal</item>
         <item>Complex</item>
         <item>Hard</item>
     </string-array>

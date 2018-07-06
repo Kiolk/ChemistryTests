@@ -118,7 +118,7 @@ class Result(var test: Test = Test(), var endListener: OnEndTestListener? = null
                 it.question.checkOpenQuestionAnswers(it.userInput)
             }
             mResultInfo.listAskedQuestionsId?.add(questionId)
-            mResultInfo.listQuestionsIdByResult?.add(Pair(result, questionId))
+            mResultInfo.listQuestionsIdByResult?.add(QuestionResultPair(result, questionId))
         }
         mResultInfo.listAnsweredQuestions = askedQuestions
 

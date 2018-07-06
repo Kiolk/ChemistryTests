@@ -6,6 +6,7 @@ import com.github.kiolk.chemistrytests.data.models.*
 import com.github.kiolk.chemistrytests.data.models.CloseQuestion.Question.INPUT_CHOICE
 import com.github.kiolk.chemistrytests.data.models.CloseQuestion.Question.MULTIPLE_CHOICE
 import com.github.kiolk.chemistrytests.data.models.CloseQuestion.Question.SINGLE_CHOICE
+import java.util.*
 
 val PHOTO_TAG = "drawable"
 
@@ -94,4 +95,13 @@ fun getTrainingTets(): Test {
     }
     val params: TestParams = TestParams(3, RANDOM_ORDER, TRAINING_TEST, 5, true, DIRECT_TEST)
     return Test(listOfQuestions, params)
+}
+
+fun changeLocale(context: Context, lang: String?) {
+    val locale = Locale(lang)
+//        lang?.let { saveData(it) }
+    Locale.setDefault(locale)
+    val configuration = context.resources.configuration
+    configuration.locale = locale
+    context.resources.updateConfiguration(configuration, context.resources.displayMetrics)
 }

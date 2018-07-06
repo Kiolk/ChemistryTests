@@ -22,7 +22,8 @@ class ResultInformation : Serializable{
     var fasterWrong : Long? = null
     var longerCorrect : Long? = null
     var longerWrong : Long? = null
-    var listQuestionsIdByResult : MutableList<Pair<Boolean, Int>>? = null
+//    var listQuestionsIdByResult : MutableList<Pair<Boolean, Int>>? = null
+    var listQuestionsIdByResult : MutableList<QuestionResultPair>? = null
     var listAnsweredQuestions : MutableList<Answer>? = null
 //    var sortedQuestions :List<CloseQuestion> = mutableListOf()
 //    var anweredQuestions : MutableList<Answer> = mutableListOf()

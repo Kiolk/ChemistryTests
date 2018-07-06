@@ -6,6 +6,7 @@ import com.github.kiolk.chemistrytests.data.asynctasks.ResultCallback
 import com.github.kiolk.chemistrytests.data.asynctasks.ResultObject
 import com.github.kiolk.chemistrytests.data.asynctasks.SingleExecut
 import com.github.kiolk.chemistrytests.data.database.DBConnector
+import com.github.kiolk.chemistrytests.data.managers.DataManager
 import com.google.firebase.messaging.FirebaseMessaging
 import kiolk.com.github.pen.Pen
 import kiolk.com.github.pen.utils.PenConstantsUtil
@@ -24,6 +25,8 @@ class AplicationInitialisationExecut(var baseContext: Context, override var call
         DBConnector.initInstance(baseContext)
 
         FirebaseMessaging.getInstance()
+
+        DataManager.initInstance(baseContext)
 
         return ResultObject("Success", callback)
     }

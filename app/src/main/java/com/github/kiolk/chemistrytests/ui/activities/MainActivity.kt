@@ -47,6 +47,13 @@ val DATA_COURSES_CHILD: String = "Courses"
 val DATA_THEORY_CHILD: String = "Theory"
 
 class MainActivity : AppCompatActivity(), MainMvp {
+
+    companion object {
+        val LANGUAGE_PREFIX = "Language"
+        val LANGUAGE_PREFERENCES = "Language_preferences"
+        val LANGUAGE_SELECTED = "Language_selected"
+    }
+
     override fun showMassageResult(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
@@ -173,7 +180,7 @@ class MainActivity : AppCompatActivity(), MainMvp {
         main_frame_layout.visibility = View.VISIBLE
         start_relative_layout.visibility = View.GONE
         showFragment(supportFragmentManager, R.id.main_frame_layout, mConfigurationFragment)
-        mConfigurationFragment.mPresenter.prepareSettings()
+        mConfigurationFragment.mPresenter?.prepareSettings()
     }
 
     private fun showHelpInformation() {
@@ -379,4 +386,18 @@ class MainActivity : AppCompatActivity(), MainMvp {
         closeFragment(supportFragmentManager, mConfigurationFragment)
         isTestFragmentShow = false
     }
+
+    fun saveLanguage(lang: String) {
+        val prefernces = getSharedPreferences(LANGUAGE_PREFERENCES, Activity.MODE_PRIVATE)
+        val editor = prefernces.edit()
+        editor.putString(LANGUAGE_PREFIX, lang)
+        editor.commit()
+    }
+
+    override fun restart() {
+        val intent = Intent(baseContext, MainActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
+
 }

@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import changeLocale
 import checkConnection
 import com.firebase.ui.auth.AuthUI
 import com.github.kiolk.chemistrytests.R
@@ -23,7 +24,10 @@ import com.github.kiolk.chemistrytests.data.fragments.FeatureFragment.Companion.
 import com.github.kiolk.chemistrytests.data.fragments.FeatureFragment.Companion.STUDENT_SLIDE
 import com.github.kiolk.chemistrytests.data.fragments.FeatureFragment.Companion.TARGET_SLIDE
 import com.github.kiolk.chemistrytests.data.fragments.attachRoundIndicators
+import com.github.kiolk.chemistrytests.data.managers.DataManager
 import com.github.kiolk.chemistrytests.data.models.TestFragmentModel
+import com.github.kiolk.chemistrytests.ui.activities.MainActivity.Companion.LANGUAGE_PREFERENCES
+import com.github.kiolk.chemistrytests.ui.activities.MainActivity.Companion.LANGUAGE_PREFIX
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import kotlinx.android.synthetic.main.activity_splash.*
@@ -57,6 +61,7 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
         setupTimer()
+        loadData()
 //        setupAuthentication()
     }
 
@@ -304,5 +309,15 @@ class SplashActivity : AppCompatActivity() {
         val intent = Intent(baseContext, MainActivity::class.java)
         startActivity(intent)
         finish()
+    }
+
+    fun loadData() {
+       val languageInterface = DataManager.instance.getInterfaceLanguage()
+//        val preferences = getSharedPreferences(LANGUAGE_PREFERENCES, Activity.MODE_PRIVATE)
+//        val lang = preferences.getString(LANGUAGE_PREFIX, "ru")
+        val lang = languageInterface.languagePrefix
+        if (lang != resources.configuration.locale.language && languageInterface.isUserSelection) {
+            changeLocale(baseContext, lang)
+        }
     }
 }

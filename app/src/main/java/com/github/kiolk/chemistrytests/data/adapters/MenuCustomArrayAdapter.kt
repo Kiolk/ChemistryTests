@@ -20,7 +20,7 @@ class MenuCustomArrayAdapter(var contexte: Context,
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         val view =inflater.inflate(layoutResourceId, parent, false)
         val item = itemsArray[position]
-        view?.findViewById<ImageView>(R.id.item_menu_icon_image_view)?.setImageResource(item.icon)
+        view?.findViewById<ImageView>(R.id.item_menu_icon_image_view)?.setImageDrawable(item.icon)
         view?.findViewById<TextView>(R.id.item_title_text_view)?.text = item.itemTitle
         return view //super.getView(position, convertView, parent)
     }

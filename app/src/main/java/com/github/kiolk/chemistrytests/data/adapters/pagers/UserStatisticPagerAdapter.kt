@@ -5,8 +5,8 @@ import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentStatePagerAdapter
 import com.github.kiolk.chemistrytests.data.asynctasks.ResultCallback
 import com.github.kiolk.chemistrytests.data.fragments.statistic.GeneralStatisticFragment
-import com.github.kiolk.chemistrytests.data.fragments.statistic.TopicStatisticFragment
 import com.github.kiolk.chemistrytests.data.fragments.statistic.StatisticPresenter
+import com.github.kiolk.chemistrytests.data.fragments.statistic.TopicStatisticFragment
 
 class UserStatisticPagerAdapter(fm: FragmentManager) : FragmentStatePagerAdapter(fm) {
 
