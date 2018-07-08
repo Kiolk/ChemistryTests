@@ -4,6 +4,7 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="BACKGROUND_COLOR">#cde3d7</color>
+    <color name="DARK_BACKGROUND_COLOR">#1b1b1b</color>
     <color name="SECOND_TEXT_COLOR">#3a6959</color>
     <color name="FIRST_TEXT_COLOR">#10120d</color>
     <color name="SQUER_COLOR">#ffffff</color>
@@ -38,4 +39,5 @@
     <color name="THEORY_TITLE_COLOR">#1b35f9</color>
     <color name="ACTIVE_BLACK_TEXT_COLOR">#000000</color>
     <color name="TAB_QUESTION_COLOR">#d0f0fa</color>
+    <color name="GREEN_ACCENT">#3bb701</color>
 </resources>

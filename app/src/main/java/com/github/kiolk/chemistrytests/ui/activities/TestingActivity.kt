@@ -29,6 +29,7 @@ import com.github.kiolk.chemistrytests.data.fragments.dialogs.LeaveTestDialog
 import com.github.kiolk.chemistrytests.data.fragments.ResultFragment
 import com.github.kiolk.chemistrytests.data.fragments.TestInfoFragment
 import com.github.kiolk.chemistrytests.data.models.*
+import com.github.kiolk.chemistrytests.ui.activities.base.BaseActivity
 import com.github.kiolk.chemistrytests.ui.customviews.ControledViewPager
 import com.github.kiolk.chemistrytests.utils.SlideAnimationUtil
 import com.github.kiolk.chemistrytests.utils.SlideAnimationUtil.FASTER
@@ -41,7 +42,7 @@ import java.util.*
 val QUESTIONS_CHILDS: String = "Questions"
 val MIN_PERCENT_FOR_SAVE_RESULT: Float = 0.75F
 
-class TestingActivity : AppCompatActivity() {
+class TestingActivity : BaseActivity() {
 
 
     lateinit var listener: CheckResultListener

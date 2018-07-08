@@ -5,4 +5,5 @@ interface ConfigurationMvpPresenter{
     fun saveLanguage(item : Int)
     fun prepareLanguageDialog()
     fun getLanguagePrefix(which: Int): String
+    fun prepareAccentColorDialog()
 }

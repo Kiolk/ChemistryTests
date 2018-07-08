@@ -79,6 +79,8 @@
     <string name="MOLAR_MASS_CALCULATOR">Molar mass calculator</string>
     <string name="SELECT_LANGUAGE">Select language</string>
     <string name="RESTART_APLICTION">Resturt application now</string>
+    <string name="SELECT_ACCENT_COLOR">Select accent color</string>
+    <string name="ACCEPT_COLOR">Acept color</string>
     <string-array name="RESULT_TAB_TITLES">
         <item>Test information</item>
         <item>General result</item>

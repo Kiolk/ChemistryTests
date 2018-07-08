@@ -9,7 +9,7 @@ class DataManager private constructor (context : Context) : SharedPreferencesHel
         return resources.getResources()
     }
 
-    private val sharedPreferences: SharedPreferences = SharedPreferences(context)
+    private val sharedPreferences: SharedPref = SharedPref(context)
     private val resources : ResourcesImpl = ResourcesImpl(context)
 
     override fun getInterfaceLanguage(): LanguageModel {

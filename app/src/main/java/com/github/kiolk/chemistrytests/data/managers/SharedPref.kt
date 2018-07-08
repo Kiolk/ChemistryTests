@@ -5,7 +5,35 @@ import android.content.Context
 import com.github.kiolk.chemistrytests.data.models.LanguageModel
 import com.github.kiolk.chemistrytests.ui.activities.MainActivity
 
-class SharedPreferences(var context : Context) : SharedPreferencesHelper{
+class SharedPref(var context : Context) : SharedPreferencesHelper{
+
+    companion object {
+
+        val THEME_MODE : String = "ThemeMode"
+        val THEME_COLOR : String = "ThemeColor"
+
+        fun getThemeMode(context : Context) : Int{
+            return themeMode(context)
+        }
+
+        private fun themeMode(context : Context?) : Int{
+            val themeMode = context?.let { PrefGetter.getString(it, THEME_MODE) }
+            if(themeMode != null){
+                return themeMode.toInt()
+            }else{
+                return -1
+            }
+        }
+
+        fun getThemeAccent(context: Context): Int {
+            val themeColor = context?.let { PrefGetter.getString(it, THEME_COLOR ) }
+            if (themeColor != null){
+                return themeColor.toInt()
+            }else{
+                return -1
+            }
+        }
+    }
 
     override fun getInterfaceLanguage(): LanguageModel {
         val preferences = context.getSharedPreferences(MainActivity.LANGUAGE_PREFERENCES, Activity.MODE_PRIVATE)
@@ -27,4 +55,7 @@ class SharedPreferences(var context : Context) : SharedPreferencesHelper{
             return
         }
     }
+
+
+
 }

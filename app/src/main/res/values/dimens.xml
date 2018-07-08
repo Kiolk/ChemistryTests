@@ -37,4 +37,5 @@
     <dimen name="LOGIN_BUTTON_WIDTH">200dp</dimen>
     <dimen name="CUSTOM_ITEM_HEIGHT">80dp</dimen>
     <dimen name="CUSTOM_DESCRIPTION_HEIGHT">240dp</dimen>
+    <dimen name="PALLET_SIZE">70dp</dimen>
 </resources>

@@ -8,6 +8,41 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <declare-styleable name="AppTheme">
+        <attr name="primaryTextColor" format="color"/>
+        <attr name="backgroundColor" format="color"/>
+        <attr name="iconPlaceHolder" format="integer"/>
+        <attr name="iconLampColor" format="color"/>
+        <attr name="bigTitle" format="dimension"/>
+        <attr name="smallTitle" format="dimension"/>
+        <attr name="generalBackground" format="integer"/>
+        <attr name="toolBarHeight" format="dimension"/>
+    </declare-styleable>
+
+    <style name="MyTheme" parent="AppTheme">
+        <item name="bigTitle">@dimen/BIG_TEXT_SIZE</item>
+    </style>
+
+    <style name="MyTheme.Light" parent="MyTheme">
+        <item name="backgroundColor">@color/BACKGROUND_COLOR</item>
+    </style>
+
+    <style name="MyTheme.Dark" parent="MyTheme">
+        <item name="backgroundColor">@color/DARK_BACKGROUND_COLOR</item>
+    </style>
+
+    <style name="MyThemeYellowDark" parent="MyTheme.Dark">
+        <item name="colorAccent">@color/YELLOW</item>
+    </style>
+
+    <style name="MyThemeRedDark" parent="MyTheme.Dark">
+        <item name="colorAccent">@color/WRONG_COLOR</item>
+    </style>
+
+    <style name="MyThemeGreenDark" parent="MyTheme.Dark">
+        <item name="colorAccent">@color/GREEN_ACCENT</item>
+    </style>
+
     <style name="Launcher" parent="AppTheme">
         <item name="android:windowBackground">@drawable/splash_layer_list</item>
     </style>
@@ -125,9 +160,19 @@
         <item name="android:textSize">@dimen/QUESTION_TEXT_SIZE</item>
     </style>
 
+    <style name="PalletButtonStyle">
+        <item name="android:layout_margin">@dimen/BLOCK_PADDING</item>
+        <item name="android:textSize">@dimen/BIG_TEXT_SIZE</item>
+        <item name="android:layout_width">@dimen/PALLET_SIZE</item>
+        <item name="android:layout_height">@dimen/PALLET_SIZE</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:textColor">@color/WHITE_TEXT_COLOR</item>
+    </style>
+
     <dimen name="SMALL_ICON_SIZE">30dp</dimen>
     <dimen name="LITTLE_ICON_SIZE">20dp</dimen>
     <dimen name="NORMAL_TEXT_SIZE">16sp</dimen>
     <dimen name="HALF_BLOCK_PADDING">2dp</dimen>
     <dimen name="OPTION_LABEL_WIDTH">30dp</dimen>
+    <color name="YELLOW">#f2d204</color>
 </resources>

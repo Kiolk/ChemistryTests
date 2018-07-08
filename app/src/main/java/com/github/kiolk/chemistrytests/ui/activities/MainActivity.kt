@@ -26,6 +26,7 @@ import com.github.kiolk.chemistrytests.data.fragments.tests.TestsFragment
 import com.github.kiolk.chemistrytests.data.models.*
 import com.github.kiolk.chemistrytests.data.models.CloseQuestion.Question.EASY_QUESTION
 import com.github.kiolk.chemistrytests.data.models.CloseQuestion.Question.SINGLE_CHOICE
+import com.github.kiolk.chemistrytests.ui.activities.base.BaseActivity
 import com.github.kiolk.chemistrytests.ui.activities.main.MainMvp
 import com.github.kiolk.chemistrytests.ui.activities.main.MainPresenter
 import com.github.kiolk.chemistrytests.utils.Constants.PERIODIC_TABLE_NAME
@@ -46,7 +47,7 @@ val DATA_BASE_USERS_CHAILD: String = "Users"
 val DATA_COURSES_CHILD: String = "Courses"
 val DATA_THEORY_CHILD: String = "Theory"
 
-class MainActivity : AppCompatActivity(), MainMvp {
+class MainActivity : BaseActivity(), MainMvp {
 
     companion object {
         val LANGUAGE_PREFIX = "Language"
@@ -77,6 +78,7 @@ class MainActivity : AppCompatActivity(), MainMvp {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+//        setTheme(R.style.MyTheme_Dark)
         setContentView(R.layout.activity_main)
         setSupportActionBar(main_tool_bar)
         main_drawer_layout.setStatusBarBackground(R.color.fui_transparent)

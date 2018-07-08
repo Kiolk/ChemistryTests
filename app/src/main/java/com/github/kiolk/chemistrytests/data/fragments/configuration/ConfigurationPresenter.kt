@@ -2,10 +2,15 @@ package com.github.kiolk.chemistrytests.data.fragments.configuration
 
 import com.github.kiolk.chemistrytests.R
 import com.github.kiolk.chemistrytests.data.managers.DataManager
+import com.github.kiolk.chemistrytests.data.managers.PrefGetter
 import com.github.kiolk.chemistrytests.data.models.LanguageModel
 import com.github.kiolk.chemistrytests.data.models.MenuItemModel
 
 class ConfigurationPresenter(private var configurationView : ConfigurationMvpView) : ConfigurationMvpPresenter{
+
+    override fun prepareAccentColorDialog() {
+      configurationView.showAccentColorDialog()
+    }
 
     override fun getLanguagePrefix(which: Int): String {
         return when(which){
