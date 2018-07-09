@@ -31,6 +31,9 @@ import com.github.kiolk.chemistrytests.data.fragments.TestInfoFragment
 import com.github.kiolk.chemistrytests.data.models.*
 import com.github.kiolk.chemistrytests.ui.activities.base.BaseActivity
 import com.github.kiolk.chemistrytests.ui.customviews.ControledViewPager
+import com.github.kiolk.chemistrytests.utils.ChartHelper.PERIODIC_TABLE_NAME
+import com.github.kiolk.chemistrytests.utils.ChartHelper.SOLUBILITY_CHART_NAME
+import com.github.kiolk.chemistrytests.utils.ChartHelper.showWebView
 import com.github.kiolk.chemistrytests.utils.SlideAnimationUtil
 import com.github.kiolk.chemistrytests.utils.SlideAnimationUtil.FASTER
 import com.github.kiolk.chemistrytests.utils.SlideAnimationUtil.VERY_FASTER
@@ -60,7 +63,7 @@ class TestingActivity : BaseActivity() {
     var isTestEnd: Boolean = false
     var isTestForeground: Boolean = false
     var isTimeEnd: Boolean = false
-    var isTheoryShow : Boolean = false
+    var isTheoryShow: Boolean = false
     var mQuestions: MutableList<CloseQuestion> = mutableListOf()
     var mTimer: Timer? = null
 
@@ -149,7 +152,7 @@ class TestingActivity : BaseActivity() {
         }
         if (result_frame_layout.visibility == View.VISIBLE) {
             val theoryFragment = supportFragmentManager.findFragmentByTag(THEORY_FRAGMENT_TAG)
-            if(theoryFragment != null && isTheoryShow){
+            if (theoryFragment != null && isTheoryShow) {
                 closeFragment(theoryFragment)
                 isTheoryShow = false
                 return
@@ -443,36 +446,17 @@ class TestingActivity : BaseActivity() {
             val group: ViewGroup = questions_tab_layout.getChildAt(0) as ViewGroup
             group.getChildAt(position).background = resources.getDrawable(R.drawable.area_not_answer)
         }
-//        testing_view_pager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener{
-//            override fun onPageScrollStateChanged(state: Int) {
-//            }
-//
-//            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
-//                Log.d("MyLogs", "onPageScrolled $position")
-//                if(mResult.askedQuestions.find { it.question ==  mResult.test.mSortedQuestions[position]} != null){
-//                    val group: ViewGroup = questions_tab_layout.getChildAt(0) as ViewGroup
-//                    group.getChildAt(position).background = resources.getDrawable(R.drawable.area_square_shape_correct)
-//                }else{
-//                    val group: ViewGroup = questions_tab_layout.getChildAt(0) as ViewGroup
-//                    group.getChildAt(position).background = resources.getDrawable(R.drawable.area_square_shape_wrong)
-//                }
-//            }
-//
-//            override fun onPageSelected(position: Int) {
-//                Log.d("MyLogs", "onPageSelected $position")
-//            }
-//        })
     }
 
     private fun setupBottomBar() {
         setupHintListener()
         periodical_table_image_view.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
-                showPeriodicTable("table")
+                showWebView(baseContext, PERIODIC_TABLE_NAME, photo_web_view)
             }
         })
         solubility_button_image_view.setOnClickListener {
-            showPeriodicTable("solubility")
+            showWebView(baseContext, SOLUBILITY_CHART_NAME, photo_web_view)
         }
     }
 
@@ -500,8 +484,8 @@ class TestingActivity : BaseActivity() {
         }
     }
 
-    private fun checkExplanationPresent(){
-        if(isTestEnd) {
+    private fun checkExplanationPresent() {
+        if (isTestEnd) {
             explanation_linear_layout.visibility = View.VISIBLE
             val position = testing_view_pager.currentItem
             val explanationList: List<Hint>? = mResult.test.mSortedQuestions[position].answerExplanations
@@ -515,12 +499,12 @@ class TestingActivity : BaseActivity() {
         }
     }
 
-    private fun setupExplanation(){
-        explanation_button_image_view.setOnClickListener{
+    private fun setupExplanation() {
+        explanation_button_image_view.setOnClickListener {
             val position = testing_view_pager.currentItem
             val explanationList: List<Hint>? = mResult.test.mSortedQuestions[position].answerExplanations
             if (explanationList != null && explanationList.isNotEmpty()) {
-                result_frame_layout.setPadding(0, 0, 0,bottom_bar_linear_layout.height)
+                result_frame_layout.setPadding(0, 0, 0, bottom_bar_linear_layout.height)
                 if (result_frame_layout.visibility != View.VISIBLE) {
                     result_frame_layout.visibility = View.VISIBLE
                     showFragment(R.id.result_frame_layout, mHintFragment)
@@ -535,7 +519,7 @@ class TestingActivity : BaseActivity() {
             val position = testing_view_pager.currentItem
             val theoryListId: List<Long>? = mResult.test.mSortedQuestions[position].theoryListId
             if (theoryListId != null && theoryListId.isNotEmpty()) {
-                result_frame_layout.setPadding(0, 0, 0,bottom_bar_linear_layout.height)
+                result_frame_layout.setPadding(0, 0, 0, bottom_bar_linear_layout.height)
                 if (result_frame_layout.visibility != View.VISIBLE) {
                     result_frame_layout.visibility = View.VISIBLE
                     showFragment(R.id.result_frame_layout, mTheoryFragment)
@@ -611,12 +595,12 @@ class TestingActivity : BaseActivity() {
         }))
     }
 
-    fun showFragment(container: Int, fragment: Fragment, fragmentTag : String? = null) {
+    fun showFragment(container: Int, fragment: Fragment, fragmentTag: String? = null) {
         val transaction = supportFragmentManager.beginTransaction()
-        if(fragmentTag != null){
+        if (fragmentTag != null) {
             transaction.add(container, fragment, fragmentTag)
             transaction.addToBackStack(fragmentTag)
-        }else{
+        } else {
             transaction.add(container, fragment)
         }
         transaction.commit()
@@ -641,19 +625,6 @@ class TestingActivity : BaseActivity() {
         photo_web_view.settings?.loadWithOverviewMode = true
         photo_web_view.visibility = View.VISIBLE
     }
-
-    fun showPeriodicTable(picture: String) {
-        val urlFolder = baseContext.cacheDir?.canonicalPath
-        val url: String = "file:///android_asset/"
-        val data = "<body bgcolor=\"#000000\"><div class=\"centered-content\" align=\"middle\" ><img src=\"$picture.png\"/></div></body>"
-        photo_web_view.loadDataWithBaseURL(url, data, "text/html", "UTF-8", null)
-        photo_web_view.settings?.builtInZoomControls = true
-        photo_web_view.settings?.displayZoomControls = false
-        photo_web_view.settings?.useWideViewPort = true
-        photo_web_view.settings?.loadWithOverviewMode = false
-        photo_web_view.visibility = View.VISIBLE
-    }
-
 }
 
 private fun updateIndicator(progressBar: ProgressBar?, size: Int, total: Int) {

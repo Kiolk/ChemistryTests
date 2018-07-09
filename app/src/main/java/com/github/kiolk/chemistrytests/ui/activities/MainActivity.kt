@@ -2,13 +2,14 @@ package com.github.kiolk.chemistrytests.ui.activities
 
 import android.app.Activity
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.design.widget.NavigationView
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.*
+import android.widget.ImageView
+import android.widget.TextView
+import android.widget.Toast
 import closeFragment
 import com.firebase.ui.auth.AuthUI
 import com.github.kiolk.chemistrytests.R
@@ -29,11 +30,11 @@ import com.github.kiolk.chemistrytests.data.models.CloseQuestion.Question.SINGLE
 import com.github.kiolk.chemistrytests.ui.activities.base.BaseActivity
 import com.github.kiolk.chemistrytests.ui.activities.main.MainMvp
 import com.github.kiolk.chemistrytests.ui.activities.main.MainPresenter
+import com.github.kiolk.chemistrytests.utils.ChartHelper.showWebView
 import com.github.kiolk.chemistrytests.utils.Constants.PERIODIC_TABLE_NAME
 import com.github.kiolk.chemistrytests.utils.Constants.SOLUBILITY_CHART_NAME
-import com.github.kiolk.chemistrytests.utils.showWebView
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.*
+import com.google.firebase.database.FirebaseDatabase
 import kiolk.com.github.pen.Pen
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.tool_bar_main.*
@@ -143,6 +144,13 @@ class MainActivity : BaseActivity(), MainMvp {
                     }
                     R.id.periodic_table_item_menu -> {
                         showWebView(baseContext, PERIODIC_TABLE_NAME, main_web_view)
+//                        if(resources.configuration.locale.language == "en"){
+//                            showWebView(baseContext, PERIODIC_TABLE_ENGLISH, main_web_view)
+//                        }else if(resources.configuration.locale.language == "be"){
+//                            showWebView(baseContext, PERIODIC_TABLE_BELARUS, main_web_view)
+//                        }else{
+//                            showWebView(baseContext, PERIODIC_TABLE_NAME, main_web_view)
+//                        }
                         return true
                     }
                     R.id.solubility_chart_item_menu -> {
@@ -345,6 +353,7 @@ class MainActivity : BaseActivity(), MainMvp {
         }
         if(main_web_view.visibility == View.VISIBLE){
             main_web_view.visibility = View.GONE
+            navigation_relative_layout.menu.findItem(R.id.test_item_menu)?.isChecked = true
             return
         }
         if (main_frame_layout.visibility == View.VISIBLE) {
