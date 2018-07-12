@@ -22,14 +22,18 @@ class UploadDataInDb(override var callback: ResultCallback) : SingleExecut {
     lateinit var mChidCoursesListener: ChildEventListener
     lateinit var mChildTheoryListener: ChildEventListener
     lateinit var mInfoDatabaseReference: DatabaseReference
+    lateinit var mAccountDatabaseReference: DatabaseReference
+    lateinit var mChildAccountListener: ChildEventListener
     var uploadTests: Boolean = false
     var uploadQuestions: Boolean = false
     var isUpdateCources : Boolean = false
     var isTheoryUpload : Boolean = false
+    var isAccountsUpload : Boolean = false
     var cnt = 0
     var cnt2 = 0
     var cnt3 = 0
     var cntTheory = 0
+    var cntAccounts = 0
     var dbInfo: QuestionsDataBaseInfo? = null
 
     override fun perform(): ResultObject<*> {
@@ -127,6 +131,7 @@ class UploadDataInDb(override var callback: ResultCallback) : SingleExecut {
 
         updateCourses()
         updateTheory()
+        updateAccounts()
     }
 
     private fun updateTheory(){
@@ -158,6 +163,36 @@ class UploadDataInDb(override var callback: ResultCallback) : SingleExecut {
             }
         }
         mTheoryDataBaseReference.addChildEventListener(mChildTheoryListener)
+    }
+    private fun updateAccounts(){
+        mAccountDatabaseReference = mFirebaseDatabase.reference.child(ACCOUNTS_CHILD)
+        mChildAccountListener = object : ChildEventListener{
+            override fun onCancelled(p0: DatabaseError?) {
+            }
+
+            override fun onChildMoved(p0: DataSnapshot?, p1: String?) {
+            }
+
+            override fun onChildChanged(p0: DataSnapshot?, p1: String?) {
+            }
+
+            override fun onChildAdded(p0: DataSnapshot?, p1: String?) {
+                val account : AcountModel? = p0?.getValue(AcountModel::class.java)
+                if(account != null){
+                    cntAccounts = cntAccounts + 1
+                    DBOperations().insertAccount(cntAccounts, account)
+                    if(cntAccounts == 9){
+                        isAccountsUpload = true
+                        mAccountDatabaseReference.removeEventListener(mChildAccountListener)
+                        setOnSuccess()
+                    }
+                }
+            }
+
+            override fun onChildRemoved(p0: DataSnapshot?) {
+            }
+        }
+        mAccountDatabaseReference.addChildEventListener(mChildAccountListener)
     }
 
     private fun updateCourses() {
@@ -192,7 +227,7 @@ class UploadDataInDb(override var callback: ResultCallback) : SingleExecut {
     }
 
     private fun setOnSuccess(){
-        if(uploadTests && uploadQuestions && (isUpdateCources && isTheoryUpload)){
+        if(uploadTests && (uploadQuestions && isAccountsUpload) && (isUpdateCources && isTheoryUpload)){
 //            callback.onSuccess("Success")
             perform()
         }

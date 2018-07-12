@@ -20,6 +20,7 @@ import com.github.kiolk.chemistrytests.data.database.DBOperations
 import com.github.kiolk.chemistrytests.data.executs.PrepareCoursesFromDb
 import com.github.kiolk.chemistrytests.data.fragments.*
 import com.github.kiolk.chemistrytests.data.fragments.CompletedTestsFragment.Companion.RESULT_TEST_TAG
+import com.github.kiolk.chemistrytests.data.fragments.accounts.PremiumFragment
 import com.github.kiolk.chemistrytests.data.fragments.configuration.ConfigurationFragment
 import com.github.kiolk.chemistrytests.data.fragments.help.HelpFragment
 import com.github.kiolk.chemistrytests.data.fragments.statistic.UserStatisticFragment
@@ -47,6 +48,8 @@ val DATA_BASE_INFO_CHAILD: String = "DBInformation"
 val DATA_BASE_USERS_CHAILD: String = "Users"
 val DATA_COURSES_CHILD: String = "Courses"
 val DATA_THEORY_CHILD: String = "Theory"
+val ACCOUNTS_CHILD: String = "Accounts"
+
 
 class MainActivity : BaseActivity(), MainMvp {
 
@@ -68,6 +71,7 @@ class MainActivity : BaseActivity(), MainMvp {
     lateinit var mCustomTest: CustomTest
     lateinit var mCustomTestFragment: CustomTestFragment
     lateinit var mTestsFragment: TestsFragment
+    var mPremiumAccounts : PremiumFragment = PremiumFragment()
     var mHelpFragment: HelpFragment = HelpFragment()
     var mConfigurationFragment: ConfigurationFragment = ConfigurationFragment()
     var mUserStatisticFragment: UserStatisticFragment = UserStatisticFragment()
@@ -164,12 +168,20 @@ class MainActivity : BaseActivity(), MainMvp {
                         showConfiguration()
                         return true
                     }
+                    R.id.price_item_menu -> {
+                        showPremiumAccounts()
+                        return true
+                    }
                     R.id.help_item_menu -> {
                         showHelpInformation()
                         return true
                     }
                     R.id.about_item_menu -> {
                         showInformation()
+                        return true
+                    }
+                    R.id.add_item_menu -> {
+                        addNewObject()
                         return true
                     }
                     R.id.log_out_item_menu -> {
@@ -191,6 +203,14 @@ class MainActivity : BaseActivity(), MainMvp {
         start_relative_layout.visibility = View.GONE
         showFragment(supportFragmentManager, R.id.main_frame_layout, mConfigurationFragment)
         mConfigurationFragment.mPresenter?.prepareSettings()
+    }
+
+    private fun showPremiumAccounts() {
+        main_frame_layout.visibility = View.VISIBLE
+        start_relative_layout.visibility = View.GONE
+        mPremiumAccounts = PremiumFragment()
+        showFragment(supportFragmentManager, R.id.main_frame_layout, mPremiumAccounts)
+        mPremiumAccounts.mPresenter.requestAvelbleAccounts(resources.configuration.locale.language)
     }
 
     private fun showHelpInformation() {
@@ -316,7 +336,9 @@ class MainActivity : BaseActivity(), MainMvp {
                         Option("S__8_", null)),
                 listOf(1), EASY_QUESTION, null, null, listOf(3), listOf("ЦТ2015", "ЧастьА"))
         val testParams: TestParams = getExampleTest()
-        val res = mFirebaseDatabase.getReference().child(QUESTIONS_CHILDS)
+        val account = AcountModel("Free", listOf("More than 100 question", "Theory"),"en", 1, 0.99F)
+//        val res = mFirebaseDatabase.getReference().child(QUESTIONS_CHILDS)
+        val res = mFirebaseDatabase.getReference().child(ACCOUNTS_CHILD)
 //            val theory = ChemTheoryModel(1, "Valency", mutableListOf(Hint("Definition", listOf("http")), Hint("Element with constant valency", listOf("hhhtp"))))
 //            val res = mFirebaseDatabase.getReference().child(DATA_THEORY_CHILD)
 //            res.child(theory.theoryId.toString()).setValue(theory)
@@ -324,7 +346,7 @@ class MainActivity : BaseActivity(), MainMvp {
 //            courses.forEach {
 //                res.child(it.mCourseId.toString()).setValue(it)
 //            }
-        res.child(question.questionId.toString()).setValue(question)
+        res.child("${account.descriptionLanguage}${account.accountId}" ).setValue(account)
 //            val info = QuestionsDataBaseInfo(1, 3, 30)
 //            res.child(question.questionId.toString()).setValue(question)
 //            val intent = Intent(this, TestingActivity::class.java)
@@ -395,6 +417,7 @@ class MainActivity : BaseActivity(), MainMvp {
         closeFragment(supportFragmentManager, mAppInformationViewFragment)
         closeFragment(supportFragmentManager, mHelpFragment)
         closeFragment(supportFragmentManager, mConfigurationFragment)
+        closeFragment(supportFragmentManager, mPremiumAccounts)
         isTestFragmentShow = false
     }
 
@@ -409,6 +432,9 @@ class MainActivity : BaseActivity(), MainMvp {
         val intent = Intent(baseContext, MainActivity::class.java)
         startActivity(intent)
         finish()
+    }
+
+    override fun paymentProcess(paymentAccount: AcountModel) {
     }
 
 }

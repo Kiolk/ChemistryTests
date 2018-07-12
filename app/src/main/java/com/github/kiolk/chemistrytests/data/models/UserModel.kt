@@ -8,3 +8,4 @@ class User (var userId : String = "UserId",
             var avatarUrl : String? = null,
             var completedTests : MutableList<ResultInformation> = mutableListOf(),
             var userCustomTests : MutableList<TestParams> = mutableListOf()) : Serializable
+

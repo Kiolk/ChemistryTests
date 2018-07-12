@@ -25,6 +25,7 @@ import com.github.kiolk.chemistrytests.data.managers.SharedPref.Companion.THEME_
 import com.github.kiolk.chemistrytests.data.models.MenuItemModel
 import com.github.kiolk.chemistrytests.providers.ThemeProvider
 import com.github.kiolk.chemistrytests.providers.ThemeProvider.GREEN
+import com.github.kiolk.chemistrytests.providers.ThemeProvider.NIGHT_MODE
 import com.github.kiolk.chemistrytests.providers.ThemeProvider.RED
 import com.github.kiolk.chemistrytests.providers.ThemeProvider.YELLOW
 import com.github.kiolk.chemistrytests.ui.activities.MainActivity
@@ -56,7 +57,7 @@ class ConfigurationFragment : BaseFragment(), ConfigurationMvpView {
 //                    context?.let { PrefSetter.putString(it, THEME_COLOR, 1.toString()) }
                 }
                 2 ->{
-                    context?.let { PrefSetter.putString(it, THEME_MODE, 1.toString()) }
+                    context?.let { PrefSetter.putString(it, THEME_MODE, NIGHT_MODE.toString()) }
                 }
                 else -> {
 

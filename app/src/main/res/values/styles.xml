@@ -13,6 +13,7 @@
         <attr name="backgroundColor" format="color"/>
         <attr name="iconPlaceHolder" format="integer"/>
         <attr name="iconLampColor" format="color"/>
+        <attr name="colorAccent" format="color"/>
         <attr name="bigTitle" format="dimension"/>
         <attr name="smallTitle" format="dimension"/>
         <attr name="generalBackground" format="integer"/>
@@ -34,12 +35,22 @@
     <style name="MyThemeYellowDark" parent="MyTheme.Dark">
         <item name="colorAccent">@color/YELLOW</item>
     </style>
+    <style name="MyThemeYellowLight" parent="MyTheme.Light">
+        <item name="colorAccent">@color/YELLOW</item>
+    </style>
 
     <style name="MyThemeRedDark" parent="MyTheme.Dark">
         <item name="colorAccent">@color/WRONG_COLOR</item>
     </style>
+    <style name="MyThemeRedLight" parent="MyTheme.Light">
+        <item name="colorAccent">@color/WRONG_COLOR</item>
+    </style>
 
     <style name="MyThemeGreenDark" parent="MyTheme.Dark">
+        <item name="colorAccent">@color/GREEN_ACCENT</item>
+    </style>
+
+    <style name="MyThemeGreenLight" parent="MyTheme.Light">
         <item name="colorAccent">@color/GREEN_ACCENT</item>
     </style>
 

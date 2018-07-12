@@ -33,5 +33,9 @@ abstract class BaseViewPagerFragment : BaseFragment(){
     }
 
     fun getProgerssBas() = view?.findViewById<ProgressBar>(R.id.progress_bar)
+
+//    fun enableNestedScrol(isEnable : Boolean){
+//        getViewPager()?.isNestedScrollingEnabled = isEnable
+//    }
 }
 

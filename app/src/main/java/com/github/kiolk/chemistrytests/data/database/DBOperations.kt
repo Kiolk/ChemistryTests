@@ -2,6 +2,8 @@ package com.github.kiolk.chemistrytests.data.database
 
 import android.content.ContentValues
 import android.database.Cursor
+import com.github.kiolk.chemistrytests.data.database.AccountDBModel.AccountDB.ACCOUNT_ID
+import com.github.kiolk.chemistrytests.data.database.AccountDBModel.AccountDB.ACCOUNT_JSON
 import com.github.kiolk.chemistrytests.data.database.ChemTheoryDBModel.ChemTheoryDB.CHEM_THEORY_ID
 import com.github.kiolk.chemistrytests.data.database.ChemTheoryDBModel.ChemTheoryDB.CHEM_THEORY_JSON
 import com.github.kiolk.chemistrytests.data.database.CourseDbModel.CourseDB.COURSE_ID
@@ -98,7 +100,7 @@ class DBOperations {
 
     private fun testParamsFromCursor(cursor: Cursor): TestParams {
         val json = cursor.getString(cursor.getColumnIndex(TestParamsDBModel.TestParamsDB.TEST_PARAMS_JSON))
-        val ob : TestParams = Gson().fromJson(json, TestParams::class.java)
+        val ob: TestParams = Gson().fromJson(json, TestParams::class.java)
         return ob
     }
 
@@ -269,7 +271,7 @@ class DBOperations {
             readableDatabase.beginTransaction()
             val res = readableDatabase.replace(ChemTheoryDBModel.ChemTheoryDB.TABLE_NAME, null, contentValue)
             readableDatabase.setTransactionSuccessful()
-        } catch (e : Exception) {
+        } catch (e: Exception) {
             e.printStackTrace()
         } finally {
             readableDatabase.endTransaction()
@@ -285,12 +287,60 @@ class DBOperations {
 
     fun getQuestionsById(ofQuestionsId: Set<Int>): MutableList<CloseQuestion> {
         val questions = getAllQuestions()
-        val questionsList : MutableList<CloseQuestion> = mutableListOf()
-        ofQuestionsId.forEach{
+        val questionsList: MutableList<CloseQuestion> = mutableListOf()
+        ofQuestionsId.forEach {
             val id = it
-            val question = questions.find { it.questionId == id}
+            val question = questions.find { it.questionId == id }
             question?.let { it1 -> questionsList.add(it1) }
         }
         return questionsList
+    }
+
+    //accounts
+
+    fun getAllAccountInformation(): List<AcountModel> {
+        return helper.readableDatabase.query(AccountDBModel.AccountDB.TABLE_NAME,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null).use { cursor -> this.allAccountsFromCursor(cursor) }
+    }
+
+    private fun allAccountsFromCursor(cursor: Cursor): MutableList<AcountModel> {
+        val list = mutableListOf<AcountModel>()
+        while (cursor.moveToNext()) {
+            list.add(accountFromCursor(cursor))
+        }
+        cursor.close()
+        return list
+    }
+
+    private fun accountFromCursor(cursor: Cursor): AcountModel {
+        val json = cursor.getString(cursor.getColumnIndex(AccountDBModel.AccountDB.ACCOUNT_JSON))
+        val ob: AcountModel = Gson().fromJson(json, AcountModel::class.java)
+        return ob
+    }
+
+    fun insertAccount(cntAccounts: Int, account: AcountModel) {
+        val contentValue = fromAccount(cntAccounts, account)
+        val readableDatabase = helper.readableDatabase
+        try {
+            readableDatabase.beginTransaction()
+            val res = readableDatabase.replace(AccountDBModel.AccountDB.TABLE_NAME, null, contentValue)
+            readableDatabase.setTransactionSuccessful()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        } finally {
+            readableDatabase.endTransaction()
+        }
+    }
+
+    private fun fromAccount(cntAccounts: Int, account: AcountModel): ContentValues {
+        return ContentValues().apply {
+            put(ACCOUNT_ID, cntAccounts)
+            put(ACCOUNT_JSON, Gson().toJson(account))
+        }
     }
 }

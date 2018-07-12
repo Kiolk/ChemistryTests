@@ -24,6 +24,7 @@ class DBConnector private constructor(context : Context) : SQLiteOpenHelper(cont
         db?.execSQL(UserDbModel.SQL_CREATE_ENTRIES)
         db?.execSQL(CourseDbModel.SQL_CREATE_ENTRIES)
         db?.execSQL(ChemTheoryDBModel.SQL_CREATE_ENTRIES)
+        db?.execSQL(AccountDBModel.SQL_CREATE_ENTRIES)
 
     }
 
@@ -33,7 +34,7 @@ class DBConnector private constructor(context : Context) : SQLiteOpenHelper(cont
         db?.execSQL(UserDbModel.SQL_DELETE_ENTRIES)
         db?.execSQL(CourseDbModel.SQL_DELETE_ENTRIES)
         db?.execSQL(ChemTheoryDBModel.SQL_DELETE_ENTRIES)
-
+        db?.execSQL(AccountDBModel.SQL_DELETE_ENTRIES)
     }
 }
 

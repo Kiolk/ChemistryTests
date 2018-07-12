@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/account_title_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/BUTTON_HEIGHT" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/account_features_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="@dimen/BUTTON_HEIGHT"
+        android:paddingTop="@dimen/BUTTON_HEIGHT">
+
+    </android.support.v7.widget.RecyclerView>
+
+    <Button
+        android:id="@+id/subscribe_account_button"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/BUTTON_HEIGHT"
+        android:layout_alignParentBottom="true"/>
+</RelativeLayout>

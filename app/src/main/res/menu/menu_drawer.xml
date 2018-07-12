@@ -48,6 +48,14 @@
             android:icon="@drawable/ic_settings_gears"
             android:title="@string/PROFILE_SETTING" />
         <item
+            android:id="@+id/price_item_menu"
+            android:icon="@drawable/ic_price"
+            android:title="@string/PREMIUM_ACCOUNT" />
+        <item
+            android:id="@+id/donation_item_menu"
+            android:icon="@drawable/ic_donation_box"
+            android:title="@string/SUPPORT_DEVELOPMENT" />
+        <item
             android:id="@+id/help_item_menu"
             android:icon="@drawable/ic_doubts_button"
             android:title="@string/QUESTIONS" />

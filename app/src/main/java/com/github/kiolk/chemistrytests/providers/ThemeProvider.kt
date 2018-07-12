@@ -28,6 +28,9 @@ object ThemeProvider{
         return when(themeMode){
             DAY_MODE ->{when(themeAccent){
                 PINK -> R.style.MyTheme_Dark
+                YELLOW -> R.style.MyThemeYellowLight
+                RED -> R.style.MyThemeRedLight
+                GREEN -> R.style.MyThemeGreenLight
                 else -> R.style.MyTheme_Dark
             }
 

@@ -81,6 +81,10 @@
     <string name="RESTART_APLICTION">Resturt application now</string>
     <string name="SELECT_ACCENT_COLOR">Select accent color</string>
     <string name="ACCEPT_COLOR">Acept color</string>
+    <string name="PREMIUM_ACCOUNT">Premium account</string>
+    <string name="SUPPORT_DEVELOPMENT">Support development</string>
+    <string name="FREE_ACCOUNT">Free</string>
+    <string name="PAY">Pay</string>
     <string-array name="RESULT_TAB_TITLES">
         <item>Test information</item>
         <item>General result</item>

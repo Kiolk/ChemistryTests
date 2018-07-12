@@ -33,9 +33,17 @@ abstract class BaseFragment : Fragment() {
             mainActivity.findViewById<DrawerLayout>(DRAWER_LAYOUT_ID).openDrawer(Gravity.START)
         }
         toolBar?.setTitle(titleId)
+        resetVisibilityMenuItems(toolBar?.menu)
+        toolBar?.menu
         menuId?.let { toolBar?.menu?.findItem(it) }?.isVisible = true
         menuId?.let { mainActivity.updateMenu(it) }
     }
+
+    private fun resetVisibilityMenuItems(menu: Menu?) {
+        menu?.findItem(R.id.reset_history_menu_item)?.isVisible = false
+        menu?.findItem(R.id.search_menu_item)?.isVisible = false
+    }
+
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
         super.onCreateOptionsMenu(menu, inflater)
