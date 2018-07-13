@@ -4,9 +4,17 @@ import android.util.Log
 import com.github.kiolk.chemistrytests.data.asynctasks.ResultCallback
 import com.github.kiolk.chemistrytests.data.asynctasks.ResultObject
 import com.github.kiolk.chemistrytests.data.asynctasks.SingleExecut
+import com.github.kiolk.chemistrytests.data.database.DBConnector
 import com.github.kiolk.chemistrytests.data.database.DBOperations
 import com.github.kiolk.chemistrytests.data.models.*
+import com.github.kiolk.chemistrytests.data.models.Account.BASIC_ACCOUNT
+import com.github.kiolk.chemistrytests.data.models.Account.FREE_ACCOUNT
+import com.github.kiolk.chemistrytests.data.models.Account.NUMBER_OF_QUESTIONS_BASIC_ACCOUNT
+import com.github.kiolk.chemistrytests.data.models.Account.NUMBER_OF_QUESTIONS_FREE_ACCOUNT
+import com.github.kiolk.chemistrytests.data.models.Account.NUMBER_OF_QUESTIONS_PREMIUM_ACCOUNT
+import com.github.kiolk.chemistrytests.data.models.Account.PREMIUM_ACCOUNT
 import com.github.kiolk.chemistrytests.ui.activities.*
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 
 class UploadDataInDb(override var callback: ResultCallback) : SingleExecut {
@@ -24,6 +32,8 @@ class UploadDataInDb(override var callback: ResultCallback) : SingleExecut {
     lateinit var mInfoDatabaseReference: DatabaseReference
     lateinit var mAccountDatabaseReference: DatabaseReference
     lateinit var mChildAccountListener: ChildEventListener
+    var mQuestionNumber : Int = 31
+    var mUserAccount : Int = FREE_ACCOUNT
     var uploadTests: Boolean = false
     var uploadQuestions: Boolean = false
     var isUpdateCources : Boolean = false
@@ -42,6 +52,12 @@ class UploadDataInDb(override var callback: ResultCallback) : SingleExecut {
 
     init {
         getDBInformation()
+        getUserAccount()
+    }
+
+    private fun getUserAccount() {
+        val user : User? = DBOperations().getUser(FirebaseAuth.getInstance().currentUser?.uid)
+        mUserAccount = user?.accountType ?: FREE_ACCOUNT
     }
 
     private fun getDBInformation() {
@@ -72,6 +88,12 @@ class UploadDataInDb(override var callback: ResultCallback) : SingleExecut {
 
     private fun splashScreenSetup() {
         mDatabaseReference = mFirebaseDatabase.reference.child(QUESTIONS_CHILDS)
+        mQuestionNumber = dbInfo?.availableQuestions ?: 100
+        when (mUserAccount) {
+            FREE_ACCOUNT -> mQuestionNumber = NUMBER_OF_QUESTIONS_FREE_ACCOUNT
+            BASIC_ACCOUNT -> mQuestionNumber = NUMBER_OF_QUESTIONS_BASIC_ACCOUNT
+            PREMIUM_ACCOUNT -> mQuestionNumber = NUMBER_OF_QUESTIONS_PREMIUM_ACCOUNT
+        }
         mChaildEventListener = object : ChildEventListener {
             override fun onCancelled(p0: DatabaseError?) {
             }
@@ -84,10 +106,13 @@ class UploadDataInDb(override var callback: ResultCallback) : SingleExecut {
 
             override fun onChildAdded(p0: DataSnapshot?, p1: String?) {
                 val question : CloseQuestion? = p0?.getValue(CloseQuestion::class.java)
-                question?.let { DBOperations().insertQuestion(it) }
+                if(cnt <= mQuestionNumber){
+                    question?.let { DBOperations().insertQuestion(it) }
+                }
                 cnt = cnt + 1
                 Log.d("MyLogs", question?.questionId?.toString())
-                if (cnt == dbInfo?.availableQuestions) {
+
+                if (cnt == mQuestionNumber) {
                     mDatabaseReference.removeEventListener(mChaildEventListener)
                     uploadQuestions = true
                     setOnSuccess()

@@ -85,6 +85,10 @@
     <string name="SUPPORT_DEVELOPMENT">Support development</string>
     <string name="FREE_ACCOUNT">Free</string>
     <string name="PAY">Pay</string>
+    <string name="SELECT_DAY_NIGHT_MODE">Select day/night mode</string>
+    <string name="DAY_MODE">Day mode</string>
+    <string name="NIGHT_MODE">Night mode</string>
+    <string name="ACCEPT_MODE">Accept mode</string>
     <string-array name="RESULT_TAB_TITLES">
         <item>Test information</item>
         <item>General result</item>

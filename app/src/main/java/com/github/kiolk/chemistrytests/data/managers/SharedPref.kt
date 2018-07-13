@@ -12,18 +12,18 @@ class SharedPref(var context : Context) : SharedPreferencesHelper{
         val THEME_MODE : String = "ThemeMode"
         val THEME_COLOR : String = "ThemeColor"
 
-        fun getThemeMode(context : Context) : Int{
-            return themeMode(context)
-        }
-
-        private fun themeMode(context : Context?) : Int{
-            val themeMode = context?.let { PrefGetter.getString(it, THEME_MODE) }
-            if(themeMode != null){
-                return themeMode.toInt()
-            }else{
-                return -1
-            }
-        }
+//        fun getThemeMode(context : Context) : Int{
+//            return themeMode(context)
+//        }
+//
+//        private fun themeMode(context : Context?) : Int{
+//            val themeMode = context?.let { PrefGetter.getString(it, THEME_MODE) }
+//            if(themeMode != null){
+//                return themeMode.toInt()
+//            }else{
+//                return -1
+//            }
+//        }
 
         fun getThemeAccent(context: Context): Int {
             val themeColor = context?.let { PrefGetter.getString(it, THEME_COLOR ) }

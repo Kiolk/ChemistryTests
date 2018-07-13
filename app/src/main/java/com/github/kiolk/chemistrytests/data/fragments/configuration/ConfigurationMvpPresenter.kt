@@ -6,4 +6,5 @@ interface ConfigurationMvpPresenter{
     fun prepareLanguageDialog()
     fun getLanguagePrefix(which: Int): String
     fun prepareAccentColorDialog()
+    fun prepareDayNightModeDialog()
 }

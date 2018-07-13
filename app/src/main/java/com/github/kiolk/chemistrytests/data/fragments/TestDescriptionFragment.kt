@@ -8,7 +8,9 @@ import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.EditText
 import com.github.kiolk.chemistrytests.R
+import com.github.kiolk.chemistrytests.data.models.Account.BASIC_ACCOUNT
 import com.github.kiolk.chemistrytests.data.models.TestInfo
+import com.github.kiolk.chemistrytests.providers.UserAccountProvider
 
 class TestDescriptionFragment : Fragment(){
 
@@ -19,6 +21,9 @@ class TestDescriptionFragment : Fragment(){
         val view = inflater.inflate(R.layout.fragment_test_description, null)
         val checkBox =  view.findViewById<CheckBox>(R.id.save_test_check_box)
         checkBox.setOnClickListener { isSaveTest = checkBox.isChecked }
+        if(context?.let { UserAccountProvider.getAccountType(it) } ?: 0 >= BASIC_ACCOUNT){
+            checkBox.visibility = View.INVISIBLE
+        }
         return view
     }
 

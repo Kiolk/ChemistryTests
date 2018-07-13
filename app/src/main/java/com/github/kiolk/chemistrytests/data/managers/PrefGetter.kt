@@ -10,4 +10,9 @@ object PrefGetter {
         val value : String? = prefernces.getString(key, null)
         return value
     }
+
+    fun getInt(context : Context, key : String) : Int {
+        val preferences = context.getSharedPreferences(MainActivity.LANGUAGE_PREFERENCES, Activity.MODE_PRIVATE)
+        return preferences.getInt(key, 0)
+    }
 }

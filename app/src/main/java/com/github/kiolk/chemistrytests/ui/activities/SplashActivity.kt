@@ -74,7 +74,7 @@ class SplashActivity : AppCompatActivity() {
                         Toast.LENGTH_LONG)
                         .show()
                 updateUserInformation()
-                startLoad()
+//                startLoad()
             } else if (resultCode == Activity.RESULT_CANCELED) {
                 finish()
             }
@@ -87,6 +87,10 @@ class SplashActivity : AppCompatActivity() {
             Log.d("MyLogs", "User uid when start ${firbaseUser.uid}")
             SingleAsyncTask().execute(UpdateResultInFirebase(firbaseUser.uid, object : ResultCallback{
                 override fun <T> onSuccess(any: T?) {
+                    val result : String = any as String
+                    if(result == "Success"){
+                        startLoad()
+                    }
                 }
 
                 override fun onError() {
@@ -110,7 +114,7 @@ class SplashActivity : AppCompatActivity() {
                             .show()
                     if(!isUserStartLogin) {
                         updateUserInformation()
-                        startLoad()
+//                        startLoad()
                     }
                 } else {
                     showMainFeaturesPager()

@@ -21,6 +21,7 @@ class UpdateResultInFirebase(var userId: String, override var callback: ResultCa
         user = users.find { it.userId == userId }
         if(user != null){
             mDatabaseReference.child(userId).setValue(user)
+            return ResultObject("Success", callback)
         }else{
             mChildEventListener = object : ChildEventListener{
                 override fun onCancelled(p0: DatabaseError?) {
@@ -37,6 +38,7 @@ class UpdateResultInFirebase(var userId: String, override var callback: ResultCa
                     if(user != null && user.userId == userId){
                         val res = DBOperations().insertUser(user)
                         mDatabaseReference.removeEventListener(mChildEventListener)
+                        callback.onSuccess("Success")
                     }
                 }
 
@@ -45,6 +47,6 @@ class UpdateResultInFirebase(var userId: String, override var callback: ResultCa
             }
             mDatabaseReference.addChildEventListener(mChildEventListener)
         }
-        return ResultObject("Sacces", callback)
+        return ResultObject("Wait", callback)
     }
 }

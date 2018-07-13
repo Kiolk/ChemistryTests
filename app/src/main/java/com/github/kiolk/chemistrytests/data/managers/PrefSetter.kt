@@ -11,4 +11,11 @@ object PrefSetter{
             editor.putString(key, value)
         editor.commit()
     }
+
+    fun putInt(context : Context, key : String, value : Int){
+        val prefernces = context.getSharedPreferences(MainActivity.LANGUAGE_PREFERENCES, Activity.MODE_PRIVATE)
+        val editor = prefernces.edit()
+        editor.putInt(key, value)
+        editor.commit()
+    }
 }

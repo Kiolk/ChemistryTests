@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:layout_gravity="center"
+    android:orientation="horizontal">
+
+    <ImageView
+        android:id="@+id/day_mode_button"
+        android:layout_width="@dimen/ICON_WIDTH"
+        android:layout_height="@dimen/ICON_WIDTH"
+        android:layout_margin="@dimen/DOUBLE_BLOCK_PADDING"
+        android:contentDescription="@string/DAY_MODE"
+        android:background="@drawable/area_square_shape"
+        android:elevation="@dimen/BLOCK_PADDING"
+        android:padding="@dimen/BLOCK_PADDING"
+        android:scaleType="centerCrop"
+        android:layout_gravity="center"
+        android:src="@drawable/ic_sun_day" />
+
+    <ImageView
+        android:layout_gravity="center"
+        android:id="@+id/night_mode_button"
+        android:background="@drawable/area_square_shape"
+        android:layout_width="@dimen/ICON_WIDTH"
+        android:layout_height="@dimen/ICON_WIDTH"
+        android:layout_margin="@dimen/DOUBLE_BLOCK_PADDING"
+        android:contentDescription="@string/NIGHT_MODE"
+        android:padding="@dimen/BLOCK_PADDING"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_night" />
+</LinearLayout>

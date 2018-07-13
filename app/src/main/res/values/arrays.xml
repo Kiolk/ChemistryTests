@@ -3,7 +3,7 @@
     <array name="settings_items">
         <item>@drawable/ic_translation</item>
         <item>@drawable/ic_paint</item>
-        <item>@drawable/ic_sun_day</item>
+        <item>@drawable/ic_vector</item>
         <item>@drawable/ic_translation</item>
         <item>@drawable/ic_translation</item>
     </array>

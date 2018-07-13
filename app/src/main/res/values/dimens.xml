@@ -40,4 +40,7 @@
     <dimen name="PALLET_SIZE">70dp</dimen>
     <dimen name="BUTTON_HEIGHT">70dp</dimen>
     <dimen name="SMALL_DOT_SIZE">5dp</dimen>
+    <dimen name="ZERO_ELEVATION">1dp</dimen>
+    <dimen name="HALF_ICON_WIDTH">50dp</dimen>
+    <dimen name="DOUBLE_BLOCK_PADDING">10dp</dimen>
 </resources>

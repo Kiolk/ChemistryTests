@@ -3,16 +3,14 @@ package com.github.kiolk.chemistrytests.data.fragments.configuration
 import android.app.AlertDialog
 import android.app.Dialog
 import android.content.DialogInterface
+import android.os.Build
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.Button
-import android.widget.ListView
-import android.widget.Toast
+import android.widget.*
 import changeLocale
 import com.github.kiolk.chemistrytests.R
 import com.github.kiolk.chemistrytests.data.adapters.MenuCustomArrayAdapter
@@ -24,6 +22,7 @@ import com.github.kiolk.chemistrytests.data.managers.SharedPref.Companion.THEME_
 import com.github.kiolk.chemistrytests.data.managers.SharedPref.Companion.THEME_MODE
 import com.github.kiolk.chemistrytests.data.models.MenuItemModel
 import com.github.kiolk.chemistrytests.providers.ThemeProvider
+import com.github.kiolk.chemistrytests.providers.ThemeProvider.DAY_MODE
 import com.github.kiolk.chemistrytests.providers.ThemeProvider.GREEN
 import com.github.kiolk.chemistrytests.providers.ThemeProvider.NIGHT_MODE
 import com.github.kiolk.chemistrytests.providers.ThemeProvider.RED
@@ -39,7 +38,6 @@ class ConfigurationFragment : BaseFragment(), ConfigurationMvpView {
 
 
     var mPresenter = ConfigurationPresenter(this)
-//    var color = 0
 
     override fun setupListSettings(itemsArray: List<MenuItemModel>) {
         setupToolBar()
@@ -54,10 +52,10 @@ class ConfigurationFragment : BaseFragment(), ConfigurationMvpView {
                 }
                 1 -> {
                     mPresenter.prepareAccentColorDialog()
-//                    context?.let { PrefSetter.putString(it, THEME_COLOR, 1.toString()) }
                 }
-                2 ->{
-                    context?.let { PrefSetter.putString(it, THEME_MODE, NIGHT_MODE.toString()) }
+                2 -> {
+                    mPresenter.prepareDayNightModeDialog()
+//                    context?.let { PrefSetter.putString(it, THEME_MODE, NIGHT_MODE.toString()) }
                 }
                 else -> {
 
@@ -80,7 +78,8 @@ class ConfigurationFragment : BaseFragment(), ConfigurationMvpView {
         val dialogBuilder: AlertDialog.Builder = AlertDialog.Builder(context)
         dialogBuilder.setTitle(resources.getString(R.string.SELECT_LANGUAGE))
                 .setSingleChoiceItems(languageArray, checkedLanguage) { dialog, which ->
-                position = which}
+                    position = which
+                }
         dialogBuilder.setPositiveButton(resources.getString(R.string.RESTART_APLICTION)) { dialog, which ->
             val activity = activity as MainActivity
             mPresenter.saveLanguage(position)
@@ -100,16 +99,16 @@ class ConfigurationFragment : BaseFragment(), ConfigurationMvpView {
         val greenButton = selectColorView.findViewById<Button>(R.id.green_button)
         var color = RED
 
-        when(savedColor){
+        when (savedColor) {
             RED -> redButton.text = SELECT_SYMBOL
             YELLOW -> yellowButton.text = SELECT_SYMBOL
             GREEN -> greenButton.text = SELECT_SYMBOL
         }
 
-        val listener = object : View.OnClickListener{
+        val listener = object : View.OnClickListener {
             override fun onClick(v: View?) {
                 cleanButtons()
-                when(v?.id){
+                when (v?.id) {
                     R.id.red_button -> {
                         color = RED
                         redButton.text = SELECT_SYMBOL
@@ -141,7 +140,7 @@ class ConfigurationFragment : BaseFragment(), ConfigurationMvpView {
         val alertBuilder = AlertDialog.Builder(context)
         alertBuilder.setTitle(context?.resources?.getString(R.string.SELECT_ACCENT_COLOR))
         alertBuilder.setView(selectColorView)
-        alertBuilder.setPositiveButton(context?.resources?.getString(R.string.ACCEPT_COLOR), object : DialogInterface.OnClickListener{
+        alertBuilder.setPositiveButton(context?.resources?.getString(R.string.ACCEPT_COLOR), object : DialogInterface.OnClickListener {
             override fun onClick(dialog: DialogInterface?, which: Int) {
 //                val color
                 context?.let { ThemeProvider.setAccentColor(it, color) }
@@ -149,6 +148,58 @@ class ConfigurationFragment : BaseFragment(), ConfigurationMvpView {
                 activity.restart()
             }
         })
+        val dialog = alertBuilder.create()
+        dialog.show()
+    }
+
+    override fun showDayNightModeDialog() {
+        val modeView = layoutInflater.inflate(R.layout.dialog_day_night_mode, null)
+        val dayButton: ImageView = modeView.findViewById(R.id.day_mode_button)
+        val nightButton: ImageView = modeView.findViewById(R.id.night_mode_button)
+        val actualMode: Int = context?.let { ThemeProvider.getThemeMode(it) } ?: DAY_MODE
+        var dayNightModeValue: Int = actualMode
+
+        fun setButtonElevation(selectedView: View, deselectedView: View) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                deselectedView.elevation = resources.getDimension(R.dimen.ZERO_ELEVATION)
+                selectedView.elevation = resources.getDimension(R.dimen.BLOCK_PADDING)
+            }
+        }
+
+        when (actualMode) {
+            DAY_MODE -> {
+                setButtonElevation(dayButton, nightButton)
+            }
+            NIGHT_MODE -> {
+                setButtonElevation(nightButton, dayButton)
+            }
+        }
+
+
+        val listener: View.OnClickListener = View.OnClickListener { v ->
+            when (v?.id) {
+                R.id.day_mode_button -> {
+                    dayNightModeValue = DAY_MODE
+                    setButtonElevation(dayButton, nightButton)
+                }
+                R.id.night_mode_button -> {
+                    dayNightModeValue = NIGHT_MODE
+                    setButtonElevation(nightButton, dayButton)
+                }
+            }
+        }
+
+        dayButton.setOnClickListener(listener)
+        nightButton.setOnClickListener(listener)
+
+        val alertBuilder = AlertDialog.Builder(context)
+        alertBuilder.setTitle(context?.resources?.getString(R.string.SELECT_DAY_NIGHT_MODE))
+        alertBuilder.setView(modeView)
+        alertBuilder.setPositiveButton(context?.resources?.getString(R.string.ACCEPT_MODE)) { dialog, which ->
+            context?.let { ThemeProvider.setNightMode(it, dayNightModeValue) }
+            val activity = activity as MainActivity
+            activity.restart()
+        }
         val dialog = alertBuilder.create()
         dialog.show()
     }

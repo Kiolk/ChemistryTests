@@ -58,4 +58,8 @@ class ConfigurationPresenter(private var configurationView : ConfigurationMvpVie
 //                MenuItemModel(R.drawable.ic_statistic, "Fifth"))
         configurationView.setupListSettings(items)
     }
+
+    override fun prepareDayNightModeDialog() {
+        configurationView.showDayNightModeDialog()
+    }
 }
