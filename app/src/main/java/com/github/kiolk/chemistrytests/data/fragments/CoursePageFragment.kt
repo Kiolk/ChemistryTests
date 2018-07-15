@@ -17,8 +17,8 @@ import com.github.kiolk.chemistrytests.data.adapters.AvailableTestRecyclerAdapte
 import com.github.kiolk.chemistrytests.data.listeners.OnItemClickListener
 import com.github.kiolk.chemistrytests.data.listeners.RecyclerTouchListener
 import com.github.kiolk.chemistrytests.data.models.Course
-import com.github.kiolk.chemistrytests.ui.activities.TEST_PARAM_INT
 import com.github.kiolk.chemistrytests.ui.activities.TestingActivity
+import com.github.kiolk.chemistrytests.utils.Constants.TEST_PARAM_INT
 import kiolk.com.github.pen.Pen
 
 val COURSE_BND : String = "course"

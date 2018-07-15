@@ -24,10 +24,8 @@ import com.github.kiolk.chemistrytests.data.fragments.FeatureFragment.Companion.
 import com.github.kiolk.chemistrytests.data.fragments.FeatureFragment.Companion.STUDENT_SLIDE
 import com.github.kiolk.chemistrytests.data.fragments.FeatureFragment.Companion.TARGET_SLIDE
 import com.github.kiolk.chemistrytests.data.fragments.attachRoundIndicators
-import com.github.kiolk.chemistrytests.data.managers.DataManager
+import com.github.kiolk.chemistrytests.data.managers.LanguageProvider
 import com.github.kiolk.chemistrytests.data.models.TestFragmentModel
-import com.github.kiolk.chemistrytests.ui.activities.MainActivity.Companion.LANGUAGE_PREFERENCES
-import com.github.kiolk.chemistrytests.ui.activities.MainActivity.Companion.LANGUAGE_PREFIX
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import kotlinx.android.synthetic.main.activity_splash.*
@@ -245,6 +243,7 @@ class SplashActivity : AppCompatActivity() {
         mAuthentication.removeAuthStateListener(mAuthenticationListener)
         logo_splash_image_view.visibility = View.VISIBLE
         my_progress_bar_image_view.visibility = View.GONE
+        login_button.visibility = View.GONE
         mResultCallback = object : ResultCallback {
             override fun <T> onSuccess(any: T?) {
                 launchMainActivity()
@@ -316,8 +315,9 @@ class SplashActivity : AppCompatActivity() {
     }
 
     fun loadData() {
-       val languageInterface = DataManager.instance.getInterfaceLanguage()
-//        val preferences = getSharedPreferences(LANGUAGE_PREFERENCES, Activity.MODE_PRIVATE)
+//       val languageInterface = DataManager.instance.getInterfaceLanguage()
+       val languageInterface = LanguageProvider(baseContext).getInterfaceLanguage()
+//        val preferences = getSharedPreferences(GENERAL_PREFERENCES, Activity.MODE_PRIVATE)
 //        val lang = preferences.getString(LANGUAGE_PREFIX, "ru")
         val lang = languageInterface.languagePrefix
         if (lang != resources.configuration.locale.language && languageInterface.isUserSelection) {

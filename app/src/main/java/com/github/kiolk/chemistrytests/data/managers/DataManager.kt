@@ -10,43 +10,42 @@ import com.github.kiolk.chemistrytests.data.fragments.accounts.AccountMvpPresent
 import com.github.kiolk.chemistrytests.data.models.AcountModel
 import com.github.kiolk.chemistrytests.data.models.LanguageModel
 
-class DataManager private constructor (context : Context) : SharedPreferencesHelper, ResourcesHelper, DataBaseHelper{
+class DataManager private constructor(context: Context) : SharedPreferencesHelper, ResourcesHelper, DataBaseHelper {
     override fun getResources(): Resources? {
         return resources.getResources()
     }
 
-    private val sharedPreferences: SharedPref = SharedPref(context)
-    private val resources : ResourcesImpl = ResourcesImpl(context)
-    private val dataBase : DBOperations = DBOperations()
+    private val languageProvider: LanguageProvider = LanguageProvider(context)
+    private val resources: ResourcesImpl = ResourcesImpl(context)
+    private val dataBase: DBOperations = DBOperations()
 
     override fun getInterfaceLanguage(): LanguageModel {
-        return sharedPreferences.getInterfaceLanguage()
+        return languageProvider.getInterfaceLanguage()
     }
 
     override fun saveInterfaceLanguage(language: LanguageModel) {
-        sharedPreferences.saveInterfaceLanguage(language)
+        languageProvider.saveInterfaceLanguage(language)
     }
 
     companion object {
-        lateinit var instance : DataManager
-        fun initInstance(context : Context){
+        lateinit var instance: DataManager
+        fun initInstance(context: Context) {
 //            if(instance == null){
-                instance = DataManager(context)
+            instance = DataManager(context)
 //            }
         }
     }
 
-    override fun getAccountModels(presenter : AccountMvpPresenter) {
-       val resultCallBack : ResultCallback = object : ResultCallback{
-           override fun <T> onSuccess(any: T?) {
-               val accounts = any as List<AcountModel>
-               presenter.preparAvaelbleAccounts(accounts)
-           }
+    override fun getAccountModels(presenter: AccountMvpPresenter) {
+        val resultCallBack: ResultCallback = object : ResultCallback {
+            override fun <T> onSuccess(any: T?) {
+                val accounts = any as List<AcountModel>
+                presenter.preparAvaelbleAccounts(accounts)
+            }
 
-           override fun onError() {
-               TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-           }
-       }
+            override fun onError() {
+            }
+        }
         SingleAsyncTask().execute(GetAccountsFromDb(resultCallBack))
     }
 }

@@ -34,6 +34,7 @@ import com.github.kiolk.chemistrytests.ui.customviews.ControledViewPager
 import com.github.kiolk.chemistrytests.utils.ChartHelper.PERIODIC_TABLE_NAME
 import com.github.kiolk.chemistrytests.utils.ChartHelper.SOLUBILITY_CHART_NAME
 import com.github.kiolk.chemistrytests.utils.ChartHelper.showWebView
+import com.github.kiolk.chemistrytests.utils.Constants.TEST_PARAM_INT
 import com.github.kiolk.chemistrytests.utils.SlideAnimationUtil
 import com.github.kiolk.chemistrytests.utils.SlideAnimationUtil.FASTER
 import com.github.kiolk.chemistrytests.utils.SlideAnimationUtil.VERY_FASTER

@@ -5,6 +5,7 @@ import com.github.kiolk.chemistrytests.data.asynctasks.ResultCallback
 import com.github.kiolk.chemistrytests.data.asynctasks.SingleAsyncTask
 import com.github.kiolk.chemistrytests.data.database.DBConnector
 import com.github.kiolk.chemistrytests.data.executs.AplicationInitialisationExecut
+import com.github.kiolk.chemistrytests.data.managers.DataManager
 import com.google.firebase.messaging.FirebaseMessaging
 import kiolk.com.github.pen.Pen
 import kiolk.com.github.pen.utils.PenConstantsUtil
@@ -12,6 +13,7 @@ import kiolk.com.github.pen.utils.PenConstantsUtil
 class ChemistryTestApp : Application(){
     override fun onCreate() {
         super.onCreate()
+//        DataManager.initInstance(baseContext)/
         SingleAsyncTask().execute(AplicationInitialisationExecut(baseContext, object : ResultCallback{
             override fun <T> onSuccess(any: T?) {
             }

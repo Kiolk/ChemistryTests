@@ -2,7 +2,7 @@ package com.github.kiolk.chemistrytests.data.executs
 
 import com.github.kiolk.chemistrytests.data.asynctasks.ResultCallback
 import com.github.kiolk.chemistrytests.data.models.QuestionsDataBaseInfo
-import com.github.kiolk.chemistrytests.ui.activities.DATA_BASE_INFO_CHAILD
+import com.github.kiolk.chemistrytests.utils.Constants.DATA_BASE_INFO_CHAILD
 import com.google.firebase.database.*
 
 class GetDataBaseInformation(var callback: ResultCallback) {

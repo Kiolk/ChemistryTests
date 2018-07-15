@@ -1,13 +1,10 @@
 package com.github.kiolk.chemistrytests.data.fragments.configuration
 
 import android.app.AlertDialog
-import android.app.Dialog
 import android.content.DialogInterface
 import android.os.Build
 import android.os.Bundle
-import android.support.design.widget.FloatingActionButton
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
@@ -15,11 +12,6 @@ import changeLocale
 import com.github.kiolk.chemistrytests.R
 import com.github.kiolk.chemistrytests.data.adapters.MenuCustomArrayAdapter
 import com.github.kiolk.chemistrytests.data.fragments.BaseFragment
-import com.github.kiolk.chemistrytests.data.managers.PrefGetter
-import com.github.kiolk.chemistrytests.data.managers.PrefSetter
-import com.github.kiolk.chemistrytests.data.managers.SharedPref
-import com.github.kiolk.chemistrytests.data.managers.SharedPref.Companion.THEME_COLOR
-import com.github.kiolk.chemistrytests.data.managers.SharedPref.Companion.THEME_MODE
 import com.github.kiolk.chemistrytests.data.models.MenuItemModel
 import com.github.kiolk.chemistrytests.providers.ThemeProvider
 import com.github.kiolk.chemistrytests.providers.ThemeProvider.DAY_MODE
@@ -91,7 +83,8 @@ class ConfigurationFragment : BaseFragment(), ConfigurationMvpView {
     }
 
     override fun showAccentColorDialog() {
-        val savedColor = context?.let { SharedPref.getThemeAccent(it) }
+//        val savedColor = context?.let { LanguageProvider.getThemeAccent(it) }
+        val savedColor = context?.let { ThemeProvider.getThemeAccent(it) }
         val inflater = layoutInflater
         val selectColorView = inflater.inflate(R.layout.dialog_accent_color, null)
         val redButton = selectColorView.findViewById<Button>(R.id.red_button)

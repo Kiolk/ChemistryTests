@@ -1,18 +1,24 @@
 package com.github.kiolk.chemistrytests.data.managers
 
-import android.app.Activity
 import android.content.Context
-import com.github.kiolk.chemistrytests.ui.activities.MainActivity
+import android.content.Context.MODE_PRIVATE
 
 object PrefGetter {
-    fun getString(context : Context, key : String) : String?{
-        val prefernces = context.getSharedPreferences(MainActivity.LANGUAGE_PREFERENCES, Activity.MODE_PRIVATE)
-        val value : String? = prefernces.getString(key, null)
-        return value
+
+    val GENERAL_PREFERENCES = "Language_preferences"
+
+    fun getString(context: Context, key: String): String? {
+        val preferences = context.getSharedPreferences(GENERAL_PREFERENCES, MODE_PRIVATE)
+        return preferences.getString(key, null)
     }
 
-    fun getInt(context : Context, key : String) : Int {
-        val preferences = context.getSharedPreferences(MainActivity.LANGUAGE_PREFERENCES, Activity.MODE_PRIVATE)
+    fun getInt(context: Context, key: String): Int {
+        val preferences = context.getSharedPreferences(GENERAL_PREFERENCES, MODE_PRIVATE)
         return preferences.getInt(key, 0)
+    }
+
+    fun getBoolean(context: Context, key: String): Boolean {
+        val preferences = context.getSharedPreferences(GENERAL_PREFERENCES, MODE_PRIVATE)
+        return preferences.getBoolean(key, false)
     }
 }

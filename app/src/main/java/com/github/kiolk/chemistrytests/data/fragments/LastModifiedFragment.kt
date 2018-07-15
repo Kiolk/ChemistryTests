@@ -14,8 +14,8 @@ import com.github.kiolk.chemistrytests.data.adapters.AvailableTestRecyclerAdapte
 import com.github.kiolk.chemistrytests.data.fragments.bases.RecyclerTestBaseFragment
 import com.github.kiolk.chemistrytests.data.listeners.OnItemClickListener
 import com.github.kiolk.chemistrytests.data.models.TestParams
-import com.github.kiolk.chemistrytests.ui.activities.TEST_PARAM_INT
 import com.github.kiolk.chemistrytests.ui.activities.TestingActivity
+import com.github.kiolk.chemistrytests.utils.Constants.TEST_PARAM_INT
 
 class LastModifiedFragment : RecyclerTestBaseFragment() {
     override val titleId: Int

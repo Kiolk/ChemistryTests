@@ -18,9 +18,9 @@ import com.github.kiolk.chemistrytests.data.models.*
 import com.github.kiolk.chemistrytests.data.models.CloseQuestion.Question.INPUT_CHOICE
 import com.github.kiolk.chemistrytests.data.models.CloseQuestion.Question.MULTIPLE_CHOICE
 import com.github.kiolk.chemistrytests.data.models.CloseQuestion.Question.SINGLE_CHOICE
-import com.github.kiolk.chemistrytests.ui.activities.TEST_PARAM_INT
 import com.github.kiolk.chemistrytests.ui.activities.TestingActivity
 import com.github.kiolk.chemistrytests.utils.CONSTANTS.SHORT_DURATION_TIME
+import com.github.kiolk.chemistrytests.utils.Constants.TEST_PARAM_INT
 import com.github.kiolk.chemistrytests.utils.convertEpochTime
 import com.google.firebase.auth.FirebaseAuth
 

@@ -8,8 +8,8 @@ import android.os.Bundle
 import android.support.v4.app.DialogFragment
 import com.github.kiolk.chemistrytests.R
 import com.github.kiolk.chemistrytests.data.models.ResultInformation
-import com.github.kiolk.chemistrytests.ui.activities.TEST_PARAM_INT
 import com.github.kiolk.chemistrytests.ui.activities.TestingActivity
+import com.github.kiolk.chemistrytests.utils.Constants.TEST_PARAM_INT
 
 class RepeatTestDialog : DialogFragment(){
 

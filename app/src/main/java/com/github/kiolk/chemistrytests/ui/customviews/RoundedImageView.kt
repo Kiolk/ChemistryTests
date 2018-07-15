@@ -6,6 +6,7 @@ import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.graphics.PorterDuff.Mode
 import android.util.AttributeSet
+import android.view.View
 import android.widget.ImageView
 import com.github.kiolk.chemistrytests.R
 import com.github.kiolk.chemistrytests.utils.SomeDrawable
@@ -18,11 +19,16 @@ class RoundedImageView : ImageView {
 
     constructor(context: Context?, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
 
-    var mBitmap :Bitmap? = null
+    var mBitmap: Bitmap? = null
 
     override fun setImageBitmap(bm: Bitmap?) {
 //        super.setImageBitmap(bm)
-mBitmap = bm
+        mBitmap = bm
+        visibility = if (mBitmap == null) {
+            View.INVISIBLE
+        } else {
+            View.VISIBLE
+        }
     }
 
     override fun onDraw(canvas: Canvas?) {
@@ -33,12 +39,17 @@ mBitmap = bm
         }
 //        val bit: Bitmap = (drawable as BitmapDrawable).bitmap
 //       drawable = SomeDrawable()
-        val bit: Bitmap = mBitmap ?: (context?.resources?.getDrawable(R.drawable.table) as BitmapDrawable).bitmap //drawable as BitmapDrawable).bitmap
+//        visibility = if(mBitmap == null){
+//            View.INVISIBLE
+//        }else{
+//            View.VISIBLE
+//        }
+        val bit: Bitmap = mBitmap ?: (context?.resources?.getDrawable(R.drawable.empty) as BitmapDrawable).bitmap //drawable as BitmapDrawable).bitmap
         val bitmap = bit.copy(Bitmap.Config.ARGB_8888, true)
 
         val bitWidth: Int = bitmap.width
         val bitHeight: Int = bitmap.height
-val rad = Math.min(bitHeight, bitWidth)
+        val rad = Math.min(bitHeight, bitWidth)
         val croppedBitmap: Bitmap = getCroppedBitmap(bitmap, rad)
         canvas?.drawBitmap(croppedBitmap, 0F, 0F, null)
 //        background = context.resources.getDrawable(R.drawable.area_select_answer)
@@ -69,7 +80,7 @@ val rad = Math.min(bitHeight, bitWidth)
         paint.isDither = true
         canvas.drawARGB(0, 0, 0, 0)
         paint.color = Color.parseColor(color)
-        canvas.drawCircle((radius /2).toFloat(), (radius/2).toFloat(), radius / 2 + 0.2F, paint)
+        canvas.drawCircle((radius / 2).toFloat(), (radius / 2).toFloat(), radius / 2 + 0.2F, paint)
         paint.xfermode = PorterDuffXfermode(Mode.SRC_IN)
         canvas.drawBitmap(tmpBitmap, rect, rect, paint)
 

@@ -4,7 +4,6 @@ import android.util.Log
 import com.github.kiolk.chemistrytests.data.asynctasks.ResultCallback
 import com.github.kiolk.chemistrytests.data.asynctasks.ResultObject
 import com.github.kiolk.chemistrytests.data.asynctasks.SingleExecut
-import com.github.kiolk.chemistrytests.data.database.DBConnector
 import com.github.kiolk.chemistrytests.data.database.DBOperations
 import com.github.kiolk.chemistrytests.data.models.*
 import com.github.kiolk.chemistrytests.data.models.Account.BASIC_ACCOUNT
@@ -13,7 +12,12 @@ import com.github.kiolk.chemistrytests.data.models.Account.NUMBER_OF_QUESTIONS_B
 import com.github.kiolk.chemistrytests.data.models.Account.NUMBER_OF_QUESTIONS_FREE_ACCOUNT
 import com.github.kiolk.chemistrytests.data.models.Account.NUMBER_OF_QUESTIONS_PREMIUM_ACCOUNT
 import com.github.kiolk.chemistrytests.data.models.Account.PREMIUM_ACCOUNT
-import com.github.kiolk.chemistrytests.ui.activities.*
+import com.github.kiolk.chemistrytests.ui.activities.QUESTIONS_CHILDS
+import com.github.kiolk.chemistrytests.utils.Constants.ACCOUNTS_CHILD
+import com.github.kiolk.chemistrytests.utils.Constants.DATA_BASE_INFO_CHAILD
+import com.github.kiolk.chemistrytests.utils.Constants.DATA_COURSES_CHILD
+import com.github.kiolk.chemistrytests.utils.Constants.DATA_THEORY_CHILD
+import com.github.kiolk.chemistrytests.utils.Constants.TESTS_CHILD
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 

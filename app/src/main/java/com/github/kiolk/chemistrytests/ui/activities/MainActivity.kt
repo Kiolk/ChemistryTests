@@ -32,6 +32,7 @@ import com.github.kiolk.chemistrytests.ui.activities.base.BaseActivity
 import com.github.kiolk.chemistrytests.ui.activities.main.MainMvp
 import com.github.kiolk.chemistrytests.ui.activities.main.MainPresenter
 import com.github.kiolk.chemistrytests.utils.ChartHelper.showWebView
+import com.github.kiolk.chemistrytests.utils.Constants.ACCOUNTS_CHILD
 import com.github.kiolk.chemistrytests.utils.Constants.PERIODIC_TABLE_NAME
 import com.github.kiolk.chemistrytests.utils.Constants.SOLUBILITY_CHART_NAME
 import com.google.firebase.auth.FirebaseAuth
@@ -42,26 +43,7 @@ import kotlinx.android.synthetic.main.tool_bar_main.*
 import reversSort
 import showFragment
 
-val TEST_PARAM_INT: String = "params"
-val TESTS_CHILD: String = "tests"
-val DATA_BASE_INFO_CHAILD: String = "DBInformation"
-val DATA_BASE_USERS_CHAILD: String = "Users"
-val DATA_COURSES_CHILD: String = "Courses"
-val DATA_THEORY_CHILD: String = "Theory"
-val ACCOUNTS_CHILD: String = "Accounts"
-
-
 class MainActivity : BaseActivity(), MainMvp {
-
-    companion object {
-        val LANGUAGE_PREFIX = "Language"
-        val LANGUAGE_PREFERENCES = "Language_preferences"
-        val LANGUAGE_SELECTED = "Language_selected"
-    }
-
-    override fun showMassageResult(message: String) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
-    }
 
     lateinit var mAuthentication: FirebaseAuth
     lateinit var mFirebaseDatabase: FirebaseDatabase
@@ -71,7 +53,7 @@ class MainActivity : BaseActivity(), MainMvp {
     lateinit var mCustomTest: CustomTest
     lateinit var mCustomTestFragment: CustomTestFragment
     lateinit var mTestsFragment: TestsFragment
-    var mPremiumAccounts : PremiumFragment = PremiumFragment()
+    var mPremiumAccounts: PremiumFragment = PremiumFragment()
     var mHelpFragment: HelpFragment = HelpFragment()
     var mConfigurationFragment: ConfigurationFragment = ConfigurationFragment()
     var mUserStatisticFragment: UserStatisticFragment = UserStatisticFragment()
@@ -83,7 +65,6 @@ class MainActivity : BaseActivity(), MainMvp {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        setTheme(R.style.MyTheme_Dark)
         setContentView(R.layout.activity_main)
         setSupportActionBar(main_tool_bar)
         main_drawer_layout.setStatusBarBackground(R.color.fui_transparent)
@@ -115,7 +96,7 @@ class MainActivity : BaseActivity(), MainMvp {
                 if (item.itemId != R.id.courses_item_menu) {
                     courses_view_pager.visibility = View.GONE
                 }
-                if(item.itemId != R.id.periodic_table_item_menu && item.itemId != R.id.solubility_chart_item_menu && item.itemId != R.id.molar_calculator_item_menu ) {
+                if (item.itemId != R.id.periodic_table_item_menu && item.itemId != R.id.solubility_chart_item_menu && item.itemId != R.id.molar_calculator_item_menu) {
                     closeFragments()
                 }
 
@@ -336,7 +317,7 @@ class MainActivity : BaseActivity(), MainMvp {
                         Option("S__8_", null)),
                 listOf(1), EASY_QUESTION, null, null, listOf(3), listOf("ЦТ2015", "ЧастьА"))
         val testParams: TestParams = getExampleTest()
-        val account = AcountModel("Free", listOf("More than 100 question", "Theory"),"en", 1, 0.99F)
+        val account = AcountModel("Free", listOf("More than 100 question", "Theory"), "en", 1, 0.99F)
 //        val res = mFirebaseDatabase.getReference().child(QUESTIONS_CHILDS)
         val res = mFirebaseDatabase.getReference().child(ACCOUNTS_CHILD)
 //            val theory = ChemTheoryModel(1, "Valency", mutableListOf(Hint("Definition", listOf("http")), Hint("Element with constant valency", listOf("hhhtp"))))
@@ -346,7 +327,7 @@ class MainActivity : BaseActivity(), MainMvp {
 //            courses.forEach {
 //                res.child(it.mCourseId.toString()).setValue(it)
 //            }
-        res.child("${account.descriptionLanguage}${account.accountId}" ).setValue(account)
+        res.child("${account.descriptionLanguage}${account.accountId}").setValue(account)
 //            val info = QuestionsDataBaseInfo(1, 3, 30)
 //            res.child(question.questionId.toString()).setValue(question)
 //            val intent = Intent(this, TestingActivity::class.java)
@@ -373,7 +354,7 @@ class MainActivity : BaseActivity(), MainMvp {
             main_drawer_layout.closeDrawer(navigation_relative_layout)
             return
         }
-        if(main_web_view.visibility == View.VISIBLE){
+        if (main_web_view.visibility == View.VISIBLE) {
             main_web_view.visibility = View.GONE
             navigation_relative_layout.menu.findItem(R.id.test_item_menu)?.isChecked = true
             return
@@ -421,20 +402,18 @@ class MainActivity : BaseActivity(), MainMvp {
         isTestFragmentShow = false
     }
 
-    fun saveLanguage(lang: String) {
-        val prefernces = getSharedPreferences(LANGUAGE_PREFERENCES, Activity.MODE_PRIVATE)
-        val editor = prefernces.edit()
-        editor.putString(LANGUAGE_PREFIX, lang)
-        editor.commit()
-    }
-
     override fun restart() {
         val intent = Intent(baseContext, MainActivity::class.java)
         startActivity(intent)
         finish()
+
     }
 
     override fun paymentProcess(paymentAccount: AcountModel) {
+    }
+
+    override fun showMassageResult(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
 }

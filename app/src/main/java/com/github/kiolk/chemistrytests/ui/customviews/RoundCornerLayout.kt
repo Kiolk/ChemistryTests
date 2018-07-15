@@ -1,15 +1,11 @@
 package com.github.kiolk.chemistrytests.ui.customviews
 
 import android.content.Context
-import android.graphics.Bitmap
-import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.Paint
-import android.graphics.PorterDuff
-import android.graphics.PorterDuffXfermode
-import android.graphics.RectF
+import android.graphics.*
 import android.util.AttributeSet
+import android.util.TypedValue
 import android.widget.RelativeLayout
+import com.github.kiolk.chemistrytests.R
 
 class RoundCornerLayout : RelativeLayout {
     private var maskBitmap: Bitmap? = null
@@ -52,7 +48,14 @@ class RoundCornerLayout : RelativeLayout {
         val canvas = Canvas(mask)
 
         val paint = Paint(Paint.ANTI_ALIAS_FLAG)
-        paint.color = Color.WHITE // TODO set your background color as needed
+
+//        paint.color = Color.WHITE // TODO set your background color as needed
+
+        //try get actual background color
+        val typedValue = TypedValue()
+        val theme = context.theme
+        theme.resolveAttribute(R.attr.backgroundColor, typedValue, true)
+        paint.color = typedValue.data
 
         canvas.drawRect(0f, 0f, width.toFloat(), height.toFloat(), paint)
 

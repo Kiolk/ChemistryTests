@@ -15,9 +15,9 @@ import com.github.kiolk.chemistrytests.data.database.DBOperations
 import com.github.kiolk.chemistrytests.data.listeners.OnItemClickListener
 import com.github.kiolk.chemistrytests.data.listeners.RecyclerTouchListener
 import com.github.kiolk.chemistrytests.data.models.TestParams
-import com.github.kiolk.chemistrytests.ui.activities.TESTS_CHILD
-import com.github.kiolk.chemistrytests.ui.activities.TEST_PARAM_INT
 import com.github.kiolk.chemistrytests.ui.activities.TestingActivity
+import com.github.kiolk.chemistrytests.utils.Constants.TESTS_CHILD
+import com.github.kiolk.chemistrytests.utils.Constants.TEST_PARAM_INT
 import com.google.firebase.database.*
 import reversSort
 
