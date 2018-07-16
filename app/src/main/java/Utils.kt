@@ -6,9 +6,10 @@ import com.github.kiolk.chemistrytests.data.models.*
 import com.github.kiolk.chemistrytests.data.models.CloseQuestion.Question.INPUT_CHOICE
 import com.github.kiolk.chemistrytests.data.models.CloseQuestion.Question.MULTIPLE_CHOICE
 import com.github.kiolk.chemistrytests.data.models.CloseQuestion.Question.SINGLE_CHOICE
+import com.github.kiolk.chemistrytests.utils.Constants.PHOTO_TAG
 import java.util.*
 
-val PHOTO_TAG = "drawable"
+//val PHOTO_TAG = "drawable"
 
 fun toHtml(pString: String): String {
     var result = pString.replace("__", "</sub>")

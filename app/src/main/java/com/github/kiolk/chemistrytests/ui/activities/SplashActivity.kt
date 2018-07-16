@@ -18,32 +18,29 @@ import com.github.kiolk.chemistrytests.data.asynctasks.ResultCallback
 import com.github.kiolk.chemistrytests.data.asynctasks.SingleAsyncTask
 import com.github.kiolk.chemistrytests.data.executs.UpdateResultInFirebase
 import com.github.kiolk.chemistrytests.data.executs.UploadDataInDb
-import com.github.kiolk.chemistrytests.data.fragments.FeatureFragment
-import com.github.kiolk.chemistrytests.data.fragments.FeatureFragment.Companion.IDE_SLIDE
-import com.github.kiolk.chemistrytests.data.fragments.FeatureFragment.Companion.ROCKET_SLIDE
-import com.github.kiolk.chemistrytests.data.fragments.FeatureFragment.Companion.STUDENT_SLIDE
-import com.github.kiolk.chemistrytests.data.fragments.FeatureFragment.Companion.TARGET_SLIDE
-import com.github.kiolk.chemistrytests.data.fragments.attachRoundIndicators
+import com.github.kiolk.chemistrytests.data.listeners.UserTouchListener
 import com.github.kiolk.chemistrytests.data.managers.LanguageProvider
 import com.github.kiolk.chemistrytests.data.models.TestFragmentModel
+import com.github.kiolk.chemistrytests.ui.fragments.FeatureFragment
+import com.github.kiolk.chemistrytests.ui.fragments.FeatureFragment.Companion.IDE_SLIDE
+import com.github.kiolk.chemistrytests.ui.fragments.FeatureFragment.Companion.ROCKET_SLIDE
+import com.github.kiolk.chemistrytests.ui.fragments.FeatureFragment.Companion.STUDENT_SLIDE
+import com.github.kiolk.chemistrytests.ui.fragments.FeatureFragment.Companion.TARGET_SLIDE
+import com.github.kiolk.chemistrytests.ui.fragments.attachRoundIndicators
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import kotlinx.android.synthetic.main.activity_splash.*
 import java.util.*
 
-val SPEED_ROTATION: Long = 1000
-val SPLASH_DURATION: Long = 2000
-val PROVIDERS = listOf<AuthUI.IdpConfig>(AuthUI.IdpConfig.Builder(AuthUI.EMAIL_PROVIDER).build(), AuthUI.IdpConfig.Builder(AuthUI.GOOGLE_PROVIDER).build())
-val RC_SIGN_IN: Int = 1
-
-interface UserTouchListener{
-    fun userTouch(int : Int)
-}
 
 class SplashActivity : AppCompatActivity() {
 
     companion object {
-        val DURATION_SHOW_ONE_FEATURE : Long = 5000
+        val DURATION_SHOW_ONE_FEATURE: Long = 5000
+        val SPEED_ROTATION: Long = 1000
+        val SPLASH_DURATION: Long = 2000
+        val PROVIDERS = listOf<AuthUI.IdpConfig>(AuthUI.IdpConfig.Builder(AuthUI.EMAIL_PROVIDER).build(), AuthUI.IdpConfig.Builder(AuthUI.GOOGLE_PROVIDER).build())
+        val RC_SIGN_IN: Int = 1
     }
 
     lateinit var mHandler: Handler
@@ -52,7 +49,7 @@ class SplashActivity : AppCompatActivity() {
     lateinit var mAuthentication: FirebaseAuth
     lateinit var mAuthenticationListener: FirebaseAuth.AuthStateListener
     var isSetupAuth: Boolean = false
-    var isUserStartLogin : Boolean = false
+    var isUserStartLogin: Boolean = false
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -80,13 +77,13 @@ class SplashActivity : AppCompatActivity() {
     }
 
     private fun updateUserInformation() {
-        val firbaseUser : FirebaseUser? = mAuthentication.currentUser
-        if(firbaseUser != null){
+        val firbaseUser: FirebaseUser? = mAuthentication.currentUser
+        if (firbaseUser != null) {
             Log.d("MyLogs", "User uid when start ${firbaseUser.uid}")
-            SingleAsyncTask().execute(UpdateResultInFirebase(firbaseUser.uid, object : ResultCallback{
+            SingleAsyncTask().execute(UpdateResultInFirebase(firbaseUser.uid, object : ResultCallback {
                 override fun <T> onSuccess(any: T?) {
-                    val result : String = any as String
-                    if(result == "Success"){
+                    val result: String = any as String
+                    if (result == "Success") {
                         startLoad()
                     }
                 }
@@ -110,7 +107,7 @@ class SplashActivity : AppCompatActivity() {
                             resources.getString(R.string.SUCCES_LOGGIN),
                             Toast.LENGTH_LONG)
                             .show()
-                    if(!isUserStartLogin) {
+                    if (!isUserStartLogin) {
                         updateUserInformation()
 //                        startLoad()
                     }
@@ -123,21 +120,21 @@ class SplashActivity : AppCompatActivity() {
         mAuthentication.addAuthStateListener(mAuthenticationListener)
     }
 
-    private fun showMainFeaturesPager(){
+    private fun showMainFeaturesPager() {
         main_features_view_pager.visibility = View.VISIBLE
         dot_indicator_linear_layout.visibility = View.VISIBLE
         val mainFeatures = getMainFeatures()
-        val adapter = FeaturesPageAdapter(supportFragmentManager, mainFeatures )
+        val adapter = FeaturesPageAdapter(supportFragmentManager, mainFeatures)
         val infinityPagerAdapter = InfinityPagerAdapter(adapter)
         main_features_view_pager.adapter = infinityPagerAdapter
         val dotCounter = mainFeatures.size
         login_button.visibility = View.VISIBLE
-        login_button.setOnClickListener{
+        login_button.setOnClickListener {
             startAuthenticationPage()
         }
 //        setupFeatureTimer(dotCounter)
 
-        val touchListener = object : UserTouchListener{
+        val touchListener = object : UserTouchListener {
             override fun userTouch(int: Int) {
                 changeButtonColor(int)
             }
@@ -162,8 +159,8 @@ class SplashActivity : AppCompatActivity() {
 //        mHandler.postDelayed(mRunnable, DURATION_SHOW_ONE_FEATURE)
     }
 
-    private fun changeButtonColor(int : Int){
-        when(int){
+    private fun changeButtonColor(int: Int) {
+        when (int) {
             STUDENT_SLIDE -> login_button.setTextColor(resources.getColor(R.color.STUDENT_COLOR))
             ROCKET_SLIDE -> login_button.setTextColor(resources.getColor(R.color.ROCKET_COLOR))
             IDE_SLIDE -> login_button.setTextColor(resources.getColor(R.color.IDEA_COLOR))
@@ -176,7 +173,7 @@ class SplashActivity : AppCompatActivity() {
         var currentItem = 0
         mRunnable = Runnable {
             currentItem = main_features_view_pager.currentItem
-            if(currentItem < dotCounter - 1 ){
+            if (currentItem < dotCounter - 1) {
                 ++currentItem
                 main_features_view_pager.setCurrentItem(currentItem)
                 mHandler.postDelayed(mRunnable, DURATION_SHOW_ONE_FEATURE)
@@ -189,7 +186,7 @@ class SplashActivity : AppCompatActivity() {
         mHandler.postDelayed(mRunnable, DURATION_SHOW_ONE_FEATURE)
     }
 
-    private fun closeMainFeaturesPager(){
+    private fun closeMainFeaturesPager() {
         main_features_view_pager.visibility = View.GONE
         dot_indicator_linear_layout.visibility = View.GONE
         mHandler.removeCallbacks(mRunnable)
@@ -202,7 +199,7 @@ class SplashActivity : AppCompatActivity() {
                 TestFragmentModel("Fourth", FeatureFragment()))
     }
 
-    fun startAuthenticationPage(){
+    fun startAuthenticationPage() {
         startActivityForResult(AuthUI.getInstance().
                 createSignInIntentBuilder().
                 setIsSmartLockEnabled(false).
@@ -316,7 +313,7 @@ class SplashActivity : AppCompatActivity() {
 
     fun loadData() {
 //       val languageInterface = DataManager.instance.getInterfaceLanguage()
-       val languageInterface = LanguageProvider(baseContext).getInterfaceLanguage()
+        val languageInterface = LanguageProvider(baseContext).getInterfaceLanguage()
 //        val preferences = getSharedPreferences(GENERAL_PREFERENCES, Activity.MODE_PRIVATE)
 //        val lang = preferences.getString(LANGUAGE_PREFIX, "ru")
         val lang = languageInterface.languagePrefix

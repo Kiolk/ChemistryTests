@@ -1,21 +1,22 @@
 package com.github.kiolk.chemistrytests.utils
 
-import PHOTO_TAG
+//import com.github.kiolk.chemistrytests.data.models.DEFAULT_RATIO
+//import com.github.kiolk.chemistrytests.data.models.INCREACE_INDEX
+//import com.github.kiolk.chemistrytests.data.models.RATIO_INDEX
 import android.graphics.drawable.BitmapDrawable
 import android.text.Html
 import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.text.style.ImageSpan
 import android.widget.TextView
+import com.github.kiolk.chemistrytests.utils.Constants.PHOTO_TAG
 import com.github.kiolk.chemistrytests.utils.FormatedConstants.DEFAULT_RATIO
 import com.github.kiolk.chemistrytests.utils.FormatedConstants.INCREACE_INDEX
 import com.github.kiolk.chemistrytests.utils.FormatedConstants.RATIO_INDEX
-//import com.github.kiolk.chemistrytests.data.models.DEFAULT_RATIO
-//import com.github.kiolk.chemistrytests.data.models.INCREACE_INDEX
-//import com.github.kiolk.chemistrytests.data.models.RATIO_INDEX
 import isPresentDrawable
 import kiolk.com.github.pen.Pen
 import toHtml
+
 object FormatedConstants{
     val RATIO_INDEX: Float = 2F
     val INCREACE_INDEX: Float = 3F

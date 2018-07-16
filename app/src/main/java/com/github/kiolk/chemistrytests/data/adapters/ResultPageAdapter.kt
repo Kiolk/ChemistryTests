@@ -5,9 +5,9 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentStatePagerAdapter
 import com.github.kiolk.chemistrytests.R
-import com.github.kiolk.chemistrytests.data.fragments.GenerralResultFragment
-import com.github.kiolk.chemistrytests.data.fragments.ResultStatisticFragment
-import com.github.kiolk.chemistrytests.data.fragments.TestInfoFragment
+import com.github.kiolk.chemistrytests.ui.fragments.GenerralResultFragment
+import com.github.kiolk.chemistrytests.ui.fragments.ResultStatisticFragment
+import com.github.kiolk.chemistrytests.ui.fragments.TestInfoFragment
 import com.github.kiolk.chemistrytests.data.models.Result
 import com.github.kiolk.chemistrytests.data.models.ResultInformation
 

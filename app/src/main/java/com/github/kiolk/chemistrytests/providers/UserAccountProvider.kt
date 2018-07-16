@@ -5,7 +5,7 @@ import com.github.kiolk.chemistrytests.data.asynctasks.ResultCallback
 import com.github.kiolk.chemistrytests.data.asynctasks.SingleAsyncTask
 import com.github.kiolk.chemistrytests.data.database.DBOperations
 import com.github.kiolk.chemistrytests.data.executs.UpdateResultInFirebase
-import com.github.kiolk.chemistrytests.data.fragments.getCurrentUser
+import com.github.kiolk.chemistrytests.ui.fragments.getCurrentUser
 import com.github.kiolk.chemistrytests.data.listeners.SimpleResultCallback
 import com.github.kiolk.chemistrytests.data.managers.PrefGetter
 import com.github.kiolk.chemistrytests.data.models.User

@@ -18,19 +18,20 @@ import com.github.kiolk.chemistrytests.data.asynctasks.ResultCallback
 import com.github.kiolk.chemistrytests.data.asynctasks.SingleAsyncTask
 import com.github.kiolk.chemistrytests.data.database.DBOperations
 import com.github.kiolk.chemistrytests.data.executs.PrepareCoursesFromDb
-import com.github.kiolk.chemistrytests.data.fragments.*
-import com.github.kiolk.chemistrytests.data.fragments.CompletedTestsFragment.Companion.RESULT_TEST_TAG
-import com.github.kiolk.chemistrytests.data.fragments.accounts.PremiumFragment
-import com.github.kiolk.chemistrytests.data.fragments.configuration.ConfigurationFragment
-import com.github.kiolk.chemistrytests.data.fragments.help.HelpFragment
-import com.github.kiolk.chemistrytests.data.fragments.statistic.UserStatisticFragment
-import com.github.kiolk.chemistrytests.data.fragments.tests.TestsFragment
+import com.github.kiolk.chemistrytests.ui.fragments.CompletedTestsFragment.Companion.RESULT_TEST_TAG
 import com.github.kiolk.chemistrytests.data.models.*
 import com.github.kiolk.chemistrytests.data.models.CloseQuestion.Question.EASY_QUESTION
 import com.github.kiolk.chemistrytests.data.models.CloseQuestion.Question.SINGLE_CHOICE
+import com.github.kiolk.chemistrytests.ui.activities.SplashActivity.Companion.RC_SIGN_IN
 import com.github.kiolk.chemistrytests.ui.activities.base.BaseActivity
 import com.github.kiolk.chemistrytests.ui.activities.main.MainMvp
 import com.github.kiolk.chemistrytests.ui.activities.main.MainPresenter
+import com.github.kiolk.chemistrytests.ui.fragments.*
+import com.github.kiolk.chemistrytests.ui.fragments.accounts.PremiumFragment
+import com.github.kiolk.chemistrytests.ui.fragments.configuration.ConfigurationFragment
+import com.github.kiolk.chemistrytests.ui.fragments.help.HelpFragment
+import com.github.kiolk.chemistrytests.ui.fragments.statistic.UserStatisticFragment
+import com.github.kiolk.chemistrytests.ui.fragments.tests.TestsFragment
 import com.github.kiolk.chemistrytests.utils.ChartHelper.showWebView
 import com.github.kiolk.chemistrytests.utils.Constants.ACCOUNTS_CHILD
 import com.github.kiolk.chemistrytests.utils.Constants.PERIODIC_TABLE_NAME
@@ -68,12 +69,12 @@ class MainActivity : BaseActivity(), MainMvp {
         setContentView(R.layout.activity_main)
         setSupportActionBar(main_tool_bar)
         main_drawer_layout.setStatusBarBackground(R.color.fui_transparent)
-        mAvaliableTests = AvaliableFragments()
-        mAvailableTests = AvaliableTestFragment()
+        mAvaliableTests = com.github.kiolk.chemistrytests.ui.fragments.AvaliableFragments()
+        mAvailableTests = com.github.kiolk.chemistrytests.ui.fragments.AvaliableTestFragment()
         mCustomTest = CustomTest()
         mAuthentication = FirebaseAuth.getInstance()
         mFirebaseDatabase = FirebaseDatabase.getInstance()
-        mCompletedTsts = CompletedTestsFragment()
+        mCompletedTsts = com.github.kiolk.chemistrytests.ui.fragments.CompletedTestsFragment()
         mCustomTestFragment = CustomTestFragment()
         mTestsFragment = TestsFragment()
         setupNavigationDrawer()

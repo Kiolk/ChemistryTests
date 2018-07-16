@@ -10,10 +10,10 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.github.kiolk.chemistrytests.R
-import com.github.kiolk.chemistrytests.data.fragments.TouchListener
-import com.github.kiolk.chemistrytests.data.fragments.imageAttachmnet
+import com.github.kiolk.chemistrytests.ui.fragments.TouchListener
+import com.github.kiolk.chemistrytests.ui.fragments.imageAttachmnet
 import com.github.kiolk.chemistrytests.data.models.Hint
-import com.github.kiolk.chemistrytests.data.models.setFormattedText
+import com.github.kiolk.chemistrytests.utils.setFormattedText
 
 class HintDottedPagerAdapter(var contex : Context, var hintList : List<Hint>, var touchListener : TouchListener? = null) : PagerAdapter(){
     override fun isViewFromObject(view: View, `object`: Any): Boolean {

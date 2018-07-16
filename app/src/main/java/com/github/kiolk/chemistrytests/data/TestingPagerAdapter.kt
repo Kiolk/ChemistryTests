@@ -1,8 +1,8 @@
 package com.github.kiolk.chemistrytests.data
 
 import android.support.v4.app.FragmentStatePagerAdapter
-import com.github.kiolk.chemistrytests.data.fragments.QuestionAnsweredFragment
-import com.github.kiolk.chemistrytests.data.fragments.QuestionFragment
+import com.github.kiolk.chemistrytests.ui.fragments.QuestionAnsweredFragment
+import com.github.kiolk.chemistrytests.ui.fragments.QuestionFragment
 import com.github.kiolk.chemistrytests.data.models.ALL_QUESTION
 import com.github.kiolk.chemistrytests.data.models.Answer
 import com.github.kiolk.chemistrytests.data.models.CloseQuestion

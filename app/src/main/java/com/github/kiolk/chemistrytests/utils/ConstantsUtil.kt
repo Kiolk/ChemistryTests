@@ -9,6 +9,11 @@ object Constants{
     val DATA_COURSES_CHILD: String = "Courses"
     val DATA_THEORY_CHILD: String = "Theory"
     val ACCOUNTS_CHILD: String = "Accounts"
+    val QUESTIONS_CHILDS: String = "Questions"
+
+    val MIN_PERCENT_FOR_SAVE_RESULT: Float = 0.75F
+
+    val PHOTO_TAG = "drawable"
 
     val PERIODIC_TABLE_NAME : String = "table"
     val PERIODIC_TABLE_ENGLISH : String = "table_en"

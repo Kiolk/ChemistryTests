@@ -6,7 +6,7 @@ import com.github.kiolk.chemistrytests.data.asynctasks.ResultCallback
 import com.github.kiolk.chemistrytests.data.asynctasks.SingleAsyncTask
 import com.github.kiolk.chemistrytests.data.database.DBOperations
 import com.github.kiolk.chemistrytests.data.executs.GetAccountsFromDb
-import com.github.kiolk.chemistrytests.data.fragments.accounts.AccountMvpPresenter
+import com.github.kiolk.chemistrytests.ui.fragments.accounts.AccountMvpPresenter
 import com.github.kiolk.chemistrytests.data.models.AcountModel
 import com.github.kiolk.chemistrytests.data.models.LanguageModel
 

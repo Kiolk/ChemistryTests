@@ -2,10 +2,10 @@ package com.github.kiolk.chemistrytests.data.presenters
 
 import com.github.kiolk.chemistrytests.data.asynctasks.ResultCallback
 import com.github.kiolk.chemistrytests.data.database.DataManagerImpl
-import com.github.kiolk.chemistrytests.data.fragments.AppInformationView
+import com.github.kiolk.chemistrytests.ui.fragments.AppInformationView
 import com.github.kiolk.chemistrytests.data.models.QuestionsDataBaseInfo
 
-class AppInformationPresenterImpl(var informationView: AppInformationView) : AppInformationPresenter, ResultCallback {
+class AppInformationPresenterImpl(var informationView: com.github.kiolk.chemistrytests.ui.fragments.AppInformationView) : AppInformationPresenter, ResultCallback {
 
     init {
         informationView.showProgressBar(true)

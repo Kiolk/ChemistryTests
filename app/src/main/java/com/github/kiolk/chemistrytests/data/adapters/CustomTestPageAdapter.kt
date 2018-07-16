@@ -5,9 +5,9 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentStatePagerAdapter
 import com.github.kiolk.chemistrytests.R
-import com.github.kiolk.chemistrytests.data.fragments.CustomTest
-import com.github.kiolk.chemistrytests.data.fragments.QuestionsListFragment
-import com.github.kiolk.chemistrytests.data.fragments.TestDescriptionFragment
+import com.github.kiolk.chemistrytests.ui.fragments.CustomTest
+import com.github.kiolk.chemistrytests.ui.fragments.QuestionsListFragment
+import com.github.kiolk.chemistrytests.ui.fragments.TestDescriptionFragment
 
 class CustomTestPageAdapter(val context: Context, fm: FragmentManager) : FragmentStatePagerAdapter(fm) {
 

@@ -12,11 +12,11 @@ import com.github.kiolk.chemistrytests.data.models.Account.NUMBER_OF_QUESTIONS_B
 import com.github.kiolk.chemistrytests.data.models.Account.NUMBER_OF_QUESTIONS_FREE_ACCOUNT
 import com.github.kiolk.chemistrytests.data.models.Account.NUMBER_OF_QUESTIONS_PREMIUM_ACCOUNT
 import com.github.kiolk.chemistrytests.data.models.Account.PREMIUM_ACCOUNT
-import com.github.kiolk.chemistrytests.ui.activities.QUESTIONS_CHILDS
 import com.github.kiolk.chemistrytests.utils.Constants.ACCOUNTS_CHILD
 import com.github.kiolk.chemistrytests.utils.Constants.DATA_BASE_INFO_CHAILD
 import com.github.kiolk.chemistrytests.utils.Constants.DATA_COURSES_CHILD
 import com.github.kiolk.chemistrytests.utils.Constants.DATA_THEORY_CHILD
+import com.github.kiolk.chemistrytests.utils.Constants.QUESTIONS_CHILDS
 import com.github.kiolk.chemistrytests.utils.Constants.TESTS_CHILD
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*

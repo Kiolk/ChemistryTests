@@ -2,7 +2,7 @@ package com.github.kiolk.chemistrytests.data.adapters
 
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentStatePagerAdapter
-import com.github.kiolk.chemistrytests.data.fragments.CoursePageFragment
+import com.github.kiolk.chemistrytests.ui.fragments.CoursePageFragment
 import com.github.kiolk.chemistrytests.data.models.Course
 
 class CoursesViewPagerAdapter (var fm : android.support.v4.app.FragmentManager,

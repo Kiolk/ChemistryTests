@@ -4,8 +4,8 @@ import android.content.Context
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentStatePagerAdapter
-import com.github.kiolk.chemistrytests.data.fragments.LatestTestsFragment
-import com.github.kiolk.chemistrytests.data.fragments.accounts.AccountFeaturesFragment
+import com.github.kiolk.chemistrytests.ui.fragments.LatestTestsFragment
+import com.github.kiolk.chemistrytests.ui.fragments.accounts.AccountFeaturesFragment
 import com.github.kiolk.chemistrytests.data.models.AcountModel
 import com.github.kiolk.chemistrytests.data.models.TestFragmentModel
 

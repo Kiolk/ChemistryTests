@@ -8,7 +8,6 @@ import android.support.v4.view.ViewCompat
 import android.support.v4.view.ViewPager
 import android.support.v4.view.ViewPropertyAnimatorListener
 import android.support.v4.view.animation.FastOutSlowInInterpolator
-import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.View
 import android.view.ViewGroup
@@ -22,37 +21,36 @@ import com.github.kiolk.chemistrytests.data.asynctasks.ResultCallback
 import com.github.kiolk.chemistrytests.data.asynctasks.SingleAsyncTask
 import com.github.kiolk.chemistrytests.data.database.DBOperations
 import com.github.kiolk.chemistrytests.data.executs.UpdateResultInDb
-import com.github.kiolk.chemistrytests.data.fragments.ChemTheoryFragment
-import com.github.kiolk.chemistrytests.data.fragments.ChemTheoryFragment.Companion.THEORY_FRAGMENT_TAG
-import com.github.kiolk.chemistrytests.data.fragments.HintFragment
-import com.github.kiolk.chemistrytests.data.fragments.dialogs.LeaveTestDialog
-import com.github.kiolk.chemistrytests.data.fragments.ResultFragment
-import com.github.kiolk.chemistrytests.data.fragments.TestInfoFragment
+import com.github.kiolk.chemistrytests.ui.fragments.ChemTheoryFragment
+import com.github.kiolk.chemistrytests.ui.fragments.ChemTheoryFragment.Companion.THEORY_FRAGMENT_TAG
+import com.github.kiolk.chemistrytests.ui.fragments.HintFragment
+import com.github.kiolk.chemistrytests.ui.fragments.ResultFragment
+import com.github.kiolk.chemistrytests.ui.fragments.TestInfoFragment
+import com.github.kiolk.chemistrytests.ui.fragments.dialogs.LeaveTestDialog
 import com.github.kiolk.chemistrytests.data.models.*
 import com.github.kiolk.chemistrytests.ui.activities.base.BaseActivity
 import com.github.kiolk.chemistrytests.ui.customviews.ControledViewPager
 import com.github.kiolk.chemistrytests.utils.ChartHelper.PERIODIC_TABLE_NAME
 import com.github.kiolk.chemistrytests.utils.ChartHelper.SOLUBILITY_CHART_NAME
 import com.github.kiolk.chemistrytests.utils.ChartHelper.showWebView
+import com.github.kiolk.chemistrytests.utils.Constants.MIN_PERCENT_FOR_SAVE_RESULT
 import com.github.kiolk.chemistrytests.utils.Constants.TEST_PARAM_INT
 import com.github.kiolk.chemistrytests.utils.SlideAnimationUtil
 import com.github.kiolk.chemistrytests.utils.SlideAnimationUtil.FASTER
 import com.github.kiolk.chemistrytests.utils.SlideAnimationUtil.VERY_FASTER
+import com.github.kiolk.chemistrytests.utils.animIn
+import com.github.kiolk.chemistrytests.utils.animOut
 import kiolk.com.github.pen.utils.MD5Util
 import kotlinx.android.synthetic.main.activity_testing.*
 import showFragment
 import java.util.*
 
-val QUESTIONS_CHILDS: String = "Questions"
-val MIN_PERCENT_FOR_SAVE_RESULT: Float = 0.75F
-
 class TestingActivity : BaseActivity() {
-
 
     lateinit var listener: CheckResultListener
     var mResultFragment = ResultFragment()
     var mHintFragment = HintFragment()
-    var mTheoryFragment = ChemTheoryFragment()
+    var mTheoryFragment = com.github.kiolk.chemistrytests.ui.fragments.ChemTheoryFragment()
     lateinit var mResult: Result
     lateinit var adapter: TestingPagerAdapter
     lateinit var mParams: TestParams
@@ -77,48 +75,12 @@ class TestingActivity : BaseActivity() {
         mQuestions = DBOperations().getAllQuestions()
         animIn(end_test_fab)
         animOut(end_test_fab)
-//        animIn(bottom_bar_linear_layout)
-//        animOut(bottom_bar_linear_layout)
         setupTestingViewPager(mQuestions)
         setupBottomBar()
-//        mChaildEventListener = object : ChildEventListener {
-//            override fun onCancelled(p0: DatabaseError?) {
-//                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-//            }
-//
-//            override fun onChildMoved(p0: DataSnapshot?, p1: String?) {
-//                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-//            }
-//
-//            override fun onChildChanged(p0: DataSnapshot?, p1: String?) {
-//                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-//            }
-//
-//            override fun onChildAdded(p0: DataSnapshot?, p1: String?) {
-////                val  question = p0?.getValue(CloseQuestion::class.java)
-////                var questionsList = mutableListOf<CloseQuestion>()
-////                question?.let { questionsList.add(it) }
-//////                question?.let { mQuestions.add(it) }
-////                Log.d("MyLogs", question?.questionId?.toString())
-////                if (question?.questionId == 30){
-////                    mQuestions = DBOperations().getAllQuestions()
-////                    questionsList = mQuestions
-////                    setupTestingViewPager(DBOperations().getAllQuestions())
-////                    setupBottomBar()
-////                }
-//            }
-//
-//            override fun onChildRemoved(p0: DataSnapshot?) {
-//                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-//            }
-//        }
-//        mDatabaseReference.addChildEventListener(mChaildEventListener)
         questions_app_bar_layout.addOnOffsetChangedListener(object : AppBarLayout.OnOffsetChangedListener {
             override fun onOffsetChanged(appBarLayout: AppBarLayout?, verticalOffset: Int) {
                 Log.d("MyLogs", "verticalOffset $verticalOffset")
-//                if (Math.abs(verticalOffset) >= questions_app_bar_layout.totalScrollRange.div(0.5F)) {
                 if (Math.abs(verticalOffset) >= 55) {
-//                    questions_tool_bar.setBackgroundColor(Color.RED)
                     if (isShowBottomBar) {
                         SlideAnimationUtil.slideOutToTop(baseContext, bottom_bar_linear_layout,
                                 object : SlideAnimationUtil.SlideAnimationListener {
@@ -129,7 +91,6 @@ class TestingActivity : BaseActivity() {
                     }
                     isShowBottomBar = false
                 } else {
-//                    questions_tool_bar.setBackgroundColor(Color.GREEN)
                     bottom_bar_linear_layout.visibility = View.VISIBLE
 
                     if (!isShowBottomBar) {
@@ -176,14 +137,8 @@ class TestingActivity : BaseActivity() {
     }
 
     override fun onPause() {
-
-
-//        if(isTestEnd){
-//            closeFragment(mResultFragment)
-//        }
         super.onPause()
         isTestForeground = false
-//        mDatabaseReference.removeEventListener(mChaildEventListener)
     }
 
 
@@ -205,36 +160,8 @@ class TestingActivity : BaseActivity() {
                         isShowFAB = false
                     }
                 }
-
-//                result_frame_layout.visibility = View.VISIBLE
-//                showFragment(R.id.result_frame_layout, mResultFragment)
-//                mResultFragment.showResult(mResult)
-//                val resultAdapter : TestingPagerAdapter = TestingPagerAdapter(supportFragmentManager, mResult.test.mSortedQuestions,
-//                       true, mResult.userResultAnswers() )
-////                testing_view_pager.removeAllViews()
-//                testing_view_pager.adapter = resultAdapter
-//                questions_tab_layout.setupWithViewPager(testing_view_pager)
-//               val group : ViewGroup = questions_tab_layout.getChildAt(0) as ViewGroup
-//                var cnt = 0
-//                mResult.userResultAnswers().forEach{
-//                    if(it.userInput == null) {
-//                       if( it.question.checkCorrectAnswers(it.getAnsweredOptions())){
-//                           group.getChildAt(cnt).background = resources.getDrawable(R.drawable.area_square_shape_correct)
-//                       }else{
-//                           group.getChildAt(cnt).background = resources.getDrawable(R.drawable.area_square_shape_wrong)
-//                       }
-//                    }else{
-//                        if(it.question.checkOpenQuestionAnswers(it.userInput)){
-//                            group.getChildAt(cnt).background = resources.getDrawable(R.drawable.area_square_shape_correct)
-//                        }else{
-//                            group.getChildAt(cnt).background = resources.getDrawable(R.drawable.area_square_shape_wrong)
-//                        }
-//                    }
-//                    cnt = cnt + 1
-//                }
             }
         })
-//        mResult.mResultInfo.startTime = System.currentTimeMillis()
         mTestInfo = TestInfoFragment().fromInstance(mResult.test.params)
         adapter = TestingPagerAdapter(supportFragmentManager, test.mSortedQuestions)
         listener = object : CheckResultListener {
@@ -250,8 +177,6 @@ class TestingActivity : BaseActivity() {
                         mResult.test.params.direction == DIRECT_TEST
                                 && end_test_fab.visibility == View.VISIBLE
                                 && (testing_view_pager.currentItem < testing_view_pager.adapter?.count?.minus(1) ?: 0)) {
-//                                && (mResult.askedQuestions.size != mResult.test.mSortedQuestions.size)) {
-//                                ) {
                             end_test_fab.setImageDrawable(resources.getDrawable(R.drawable.ic_dot_right_arrow))
                             animIn(end_test_fab)
                             end_test_fab.setOnClickListener {
@@ -289,22 +214,6 @@ class TestingActivity : BaseActivity() {
             questions_tab_layout.visibility = View.GONE
         }
         attachViewPagerListener(testing_view_pager)
-//        testing_view_pager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener{
-//            override fun onPageScrollStateChanged(state: Int) {
-//            }
-//
-//            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
-//            }
-//
-//            override fun onPageSelected(position: Int) {
-//                checkHintPresent()
-//                if(end_test_fab.visibility == View.VISIBLE && !isTestEnd){
-//                    end_test_fab.visibility == View.GONE
-//                } else if (end_test_fab.visibility == View.INVISIBLE && !isTestEnd && test.params.testType == TRAINING_TEST){
-//
-//                }
-//            }
-//        })
         questions_tab_layout.setupWithViewPager(testing_view_pager)
         questions_tool_bar.title = mParams.testInfo.testTitle
 
@@ -432,12 +341,6 @@ class TestingActivity : BaseActivity() {
         }
     }
 
-    private fun updateSelectTabLayout() {
-        val position: Int = testing_view_pager.currentItem
-        val group: ViewGroup = questions_tab_layout.getChildAt(0) as ViewGroup
-        group.getChildAt(position).background = resources.getDrawable(R.drawable.area_select_answer)
-    }
-
     private fun updateTabLayout() {
         val position: Int = testing_view_pager.currentItem
         if (mResult.askedQuestions.find { it.question == mResult.test.mSortedQuestions[position] } != null) {
@@ -548,9 +451,6 @@ class TestingActivity : BaseActivity() {
     fun showResult() {
         mTimer?.cancel()
         isTestEnd = true
-//        result_frame_layout.visibility = View.VISIBLE
-//        showFragment(R.id.result_frame_layout, mResultFragment)
-//        mResultFragment.showResult(mResult.mResultInfo)
         mResult.writeResultInformation()
         mResult.mResultInfo.startTime = mStartTest
         mResult.mResultInfo.endTime = System.currentTimeMillis()
@@ -626,53 +526,53 @@ class TestingActivity : BaseActivity() {
         photo_web_view.settings?.loadWithOverviewMode = true
         photo_web_view.visibility = View.VISIBLE
     }
+
+    private fun updateIndicator(progressBar: ProgressBar?, size: Int, total: Int) {
+        val percentAnswered: Int = size.times(100).div(total)
+        progressBar?.progress = percentAnswered
+    }
 }
 
-private fun updateIndicator(progressBar: ProgressBar?, size: Int, total: Int) {
-    val percentAnswered: Int = size.times(100).div(total)
-    progressBar?.progress = percentAnswered
-}
-
-fun animOut(view: View) {
-    ViewCompat.animate(view)
-            .scaleX(0.0F)
-            .scaleY(0.0F)
-            .alpha(0.0F)
-            .setInterpolator(FastOutSlowInInterpolator())
-            .withLayer()
-            .setListener(object : ViewPropertyAnimatorListener {
-                override fun onAnimationEnd(view: View?) {
-                    view?.visibility = View.GONE
-                }
-
-                override fun onAnimationCancel(view: View?) {
-                }
-
-                override fun onAnimationStart(view: View?) {
-
-                }
-            })
-            .start()
-}
-
-fun animIn(view: View) {
-    view.visibility = View.VISIBLE
-    ViewCompat.animate(view)
-            .scaleX(1.0F)
-            .scaleY(1.0F)
-            .alpha(1.0F)
-            .setInterpolator(FastOutSlowInInterpolator())
-            .withLayer()
-            .setListener(object : ViewPropertyAnimatorListener {
-                override fun onAnimationEnd(view: View?) {
-                }
-
-                override fun onAnimationCancel(view: View?) {
-                }
-
-                override fun onAnimationStart(view: View?) {
-
-                }
-            })
-            .start()
-}
+//fun animOut(view: View) {
+//    ViewCompat.animate(view)
+//            .scaleX(0.0F)
+//            .scaleY(0.0F)
+//            .alpha(0.0F)
+//            .setInterpolator(FastOutSlowInInterpolator())
+//            .withLayer()
+//            .setListener(object : ViewPropertyAnimatorListener {
+//                override fun onAnimationEnd(view: View?) {
+//                    view?.visibility = View.GONE
+//                }
+//
+//                override fun onAnimationCancel(view: View?) {
+//                }
+//
+//                override fun onAnimationStart(view: View?) {
+//
+//                }
+//            })
+//            .start()
+//}
+//
+//fun animIn(view: View) {
+//    view.visibility = View.VISIBLE
+//    ViewCompat.animate(view)
+//            .scaleX(1.0F)
+//            .scaleY(1.0F)
+//            .alpha(1.0F)
+//            .setInterpolator(FastOutSlowInInterpolator())
+//            .withLayer()
+//            .setListener(object : ViewPropertyAnimatorListener {
+//                override fun onAnimationEnd(view: View?) {
+//                }
+//
+//                override fun onAnimationCancel(view: View?) {
+//                }
+//
+//                override fun onAnimationStart(view: View?) {
+//
+//                }
+//            })
+//            .start()
+//}

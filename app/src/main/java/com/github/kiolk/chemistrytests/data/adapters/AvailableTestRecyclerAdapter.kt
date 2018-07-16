@@ -10,7 +10,7 @@ import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
 import com.github.kiolk.chemistrytests.R
-import com.github.kiolk.chemistrytests.data.fragments.setupIcons
+import com.github.kiolk.chemistrytests.ui.fragments.setupIcons
 import com.github.kiolk.chemistrytests.data.models.CloseQuestion.Question.COMPLEX_QUESTION
 import com.github.kiolk.chemistrytests.data.models.CloseQuestion.Question.EASY_QUESTION
 import com.github.kiolk.chemistrytests.data.models.CloseQuestion.Question.HARD_QUESTION
