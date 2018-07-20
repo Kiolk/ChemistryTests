@@ -21,6 +21,7 @@ import com.github.kiolk.chemistrytests.data.executs.UploadDataInDb
 import com.github.kiolk.chemistrytests.data.listeners.UserTouchListener
 import com.github.kiolk.chemistrytests.data.managers.LanguageProvider
 import com.github.kiolk.chemistrytests.data.models.TestFragmentModel
+import com.github.kiolk.chemistrytests.providers.SettingProvider
 import com.github.kiolk.chemistrytests.ui.fragments.FeatureFragment
 import com.github.kiolk.chemistrytests.ui.fragments.FeatureFragment.Companion.IDE_SLIDE
 import com.github.kiolk.chemistrytests.ui.fragments.FeatureFragment.Companion.ROCKET_SLIDE
@@ -53,11 +54,10 @@ class SplashActivity : AppCompatActivity() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        setupAppLanguage()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
         setupTimer()
-        loadData()
-//        setupAuthentication()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -73,6 +73,7 @@ class SplashActivity : AppCompatActivity() {
             } else if (resultCode == Activity.RESULT_CANCELED) {
                 finish()
             }
+
         }
     }
 
@@ -80,6 +81,7 @@ class SplashActivity : AppCompatActivity() {
         val firbaseUser: FirebaseUser? = mAuthentication.currentUser
         if (firbaseUser != null) {
             Log.d("MyLogs", "User uid when start ${firbaseUser.uid}")
+            SettingProvider.stroeID(baseContext, firbaseUser.uid)
             SingleAsyncTask().execute(UpdateResultInFirebase(firbaseUser.uid, object : ResultCallback {
                 override fun <T> onSuccess(any: T?) {
                     val result: String = any as String
@@ -109,7 +111,6 @@ class SplashActivity : AppCompatActivity() {
                             .show()
                     if (!isUserStartLogin) {
                         updateUserInformation()
-//                        startLoad()
                     }
                 } else {
                     showMainFeaturesPager()
@@ -132,7 +133,6 @@ class SplashActivity : AppCompatActivity() {
         login_button.setOnClickListener {
             startAuthenticationPage()
         }
-//        setupFeatureTimer(dotCounter)
 
         val touchListener = object : UserTouchListener {
             override fun userTouch(int: Int) {
@@ -143,20 +143,6 @@ class SplashActivity : AppCompatActivity() {
         val randomNumber = Random().nextInt(dotCounter)
         main_features_view_pager.currentItem = randomNumber
         changeButtonColor(randomNumber)
-//
-// mHandler = Handler()
-//        var currentItem = 0
-//        mRunnable = Runnable {
-//            currentItem = main_features_view_pager.currentItem
-//            if(currentItem < dotCounter - 1 ){
-//                ++currentItem
-//            }else {
-//                currentItem = 0
-//            }
-//            main_features_view_pager.setCurrentItem(currentItem)
-//            mHandler.postDelayed(mRunnable, DURATION_SHOW_ONE_FEATURE)
-//        }
-//        mHandler.postDelayed(mRunnable, DURATION_SHOW_ONE_FEATURE)
     }
 
     private fun changeButtonColor(int: Int) {
@@ -207,28 +193,6 @@ class SplashActivity : AppCompatActivity() {
                 build(), RC_SIGN_IN)
     }
 
-    override fun onResume() {
-        super.onResume()
-//        val handler = Handler()
-//        handler.postDelayed({if(!isSetupAuth){
-//            setupAuthentication()
-//        }
-//        mAuthentication.addAuthStateListener(mAuthenticationListener)
-//        setupTimer()
-//        mHandler.postDelayed(mRunnable, DURATION_SHOW_ONE_FEATURE)
-    }
-
-    override fun onPostResume() {
-        super.onPostResume()
-    }
-
-    override fun onPause() {
-        super.onPause()
-//        mHandler.removeCallbacks(mRunnable)
-//        mAuthentication.removeAuthStateListener(mAuthenticationListener)
-
-    }
-
     override fun onDestroy() {
         mAuthentication.removeAuthStateListener(mAuthenticationListener)
         mHandler.removeCallbacks(mRunnable)
@@ -264,8 +228,6 @@ class SplashActivity : AppCompatActivity() {
         mHandler = Handler()
         mRunnable = Runnable {
             setupAuthentication()
-//            setMyProgressBar()
-//            mHandler.postDelayed(mRunnable, SPEED_ROTATION)
         }
         mHandler.postDelayed(mRunnable, 100)
     }
@@ -311,11 +273,8 @@ class SplashActivity : AppCompatActivity() {
         finish()
     }
 
-    fun loadData() {
-//       val languageInterface = DataManager.instance.getInterfaceLanguage()
+    private fun setupAppLanguage() {
         val languageInterface = LanguageProvider(baseContext).getInterfaceLanguage()
-//        val preferences = getSharedPreferences(GENERAL_PREFERENCES, Activity.MODE_PRIVATE)
-//        val lang = preferences.getString(LANGUAGE_PREFIX, "ru")
         val lang = languageInterface.languagePrefix
         if (lang != resources.configuration.locale.language && languageInterface.isUserSelection) {
             changeLocale(baseContext, lang)

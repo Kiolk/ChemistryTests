@@ -14,8 +14,8 @@ object UserAccountProvider {
 
     val ACCOUNT : String = "Account"
 
-    fun changeTypeUserAccount(typeAccount : Int, resultCallback : SimpleResultCallback){
-      val user = getCurrentUser()
+    fun changeTypeUserAccount(context : Context, typeAccount : Int, resultCallback : SimpleResultCallback){
+      val user = getCurrentUser(context)
         user?.accountType = typeAccount
         user?.let { DBOperations().insertUser(it) }
         SingleAsyncTask().execute(user?.userId?.let { UpdateResultInFirebase(it, object : ResultCallback{

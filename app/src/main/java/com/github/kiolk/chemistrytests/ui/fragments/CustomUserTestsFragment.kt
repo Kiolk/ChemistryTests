@@ -1,5 +1,6 @@
 package com.github.kiolk.chemistrytests.ui.fragments
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -12,6 +13,7 @@ import com.github.kiolk.chemistrytests.data.database.DBOperations
 import com.github.kiolk.chemistrytests.ui.fragments.bases.RecyclerTestBaseFragment
 import com.github.kiolk.chemistrytests.data.listeners.OnItemClickListener
 import com.github.kiolk.chemistrytests.data.models.User
+import com.github.kiolk.chemistrytests.providers.SettingProvider
 import com.github.kiolk.chemistrytests.ui.activities.TestingActivity
 import com.github.kiolk.chemistrytests.utils.Constants.TEST_PARAM_INT
 import com.google.firebase.auth.FirebaseAuth
@@ -24,7 +26,7 @@ class CustomUserTestsFragment : RecyclerTestBaseFragment(){
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_custom_user_tests, null)
-        val tests = getCurrentUser()?.userCustomTests?.let { reversSort(it) }
+        val tests = getCurrentUser(context)?.userCustomTests?.let { reversSort(it) }
         val adapter = context?.let { AvailableTestRecyclerAdapter(it, tests, null) }
         val listener = object  : OnItemClickListener {
             override fun onClick(view: View, position: Int) {
@@ -45,8 +47,9 @@ class CustomUserTestsFragment : RecyclerTestBaseFragment(){
     }
 }
 
-fun getCurrentUser() : User? {
+fun getCurrentUser(context : Context?) : User? {
     val users = DBOperations().getAllUsers()
-    val current = FirebaseAuth.getInstance().currentUser
-    return users.find { it.userId == current?.uid }
+//    val current = FirebaseAuth.getInstance().currentUser
+    val uid = context?.let { SettingProvider.getId(it) }
+    return users.find { it.userId == uid }
 }
