@@ -10,6 +10,7 @@ object CONSTANTS{
     val SHORT_DURATION_TIME : String = "KK:mm"
     val DAY_PATERN : String = "dd.MM.yyyy"
     val SLASH_DAY_PATERN : String = "dd/MM/yyyy"
+    val TIMER_PATTERN : String = "hh:mm:ss"
 }
 
 fun convertEpochTime(date : Long, context : Context?, pattern : String, isAbsoluteTime: Boolean = false) : String {

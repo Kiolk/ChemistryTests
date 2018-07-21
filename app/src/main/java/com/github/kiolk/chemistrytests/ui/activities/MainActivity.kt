@@ -3,7 +3,9 @@ package com.github.kiolk.chemistrytests.ui.activities
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.os.PersistableBundle
 import android.support.design.widget.NavigationView
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -417,4 +419,14 @@ class MainActivity : BaseActivity(), MainMvp {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
+    override fun onSaveInstanceState(outState: Bundle?, outPersistentState: PersistableBundle?) {
+        super.onSaveInstanceState(outState, outPersistentState)
+        val menu = navigation_relative_layout.menu
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
+        super.onRestoreInstanceState(savedInstanceState)
+    restart()
+        Log.d("MyLogs", "onRestore")
+    }
 }

@@ -30,6 +30,15 @@ class AvaliableTestFragment : Fragment(){
     var mRecyclerAdapter : AvailableTestRecyclerAdapter? = null
     var mIsTestStart : Boolean = false
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+    }
+
+    override fun onViewStateRestored(savedInstanceState: Bundle?) {
+        super.onViewStateRestored(savedInstanceState)
+        mTests = DBOperations().getAllTestsParams()
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_avaliable_tests, null)
         mTests = DBOperations().getAllTestsParams()

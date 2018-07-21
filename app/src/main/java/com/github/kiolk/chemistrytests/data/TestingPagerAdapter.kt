@@ -18,8 +18,9 @@ class TestingPagerAdapter(fm: android.support.v4.app.FragmentManager, var test: 
                           var answers: MutableList<Answer>? = null) : FragmentStatePagerAdapter(fm) {
 
     override fun getItem(position: Int): android.support.v4.app.Fragment {
-        val isCheckAnswer = (test.contains(answers?.get(position)?.question) && (answers?.get(position)?.userAnswers?.contains(-1) != true ||
-                answers?.get(position)?.userInput != null))
+      //  val isCheckAnswer = (test.contains(answers?.get(position)?.question?.questionId) && (answers?.get(position)?.userAnswers?.contains(-1) != true ||
+        val isCheckAnswer =answers != null && (answers?.get(position)?.userAnswers?.contains(-1) != true ||
+                answers?.get(position)?.userInput != null)
         return if (isCheckAnswer) {
             QuestionAnsweredFragment().fromInstance(answers!![position])
         } else            if (!isResult) {
@@ -27,6 +28,10 @@ class TestingPagerAdapter(fm: android.support.v4.app.FragmentManager, var test: 
             } else {
                 QuestionAnsweredFragment().fromInstance(answers!![position])
             }
+    }
+
+    override fun getItemPosition(`object`: Any): Int {
+        return super.getItemPosition(`object`)
     }
 
     override fun getCount(): Int {

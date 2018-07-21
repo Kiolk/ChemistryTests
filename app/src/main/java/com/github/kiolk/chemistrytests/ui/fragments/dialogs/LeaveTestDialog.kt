@@ -14,7 +14,7 @@ class LeaveTestDialog : DialogFragment(){
         dialogLeave.setMessage(R.string.LEAV_TEST)
         dialogLeave.setPositiveButton(R.string.SHOW_RESULT){ dialog, which ->
             val act = activity as TestingActivity
-            act.showResult()
+            act.showResult(true)
         }
         dialogLeave.setNegativeButton(R.string.NO) { dialog, which -> fragmentManager?.fragments?.clear() }
         dialogLeave.setNeutralButton(R.string.YES) {dialog, which -> activity?.finish()}

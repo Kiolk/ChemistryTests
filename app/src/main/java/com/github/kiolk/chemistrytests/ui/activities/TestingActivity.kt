@@ -2,12 +2,10 @@ package com.github.kiolk.chemistrytests.ui.activities
 
 import android.os.Bundle
 import android.os.Handler
+import android.os.PersistableBundle
 import android.support.design.widget.AppBarLayout
 import android.support.v4.app.Fragment
-import android.support.v4.view.ViewCompat
 import android.support.v4.view.ViewPager
-import android.support.v4.view.ViewPropertyAnimatorListener
-import android.support.v4.view.animation.FastOutSlowInInterpolator
 import android.util.Log
 import android.view.View
 import android.view.ViewGroup
@@ -21,15 +19,16 @@ import com.github.kiolk.chemistrytests.data.asynctasks.ResultCallback
 import com.github.kiolk.chemistrytests.data.asynctasks.SingleAsyncTask
 import com.github.kiolk.chemistrytests.data.database.DBOperations
 import com.github.kiolk.chemistrytests.data.executs.UpdateResultInDb
+import com.github.kiolk.chemistrytests.data.models.*
+import com.github.kiolk.chemistrytests.ui.activities.base.BaseActivity
+import com.github.kiolk.chemistrytests.ui.customviews.ControledViewPager
 import com.github.kiolk.chemistrytests.ui.fragments.ChemTheoryFragment
 import com.github.kiolk.chemistrytests.ui.fragments.ChemTheoryFragment.Companion.THEORY_FRAGMENT_TAG
 import com.github.kiolk.chemistrytests.ui.fragments.HintFragment
 import com.github.kiolk.chemistrytests.ui.fragments.ResultFragment
 import com.github.kiolk.chemistrytests.ui.fragments.TestInfoFragment
 import com.github.kiolk.chemistrytests.ui.fragments.dialogs.LeaveTestDialog
-import com.github.kiolk.chemistrytests.data.models.*
-import com.github.kiolk.chemistrytests.ui.activities.base.BaseActivity
-import com.github.kiolk.chemistrytests.ui.customviews.ControledViewPager
+import com.github.kiolk.chemistrytests.utils.CONSTANTS.TIMER_PATTERN
 import com.github.kiolk.chemistrytests.utils.ChartHelper.PERIODIC_TABLE_NAME
 import com.github.kiolk.chemistrytests.utils.ChartHelper.SOLUBILITY_CHART_NAME
 import com.github.kiolk.chemistrytests.utils.ChartHelper.showWebView
@@ -40,17 +39,28 @@ import com.github.kiolk.chemistrytests.utils.SlideAnimationUtil.FASTER
 import com.github.kiolk.chemistrytests.utils.SlideAnimationUtil.VERY_FASTER
 import com.github.kiolk.chemistrytests.utils.animIn
 import com.github.kiolk.chemistrytests.utils.animOut
+import com.github.kiolk.chemistrytests.utils.convertEpochTime
 import kiolk.com.github.pen.utils.MD5Util
 import kotlinx.android.synthetic.main.activity_testing.*
+import kotlinx.android.synthetic.main.tabbed_view_pager.*
 import showFragment
 import java.util.*
 
 class TestingActivity : BaseActivity() {
 
+    companion object {
+        val QUESTION_BNDL: String = "askedQuestion"
+        val SORTED_QUESTION_BNDL: String = "sortedQuestion"
+        val CURRENT_POSITION_BNDL: String = "currentPosition"
+        val TEST_START_TIME_BNDL: String = "startTime"
+        val IS_TEST_END_BNDL: String = "isTestEnd"
+        val TIMER_VALUE_BNDL : String ="timer"
+    }
+
     lateinit var listener: CheckResultListener
     var mResultFragment = ResultFragment()
     var mHintFragment = HintFragment()
-    var mTheoryFragment = com.github.kiolk.chemistrytests.ui.fragments.ChemTheoryFragment()
+    var mTheoryFragment = ChemTheoryFragment()
     lateinit var mResult: Result
     lateinit var adapter: TestingPagerAdapter
     lateinit var mParams: TestParams
@@ -64,19 +74,24 @@ class TestingActivity : BaseActivity() {
     var isTimeEnd: Boolean = false
     var isTheoryShow: Boolean = false
     var mQuestions: MutableList<CloseQuestion> = mutableListOf()
+    var mSvedSortedQuestion: MutableList<CloseQuestion>? = null
+    var mSavedAskedQuestion: MutableList<Answer>? = null
     var mTimer: Timer? = null
+    var pagelistener: ViewPager.OnPageChangeListener? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_testing)
+        Log.d("MyLogs", "onCreate")
         mParams = intent.extras.get(TEST_PARAM_INT) as TestParams
         mStartTest = System.currentTimeMillis()
         mViewPager = findViewById(R.id.testing_view_pager)
         mQuestions = DBOperations().getAllQuestions()
         animIn(end_test_fab)
         animOut(end_test_fab)
-        setupTestingViewPager(mQuestions)
-        setupBottomBar()
+    }
+
+    private fun setupTabBar() {
         questions_app_bar_layout.addOnOffsetChangedListener(object : AppBarLayout.OnOffsetChangedListener {
             override fun onOffsetChanged(appBarLayout: AppBarLayout?, verticalOffset: Int) {
                 Log.d("MyLogs", "verticalOffset $verticalOffset")
@@ -104,6 +119,105 @@ class TestingActivity : BaseActivity() {
                 }
             }
         })
+    }
+
+
+    override fun onStart() {
+        super.onStart()
+        Log.d("MyLogs", "onStart")
+//        setupTestingViewPager(mQuestions)
+//        setupBottomBar()
+//        setupTabBar()
+//        if (mSavedAskedQuestion != null) {
+//            mResult.askedQuestions = mSavedAskedQuestion as MutableList<Answer>
+//            updateViewPagerAdapter()
+//        }
+        questionSetup()
+    }
+
+    fun questionSetup() {
+        Log.d("MyLogs", "onQuestionSetup")
+        setupTestingViewPager(mQuestions)
+        setupBottomBar()
+        setupTabBar()
+        if (mSavedAskedQuestion != null) {
+            mResult.askedQuestions = mSavedAskedQuestion as MutableList<Answer>
+            updateViewPagerAdapter()
+        }
+
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
+        super.onRestoreInstanceState(savedInstanceState)
+        Log.d("MyLogs", "onRestoreSingle")
+        val askedQuestions: MutableList<Answer> = mutableListOf()
+        var cnt = 0
+        var answer: Answer? = null
+        mSavedAskedQuestion = mutableListOf()
+        do {
+            answer = savedInstanceState?.getSerializable(QUESTION_BNDL + cnt) as? Answer
+            if (answer != null) {
+//                askedQuestions.add(answer)
+                answer.let { mSavedAskedQuestion?.add(it) }
+            }
+            ++cnt
+        } while (answer != null)
+//        mResult.askedQuestions = askedQuestions
+
+        cnt = 0
+        var question: CloseQuestion? = null
+        mSvedSortedQuestion = mutableListOf()
+        do {
+            question = savedInstanceState?.getSerializable(SORTED_QUESTION_BNDL + cnt) as? CloseQuestion
+            ++cnt
+            question?.let { mSvedSortedQuestion?.add(it) }
+        } while (question != null)
+        isTestEnd = savedInstanceState?.getBoolean(IS_TEST_END_BNDL) ?: false
+        questionSetup()
+        reStoreTabLayout()
+        testing_view_pager.currentItem = savedInstanceState?.getInt(CURRENT_POSITION_BNDL) as Int
+        mResult.mStartTestTime = savedInstanceState.getLong(TEST_START_TIME_BNDL)
+        mResult.writeResultInformation()
+        if (isTestEnd) {
+            showResult(false)
+        }
+        if(mResult.test.params.testTimer != null && !isTestEnd && !isTestEnd){
+            startTestTimer(savedInstanceState.getLong(TIMER_VALUE_BNDL))
+        }
+    }
+
+    private fun reStoreTabLayout() {
+        var count = questions_tab_layout.tabCount
+        val resultAnswer = mResult.userResultAnswers()
+        while (count > 0) {
+            --count
+            if (resultAnswer[count].userInput != null || !resultAnswer[count].userAnswers.contains(-1)) {
+                val group: ViewGroup = questions_tab_layout.getChildAt(0) as ViewGroup
+                group.getChildAt(count).background = resources.getDrawable(R.drawable.area_take_answer)
+            }
+        }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle?) {
+        super.onSaveInstanceState(outState)
+        Log.d("MyLogs", "onSaveSingle")
+        var cnt = 0
+        mResult.askedQuestions.forEach {
+            outState?.putSerializable(QUESTION_BNDL + cnt, mResult.askedQuestions[cnt])
+            ++cnt
+        }
+        cnt = 0
+        mResult.test.mSortedQuestions.forEach {
+            outState?.putSerializable(SORTED_QUESTION_BNDL + cnt, it)
+            ++cnt
+        }
+        outState?.putInt(CURRENT_POSITION_BNDL, testing_view_pager.currentItem)
+        outState?.putLong(TEST_START_TIME_BNDL, mResult.mStartTestTime)
+        outState?.putBoolean(IS_TEST_END_BNDL, isTestEnd)
+        val timerTime : String? = test_timer_text_view.tag as? String
+        if(timerTime != null) {
+            outState?.putLong(TIMER_VALUE_BNDL, timerTime.toLong())
+        }
     }
 
     override fun onBackPressed() {
@@ -146,6 +260,10 @@ class TestingActivity : BaseActivity() {
 
         val test = Test(questionsList, mParams)
 
+        if (mSvedSortedQuestion != null) {
+            test.mSortedQuestions = mSvedSortedQuestion as MutableList<CloseQuestion>
+        }
+
         mResult = Result(test, object : OnEndTestListener {
             override fun endedTest() {
                 if (!isShowFAB) {
@@ -156,7 +274,7 @@ class TestingActivity : BaseActivity() {
                     end_test_fab.setImageDrawable(resources.getDrawable(R.drawable.ic_results))
                     end_test_fab.setOnClickListener {
                         animOut(end_test_fab)
-                        showResult()
+                        showResult(true)
                         isShowFAB = false
                     }
                 }
@@ -245,10 +363,11 @@ class TestingActivity : BaseActivity() {
         val task: TimerTask = object : TimerTask() {
             override fun run() {
                 handler.post {
-                    test_timer_text_view.text = timeLength.toString()
+                    test_timer_text_view.text = convertEpochTime(timeLength, baseContext, TIMER_PATTERN,  true)
+                    test_timer_text_view.tag = timeLength.toString()
                     timeLength -= 100L
                     if (timeLength < 0 && isTestForeground) {
-                        showResult()
+                        showResult(true)
                         mTimer?.cancel()
                     } else if (timeLength < 0 && !isTestForeground) {
                         isTimeEnd = true
@@ -257,6 +376,7 @@ class TestingActivity : BaseActivity() {
                 }
             }
         }
+        mTimer?.cancel()
         mTimer = Timer()
         mTimer?.scheduleAtFixedRate(task, 0, 100)
     }
@@ -271,7 +391,8 @@ class TestingActivity : BaseActivity() {
     }
 
     private fun attachViewPagerListener(pager: ViewPager) {
-        pager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+        pagelistener?.let { pager.removeOnPageChangeListener(it) }
+        pagelistener = object : ViewPager.OnPageChangeListener {
             override fun onPageScrollStateChanged(state: Int) {
             }
 
@@ -295,7 +416,8 @@ class TestingActivity : BaseActivity() {
                     }
                 }
             }
-        })
+        }
+        pager.addOnPageChangeListener(pagelistener as ViewPager.OnPageChangeListener)
     }
 
     override fun onDestroy() {
@@ -307,7 +429,7 @@ class TestingActivity : BaseActivity() {
         super.onResume()
         isTestForeground = true
         if (isTimeEnd) {
-            showResult()
+            showResult(true)
         }
     }
 
@@ -448,12 +570,12 @@ class TestingActivity : BaseActivity() {
         }
     }
 
-    fun showResult() {
+    fun showResult(isFirstTime : Boolean) {
         mTimer?.cancel()
         isTestEnd = true
         mResult.writeResultInformation()
-        mResult.mResultInfo.startTime = mStartTest
-        mResult.mResultInfo.endTime = System.currentTimeMillis()
+//        mResult.mResultInfo.startTime = mStartTest
+//        mResult.mResultInfo.endTime = System.currentTimeMillis()
         val resultAdapter: TestingPagerAdapter = TestingPagerAdapter(supportFragmentManager, mResult.test.mSortedQuestions,
                 true, mResult.userResultAnswers())
         testing_view_pager.adapter = resultAdapter
@@ -478,10 +600,12 @@ class TestingActivity : BaseActivity() {
             }
             cnt = cnt + 1
         }
-        result_frame_layout.visibility = View.VISIBLE
-        showFragment(R.id.result_frame_layout, mResultFragment)
-        mResultFragment.showResult(mResult.mResultInfo)
-        if (mResult.mResultInfo.percentAsked >= MIN_PERCENT_FOR_SAVE_RESULT) {
+        if(isFirstTime){
+            result_frame_layout.visibility = View.VISIBLE
+            showFragment(R.id.result_frame_layout, mResultFragment)
+            mResultFragment.showResult(mResult.mResultInfo)
+        }
+        if (mResult.mResultInfo.percentAsked >= MIN_PERCENT_FOR_SAVE_RESULT && isFirstTime) {
             addResultForUserProfile()
         }
     }

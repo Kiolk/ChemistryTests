@@ -64,7 +64,7 @@ class Result(var test: Test = Test(), var endListener: OnEndTestListener? = null
         val listAskedQuestion: MutableList<Answer> = mutableListOf()
         test.mSortedQuestions.forEach {
             val question: CloseQuestion = it
-            val userAnswer: Answer? = askedQuestions.find { it.question == question }
+            val userAnswer: Answer? = askedQuestions.find { it.question.questionId == question.questionId }
             if (userAnswer != null) {
                 listAskedQuestion.add(userAnswer)
             } else {
@@ -84,15 +84,17 @@ class Result(var test: Test = Test(), var endListener: OnEndTestListener? = null
         askedQuestions = tmp
     }
 
-    fun writeResultInformation(){
+    fun writeResultInformation() : ResultInformation{
         mResultInfo = ResultInformation()
+        mResultInfo.startTime = mStartTestTime
+        mResultInfo.endTime = System.currentTimeMillis()
         mResultInfo.totalQuestions = test.mSortedQuestions.size
         mResultInfo.askedQuestions = askedQuestions.size
         mResultInfo.correctAnswered = correctAnswers
         mResultInfo.wrongAnswered = mResultInfo.askedQuestions!! - correctAnswers
         mResultInfo.percentAsked = (mResultInfo.askedQuestions?.div(mResultInfo.totalQuestions?.toFloat() ?: 1F)) ?: 0F
-        mResultInfo.startTime = mStartTestTime
-        mResultInfo.endTime = System.currentTimeMillis()
+//        mResultInfo.startTime = mStartTestTime
+//        mResultInfo.endTime = System.currentTimeMillis()
         mResultInfo.duration = mResultInfo.endTime!! - mResultInfo.startTime!!
         mResultInfo.resultScore = getTestResult()
         mResultInfo.percentCorrect = (mResultInfo.correctAnswered!! / mResultInfo.totalQuestions!!)*100F
@@ -124,6 +126,7 @@ class Result(var test: Test = Test(), var endListener: OnEndTestListener? = null
 
 //        mResultInfo.sortedQuestions = test.mSortedQuestions //as MutableList<CloseQuestion>
 //        mResultInfo.anweredQuestions = askedQuestions
+        return mResultInfo
     }
 
     private fun getTestMark(): String {
