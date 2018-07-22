@@ -17,6 +17,7 @@
         <attr name="bigTitle" format="dimension"/>
         <attr name="smallTitle" format="dimension"/>
         <attr name="generalBackground" format="integer"/>
+        <attr name="itemBackgroundColor" format="color"/>
         <attr name="toolBarHeight" format="dimension"/>
     </declare-styleable>
 
@@ -26,10 +27,14 @@
 
     <style name="MyTheme.Light" parent="MyTheme">
         <item name="backgroundColor">@color/BACKGROUND_COLOR</item>
+        <item name="itemBackgroundColor">@color/BACKGROUND_COLOR</item>
+        <item name="primaryTextColor">@color/DARK_PRIMARY_TEXT_COLOR</item>
     </style>
 
     <style name="MyTheme.Dark" parent="MyTheme">
         <item name="backgroundColor">@color/DARK_BACKGROUND_COLOR</item>
+        <item name="itemBackgroundColor">@color/LIGHT_DARK_BACKGROUND_COLOR</item>
+        <item name="primaryTextColor">@color/LIGHT_PRIMARY_TEXT_COLOR</item>
     </style>
 
     <style name="MyThemeYellowDark" parent="MyTheme.Dark">
@@ -180,10 +185,22 @@
         <item name="android:textColor">@color/WHITE_TEXT_COLOR</item>
     </style>
 
+    <style name="BigTextStyle">
+        <item name="android:padding">@dimen/DOUBLE_BLOCK_PADDING</item>
+        <item name="android:layout_centerHorizontal">true</item>
+        <item name="android:elevation">@dimen/TEXT_ELEVATION</item>
+        <item name="android:textSize">@dimen/FEATURE_TITLE</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:fontFamily">@font/qoly</item>
+    </style>
+
     <dimen name="SMALL_ICON_SIZE">30dp</dimen>
     <dimen name="LITTLE_ICON_SIZE">20dp</dimen>
     <dimen name="NORMAL_TEXT_SIZE">16sp</dimen>
     <dimen name="HALF_BLOCK_PADDING">2dp</dimen>
     <dimen name="OPTION_LABEL_WIDTH">30dp</dimen>
+    <dimen name="FEATURE_TITLE">44sp</dimen>
     <color name="YELLOW">#f2d204</color>
+    <color name="LIGHT_PRIMARY_TEXT_COLOR">#dedcdc</color>
+    <color name="DARK_PRIMARY_TEXT_COLOR">#454545</color>
 </resources>

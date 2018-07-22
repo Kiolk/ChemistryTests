@@ -89,6 +89,11 @@
     <string name="DAY_MODE">Day mode</string>
     <string name="NIGHT_MODE">Night mode</string>
     <string name="ACCEPT_MODE">Accept mode</string>
+    <string name="FEATURE_PICTURE">Feature picture</string>
+    <string name="STUDY_EVRY_WHARE">STUDY\n EVERYWHERE</string>
+    <string name="LEAVE_UP_KNOLIDHE">LEAVE UP\nYOUR\nKNOWLEDGE</string>
+    <string name="TRAINING_YOUR_BRAIN">TRAIN\nYOUR\nBRAIN</string>
+    <string name="TARGET_FEATURE">TO REACH\nYOUR\nGOAL</string>
     <string-array name="RESULT_TAB_TITLES">
         <item>Test information</item>
         <item>General result</item>

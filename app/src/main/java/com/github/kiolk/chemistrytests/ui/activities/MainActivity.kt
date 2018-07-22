@@ -48,6 +48,10 @@ import showFragment
 
 class MainActivity : BaseActivity(), MainMvp {
 
+    companion object {
+        val MENU_ID_BNDL : String = "menuId"
+    }
+
     lateinit var mAuthentication: FirebaseAuth
     lateinit var mFirebaseDatabase: FirebaseDatabase
     lateinit var mAvaliableTests: AvaliableFragments
@@ -62,7 +66,7 @@ class MainActivity : BaseActivity(), MainMvp {
     var mUserStatisticFragment: UserStatisticFragment = UserStatisticFragment()
     var mAppInformationViewFragment: AppInformationViewFragment = AppInformationViewFragment()
     var isTestFragmentShow: Boolean = false
-    var mSelectedMenuItem: Int = R.id.test_item_menu
+    var mSelectedMenuItem: Int = R.id.tests_history_item_menu
 
     var presenter = MainPresenter(this)
 
@@ -96,88 +100,89 @@ class MainActivity : BaseActivity(), MainMvp {
         }
         navigation_relative_layout.setNavigationItemSelectedListener(object : NavigationView.OnNavigationItemSelectedListener {
             override fun onNavigationItemSelected(item: MenuItem): Boolean {
-                if (item.itemId != R.id.courses_item_menu) {
-                    courses_view_pager.visibility = View.GONE
-                }
-                if (item.itemId != R.id.periodic_table_item_menu && item.itemId != R.id.solubility_chart_item_menu && item.itemId != R.id.molar_calculator_item_menu) {
-                    closeFragments()
-                }
-
-//                navigation_relative_layout.menu.findItem(mSelectedMenuItem).icon.setColorFilter(resources.getColor(R.color.GRAY_TEXT_COLOR), PorterDuff.Mode.ADD)
-//                item.icon.setColorFilter(resources.getColor(R.color.BLACK_TEXT_COLOR), PorterDuff.Mode.ADD)
-                main_drawer_layout.closeDrawer(navigation_relative_layout)
-                mSelectedMenuItem = item.itemId
-                main_tool_bar.visibility = View.VISIBLE
-                when (item.itemId) {
-                    R.id.test_item_menu -> {
-                        showTests()
-                        return true
-                    }
-                    R.id.courses_item_menu -> {
-                        showCourses()
-                        main_tool_bar.visibility = View.GONE
-                        return true
-                    }
-                    R.id.custom_test_item_menu -> {
-                        showCustomTest()
-                        return true
-                    }
-                    R.id.tests_history_item_menu -> {
-                        showHistory()
-                        return true
-                    }
-                    R.id.statistic_item_menu -> {
-                        showStatistic()
-                        return true
-                    }
-                    R.id.periodic_table_item_menu -> {
-                        showWebView(baseContext, PERIODIC_TABLE_NAME, main_web_view)
-//                        if(resources.configuration.locale.language == "en"){
-//                            showWebView(baseContext, PERIODIC_TABLE_ENGLISH, main_web_view)
-//                        }else if(resources.configuration.locale.language == "be"){
-//                            showWebView(baseContext, PERIODIC_TABLE_BELARUS, main_web_view)
-//                        }else{
-//                            showWebView(baseContext, PERIODIC_TABLE_NAME, main_web_view)
-//                        }
-                        return true
-                    }
-                    R.id.solubility_chart_item_menu -> {
-                        showWebView(baseContext, SOLUBILITY_CHART_NAME, main_web_view)
-                        return true
-                    }
-                    R.id.molar_calculator_item_menu -> {
-                        return true
-                    }
-                    R.id.settings_item_menu -> {
-                        showConfiguration()
-                        return true
-                    }
-                    R.id.price_item_menu -> {
-                        showPremiumAccounts()
-                        return true
-                    }
-                    R.id.help_item_menu -> {
-                        showHelpInformation()
-                        return true
-                    }
-                    R.id.about_item_menu -> {
-                        showInformation()
-                        return true
-                    }
-                    R.id.add_item_menu -> {
-                        addNewObject()
-                        return true
-                    }
-                    R.id.log_out_item_menu -> {
-                        Toast.makeText(baseContext, "Show third mGeneralStatistic", Toast.LENGTH_SHORT).show()
-                        AuthUI.getInstance().signOut(baseContext)
-                        val intent: Intent = Intent(baseContext, SplashActivity::class.java)
-                        finish()
-                        startActivity(intent)
-                        return true
-                    }
-                }
-                return false
+                return clickOnMenuItem(item)
+//                if (item.itemId != R.id.courses_item_menu) {
+//                    courses_view_pager.visibility = View.GONE
+//                }
+//                if (item.itemId != R.id.periodic_table_item_menu && item.itemId != R.id.solubility_chart_item_menu && item.itemId != R.id.molar_calculator_item_menu) {
+//                    closeFragments()
+//                }
+//
+////                navigation_relative_layout.menu.findItem(mSelectedMenuItem).icon.setColorFilter(resources.getColor(R.color.GRAY_TEXT_COLOR), PorterDuff.Mode.ADD)
+////                item.icon.setColorFilter(resources.getColor(R.color.BLACK_TEXT_COLOR), PorterDuff.Mode.ADD)
+//                main_drawer_layout.closeDrawer(navigation_relative_layout)
+//                mSelectedMenuItem = item.itemId
+//                main_tool_bar.visibility = View.VISIBLE
+//                when (item.itemId) {
+//                    R.id.test_item_menu -> {
+//                        showTests()
+//                        return true
+//                    }
+//                    R.id.courses_item_menu -> {
+//                        showCourses()
+//                        main_tool_bar.visibility = View.GONE
+//                        return true
+//                    }
+//                    R.id.custom_test_item_menu -> {
+//                        showCustomTest()
+//                        return true
+//                    }
+//                    R.id.tests_history_item_menu -> {
+//                        showHistory()
+//                        return true
+//                    }
+//                    R.id.statistic_item_menu -> {
+//                        showStatistic()
+//                        return true
+//                    }
+//                    R.id.periodic_table_item_menu -> {
+//                        showWebView(baseContext, PERIODIC_TABLE_NAME, main_web_view)
+////                        if(resources.configuration.locale.language == "en"){
+////                            showWebView(baseContext, PERIODIC_TABLE_ENGLISH, main_web_view)
+////                        }else if(resources.configuration.locale.language == "be"){
+////                            showWebView(baseContext, PERIODIC_TABLE_BELARUS, main_web_view)
+////                        }else{
+////                            showWebView(baseContext, PERIODIC_TABLE_NAME, main_web_view)
+////                        }
+//                        return true
+//                    }
+//                    R.id.solubility_chart_item_menu -> {
+//                        showWebView(baseContext, SOLUBILITY_CHART_NAME, main_web_view)
+//                        return true
+//                    }
+//                    R.id.molar_calculator_item_menu -> {
+//                        return true
+//                    }
+//                    R.id.settings_item_menu -> {
+//                        showConfiguration()
+//                        return true
+//                    }
+//                    R.id.price_item_menu -> {
+//                        showPremiumAccounts()
+//                        return true
+//                    }
+//                    R.id.help_item_menu -> {
+//                        showHelpInformation()
+//                        return true
+//                    }
+//                    R.id.about_item_menu -> {
+//                        showInformation()
+//                        return true
+//                    }
+//                    R.id.add_item_menu -> {
+//                        addNewObject()
+//                        return true
+//                    }
+//                    R.id.log_out_item_menu -> {
+//                        Toast.makeText(baseContext, "Show third mGeneralStatistic", Toast.LENGTH_SHORT).show()
+//                        AuthUI.getInstance().signOut(baseContext)
+//                        val intent: Intent = Intent(baseContext, SplashActivity::class.java)
+//                        finish()
+//                        startActivity(intent)
+//                        return true
+//                    }
+//                }
+//                return false
             }
         })
     }
@@ -409,7 +414,6 @@ class MainActivity : BaseActivity(), MainMvp {
         val intent = Intent(baseContext, MainActivity::class.java)
         startActivity(intent)
         finish()
-
     }
 
     override fun paymentProcess(paymentAccount: AcountModel) {
@@ -419,14 +423,97 @@ class MainActivity : BaseActivity(), MainMvp {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
-    override fun onSaveInstanceState(outState: Bundle?, outPersistentState: PersistableBundle?) {
-        super.onSaveInstanceState(outState, outPersistentState)
-        val menu = navigation_relative_layout.menu
+    override fun onSaveInstanceState(outState: Bundle?) {
+        super.onSaveInstanceState(outState)
+        outState?.putInt(MENU_ID_BNDL, mSelectedMenuItem)
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
         super.onRestoreInstanceState(savedInstanceState)
-    restart()
+        restart()
         Log.d("MyLogs", "onRestore")
+        var item : MenuItem? = null
+        savedInstanceState?.getInt(MENU_ID_BNDL )?.let { item = navigation_relative_layout.menu.findItem(it)}
+        item?.isChecked = true
+        item?.let { mSelectedMenuItem = it.itemId }
+        item?.let { clickOnMenuItem(it) }
+    }
+
+    fun clickOnMenuItem(item : MenuItem) : Boolean{
+        if (item.itemId != R.id.courses_item_menu) {
+            courses_view_pager.visibility = View.GONE
+        }
+        if (item.itemId != R.id.periodic_table_item_menu && item.itemId != R.id.solubility_chart_item_menu && item.itemId != R.id.molar_calculator_item_menu) {
+            closeFragments()
+        }
+
+//                navigation_relative_layout.menu.findItem(mSelectedMenuItem).icon.setColorFilter(resources.getColor(R.color.GRAY_TEXT_COLOR), PorterDuff.Mode.ADD)
+//                item.icon.setColorFilter(resources.getColor(R.color.BLACK_TEXT_COLOR), PorterDuff.Mode.ADD)
+        main_drawer_layout.closeDrawer(navigation_relative_layout)
+        mSelectedMenuItem = item.itemId
+        main_tool_bar.visibility = View.VISIBLE
+        when (item.itemId) {
+            R.id.test_item_menu -> {
+                showTests()
+                return true
+            }
+            R.id.courses_item_menu -> {
+                showCourses()
+                main_tool_bar.visibility = View.GONE
+                return true
+            }
+            R.id.custom_test_item_menu -> {
+                showCustomTest()
+                return true
+            }
+            R.id.tests_history_item_menu -> {
+                showHistory()
+                return true
+            }
+            R.id.statistic_item_menu -> {
+                showStatistic()
+                return true
+            }
+            R.id.periodic_table_item_menu -> {
+                showWebView(baseContext, PERIODIC_TABLE_NAME, main_web_view)
+                return true
+            }
+            R.id.solubility_chart_item_menu -> {
+                showWebView(baseContext, SOLUBILITY_CHART_NAME, main_web_view)
+                return true
+            }
+            R.id.molar_calculator_item_menu -> {
+                return true
+            }
+            R.id.settings_item_menu -> {
+                showConfiguration()
+                return true
+            }
+            R.id.price_item_menu -> {
+                showPremiumAccounts()
+                return true
+            }
+            R.id.help_item_menu -> {
+                showHelpInformation()
+                return true
+            }
+            R.id.about_item_menu -> {
+                showInformation()
+                return true
+            }
+            R.id.add_item_menu -> {
+                addNewObject()
+                return true
+            }
+            R.id.log_out_item_menu -> {
+                Toast.makeText(baseContext, "Show third mGeneralStatistic", Toast.LENGTH_SHORT).show()
+                AuthUI.getInstance().signOut(baseContext)
+                val intent: Intent = Intent(baseContext, SplashActivity::class.java)
+                finish()
+                startActivity(intent)
+                return true
+            }
+        }
+        return false
     }
 }

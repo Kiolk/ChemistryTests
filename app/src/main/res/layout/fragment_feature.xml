@@ -7,7 +7,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
-        android:src="@drawable/table"/>
+        android:contentDescription="@string/FEATURE_PICTURE"/>
 
     <Button
         android:layout_alignParentBottom="true"
@@ -18,4 +18,17 @@
         android:layout_margin="@dimen/BLOCK_PADDING"
         android:visibility="gone"
         android:text="@string/LOGIN"/>
+
+    <TextView
+        android:id="@+id/feature_description_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/TRAINING_YOUR_BRAIN"
+        android:gravity="center"
+        style="@style/BigTextStyle"
+        android:shadowRadius="3"
+        android:shadowDy="1"
+        android:shadowDx="1"
+        android:shadowColor="@color/DARK_BACKGROUND"
+        android:visibility="visible"/>
 </RelativeLayout>

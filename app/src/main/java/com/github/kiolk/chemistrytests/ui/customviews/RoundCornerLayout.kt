@@ -54,7 +54,7 @@ class RoundCornerLayout : RelativeLayout {
         //try get actual background color
         val typedValue = TypedValue()
         val theme = context.theme
-        theme.resolveAttribute(R.attr.backgroundColor, typedValue, true)
+        theme.resolveAttribute(R.attr.itemBackgroundColor, typedValue, true)
         paint.color = typedValue.data
 
         canvas.drawRect(0f, 0f, width.toFloat(), height.toFloat(), paint)

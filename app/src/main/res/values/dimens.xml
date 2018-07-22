@@ -23,7 +23,7 @@
     <dimen name="ITEM_DIVADER_SIZE">5dp</dimen>
     <dimen name="ITEM_ELEVATION">2dp</dimen>
     <dimen name="LABEL">5dp</dimen>
-    <dimen name="LABEL_HEIGHT">150dp</dimen>
+    <dimen name="LABEL_HEIGHT">155dp</dimen>
     <dimen name="COURSE_BLOCK_HEIGHT">150dp</dimen>
     <dimen name="ICON_MARGIN">10dp</dimen>
     <dimen name="DIVIDER_HEIGHT">1dp</dimen>
@@ -43,4 +43,5 @@
     <dimen name="ZERO_ELEVATION">1dp</dimen>
     <dimen name="HALF_ICON_WIDTH">50dp</dimen>
     <dimen name="DOUBLE_BLOCK_PADDING">10dp</dimen>
+    <dimen name="TEXT_ELEVATION">3dp</dimen>
 </resources>

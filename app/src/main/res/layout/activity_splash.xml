@@ -41,8 +41,8 @@
         android:orientation="horizontal"
         android:layout_alignParentBottom="true"
         android:layout_centerInParent="true"
-        android:visibility="gone"
-        android:layout_marginBottom="100dp">
+        android:visibility="visible"
+        android:layout_marginBottom="50dp">
     </LinearLayout>
 
     <Button

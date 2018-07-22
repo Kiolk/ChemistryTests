@@ -18,7 +18,7 @@
             <android.support.design.widget.CollapsingToolbarLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:contentScrim="@color/BACKGROUND_COLOR"
+                app:contentScrim="@color/DARK_BACKGROUND"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
                 <ImageView
@@ -32,6 +32,8 @@
                     android:id="@+id/course_tool_bar"
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
+                    app:subtitleTextColor="?attr/primaryTextColor"
+                    app:titleTextAppearance="?attr/primaryTextColor"
                     android:minHeight="?attr/actionBarSize"
                     app:layout_collapseMode="pin" />
             </android.support.design.widget.CollapsingToolbarLayout>
@@ -51,15 +53,18 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/COURSE_BLOCK_HEIGHT">
+                    android:layout_height="@dimen/COURSE_BLOCK_HEIGHT"
+                    android:background="?attr/backgroundColor">
 
                     <TextView
                         android:id="@+id/description_course_text_view"
+                        android:textColor="?attr/primaryTextColor"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent" />
                 </LinearLayout>
 
                 <android.support.v7.widget.RecyclerView
+                    android:background="?attr/backgroundColor"
                     android:id="@+id/courses_tests_recycler_view"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
