@@ -44,4 +44,5 @@
     <dimen name="HALF_ICON_WIDTH">50dp</dimen>
     <dimen name="DOUBLE_BLOCK_PADDING">10dp</dimen>
     <dimen name="TEXT_ELEVATION">3dp</dimen>
+    <dimen name="FLOAT_BUTTON_MARGIN">16dp</dimen>
 </resources>

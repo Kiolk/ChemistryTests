@@ -3,7 +3,6 @@ package com.github.kiolk.chemistrytests.ui.activities
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.support.design.widget.NavigationView
 import android.util.Log
 import android.view.Menu
@@ -20,7 +19,6 @@ import com.github.kiolk.chemistrytests.data.asynctasks.ResultCallback
 import com.github.kiolk.chemistrytests.data.asynctasks.SingleAsyncTask
 import com.github.kiolk.chemistrytests.data.database.DBOperations
 import com.github.kiolk.chemistrytests.data.executs.PrepareCoursesFromDb
-import com.github.kiolk.chemistrytests.ui.fragments.CompletedTestsFragment.Companion.RESULT_TEST_TAG
 import com.github.kiolk.chemistrytests.data.models.*
 import com.github.kiolk.chemistrytests.data.models.CloseQuestion.Question.EASY_QUESTION
 import com.github.kiolk.chemistrytests.data.models.CloseQuestion.Question.SINGLE_CHOICE
@@ -29,6 +27,7 @@ import com.github.kiolk.chemistrytests.ui.activities.base.BaseActivity
 import com.github.kiolk.chemistrytests.ui.activities.main.MainMvp
 import com.github.kiolk.chemistrytests.ui.activities.main.MainPresenter
 import com.github.kiolk.chemistrytests.ui.fragments.*
+import com.github.kiolk.chemistrytests.ui.fragments.CompletedTestsFragment.Companion.RESULT_TEST_TAG
 import com.github.kiolk.chemistrytests.ui.fragments.accounts.PremiumFragment
 import com.github.kiolk.chemistrytests.ui.fragments.configuration.ConfigurationFragment
 import com.github.kiolk.chemistrytests.ui.fragments.help.HelpFragment
@@ -49,7 +48,7 @@ import showFragment
 class MainActivity : BaseActivity(), MainMvp {
 
     companion object {
-        val MENU_ID_BNDL : String = "menuId"
+        val MENU_ID_BNDL: String = "menuId"
     }
 
     lateinit var mAuthentication: FirebaseAuth
@@ -426,20 +425,23 @@ class MainActivity : BaseActivity(), MainMvp {
     override fun onSaveInstanceState(outState: Bundle?) {
         super.onSaveInstanceState(outState)
         outState?.putInt(MENU_ID_BNDL, mSelectedMenuItem)
+//        supportFragmentManager.putFragment(outState, "Fragment", mCompletedTsts)
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
         super.onRestoreInstanceState(savedInstanceState)
+//        mCompletedTsts = supportFragmentManager.getFragment(savedInstanceState, "Fragment") as CompletedTestsFragment
+//        showFragment(supportFragmentManager, main_frame_layout.id, mCompletedTsts)
         restart()
         Log.d("MyLogs", "onRestore")
-        var item : MenuItem? = null
-        savedInstanceState?.getInt(MENU_ID_BNDL )?.let { item = navigation_relative_layout.menu.findItem(it)}
+        var item: MenuItem? = null
+        savedInstanceState?.getInt(MENU_ID_BNDL)?.let { item = navigation_relative_layout.menu.findItem(it) }
         item?.isChecked = true
         item?.let { mSelectedMenuItem = it.itemId }
         item?.let { clickOnMenuItem(it) }
     }
 
-    fun clickOnMenuItem(item : MenuItem) : Boolean{
+    fun clickOnMenuItem(item: MenuItem): Boolean {
         if (item.itemId != R.id.courses_item_menu) {
             courses_view_pager.visibility = View.GONE
         }

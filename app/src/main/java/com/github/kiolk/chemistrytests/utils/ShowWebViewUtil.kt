@@ -46,7 +46,7 @@ object ChartHelper {
                 webView.loadDataWithBaseURL(url, data, "text/html", "UTF-8", null)
                 webView.settings?.builtInZoomControls = true
                 webView.settings?.displayZoomControls = false
-                webView.settings?.useWideViewPort = true
+//                webView.settings?.useWideViewPort = true
 //                webView.settings?.loadWithOverviewMode = false
                 webView.visibility = View.VISIBLE
         }
