@@ -13,7 +13,7 @@ interface StatisticView {
     fun setupGeneralStatistic(statistic: StatisticModel)
 }
 
-class GeneralStatisticFragment : com.github.kiolk.chemistrytests.ui.fragments.BaseFragment(), StatisticView {
+class GeneralStatisticFragment : BaseFragment(), StatisticView {
     override val menuId: Int?
         get() = R.id.reset_history_menu_item
 

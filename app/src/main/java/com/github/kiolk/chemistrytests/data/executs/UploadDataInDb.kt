@@ -37,7 +37,7 @@ class UploadDataInDb(override var callback: ResultCallback) : SingleExecut {
     lateinit var mAccountDatabaseReference: DatabaseReference
     lateinit var mChildAccountListener: ChildEventListener
     var mQuestionNumber : Int = 31
-    var mUserAccount : Int = FREE_ACCOUNT
+    var mUserAccount : Int = PREMIUM_ACCOUNT
     var uploadTests: Boolean = false
     var uploadQuestions: Boolean = false
     var isUpdateCources : Boolean = false

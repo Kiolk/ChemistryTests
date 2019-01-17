@@ -23,7 +23,7 @@ import com.github.kiolk.chemistrytests.ui.activities.MainActivity
 import com.github.kiolk.chemistrytests.utils.Constants.EMPTY_STRING
 import com.github.kiolk.chemistrytests.utils.Constants.SELECT_SYMBOL
 
-class ConfigurationFragment : com.github.kiolk.chemistrytests.ui.fragments.BaseFragment(), ConfigurationMvpView {
+class ConfigurationFragment : BaseFragment(), ConfigurationMvpView {
 
     override val menuId: Int?
         get() = null

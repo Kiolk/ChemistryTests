@@ -15,6 +15,7 @@ import com.github.kiolk.chemistrytests.ui.fragments.BaseFragment
 import com.github.kiolk.chemistrytests.ui.fragments.FeatureFragment
 import com.github.kiolk.chemistrytests.data.models.AcountModel
 import com.github.kiolk.chemistrytests.providers.PaymentProvider
+import com.robertlevonyan.views.customfloatingactionbutton.FloatingActionButton
 
 class AccountFeaturesFragment : Fragment(){
 
@@ -34,13 +35,13 @@ class AccountFeaturesFragment : Fragment(){
         return view.findViewById(R.id.account_features_recycler_view)
     }
 
-    fun getTitle(view : View) : TextView?{
-        return view.findViewById(R.id.account_title_text_view)
-    }
+//    fun getTitle(view : View) : TextView?{
+//        return view.findViewById(R.id.account_title_text_view)
+//    }
 
-    fun getSubscriptionButton(view: View) : Button?{
-        val button : Button=  view.findViewById(R.id.subscribe_account_button)
-        button.setOnClickListener(object : View.OnClickListener{
+    fun getSubscriptionButton(view: View) : FloatingActionButton?{
+        val button : FloatingActionButton? =  view.findViewById(R.id.subscribe_account_button)
+        button?.setOnClickListener(object : View.OnClickListener{
             override fun onClick(v: View?) {
                val payment = PaymentProvider()
                 mAccount?.let { context?.let { it1 -> payment.prepareDialog(it1, it) } }
@@ -59,7 +60,7 @@ class AccountFeaturesFragment : Fragment(){
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(ACCOUNT_FEATURES_LAYOUT, null)
         mAccount?.accountFeatures?.let { setupRecycler(view, it) }
-        getTitle(view)?.text = mAccount?.accountTitle
+//        getTitle(view)?.text = mAccount?.accountTitle
         getSubscriptionButton(view)?.text = mAccount?.accountCost.toString()
         return view
     }

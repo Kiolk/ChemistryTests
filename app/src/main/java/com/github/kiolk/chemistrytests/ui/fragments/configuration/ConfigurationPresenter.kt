@@ -43,8 +43,9 @@ class ConfigurationPresenter(private var configurationView : ConfigurationMvpVie
        DataManager.instance.saveInterfaceLanguage(LanguageModel(selectLanguage, true))
     }
 
-    override fun prepareSettings() {
-        val resourseDrawableid = DataManager.instance.getResources()?.obtainTypedArray(R.array.settings_items)
+    override fun
+            prepareSettings() {
+        val resourseDrawableid  = DataManager.instance.getResources()?.obtainTypedArray(R.array.settings_items)
         val titles = DataManager.instance.getResources()?.getStringArray(R.array.SETTINGS_TITLE_ARRAY)
         val items : MutableList<MenuItemModel> = mutableListOf()
         var cnt : Int = 0

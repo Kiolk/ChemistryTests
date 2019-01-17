@@ -36,15 +36,61 @@ class CompletedTestsFragment : com.github.kiolk.chemistrytests.ui.fragments.Base
 
     var mResults: MutableList<ResultInformation>? = null
     var mAdapter: AvailableTestRecyclerAdapter? = null
-    var mFragment : com.github.kiolk.chemistrytests.ui.fragments.ResultFragment = com.github.kiolk.chemistrytests.ui.fragments.ResultFragment()
+    var mFragment : ResultFragment = ResultFragment()
     var isShowResult : Boolean = false
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         setupToolBar()
-        return inflater.inflate(R.layout.fragment_last_user_tests, null)
+        val view = inflater.inflate(R.layout.fragment_last_user_tests, null)
+        if(savedInstanceState != null){
+            val size = savedInstanceState?.getInt("cnt", 0)
+            var cnt = 0
+            if(size > 0){
+                mResults = mutableListOf()
+            }
+            while(cnt <size ){
+                mResults?.add(savedInstanceState.getSerializable("res" + cnt) as ResultInformation)
+                ++cnt
+            }
+            mResults?.let { showResults(it, view) }
+        }
+        return view
     }
 
-    fun showResults(results: MutableList<ResultInformation>) {
+
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        val size = savedInstanceState?.getInt("cnt", 0)
+        var cnt = 0
+        if(size ?: 0 > 0){
+            mResults = mutableListOf()
+        }
+        while(cnt <size ?: 0){
+            mResults?.add(savedInstanceState?.getSerializable("res" + cnt) as ResultInformation)
+            ++cnt
+        }
+//        mResults?.let { showResults(it) }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+//        outState.putSerializable("results", mResults)
+//        val recyclerView: RecyclerView? = view?.findViewById<RecyclerView>(R.id.last_user_tests_recycler_view)
+//        recyclerView?.position
+        var cnt = 0
+        while(cnt < mResults?.size ?: 0){
+            outState.putSerializable("res" + cnt, mResults?.get(cnt))
+            ++cnt
+        }
+        outState.putInt("cnt", cnt)
+    }
+
+    fun showResults(results: MutableList<ResultInformation>, fragmentView : View? = null) {
+        var view = view
+        if(fragmentView != null){
+            view = fragmentView
+        }
         mResults = results
         val recyclerView: RecyclerView? = view?.findViewById<RecyclerView>(R.id.last_user_tests_recycler_view)
         recyclerView?.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)

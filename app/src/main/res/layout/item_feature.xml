@@ -14,6 +14,7 @@
     <TextView
         android:id="@+id/feature_item_text_view"
         android:layout_width="match_parent"
+        android:textColor="?attr/primaryTextColor"
+        android:textSize="@dimen/NORMAL_TEXT_SIZE"
         android:layout_height="wrap_content" />
-
 </LinearLayout>

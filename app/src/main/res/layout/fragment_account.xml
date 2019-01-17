@@ -1,24 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
-
-    <TextView
-        android:id="@+id/account_title_text_view"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/BUTTON_HEIGHT" />
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/account_features_recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingBottom="@dimen/BUTTON_HEIGHT"
-        android:paddingTop="@dimen/BUTTON_HEIGHT">
+        android:layout_height="match_parent">
 
     </android.support.v7.widget.RecyclerView>
 
-    <Button
+    <com.robertlevonyan.views.customfloatingactionbutton.FloatingActionButton
         android:id="@+id/subscribe_account_button"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/BUTTON_HEIGHT"
-        android:layout_alignParentBottom="true"/>
-</RelativeLayout>
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:fabSize="normal"
+        app:fabColor="?attr/colorAccent"
+        app:fabType="roundedSquare"
+        app:layout_anchorGravity="bottom|right|end"
+        android:layout_gravity="bottom|right"
+        android:text="$0.11"
+        app:layout_anchor="@id/account_features_recycler_view"
+        android:layout_margin="@dimen/FLOAT_BUTTON_MARGIN"/>
+    
+    <!--<Button-->
+        <!--android:id="@+id/subscribe_account_button"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="@dimen/BUTTON_HEIGHT"-->
+        <!--android:layout_alignParentBottom="true"/>-->
+</android.support.design.widget.CoordinatorLayout>

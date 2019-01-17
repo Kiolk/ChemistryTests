@@ -30,7 +30,7 @@ abstract class BaseFragment : Fragment() {
             toolBar = mainActivity.main_tool_bar
         }
         toolBar?.setNavigationOnClickListener {
-            mainActivity.findViewById<DrawerLayout>(com.github.kiolk.chemistrytests.ui.fragments.BaseFragment.Companion.DRAWER_LAYOUT_ID).openDrawer(Gravity.START)
+            mainActivity.findViewById<DrawerLayout>(BaseFragment.Companion.DRAWER_LAYOUT_ID).openDrawer(Gravity.START)
         }
         toolBar?.setTitle(titleId)
         resetVisibilityMenuItems(toolBar?.menu)
