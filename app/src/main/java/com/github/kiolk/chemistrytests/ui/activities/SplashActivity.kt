@@ -87,6 +87,8 @@ class SplashActivity : AppCompatActivity() {
                     val result: String = any as String
                     if (result == "Success") {
                         startLoad()
+                    }else{
+                        startLoad()
                     }
                 }
 
@@ -230,41 +232,6 @@ class SplashActivity : AppCompatActivity() {
             setupAuthentication()
         }
         mHandler.postDelayed(mRunnable, 100)
-    }
-
-    private fun setMyProgressBar() {
-        val string: String = my_progress_bar_image_view.tag.toString()
-        val tag: Int = string.toInt()
-        if (!listOf(2, 3, 4, 5, 6).contains(tag)) {
-            my_progress_bar_image_view.setImageDrawable(resources.getDrawable(R.drawable.ic_benzolring1))
-            my_progress_bar_image_view.tag = 2
-            return
-        }
-        if (!listOf(1, 3, 4, 5, 6).contains(tag)) {
-            my_progress_bar_image_view.setImageDrawable(resources.getDrawable(R.drawable.ic_benzolring2))
-            my_progress_bar_image_view.tag = 3
-            return
-        }
-        if (!listOf(2, 1, 4, 5, 6).contains(tag)) {
-            my_progress_bar_image_view.setImageDrawable(resources.getDrawable(R.drawable.ic_benzolring3))
-            my_progress_bar_image_view.tag = 4
-            return
-        }
-        if (!listOf(2, 3, 1, 5, 6).contains(tag)) {
-            my_progress_bar_image_view.setImageDrawable(resources.getDrawable(R.drawable.ic_benzolring4))
-            my_progress_bar_image_view.tag = 5
-            return
-        }
-        if (!listOf(2, 3, 4, 1, 6).contains(tag)) {
-            my_progress_bar_image_view.setImageDrawable(resources.getDrawable(R.drawable.ic_benzolring5))
-            my_progress_bar_image_view.tag = 6
-            return
-        }
-        if (!listOf(2, 3, 4, 5, 1).contains(tag)) {
-            my_progress_bar_image_view.setImageDrawable(resources.getDrawable(R.drawable.ic_benzolring))
-            my_progress_bar_image_view.tag = 1
-            return
-        }
     }
 
     fun launchMainActivity() {
