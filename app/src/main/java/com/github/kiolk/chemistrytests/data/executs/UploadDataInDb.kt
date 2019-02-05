@@ -61,7 +61,7 @@ class UploadDataInDb(override var callback: ResultCallback) : SingleExecut {
 
     private fun getUserAccount() {
         val user : User? = DBOperations().getUser(FirebaseAuth.getInstance().currentUser?.uid)
-        mUserAccount = user?.accountType ?: FREE_ACCOUNT
+        mUserAccount = user?.accountType ?: PREMIUM_ACCOUNT
     }
 
     private fun getDBInformation() {

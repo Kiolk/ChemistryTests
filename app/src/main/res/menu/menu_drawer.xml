@@ -11,20 +11,24 @@
         <item
             android:id="@+id/courses_item_menu"
             android:icon="@drawable/ic_study_notes"
-            android:title="@string/COURSES" />
+            android:title="@string/COURSES"
+            android:visible="false"/>
         <item
             android:id="@+id/custom_test_item_menu"
             android:icon="@drawable/ic_puzzle"
-            android:title="@string/CUSTOM_TEST" />
+            android:title="@string/CUSTOM_TEST"
+            android:visible="false"/>
     </group>
     <group android:id="@+id/statistic_group"
         android:checkableBehavior="single">
         <item android:id="@+id/tests_history_item_menu"
             android:icon="@drawable/ic_history"
+            android:visible="false"
             android:title="@string/HISTORY"/>
         <item
             android:id="@+id/statistic_item_menu"
             android:icon="@drawable/ic_statistic"
+            android:visible="false"
             android:title="@string/STATISTICS" />
     </group>
     <group android:id="@+id/information_group"
@@ -39,6 +43,7 @@
         <item
             android:id="@+id/molar_calculator_item_menu"
             android:icon="@drawable/ic_school_calculator"
+            android:visible="false"
             android:title="@string/MOLAR_MASS_CALCULATOR" />
     </group>
     <group android:id="@+id/settings_group"
@@ -46,26 +51,32 @@
         <item
             android:id="@+id/settings_item_menu"
             android:icon="@drawable/ic_settings_gears"
+            android:visible="false"
             android:title="@string/PROFILE_SETTING" />
         <item
             android:id="@+id/price_item_menu"
             android:icon="@drawable/ic_price"
+            android:visible="false"
             android:title="@string/PREMIUM_ACCOUNT" />
         <item
             android:id="@+id/donation_item_menu"
             android:icon="@drawable/ic_donation_box"
+            android:visible="false"
             android:title="@string/SUPPORT_DEVELOPMENT" />
         <item
             android:id="@+id/help_item_menu"
             android:icon="@drawable/ic_doubts_button"
+            android:visible="false"
             android:title="@string/QUESTIONS" />
         <item
             android:id="@+id/about_item_menu"
             android:icon="@drawable/ic_info_sign"
+            android:visible="false"
             android:title="@string/ADDITIONAL_INFORMATION" />
         <item
             android:id="@+id/add_item_menu"
             android:icon="@drawable/ic_theory_gray"
+            android:visible="false"
             android:title="@string/ADDITIONAL_INFORMATION" />
     </group>
     <group android:id="@+id/log_out_group"
