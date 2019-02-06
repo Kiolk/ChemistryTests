@@ -1,12 +1,14 @@
 package com.github.kiolk.chemistrytests
 
 import android.app.Application
+import com.crashlytics.android.Crashlytics
 import com.github.kiolk.chemistrytests.data.asynctasks.ResultCallback
 import com.github.kiolk.chemistrytests.data.asynctasks.SingleAsyncTask
 import com.github.kiolk.chemistrytests.data.database.DBConnector
 import com.github.kiolk.chemistrytests.data.executs.AplicationInitialisationExecut
 import com.github.kiolk.chemistrytests.data.managers.DataManager
 import com.google.firebase.messaging.FirebaseMessaging
+import io.fabric.sdk.android.Fabric
 import kiolk.com.github.pen.Pen
 import kiolk.com.github.pen.utils.PenConstantsUtil
 
@@ -21,6 +23,9 @@ class ChemistryTestApp : Application(){
             override fun onError() {
             }
         }))
+
+        Fabric.with(this, Crashlytics())
+
 //        initImageLoader()
 //        DBConnector.initInstance(baseContext)
 //

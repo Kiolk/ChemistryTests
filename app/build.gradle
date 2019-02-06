@@ -1,5 +1,7 @@
 apply plugin: 'com.android.application'
 
+apply plugin: 'io.fabric'
+
 apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
@@ -12,8 +14,11 @@ android {
         targetSdkVersion 26
         multiDexEnabled true
         versionCode 1
-        versionName "1.0"
+        versionName "0.0.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        ext.betaDistributionReleaseNotes="Test Release note"
+        ext.betaDistributionEmails="tyteishi@gmail.com"
+        ext.betaDistributionGroupAliases="my-best-testers"
     }
 
     signingConfigs {
@@ -30,6 +35,10 @@ android {
             signingConfig signingConfigs.release
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+
+        debug {
+            signingConfig signingConfigs.release
         }
     }
     testOptions {
@@ -61,6 +70,9 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
     implementation project(':pen')
     implementation 'com.google.android.gms:play-services:12.0.1'
+    implementation('com.crashlytics.sdk.android:crashlytics:2.9.6@aar') {
+        transitive = true;
+    }
 }
 
 
