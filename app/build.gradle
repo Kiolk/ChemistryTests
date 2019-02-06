@@ -46,6 +46,13 @@ android {
             includeAndroidResources = true
         }
     }
+
+    applicationVariants.all{variant ->
+        variant.outputs.all {
+            def buildType = variant.buildType.debuggable ? "debug" : "release"
+            outputFileName = "ChemistryTest-${android.defaultConfig.versionCode}-v${android.defaultConfig.versionName}-${buildType}.apk"
+        }
+    }
 }
 
 dependencies {
