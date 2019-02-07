@@ -1,0 +1,37 @@
+ext.versions = [
+        appCompat : '26.1.0',
+        supportDesign : '26.1.0',
+        firebaseCore : '12.0.1',
+        gson: '2.8.2',
+        firebaseUiAuth : "3.2.2",
+        constraint:"1.0.2",
+        benzeneBar: '0.1',
+        FAB : '2.0.5',
+]
+ext.library = [
+        appCompat : "com.android.support:appcompat-v7:$versions.appCompat",
+        supportDesign : "com.android.support:design:$versions.supportDesign",
+        fireBaseCore : "com.google.firebase:firebase-core:$versions.firebaseCore",
+        firebaseDatabase :"com.google.firebase:firebase-database:$versions.firebaseCore",
+        firebaseMessagin: "com.google.firebase:firebase-messaging:$versions.firebaseCore",
+        firebaseAuth: "com.google.firebase:firebase-auth:$versions.firebaseCore",
+        firebaseUiAuth: "com.firebaseui:firebase-ui-auth:$versions.firebaseUiAuth",
+
+        //JsonParser
+        gson: "com.google.code.gson:gson:$versions.gson",
+
+        //ConstraintLayout
+        constariantLayout : "com.android.support.constraint:constraint-layout:$versions.constarint",
+
+        //BenzeneProgressBar
+        benzeneBar: "com.github.Kiolk:BenzeneProgressBar:$versions.benzeneBar",
+
+        //CardView
+        cardView : "com.android.support:cardview-v7:$versions.appCompat",
+
+        //FloatActionButton
+        floatAB : "com.robertlevonyan.view:CustomFloatingActionButton:$versions.FAB"
+
+
+
+]
