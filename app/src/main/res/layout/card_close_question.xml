@@ -64,6 +64,7 @@
                                     android:id="@+id/question_one_label_text_view"
                                     style="@style/Right.Rounded"
                                     android:layout_width="@dimen/OPTION_LABEL_WIDTH"
+                                    android:layout_alignParentTop="true"
                                     android:layout_height="match_parent"
                                     android:text="@string/ONE" />
 
@@ -85,6 +86,8 @@
                                     style="@style/Right.Rounded"
                                     android:layout_width="@dimen/OPTION_LABEL_WIDTH"
                                     android:layout_height="match_parent"
+                                    android:layout_alignParentTop="true"
+                                    android:layout_marginTop="2dp"
                                     android:text="@string/TWO" />
 
                                 <TextView
@@ -105,6 +108,7 @@
                                     android:id="@+id/question_three_label_text_view"
                                     style="@style/Right.Rounded"
                                     android:layout_width="@dimen/OPTION_LABEL_WIDTH"
+                                    android:layout_alignParentTop="true"
                                     android:layout_height="match_parent"
                                     android:text="@string/THREE"/>
 
@@ -124,6 +128,8 @@
                                     style="@style/Right.Rounded"
                                     android:layout_width="@dimen/OPTION_LABEL_WIDTH"
                                     android:layout_height="match_parent"
+                                    android:layout_alignParentTop="true"
+                                    android:layout_marginTop="2dp"
                                     android:text="@string/FOUR" />
 
                                 <TextView
@@ -143,6 +149,7 @@
                                     android:id="@+id/question_five_label_text_view"
                                     style="@style/Right.Rounded"
                                     android:layout_width="@dimen/OPTION_LABEL_WIDTH"
+                                    android:layout_alignParentTop="true"
                                     android:layout_height="match_parent"
                                     android:text="@string/FIVE" />
 

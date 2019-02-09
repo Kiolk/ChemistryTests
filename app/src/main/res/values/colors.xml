@@ -12,6 +12,10 @@
     <color name="CORRECT_COLOR">#35df02</color>
     <color name="WRONG_COLOR">#f11b2a</color>
     <color name="INACTIVE_ICON">#848484</color>
+    <color name="CORRECT_TAB_COLOR">#cbffbb</color>
+    <color name="WRONG_TAB_COLOR">#ffbebb</color>
+    <color name="NOT_ANSWER_TAB_COLOR">#bbd1ff</color>
+    <color name="ANSWERED_TAB_COLOR">#969697</color>
     <color name="GRAY_TEXT_COLOR">#8f8f8f</color>
     <color name="BLACK_TEXT_COLOR">#000000</color>
     <color name="RED_TEXT_COLOR">#ff3333</color>

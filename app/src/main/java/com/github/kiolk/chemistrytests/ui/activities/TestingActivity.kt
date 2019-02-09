@@ -198,6 +198,16 @@ class TestingActivity : BaseActivity() {
         }
     }
 
+    private fun setubTabBackground(){
+        var count = questions_tab_layout.tabCount
+        --count
+        while(count >= 0){
+            val group: ViewGroup = questions_tab_layout.getChildAt(0) as ViewGroup
+            group.getChildAt(count).background = resources.getDrawable(R.drawable.area_not_answer)
+            --count
+        }
+    }
+
     override fun onSaveInstanceState(outState: Bundle?) {
         super.onSaveInstanceState(outState)
         Log.d("MyLogs", "onSaveSingle")
@@ -334,6 +344,7 @@ class TestingActivity : BaseActivity() {
         attachViewPagerListener(testing_view_pager)
         questions_tab_layout.setupWithViewPager(testing_view_pager)
         questions_tool_bar.title = mParams.testInfo.testTitle
+        setubTabBackground()
 
 
         val naviagationListener: View.OnClickListener = object : View.OnClickListener {
@@ -448,18 +459,18 @@ class TestingActivity : BaseActivity() {
     private fun showSingleQuestionAnswer(answer: Answer) {
         if (answer.userInput != null) {
             mResult.takeAnswer(answer)
-            Toast.makeText(baseContext, "Correct Answer! ${mResult.points.toString()}", Toast.LENGTH_LONG).show()
+           // Toast.makeText(baseContext, "Correct Answer! ${mResult.points.toString()}", Toast.LENGTH_LONG).show()
             return
         }
 
         if (answer.question.checkCorrectAnswersByNumbers(answer.userAnswers)) {
             mResult.takeAnswer(answer)
-            Toast.makeText(baseContext, "Correct Answer! ${mResult.points.toString()}", Toast.LENGTH_LONG).show()
+            //Toast.makeText(baseContext, "Correct Answer! ${mResult.points.toString()}", Toast.LENGTH_LONG).show()
         } else if (answer.userAnswers.isEmpty()) {
             mResult.removeEmptyAnswer(answer)
         } else {
             mResult.takeAnswer(answer)
-            Toast.makeText(baseContext, "Wrong Answer! ${mResult.points.toString()}", Toast.LENGTH_LONG).show()
+          //  Toast.makeText(baseContext, "Wrong Answer! ${mResult.points.toString()}", Toast.LENGTH_LONG).show()
         }
     }
 
@@ -574,7 +585,8 @@ class TestingActivity : BaseActivity() {
         mTimer?.cancel()
         isTestEnd = true
         mResult.writeResultInformation()
-//        mResult.mResultInfo.startTime = mStartTest
+        indicator_line_linear_layout.visibility = View.GONE
+//        mResult.mResultInfo.startTime = mStartTesindicator_answered_progress_bar.t
 //        mResult.mResultInfo.endTime = System.currentTimeMillis()
         val resultAdapter: TestingPagerAdapter = TestingPagerAdapter(supportFragmentManager, mResult.test.mSortedQuestions,
                 true, mResult.userResultAnswers())
@@ -652,6 +664,7 @@ class TestingActivity : BaseActivity() {
     }
 
     private fun updateIndicator(progressBar: ProgressBar?, size: Int, total: Int) {
+        indicator_line_linear_layout.visibility=View.VISIBLE
         val percentAnswered: Int = size.times(100).div(total)
         progressBar?.progress = percentAnswered
     }

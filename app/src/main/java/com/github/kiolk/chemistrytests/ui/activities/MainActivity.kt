@@ -289,7 +289,7 @@ class MainActivity : BaseActivity(), MainMvp {
 
     override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
-        menu?.findItem(mSelectedMenuItem)?.isVisible = true
+//        menu?.findItem(mSelectedMenuItem)?.isVisible = true
         return super.onPrepareOptionsMenu(menu)
     }
 
@@ -346,10 +346,10 @@ class MainActivity : BaseActivity(), MainMvp {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == RC_SIGN_IN) {
             if (resultCode == Activity.RESULT_OK) {
-                Toast.makeText(baseContext,
-                        resources.getString(R.string.SUCCES_LOGGIN),
-                        Toast.LENGTH_LONG)
-                        .show()
+//                Toast.makeText(baseContext,
+//                        resources.getString(R.string.SUCCES_LOGGIN),
+//                        Toast.LENGTH_LONG)
+//                        .show()
             } else if (resultCode == Activity.RESULT_CANCELED) {
                 finish()
             }

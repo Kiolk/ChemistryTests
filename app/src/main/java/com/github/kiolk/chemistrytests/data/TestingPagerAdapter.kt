@@ -39,6 +39,6 @@ class TestingPagerAdapter(fm: android.support.v4.app.FragmentManager, var test: 
     }
 
     override fun getPageTitle(position: Int): CharSequence {
-        return position.toString()
+        return (position + 1).toString()
     }
 }

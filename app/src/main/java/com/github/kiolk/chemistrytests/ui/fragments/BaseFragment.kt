@@ -35,7 +35,7 @@ abstract class BaseFragment : Fragment() {
         toolBar?.setTitle(titleId)
         resetVisibilityMenuItems(toolBar?.menu)
         toolBar?.menu
-        menuId?.let { toolBar?.menu?.findItem(it) }?.isVisible = true
+//        menuId?.let { toolBar?.menu?.findItem(it) }?.isVisible = true
         menuId?.let { mainActivity.updateMenu(it) }
     }
 
@@ -51,7 +51,7 @@ abstract class BaseFragment : Fragment() {
     }
 
     override fun onPrepareOptionsMenu(menu: Menu?) {
-        menuId?.let { menu?.findItem(it) }?.isVisible = true
+//        menuId?.let { menu?.findItem(it) }?.isVisible = true
         super.onPrepareOptionsMenu(menu)
     }
 }

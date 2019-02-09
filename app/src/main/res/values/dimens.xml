@@ -45,4 +45,11 @@
     <dimen name="DOUBLE_BLOCK_PADDING">10dp</dimen>
     <dimen name="TEXT_ELEVATION">3dp</dimen>
     <dimen name="FLOAT_BUTTON_MARGIN">16dp</dimen>
+    <dimen name="padding_side_tab_question">2dp</dimen>
+    <dimen name="padding_vertical_tab_question">5dp</dimen>
+
+    <dimen name="side_margin_card_item">2dp</dimen>
+    <dimen name="vertical_margin_card_item">1dp</dimen>
+    <dimen name="padding_card_item">4dp</dimen>
+    <dimen name="small_text_separation">3dp</dimen>
 </resources>

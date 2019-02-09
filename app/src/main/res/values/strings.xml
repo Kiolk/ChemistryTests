@@ -94,6 +94,7 @@
     <string name="LEAVE_UP_KNOLIDHE">LEAVE UP\nYOUR\nKNOWLEDGE</string>
     <string name="TRAINING_YOUR_BRAIN">TRAIN\nYOUR\nBRAIN</string>
     <string name="TARGET_FEATURE">TO REACH\nYOUR\nGOAL</string>
+    <string name="MIN_READ" translatable="false">min read</string>
     <string-array name="RESULT_TAB_TITLES">
         <item>Test information</item>
         <item>General result</item>

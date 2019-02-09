@@ -64,10 +64,10 @@ class SplashActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == RC_SIGN_IN) {
             if (resultCode == Activity.RESULT_OK) {
-                Toast.makeText(baseContext,
-                        resources.getString(R.string.SUCCES_LOGGIN),
-                        Toast.LENGTH_LONG)
-                        .show()
+//                Toast.makeText(baseContext,
+//                        resources.getString(R.string.SUCCES_LOGGIN),
+//                        Toast.LENGTH_LONG)
+//                        .show()
                 updateUserInformation()
 //                startLoad()
             } else if (resultCode == Activity.RESULT_CANCELED) {
@@ -107,10 +107,10 @@ class SplashActivity : AppCompatActivity() {
             override fun onAuthStateChanged(p0: FirebaseAuth) {
                 val firebaseUser: FirebaseUser? = p0.currentUser
                 if (firebaseUser != null) {
-                    Toast.makeText(baseContext,
-                            resources.getString(R.string.SUCCES_LOGGIN),
-                            Toast.LENGTH_LONG)
-                            .show()
+//                    Toast.makeText(baseContext,
+//                            resources.getString(R.string.SUCCES_LOGGIN),
+//                            Toast.LENGTH_LONG)
+//                            .show()
                     if (!isUserStartLogin) {
                         updateUserInformation()
                     }

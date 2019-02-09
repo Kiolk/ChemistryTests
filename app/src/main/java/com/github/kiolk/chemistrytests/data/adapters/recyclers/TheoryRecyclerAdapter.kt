@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.github.kiolk.chemistrytests.R
 import com.github.kiolk.chemistrytests.data.models.ChemTheoryModel
+import com.github.kiolk.chemistrytests.data.models.readingDuration
 import kotlinx.android.synthetic.main.card_theory_item.view.*
 
 class TheoryRecyclerAdapter(var context : Context, var listTheory : List<ChemTheoryModel>) : RecyclerView.Adapter<TheoryRecyclerAdapter.TheoryViewHolder>(){
@@ -18,6 +19,7 @@ class TheoryRecyclerAdapter(var context : Context, var listTheory : List<ChemThe
 
     override fun onBindViewHolder(holder: TheoryViewHolder?, position: Int) {
         holder?.title?.text = listTheory[position].theoryTitle
+        holder?.readDuration?.text = listTheory[position].readingDuration().toString()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): TheoryViewHolder {
@@ -27,6 +29,7 @@ class TheoryRecyclerAdapter(var context : Context, var listTheory : List<ChemThe
 
     class TheoryViewHolder internal constructor(item : View) : RecyclerView.ViewHolder(item){
         val title : TextView = item.theory_item_title_text_view
+        val readDuration : TextView = item.read_duration_text_view
     }
 
 }
